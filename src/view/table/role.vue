@@ -435,23 +435,19 @@
        */
       submitAjax (url, obj) {
         const _type = 'POST'
-        this.requestAjax(_type, url, obj, (res) => {
-          this.submitAjaxThen(res)
-        })
-      },
-      /**
-       * 提交完成后处理方法
-       * @param res
-       */
-      submitAjaxThen (res) {
-        if (res.data.success) {
-          this.$Message.success(this.clickType + '用户成功')
-          this.inputForm.modalshow = false
-          this.loadTable()
-        } else if (!res.data.message) {
+        this.requestAjax(_type, url, obj).then((data) => {
+          if (data.success) {
+            this.$Message.success(this.clickType + '用户成功')
+            this.inputForm.modalshow = false
+            this.loadTable()
+          } else if (!data.message) {
+            this.$Message.success(this.clickType + '用户失败')
+          }
+          this.inputForm.modalDisabled = false
+        }, (err) => {
           this.$Message.success(this.clickType + '用户失败')
-        }
-        this.inputForm.modalDisabled = false
+          this.inputForm.modalDisabled = false
+        })
       },
       /**
        * 批量删除
@@ -490,16 +486,16 @@
        */
       deleteUserInfo (id) {
         const _type = 'DELETE'
-        const _url = 'deleteUsers'
+        const _url = 'deleteMembers'
         const _params = {}
-        this.requestAjax(_type, _url, _params, (res) => {
-          if (res.data.success) {
-            this.$Message.success('删除成功')
-            this.loadTable()
-          } else {
-            this.$Message.error('删除失败')
-          }
-        }, id)
+        this.requestAjax(_type, _url, _params, id).then((data) => {
+            if (data.success) {
+              this.$Message.success('删除成功')
+              this.loadTable()
+            } else {
+              this.$Message.error('删除失败')
+            }
+        })
       }
     },
     mounted () {

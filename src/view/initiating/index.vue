@@ -426,10 +426,9 @@
         this.axios({
           method: 'POST',
           url: this.getWbkUrl('upload'),
-          data: formData,
-          headers: {'Content-Type': 'multipart/form-data'}
+          data: formData
         }).then((res) => {
-          console.log(res)
+         this.fromVal.posterUrl = process.env.API + res.data.msg
         })
         return false
       }
