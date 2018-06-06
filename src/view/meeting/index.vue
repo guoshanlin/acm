@@ -1,108 +1,185 @@
 <template>
+  <div class="wrapper">
+    <Row>
+      <Col span="18">
+        <div class=" b wrapper-box">
+          <Affix :offset-top="10" style="padding:5px 0px;">
+            <Row type="flex" :gutter=5>
+              <i-col span="12">
+                <Row type="flex" justify="start">
+                  <i-col>
+                    <Button type="primary" @click="addMeeting">创建会议</Button>
+                  </i-col>
+                </Row>
+              </i-col>
+              <i-col span="12">
+                <Row type="flex" justify="end">
+                  <i-col>
+                    <i-input class="width-letf" placeholder="请输入会议名称" v-model="keyWord"></i-input>
+                  </i-col>
+                  <i-col>
+                    <Button type="primary"  class="m-r15 m-l5" icon="ios-search" @click="searchDriver">搜索</Button>
+                  </i-col>
+                </Row>
+              </i-col>
+            </Row>
+          </Affix>
+          <Menu mode="horizontal" active-name="1" @on-select="menuSelect">
+            <MenuItem name="1">全部会议</MenuItem>
+            <MenuItem name="2">未开始</MenuItem>
+            <MenuItem name="3">进行中</MenuItem>
+            <MenuItem name="4">已结束</MenuItem>
+          </Menu>
 
-  <div class="wrapper-content">
-    <div class="app-header b c3">
-      <Row type="flex" justify="end">
-        <Col class="header-col">店铺认证</Col>
-        <Col class="header-col">套餐升级</Col>
-        <Col class="header-col">
-        <Dropdown>
-          <a href="javascript:void(0)" class="c3">
-            下拉菜单
-            <Icon type="arrow-down-b"></Icon>
-          </a>
-          <DropdownMenu slot="list">
-            <DropdownItem>商户列表</DropdownItem>
-            <DropdownItem>我的会展</DropdownItem>
-            <DropdownItem divided>退出</DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
-        </Col>
-      </Row>
-    </div>
-    <div class="cloud-left-menu">
+          <div class="list-wrapper">
+            <ul class="list">
+              <li class="list-item fbox" v-for="item in [1,2,3,4,5]">
+                <Button class="manage-btn" type="primary">管理</Button>
+                <div class="pic-wrapper">
+                  <img width="100%" height="100%" v-lazy="loadImg">
+                  <span class="tips b1 c">进行中</span>
+                </div>
+                <div class="info-wrapper flex c2">
+                  <h3 class="fz13">北京奥运会开幕(复制)</h3>
+                  <div>会议ID：16434 <span class="b2 c3 meeting-version">体验版</span></div>
+                  <div class="fbox">
+                    <div class="flex"><div>报名时间：2018-06-05 17:37 ~ 2018-07-05 17:00</div></div>
+                    <div class="flex"><Icon type="person"></Icon> 发布者：林先生</div>
+                  </div>
+                  <div class="fbox">
+                    <div class="flex"><div>报名时间：2018-06-05 17:37 ~ 2018-07-05 17:00</div></div>
+                    <div class="flex"><Icon type="ios-location"></Icon> 北京市北京市东城区</div>
+                  </div>
+                  <div class="fbox tools-wrapper">
+                    <div class="flex"><a class="c2"><Icon type="ios-paper-outline c1"></Icon> 基本信息</a></div>
+                    <div class="flex"><a class="c2"><Icon type="ios-paper-outline c1"></Icon> 门票管理</a></div>
+                    <div class="flex"><a class="c2"><Icon type="ios-paper-outline c1"></Icon> 会议邀请</a></div>
+                    <div class="flex"><a class="c2"><Icon type="ios-paper-outline c1"></Icon> 人员管理</a></div>
+                    <div class="flex"><a class="c2"><Icon type="ios-paper-outline c1"></Icon> 订单管理</a></div>
+                    <div class="flex"><a class="c2"><Icon type="ios-paper-outline c1"></Icon> 微信墙</a></div>
+                    <div class="flex"><a class="c2"><Icon type="ios-paper-outline c1"></Icon> 参会统计</a></div>
+                    <div class="flex"><a class="c2"><Icon type="ios-paper-outline c1"></Icon> 复制会议</a></div>
+                  </div>
+                </div>
+              </li>
+            </ul>
 
-      <div class="user-pic-wrapper posct">
-        <img src="https://image-c.weimobwmc.com/sass-admin/ea93f479be764d85a94b74a99b92006c.png">
-      </div>
-
-      <div class="menu-wrapper">
-        <ul class="menu-list fz14 ct">
-          <li><a class="c"><Icon type="ios-albums" class="icon"></Icon>会务</a></li>
-          <li><a class=" c3"><Icon type="ios-albums" class="icon"></Icon>财务</a></li>
-          <li><a class=" c3"><Icon type="ios-albums" class="icon"></Icon>营销</a></li>
-          <li><a class=" c3"><Icon type="ios-albums" class="icon"></Icon>推广</a></li>
-        </ul>
-        <div class="c3 posct" style="position:absolute;width: 100%;height:40px;bottom:0;"><img width="60" src="../../assets/logo_core.png" ></div>
-      </div>
-
-    </div>
-    <div class="app-content">
-      <router-view></router-view>
-    </div>
+            <!--分页-->
+            <div style="text-align: right; padding-top: 5px;">
+              <Page show-total show-sizer show-elevator style="display: inline-block;" placement="top"
+                    :total="total"
+                    :page-size="parms.limit"
+                    :current="parms.offset"
+                    @on-change="changePage"
+                    @on-page-size-change="changeSize"></Page>
+            </div>
+          </div>
+        </div>
+      </Col>
+      <Col span="6">
+        <div class=" b wrapper-box" style="margin-left: 10px">
+          侧边
+        </div>
+      </Col>
+    </Row>
   </div>
-
 </template>
 
 <script>
   export default {
     data() {
-      return {}
+      return {
+        keyWord: '',
+        total: 0,
+        parms: {
+          keyWord: '',
+          limit: 20,
+          offset: 1
+        },
+        loadImg: "https://static.veer.com/veer/static/resources/FourPack/2018-06-04/9dc68eb66cfc44ceb921a8c8c2cc8c0a.jpg"
+      }
     },
     created() {
       setTimeout(() => {
 
       }, 20)
     },
-    methods: {}
+    methods: {
+      searchDriver(){
+        this.$Message.warning('搜索')
+      },
+      addMeeting(){
+        this.$Message.warning('创建会议')
+      },
+      menuSelect(name){
+        this.$Message.warning(name)
+      },
+      /**
+       *跳页
+       * @param v
+       */
+      changePage (v) {
+        this.parms.offset = v
+        this.$Message.warning(v)
+      },
+      /**
+       *改变页面展示用户条数
+       * @param v
+       */
+      changeSize (v) {
+        this.parms.limit = v
+        this.$Message.warning(v)
+      },
+    }
   }
 </script>
 
-<style scoped>
-  .wrapper-content{
-    min-height: 100%;
-    background-color: #f5f5f5;
-  }
-  .app-header{
-    width: 100%;
-    height: 50px;
-    box-shadow: 0 2px 20px 0 rgba(15,12,70,.1);
-    line-height: 50px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-  }
-  .header-col{
-    margin-right: 24px;
-  }
-  .app-content{
-    padding: 50px 0 0 120px;
+<style>
 
+  .wrapper{
+    margin: 10px;
   }
-  .cloud-left-menu{
-    position: fixed;
+  .list-wrapper{
+    margin: 10px 0;
+  }
+  .list-item{
+    position: relative;
+    border: 1px solid #e3e2e5;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  .manage-btn{
+    position: absolute;
+    top: 23px;
+    right: 30px;
+  }
+  .pic-wrapper{
+    width: 130px;
+    height: 130px;
+    position: relative;
+    border-radius: 4px;
     overflow: hidden;
+  }
+  .pic-wrapper .tips{
+    position: absolute;
     top: 0;
-    bottom: 0;
-    left: 0;
-    width: 119px;
-    z-index: 1000;
-    background: #222430;
+    right: 0;
+    padding: 3px 10px;
+    border-radius: 0 4px 0 4px;
   }
-  .user-pic-wrapper{
-    height: 120px;
+  .info-wrapper{
+    padding: 10px;
+    line-height: 20px;
   }
-  .user-pic-wrapper img{
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+  .meeting-version{
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-left: 8px
   }
-  .menu-list{
-    line-height: 36px;
+  .tools-wrapper{
+    border-top: 1px solid #e3e2e5;
+    margin-top: 8px;
+    padding-top: 5px;
   }
-  .menu-list a{display: block;transition: .3 ;}
-  .menu-list a:hover{color: #fff!important;}
-  .menu-list a .icon{margin-right: 10px}
-
 </style>
