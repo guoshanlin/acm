@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <Button class="manage-btn" type="primary" @click="exmine">{{buttonName}}</Button>
+  <div class="fbox">
+    <Button class="manage-btn" type="primary" @click="exmine">{{button}}</Button>
     <div class="pic-wrapper">
       <img width="100%" height="100%" v-lazy="loadImg">
       <span class="tips b1 c">进行中</span>
@@ -40,7 +40,7 @@
     },
     props: {
       row: '',
-      buttonName: '审核'
+      button: ''
     },
     methods: {
       clickItem () {
@@ -77,8 +77,8 @@
   }
 
   .info-wrapper {
-    padding: 10px;
-    line-height: 20px;
+    padding: 10px 20px;
+    line-height: 26px;
   }
 
   .meeting-version {
