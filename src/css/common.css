@@ -146,3 +146,7 @@ table {border-collapse: collapse;border-spacing: 0;}
   border-radius: 3px;
   padding: 10px;
 }
+
+.ivu-tooltip-inner{
+  white-space: normal;
+}

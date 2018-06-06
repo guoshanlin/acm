@@ -134,7 +134,7 @@
   }
 </script>
 
-<style scoped>
+<style>
 
   .wrapper{
     margin: 10px;
@@ -180,5 +180,6 @@
   .tools-wrapper{
     border-top: 1px solid #e3e2e5;
     margin-top: 8px;
+    padding-top: 5px;
   }
 </style>

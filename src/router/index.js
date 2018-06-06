@@ -22,6 +22,32 @@ export default new Router({
         {
           path: '/meetingList',
           component: (resolve) => require(['../view/meeting-list'], resolve)
+        },
+        {
+          path: '/marketing',
+          component: (resolve) => require(['../view/marketing'], resolve)
+        },
+        {
+          path: '/promotion',
+          component: (resolve) => require(['../view/promotion'], resolve)
+        },
+        {
+          path: '/finance',
+          component: (resolve) => require(['../view/finance'], resolve),
+          children: [
+            {
+              path: 'myAccount',
+              component: (resolve) => require(['../view/my-account'], resolve)
+            },
+            {
+              path: 'incomeDetails',
+              component: (resolve) => require(['../view/income-details'], resolve)
+            },
+            {
+              path: 'withdrawalDetails',
+              component: (resolve) => require(['../view/withdrawal-details'], resolve)
+            }
+          ]
         }
       ]
     },

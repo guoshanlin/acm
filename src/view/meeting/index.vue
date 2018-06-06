@@ -8,7 +8,7 @@
         <Col class="header-col">
         <Dropdown>
           <a href="javascript:void(0)" class="c3">
-            下拉菜单
+            我的展会
             <Icon type="arrow-down-b"></Icon>
           </a>
           <DropdownMenu slot="list">
@@ -26,16 +26,13 @@
         <img src="https://image-c.weimobwmc.com/sass-admin/ea93f479be764d85a94b74a99b92006c.png">
       </div>
 
-      <div class="menu-wrapper">
-        <ul class="menu-list fz14 ct">
-          <li><a class="c"><Icon type="ios-albums" class="icon"></Icon>会务</a></li>
-          <li><a class=" c3"><Icon type="ios-albums" class="icon"></Icon>财务</a></li>
-          <li><a class=" c3"><Icon type="ios-albums" class="icon"></Icon>营销</a></li>
-          <li><a class=" c3"><Icon type="ios-albums" class="icon"></Icon>推广</a></li>
-        </ul>
-        <div class="c3 posct" style="position:absolute;width: 100%;height:40px;bottom:0;"><img width="60" src="../../assets/logo_core.png" ></div>
-      </div>
+      <Menu theme="dark" :active-name="activeNenu" width="160px"  class="menu-wrapper" @on-select="changeMenu">
+        <template v-for="(item,i) in menuList">
+          <MenuItem :name="item.path" :key="i"><Icon type="document-text"></Icon>{{item.title}}</MenuItem>
+        </template>
+      </Menu>
 
+      <div class="c3 posct" style="position:absolute;width: 100%;height:40px;bottom:0;"><img width="60" src="../../assets/logo_core.png" ></div>
     </div>
     <div class="app-content">
       <router-view></router-view>
@@ -47,14 +44,26 @@
 <script>
   export default {
     data() {
-      return {}
+      return {
+        activeNenu: this.$route.path,
+        menuList: [
+          {path: "/meetingList", title: "会务"},
+          {path: "/finance/myAccount", title: "财务"},
+          {path: "/marketing", title: "营销"},
+          {path: "/promotion", title: "推广"}
+        ]
+      }
     },
     created() {
       setTimeout(() => {
 
       }, 20)
     },
-    methods: {}
+    methods: {
+      changeMenu(name){
+        this.$router.push(name)
+      }
+    }
   }
 </script>
 
@@ -77,7 +86,7 @@
     margin-right: 24px;
   }
   .app-content{
-    padding: 50px 0 0 120px;
+    padding: 50px 0 0 160px;
 
   }
   .cloud-left-menu{
@@ -86,7 +95,7 @@
     top: 0;
     bottom: 0;
     left: 0;
-    width: 119px;
+    width: 160px;
     z-index: 1000;
     background: #222430;
   }
@@ -98,11 +107,8 @@
     height: 40px;
     border-radius: 50%;
   }
-  .menu-list{
-    line-height: 36px;
-  }
-  .menu-list a{display: block;transition: .3 ;}
-  .menu-list a:hover{color: #fff!important;}
-  .menu-list a .icon{margin-right: 10px}
 
+  .menu-wrapper{
+    background: #222430;
+  }
 </style>
