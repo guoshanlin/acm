@@ -181,7 +181,11 @@
           ]
         },
         radios: {
-          check: [
+          checked: [
+            {value: 'true', name: '是'},
+            {value: 'false', name: '否'}
+          ],
+          recommend: [
             {value: 'true', name: '是'},
             {value: 'false', name: '否'}
           ]

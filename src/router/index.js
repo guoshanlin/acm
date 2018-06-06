@@ -61,6 +61,11 @@ export default new Router({
                     component: (resolve) => require(['../view/examine-details/index'], resolve)
                   }
                 ]
+              },
+              {
+                path: '/index/examineDetails',
+                name: '活动详情',
+                component: (resolve) => require(['../view/examine-details/index'], resolve)
               }
             ]
           }

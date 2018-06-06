@@ -14,9 +14,9 @@ export default {
       members: {url: 'members', pre: preuUrl},
       // 删除用户
       deleteMembers: {url: 'members/{id}', pre: preuUrl},
-
-      upload: {url: 'files/upload', pre: preuUrl},
       // 上传文件
+      upload: {url: 'files/upload', pre: preuUrl},
+      // 查询添加活动
       activitys: {url: 'activitys', pre: preuUrl}
     }
     /**

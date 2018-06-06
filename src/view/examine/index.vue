@@ -6,34 +6,198 @@
         <MenuItem name="2">已通过</MenuItem>
         <MenuItem name="3">未通过</MenuItem>
       </Menu>
+      <div class="list-wrapper">
+        <ul class="list">
+          <li class="list-item" v-for="item in data" :key="item.id">
+            <activity-item :row='item' :button="buttonName" @click="itemDetails" @exmine="exmine"></activity-item>
+          </li>
+        </ul>
+      </div>
+      <!--分页-->
+      <div style="text-align: right; padding-top: 5px;">
+        <Page show-total show-sizer show-elevator style="display: inline-block;" placement="top"
+              :total="total"
+              :page-size="parms.limit"
+              :current="parms.offset"
+              @on-change="changePage"
+              @on-page-size-change="changeSize"></Page>
+      </div>
+      <!--新增表单承载标签-->
+      <input-from v-if="inputForm.show" @changeOptions="getExmineVal" :options="inputForm.option" :value="inputForm.value" :modalDisabled="inputForm.modalDisabled"
+                  :modalshow="inputForm.modalshow"/>
     </div>
-    <div class="list-wrapper">
-      <ul class="list">
-        <li class="list-item" v-for="item in [1,2,3,4,5]" :key="item">
-           <activity-item :button="buttonName"></activity-item>
-        </li>
-      </ul>
+    <div>
+       <router-view></router-view>
     </div>
- </div>
+  </div>
 </template>
 
 <script>
   import activityItem from 'components/activity-item/index'
+  import inputFrom from 'components/modal/inputFrom.vue'
 
   export default {
     name: 'index',
     data () {
       return {
-        buttonName: '审核'
+        buttonName: '审核',
+        data: [],
+        total: 0,
+        parms: {
+          limit: 20,
+          offset: 1
+        },
+        inputForm: {
+          show: false,
+          modalDisabled: false,
+          modalshow: false,
+          option: {
+            title: '审核',
+            width: '512',
+            opintions: [
+              [
+                {
+                  title: '审核结果',
+                  id: 'checked',
+                  type: 'radio',
+                  titlespan: 5,
+                  colspan: 7,
+                  required: true
+                },
+                {
+                  title: '是否强力推荐',
+                  id: 'recommend',
+                  type: 'radio',
+                  titlespan: 5,
+                  colspan: 7,
+                  required: true
+                }
+              ],
+              [
+                {
+                  title: '审批意见',
+                  id: 'remark',
+                  type: 'textarea',
+                  titlespan: 5,
+                  colspan: 19,
+                  required: false
+                }
+              ]
+            ],
+            button: [{
+              type: 'primary',
+              title: '确定',
+              click: 'handle'
+            }]
+          },
+          value: {
+            checked: 'true',
+            recommend: 'false',
+            remark: ''
+          }
+        }
       }
     },
     components: {
-      activityItem
+      activityItem,
+      inputFrom
     },
     methods: {
+      /**
+       *跳页
+       * @param v
+       */
+      changePage (v) {
+        this.parms.offset = v
+      },
+      /**
+       *改变页面展示用户条数
+       * @param v
+       */
+      changeSize (v) {
+        this.parms.limit = v
+      },
+      /**
+       * 切换tab
+       * @param name
+       */
       menuSelect (name) {
         this.$Message.warning(name)
+      },
+      /**
+       * 审核
+       * @param row
+       */
+      exmine (row) {
+        this.inputForm.modalshow = true
+        this.inputForm.show = true
+        this.inputForm.modalDisabled = false
+        this.inputForm.value.id = row.id
+      },
+
+      getExmineVal (val, type) {
+        this.inputForm.value = val // 表单填写的内容;
+        if (type === 'cancel') { // 按钮操作
+          this.inputForm.modalshow = false // 隐藏modal
+          return
+        }
+        let newVal = {}
+        Object.assign(newVal, val)
+        this.inputForm.modalDisabled = true
+        this.submitAjax('activitys', newVal, '审核')
+      },
+      /**
+       * 提交表单
+       * @param url
+       * @param obj
+       */
+      submitAjax (url, obj, msg) {
+        const _type = 'POST'
+        this.requestAjax(_type, url, obj).then((data) => {
+          if (data.success) {
+            this.$Message.success(msg + '用户成功')
+            this.inputForm.modalshow = false
+            this.loadTable()
+          } else if (!data.message) {
+            this.$Message.success(msg + '用户失败')
+          }
+          this.inputForm.modalDisabled = false
+        },(err) => {
+          this.$Message.success(msg + '用户失败')
+          this.inputForm.modalDisabled = false
+        })
+      },
+      /**
+       * 查看详情
+       * @param row
+       */
+      itemDetails (row) {
+        this.routePush('/index/examineDetails', row.id)
+      },
+      /**
+       * 加载活动
+       */
+      initItem () {
+        const _type = 'GET'
+        const _params = this.parms
+        const _url = 'activitys'
+        this.requestAjax(_type, _url, _params).then((data) => {
+          if (!data.message) {
+            this.total = !isNaN(+data.data.total) ? +data.data.total : 0
+            this.data = data.data.rows
+          }
+        })
       }
+    },
+    mounted () {
+      this.$nextTick(() => {
+        this.initItem()
+        document.querySelector('.ivu-page-options-elevator').title = '输入后回车跳至指定页'
+        clearInterval(this.timer)
+        this.timer = setInterval(() => {
+          this.initItem()
+        }, 60 * 1000)
+      })
     }
   }
 </script>

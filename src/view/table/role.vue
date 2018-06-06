@@ -30,7 +30,7 @@
       </Row>
     </Affix>
     <!--table列表-->
-    <i-table :columns="columns" :data="data" border size="small" ref="table" :height="height" @on-sort-change="sortChange" @on-selection-change="selectTable" :no-data-text="loading" @on-row-dblclick="rowDbClick"></i-table>
+    <i-table :columns="columns" :data="data" border size="small" ref="table" @on-sort-change="sortChange" @on-selection-change="selectTable" :no-data-text="loading" @on-row-dblclick="rowDbClick"></i-table>
     <!--分页-->
     <div style="text-align: right; padding-top: 5px;">
       <Page show-total show-sizer show-elevator style="display: inline-block;" placement="top"
@@ -59,7 +59,7 @@
     },
     data () {
       return {
-        height: '' + (document.body.offsetHeight - 325),
+      /*  height: '' + (document.body.offsetHeight - 325),*/
         columns: [
           {title: '姓名', key: 'name', width: 120, sortable: false},
        /*   {title: '昵称', key: 'nickName', width: 100, sortable: false},*/
@@ -611,7 +611,7 @@
     mounted () {
       this.$nextTick(() => {
         window.onresize = () => {
-          this.height = '' + (document.body.offsetHeight - 325)
+         /* this.height = '' + (document.body.offsetHeight - 325)*/
         //  this.initAllTableScroll()
         }
         this.loadTable()

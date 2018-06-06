@@ -12,7 +12,7 @@
         <i-col><h3 @click="routePush('/index/home')"><a>展会</a></h3></i-col>
       </Row>
     </div>
-    <div class="layout-content clearFix m-0">
+    <div class="layout-content min-height clearFix m-0">
        <router-view></router-view>
     </div>
     <div class="layout-copy">
@@ -44,4 +44,5 @@
   .index-tab h3{height: 50px;}
   .index-tab h3:hover{background-color: #0CAE6C;}
   .index-tab a{display: inline-block; height: 45px; font-size: 20px;padding: 0 30px;color: #fff}
+  .min-height{ min-height: calc( 100% - 220px)}
 </style>

@@ -1,11 +1,21 @@
 <template>
-
+  <div>
+    <datails-item :row='item' :button="buttonName" @click="itemDetails" @exmine="exmine"></datails-item>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "index"
+  import datailsItem from 'components/datails-item/index'
+
+  export default {
+    name: 'index',
+    data () {
+
+    },
+    components: {
+      datailsItem
     }
+  }
 </script>
 
 <style scoped>

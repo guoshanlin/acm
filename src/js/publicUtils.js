@@ -74,6 +74,19 @@ export default {
      * @param number
      * @returns {string}
      */
+    Vue.prototype.getChecked = function (number) {
+       switch ('' + number) {
+         case '0': return '待审核'
+         case '1': return '已通过'
+         case '2': return '未通过'
+         default: return number
+       }
+    }
+    /**
+     * 转义状态
+     * @param number
+     * @returns {string}
+     */
     Vue.prototype.getUserChannel = function (number) {
        switch ('' + number) {
          case '0': return '人工创建'
@@ -104,8 +117,12 @@ export default {
      * 公用页面跳转
      * @param url
      */
-    Vue.prototype.routePush = function (url) {
-        this.$router.push(url)
+    Vue.prototype.routePush = function (url, id) {
+        if (id) {
+          this.$router.push({path: url, query: {id: id}})
+        } else {
+          this.$router.push(url)
+        }
       }
     /**
      * 验证非空
