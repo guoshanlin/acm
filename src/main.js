@@ -15,7 +15,7 @@ import Scrollbar from 'smooth-scrollbar'
 import publicUtils from 'js/publicUtils'
 // 设置公用请求端口
 import getwbkUrl from 'js/getwbkUrl'
-
+import VueLazyload from 'vue-lazyload'
 import InitScroll from 'js/initScroll'
 
 axios.defaults.baseURL = process.env.API
@@ -27,6 +27,14 @@ Vue.use(iView)
 Vue.use(publicUtils)
 Vue.use(getwbkUrl)
 Vue.use(InitScroll)
+
+// 懒加载图片
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  error: require('./assets/logo.png'),
+  loading:require('./assets/logo.png'),
+  attempt: 1
+})
 
 /* eslint-disable no-new */
 new Vue({
