@@ -49,6 +49,18 @@ export default new Router({
                 path: '/index/role',
                 name: '会员管理',
                 component: (resolve) => require(['../view/table/role'], resolve)
+              },
+              {
+                path: '/index/examine',
+                name: '审批管理',
+                component: (resolve) => require(['../view/examine/index'], resolve),
+                chilren: [
+                  {
+                    path: '/index/examine/examineDetails',
+                    name: '活动详情',
+                    component: (resolve) => require(['../view/examine-details/index'], resolve)
+                  }
+                ]
               }
             ]
           }

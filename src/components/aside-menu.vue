@@ -28,7 +28,9 @@
       return {
         // openNames:['1','2','3'],
         loadMian: [
-          {path: '/index/role', title: '会员管理'}
+          {path: '/index/role', title: '会员管理'},
+          {path: '/index/examine', title: '审批管理'},
+          {path: '/index/examineDetails', title: '审批管理'}
           // {path: '/IndexManagement', title:  '数据管理',children:[
           //     {path: '/IndexManagement', title:  '数据管理',},
           //     {path: '/hostManagement',title:  '主机管理'},
