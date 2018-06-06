@@ -17,11 +17,11 @@ export default new Router({
     },
     {
       path: '/meeting',
-      component: (resolve) => require(['../view/meeting'], resolve),
+      component: (resolve) => require(['../view/main-menu'], resolve),
       children: [
         {
-          path: '/meetingList',
-          component: (resolve) => require(['../view/meeting-list'], resolve)
+          path: '/meeting',
+          component: (resolve) => require(['../view/meeting'], resolve)
         },
         {
           path: '/marketing',
