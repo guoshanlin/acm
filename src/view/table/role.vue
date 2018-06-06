@@ -7,8 +7,12 @@
           <Row type="flex" justify="start">
             <i-col>
               <Button type="primary" @click="addOrModify">新增</Button>
-              <Button type="primary" @click="addOrModify">导入</Button>
 <!--              <Button type="warning" " @click="deleteAll">删除</Button>-->
+            </i-col>
+            <i-col>
+              <Upload class="m-l10" :action="getWbkUrl('upload')" :before-upload="handleUpload">
+                <Button type="primary">导入</Button>
+              </Upload>
             </i-col>
           </Row>
 
@@ -39,10 +43,13 @@
     <!--新增表单承载标签-->
     <input-from v-if="inputForm.show" @changeOptions="getInputVal" :options="inputForm.option" :value="inputForm.value" :modalDisabled="inputForm.modalDisabled"
                 :modalshow="inputForm.modalshow"/>
+    <!--详情列表承载标签-->
+    <table-details v-if="tableDetails.show" :modalshow=tableDetails.modalshow :newValue=tableDetails.option  @getValue="tableDetailsMethods"></table-details>
   </div>
 </template>
 <script type="es6">
  import inputFrom from 'components/modal/inputFrom.vue'
+ import tableDetails from 'components/modal/tableDetails.vue'
   export default {
     destroyed () {
       window.onresize = function () {
@@ -55,7 +62,7 @@
         height: '' + (document.body.offsetHeight - 325),
         columns: [
           {title: '姓名', key: 'name', width: 120, sortable: false},
-          {title: '昵称', key: 'nickName', width: 100, sortable: false},
+       /*   {title: '昵称', key: 'nickName', width: 100, sortable: false},*/
           {title: '性别',
             key: 'sex',
             width: 80,
@@ -73,39 +80,46 @@
             }},
           {title: '手机', key: 'phone', width: 160, sortable: false},
           {title: '邮箱', key: 'email', width: 170, sortable: false},
-          {title: '微信', key: 'wechat', width: 160, sortable: false},
-          {title: '身份证',
+    /*      {title: '微信', key: 'wechat', width: 160, sortable: false},*/
+/*          {title: '身份证',
             key: 'cardNumber',
             width: 160,
             sortable: false,
             render: (h, params) => {
               return this.tdRender(h, params)
-            }},
+            }},*/
           {title: '地址',
             key: 'address',
-            width: 160,
             sortable: false,
             render: (h, params) => {
               return this.tdRender(h, params)
             }},
           {title: '公司', key: 'company', width: 160, sortable: false},
           {title: '职位', key: 'position', width: 120, sortable: false},
-          {title: '是否会员',
+          {title: '级别',
             key: 'level',
             width: 100,
             sortable: false,
             render: (h, params) => {
-              return this.tdRender(h, params)
+              return h('div', {
+                'class': 'td-render',
+                domProps: {
+                  title: params.row[params.column.key] === 1 ? '会员' : '非会员'
+                },
+                style: {
+                  cursor: 'pointer'
+                }
+              }, params.row[params.column.key] === 1 ? '会员' : '非会员')
             }},
-          {title: '渠道',
+/*          {title: '渠道',
             key: 'channel',
             width: 80,
             sortable: false,
             render: (h, params) => {
               return this.tdRender(h, params)
-            }},
+            }},*/
           {title: '操作',
-            width: 150,
+            width: 130,
             render: (h, params) => {
               return h('div', [
                 h('Button', {
@@ -158,7 +172,8 @@
     },
     computed: {},
     components: {
-       inputFrom
+       inputFrom,
+      tableDetails
     },
     methods: {
       /**
@@ -238,32 +253,39 @@
           tabPane: false,
           uEditor: false,
           rowId: '',
+          // name nickName phone wechat email sex
+          // cardNumber type hobby company position channel level address type validTime
           opintions: [
             [
-              {title: '账号', value: row.userName, show: true, type: ''},
-              {title: '名称', value: row.name, show: true, type: ''}
+              {title: '姓名', value: row.name, show: true, type: ''},
+              {title: '昵称', value: row.nickName, show: true, type: ''}
             ],
             [
-              {title: '固定电话', value: row.tel, show: true, type: ''},
-              {title: '状态', value: this.getUserStatus(row.status), show: true, type: ''}
-            ],
-            [
-              {title: '类型', value: this.getUserType(row.type), show: true, type: ''},
+              {title: '手机', value: row.phone, show: true, type: ''},
               {title: '微信', value: row.wechat, show: true, type: ''}
             ],
             [
-              {title: '职责', value: this.getUserRole(row.role), show: true, type: ''},
-              {title: '部门', value: row.depart, show: true, type: ''}
+              {title: '邮箱', value: row.email, show: true, type: ''},
+              {title: '性别', value: row.sex === 1 ? '男' : '女', show: true, type: ''}
             ],
             [
-              {title: '手机', value: row.mobilePhone, show: true, type: ''},
-               {title: '', value: '', show: true, type: ''}
+              {title: '身份证', value: row.cardNumber, show: true, type: ''},
+              {title: '类型', value: row.type === 1 ? '企业' : '个人', show: true, type: ''}
             ],
             [
-              {title: '邮箱', value: row.email, show: true, type: '', colspan: 3}
+              {title: '公司', value: row.company, show: true, type: ''},
+              {title: '部门', value: row.position, show: true, type: ''}
             ],
             [
-              {title: '备注', value: row.memo, show: true, type: '', colspan: 3}
+              {title: '爱好', value: row.hobby, show: true, type: ''},
+              {title: '渠道', value: this.getUserChannel(row.channel), show: true, type: ''}
+            ],
+            [
+              {title: '级别', value: row.level === 1 ? '会员' : '非会员', show: true, type: ''},
+              {title: '会员有效期', value: this.formatterObjTime(row.validTime), show: true, type: ''}
+            ],
+              [
+              {title: '地址', value: row.address, colspan: 3, show: true, type: ''}
             ]
           ],
           button: [
@@ -290,20 +312,12 @@
         }
         this.inputForm.modalshow = true
         this.inputForm.show = true
-        this.inputForm.modalDisabled=false
+        this.inputForm.modalDisabled = false
         this.inputForm.option = {
           title: _b ? '修改用户' : '新增用户',
           width: '768',
           opintions: [
             [
-              {
-                title: '账号',
-                id: 'userName',
-                type: 'input',
-                titlespan: 3,
-                colspan: 9,
-                required: true
-              },
               {
                 title: '姓名',
                 id: 'name',
@@ -311,6 +325,33 @@
                 titlespan: 3,
                 colspan: 9,
                 required: true
+              },
+              {
+                title: '昵称',
+                id: 'nickName',
+                type: 'input',
+                titlespan: 3,
+                colspan: 9,
+                required: true
+              }
+            ],
+            [
+              {
+                title: '手机',
+                id: 'phone',
+                type: 'input',
+                titlespan: 3,
+                colspan: 9,
+                required: true,
+                valueType: 'mobilePhone'
+              },
+              {
+                title: '微信',
+                id: 'wechat',
+                type: 'input',
+                titlespan: 3,
+                colspan: 9,
+                required: false
               }
             ],
             [
@@ -320,31 +361,12 @@
                 type: 'input',
                 titlespan: 3,
                 colspan: 9,
-                required: false,
+                required: true,
                 valueType: 'email'
               },
               {
-                title: '手机',
-                id: 'mobilePhone',
-                type: 'input',
-                titlespan: 3,
-                colspan: 9,
-                required: false,
-                valueType: 'mobilePhone'
-              }
-            ],
-            [
-              {
-                title: '微信',
-                id: 'wechat',
-                type: 'input',
-                titlespan: 3,
-                colspan: 9,
-                required: false
-              },
-              {
-                title: '状态',
-                id: 'status',
+                title: '性别',
+                id: 'sex',
                 type: 'select',
                 titlespan: 3,
                 colspan: 9,
@@ -354,6 +376,15 @@
             ],
             [
               {
+                title: '身份证号',
+                id: 'cardNumber',
+                type: 'input',
+                titlespan: 3,
+                colspan: 9,
+                required: false,
+                valueType: 'idCard'
+              },
+              {
                 title: '类型',
                 id: 'type',
                 type: 'select',
@@ -361,25 +392,71 @@
                 colspan: 9,
                 relation: '',
                 required: false
-              },
-              {
-                title: '固定电话',
-                id: 'tel',
-                type: 'input',
-                titlespan: 3,
-                colspan: 9,
-                required: false,
-                valueType: 'telephone'
               }
             ],
             [
               {
-                title: '备注',
-                id: 'memo',
-                type: 'textarea',
+                title: '爱好',
+                id: 'hobby',
+                type: 'input',
+                titlespan: 3,
+                colspan: 9,
+                required: false
+              },
+              {
+                title: '公司',
+                id: 'company',
+                type: 'input',
+                titlespan: 3,
+                colspan: 9,
+                required: false
+              }
+            ],
+            [
+              {
+                title: '职位',
+                id: 'position',
+                type: 'input',
+                titlespan: 3,
+                colspan: 9,
+                required: false
+              },
+              {
+                title: '渠道',
+                id: 'channel',
+                type: 'select',
+                titlespan: 3,
+                colspan: 9,
+                relation: '',
+                required: false
+              }
+            ],
+            [
+              {
+                title: '级别',
+                id: 'level',
+                type: 'select',
+                titlespan: 3,
+                colspan: 9,
+                relation: '',
+                required: false
+              },
+              {
+                title: '会员有效期',
+                id: 'validTime',
+                type: 'time',
+                titlespan: 3,
+                colspan: 9,
+                required: false
+              }
+            ],
+            [
+              {
+                title: '地址',
+                id: 'address',
+                type: 'input',
                 titlespan: 3,
                 colspan: 21,
-                rowsNub: 3,
                 required: false
               }
             ]
@@ -391,16 +468,23 @@
           }]
 
         }
+
         this.inputForm.value = {
-          userName: _b ? row.userName : '',
           name: _b ? row.name : '',
+          nickName: _b ? row.nickName : '',
           email: _b ? row.email : '',
-          mobilePhone: _b ? row.mobilePhone : '',
+          phone: _b ? row.phone : '',
           wechat: _b ? row.wechat : '',
-          status: _b ? '' + row.status : '0',
-          type: _b ? '' + row.type : '1',
-          tel: _b ? '' + row.tel : '',
-          memo: _b ? row.memo : ''
+          sex: _b ? '' + row.sex : '1',
+          type: _b ? '' + row.type : '0',
+          cardNumber: _b ? row.cardNumber : '',
+          hobby: _b ? row.hobby : '',
+          company: _b ? row.company : '',
+          position: _b ? row.position : '',
+          channel: _b ? '' + row.channel : '0',
+          level: _b ? '' + row.level : '0',
+          address: _b ? row.address : '',
+          validTime: _b ? this.formatterObjTime(row.validTime) : ''
         }
         if (_b) {
           this.inputForm.value.id = row.id
@@ -496,6 +580,32 @@
               this.$Message.error('删除失败')
             }
         })
+      },
+      /**
+       * 上传文件
+       * @param file
+       * @returns {boolean}
+       */
+      handleUpload (file) {
+        let arr = file.name.split('.')
+        if (['xls', 'xlsx', 'xlsm', 'xlt', 'xltx', 'xltm'].indexOf(arr[arr.length - 1]) === -1) {
+          this.$Message.error(file.name + '非excel文件，不能导入')
+          return false
+        }
+        let formData = new FormData()
+        formData.append('file', file)
+        formData.append('type', 'account')
+        this.requestFile('POST', 'upload', formData).then((data) => {
+          if (data.err == '') {
+            this.$Message.success('导入成功')
+            this.loadTable()
+          } else {
+            this.$Message.error('导入失败')
+          }
+        },(err) => {
+          this.$Message.error('导入失败')
+        })
+        return false
       }
     },
     mounted () {

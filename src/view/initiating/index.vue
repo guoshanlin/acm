@@ -404,13 +404,18 @@
           applyBeginTime: this.formatterTime(this.fromVal.applyTime[0]), // 活动开始时间
           applyEndTime: this.formatterTime(this.fromVal.applyTime[1]), // 活动开始时间
           beginTime: this.formatterTime(this.fromVal.time[0]), // 活动开始时间
-          endTime: this.formatterTime(this.fromVal.time[1]) // 活动结束时间
+          endTime: this.formatterTime(this.fromVal.time[1]), // 活动结束时间
+          checked: 0 // 审核状态
         }
         if (this.verification(_params, this.msgTip)) {
-            this.requestAjax('post', 'activitys', _params).then((res) => {
-
+            this.requestAjax('post', 'activitys', _params).then((data) => {
+              if (data.success) {
+                this.$Message.success('发布成功')
+              } else {
+                this.$Message.success('发布失败')
+              }
             },(err) => {
-
+              this.$Message.success('发布失败')
             })
         }
       },
@@ -420,15 +425,16 @@
        * @returns {boolean}
        */
       handleUpload: function (file) {
+        let arr = file.name.split('.')
+        if (['bmp', 'jpg', 'jpeg', 'png', 'gif'].indexOf(arr[arr.length - 1]) === -1) {
+          this.$Message.error(file.name + '不是图片，不能导入')
+          return false
+        }
         let formData = new FormData()
         formData.append('file', file)
         formData.append('type', 'account')
-        this.axios({
-          method: 'POST',
-          url: this.getWbkUrl('upload'),
-          data: formData
-        }).then((res) => {
-         this.fromVal.posterUrl = process.env.API + res.data.msg
+        this.requestFile('POST', 'upload', formData).then((data) => {
+          this.fromVal.posterUrl = process.env.API + data.msg
         })
         return false
       }
