@@ -1,29 +1,37 @@
 <template>
   <div class="fbox">
-    <Button v-if="row.checked == 0" class="manage-btn" type="primary" @click="exmine">{{button}}</Button>
-    <div class="pic-wrapper">
+    <div class="pic-datails">
       <img width="100%" height="100%" v-lazy="loadImg">
       <span class="tips b1 c">进行中</span>
     </div>
-    <div class="info-wrapper flex c2">
-      <h3 class="fz18">{{row.name}} <a class="fz15" @click="clickItem"> 查看详情</a></h3>
-      <div class="fz15">状态：<span class="b2 c3 meeting-version">{{getChecked(row.checked)}}</span></div>
-      <div class="fbox fz15">
-        <div class="flex">
-          <div>报名截止时间：{{row.applyBeginTime}} ~ {{row.applyEndTime}}</div>
-        </div>
+    <div class="info-datails flex c2">
+      <h3 class="fz24">{{row.name}}</h3>
+      <div class="fbox fz16">
         <div class="flex">
           <Icon type="person"></Icon>
           发布者：{{row.name}}
         </div>
       </div>
-      <div class="fbox fz15">
+      <div class="fz16">状态：<span class="b2 c3 meeting-version">{{getChecked(row.checked)}}</span></div>
+      <div class="fbox fz16">
+        <div class="flex">
+          <div>报名截止时间：{{row.applyBeginTime}} ~ {{row.applyEndTime}}</div>
+        </div>
+      </div>
+      <div class="fbox fz16">
         <div class="flex">
           <div>活动截止时间：{{row.beginTime}} ~ {{row.endTime}}</div>
         </div>
+      </div>
+      <div class="fbox fz16">
         <div class="flex">
           <Icon type="ios-location"></Icon>
           {{row.address}}
+        </div>
+      </div>
+      <div class="fbox fz16">
+        <div class="flex">
+          <Button v-if="row.checked == 0" type="primary" @click="exmine">{{button}}</Button>
         </div>
       </div>
     </div>
@@ -60,15 +68,15 @@
     right: 30px;
   }
 
-  .pic-wrapper {
-    width: 130px;
-    height: 130px;
+  .pic-datails {
+    width: 500px;
+    height: 300px;
     position: relative;
     border-radius: 4px;
     overflow: hidden;
   }
 
-  .pic-wrapper .tips {
+  .pic-datails .tips {
     position: absolute;
     top: 0;
     right: 0;
@@ -76,9 +84,9 @@
     border-radius: 0 4px 0 4px;
   }
 
-  .info-wrapper {
-    padding: 10px 20px;
-    line-height: 26px;
+  .info-datails {
+    padding: 10px 30px;
+    line-height: 40px;
   }
 
   .meeting-version {

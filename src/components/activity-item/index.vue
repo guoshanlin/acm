@@ -1,13 +1,16 @@
 <template>
   <div class="fbox">
-    <Button v-if="row.checked == 0" class="manage-btn" type="primary" @click="exmine">{{button}}</Button>
     <div class="pic-wrapper">
       <img width="100%" height="100%" v-lazy="loadImg">
       <span class="tips b1 c">进行中</span>
     </div>
     <div class="info-wrapper flex c2">
       <h3 class="fz18">{{row.name}} <a class="fz15" @click="clickItem"> 查看详情</a></h3>
-      <div class="fz15">状态：<span class="b2 c3 meeting-version">{{getChecked(row.checked)}}</span></div>
+      <div class="fbox fz15">
+        <div class="flex">
+          <div class="fz15">状态：<span class="b2 c3 meeting-version">{{getChecked(row.checked)}}</span> <Button v-if="row.checked == 0" type="primary" @click="exmine">{{button}}</Button></div>
+        </div>
+      </div>
       <div class="fbox fz15">
         <div class="flex">
           <div>报名截止时间：{{row.applyBeginTime}} ~ {{row.applyEndTime}}</div>
@@ -54,11 +57,11 @@
 </script>
 
 <style>
-  .manage-btn {
+/*  .manage-btn {
     position: absolute;
     top: 23px;
     right: 30px;
-  }
+  }*/
 
   .pic-wrapper {
     width: 130px;
