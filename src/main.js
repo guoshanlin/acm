@@ -31,8 +31,8 @@ Vue.use(InitScroll)
 // 懒加载图片
 Vue.use(VueLazyload, {
   preLoad: 1.3,
-  error: require('./assets/logo.png'),
-  loading:require('./assets/logo.png'),
+  error: require('./assets/loading.png'),
+  loading:require('./assets/loading.png'),
   attempt: 1
 })
 

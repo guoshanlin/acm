@@ -33,7 +33,7 @@
 
           <div class="list-wrapper">
             <ul class="list">
-              <li class="list-item fbox" v-for="item in [1,2,3,4,5]">
+              <li class="list-item fbox" v-for="item in [1,2,3,4,5,6,7,8]">
                 <Button class="manage-btn" type="primary">管理</Button>
                 <div class="pic-wrapper">
                   <img width="100%" height="100%" v-lazy="loadImg">
@@ -77,8 +77,43 @@
         </div>
       </Col>
       <Col span="6">
-        <div class=" b wrapper-box" style="margin-left: 10px">
-          侧边
+        <div class=" b wrapper-box m-l10">
+          <div class="clear rig-title">
+            <h3 class="c2">会务</h3>
+          </div>
+          <ul class="rig-list-wrapper">
+            <li>可使用场次<span class="c4 fr">0场</span></li>
+            <li>已创建场次<span class="fr">0场</span></li>
+          </ul>
+          <Button type="error" size="large" class="meeting-go-buy">立即订购</Button>
+        </div>
+        <div class="b wrapper-box m-l10 m-t10">
+          <div class="clear rig-title m-b10">
+            <h3 class="c2">会务官方公众号</h3>
+          </div>
+          <img src="https://image-c.weimobwmc.com/sass-admin/c91ce187d5df48cf949ea997af2821cd.png" width="100%"/>
+        </div>
+        <div class=" b wrapper-box m-l10 m-t10">
+          <div class="clear rig-title">
+            <h3 class="c2">使用指南</h3>
+          </div>
+          <ul class="rig-list-wrapper">
+            <li><a class="c2">会前设置</a></li>
+            <li><a class="c2">会中设置</a></li>
+            <li><a class="c2">参会管理</a></li>
+            <li><a class="c2">数据统计</a></li>
+          </ul>
+        </div>
+        <div class=" b wrapper-box m-l10 m-t10">
+          <div class="clear rig-title">
+            <h3 class="c2">使用指南</h3>
+          </div>
+          <ul class="rig-list-wrapper">
+            <li><a class="c2">如何进入微盟会务小程序？</a></li>
+            <li><a class="c2">会议邀请函如何修改基本信息？</a></li>
+            <li><a class="c2">会议邀请函如何修改会议议程？</a></li>
+            <li><a class="c2">如何查看报名的具体人员情况？</a></li>
+          </ul>
         </div>
       </Col>
     </Row>
@@ -181,5 +216,28 @@
     border-top: 1px solid #e3e2e5;
     margin-top: 8px;
     padding-top: 5px;
+  }
+  .rig-list-wrapper{padding: 10px 0}
+  .rig-list-wrapper li{
+    line-height: 40px;
+  }
+  .rig-list-wrapper li:nth-child(n+2){border-top: 1px solid #f4f4f4;}
+  .meeting-go-buy{
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+  }
+  .rig-list-wrapper li a:hover{
+    color: #118fff!important;
+  }
+  .rig-title h3:before{
+    content: '';
+    display: block;
+    width: 3px;
+    height: 14px;
+    background: #2589ff;
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: -2px;
   }
 </style>

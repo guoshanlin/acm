@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrapper b wrapper-box">
     <Affix :offset-top="10" style="padding:5px 0px;">
       <Row type="flex" :gutter=5>
         <!--<列表导栏>-->
@@ -625,3 +625,9 @@
     }
   }
 </script>
+
+<style scoped>
+  .wrapper{
+    margin: 10px;
+  }
+</style>

@@ -5,24 +5,24 @@
       <span class="tips b1 c">进行中</span>
     </div>
     <div class="info-wrapper flex c2">
-      <h3 class="fz18">{{row.name}} <a class="fz15" @click="clickItem"> 查看详情</a></h3>
-      <div class="fbox fz15">
+      <h3 class="fz13">{{row.name}}&nbsp;&nbsp;<a class="fz14" @click="clickItem"> 查看详情</a></h3>
+      <div class="fbox">
         <div class="flex">
-          <div class="fz15">状态：<span class="b2 c3 meeting-version">{{getChecked(row.checked)}}</span> <Button v-if="row.checked == 0" type="primary" @click="exmine">{{button}}</Button></div>
+          <div class="">状态：<span class="b2 c3 meeting-version">{{getChecked(row.checked)}}</span> <Button v-if="row.checked == 0" type="primary" @click="exmine">{{button}}</Button></div>
         </div>
       </div>
-      <div class="fbox fz15">
+      <div class="fbox">
         <div class="flex">
-          <div>报名截止时间：{{row.applyBeginTime}} ~ {{row.applyEndTime}}</div>
+          <div>报名截止时间：{{new Date(row.applyBeginTime.time).format("yyyy-MM-dd hh:mm:ss")}} ~ {{new Date(row.applyEndTime.time).format("yyyy-MM-dd hh:mm:ss")}}</div>
         </div>
         <div class="flex">
           <Icon type="person"></Icon>
           发布者：{{row.name}}
         </div>
       </div>
-      <div class="fbox fz15">
+      <div class="fbox">
         <div class="flex">
-          <div>活动截止时间：{{row.beginTime}} ~ {{row.endTime}}</div>
+          <div>活动截止时间：{{new Date(row.beginTime.time).format("yyyy-MM-dd hh:mm:ss")}} ~ {{new Date(row.endTime.time).format("yyyy-MM-dd hh:mm:ss")}}</div>
         </div>
         <div class="flex">
           <Icon type="ios-location"></Icon>
@@ -56,7 +56,7 @@
   }
 </script>
 
-<style>
+<style scoped>
 /*  .manage-btn {
     position: absolute;
     top: 23px;
@@ -81,7 +81,7 @@
 
   .info-wrapper {
     padding: 10px 20px;
-    line-height: 26px;
+    line-height: 28px;
   }
 
   .meeting-version {

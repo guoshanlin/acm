@@ -48,6 +48,21 @@ export default new Router({
               component: (resolve) => require(['../view/withdrawal-details'], resolve)
             }
           ]
+        },
+        {
+          path: '/role',
+          name: '会员管理',
+          component: (resolve) => require(['../view/table/role'], resolve)
+        },
+        {
+          path: '/examine',
+          name: '审批管理',
+          component: (resolve) => require(['../view/examine'], resolve)
+        },
+        {
+          path: '/examineDetails',
+          name: '活动详情',
+          component: (resolve) => require(['../view/examine-details'], resolve)
         }
       ]
     },

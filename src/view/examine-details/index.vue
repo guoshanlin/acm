@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div  class="wrapper b wrapper-box">
     <div class="datails-item">
       <datails-item :row='data' :button="buttonName"  @exmine="exmine"></datails-item>
     </div>
@@ -137,5 +137,6 @@
 </script>
 
 <style>
+  .wrapper{margin: 10px}
  .datails-item{position: relative}
 </style>

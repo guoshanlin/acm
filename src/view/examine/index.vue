@@ -1,6 +1,14 @@
 <template>
-  <div>
-    <div>
+  <div class="wrapper b wrapper-box">
+    <div style="position: relative">
+      <Row type="flex" justify="end" class="search-wrapper">
+        <i-col>
+          <i-input class="width-letf" placeholder="请输入会议名称" v-model="keyWord"></i-input>
+        </i-col>
+        <i-col>
+          <Button type="primary"  class="m-r15 m-l5" icon="ios-search" @click="searchDriver">搜索</Button>
+        </i-col>
+      </Row>
       <Menu mode="horizontal" active-name="1" @on-select="menuSelect" class="menu-tab">
         <MenuItem name="1">待审核</MenuItem>
         <MenuItem name="2">已通过</MenuItem>
@@ -26,9 +34,6 @@
       <input-from v-if="inputForm.show" @changeOptions="getExmineVal" :options="inputForm.option" :value="inputForm.value" :modalDisabled="inputForm.modalDisabled"
                   :modalshow="inputForm.modalshow"/>
     </div>
-    <div>
-       <router-view></router-view>
-    </div>
   </div>
 </template>
 
@@ -40,6 +45,7 @@
     name: 'index',
     data () {
       return {
+        keyWord:'',
         buttonName: '审核',
         data: [],
         total: 0,
@@ -124,6 +130,9 @@
       menuSelect (name) {
         this.$Message.warning(name)
       },
+      searchDriver(){
+        this.$Message.warning('搜索')
+      },
       /**
        * 审核
        * @param row
@@ -172,7 +181,7 @@
        * @param row
        */
       itemDetails (row) {
-        this.routePush('/index/examineDetails', row.id)
+        this.routePush('/examineDetails', row.id)
       },
       /**
        * 加载活动
@@ -203,7 +212,13 @@
 </script>
 
 <style>
-.menu-tab{ height: 30px !important; line-height: 30px;}
+  .wrapper{margin: 10px}
+  .search-wrapper{
+    position: absolute;
+    top: 10px;
+    right: 0px;
+    z-index: 901;
+  }
 .list-wrapper{margin: 10px 0;}
 .list-item{
   position: relative;

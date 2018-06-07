@@ -6,30 +6,29 @@
     </div>
     <div class="info-datails flex c2">
       <h3 class="fz24">{{row.name}}</h3>
-      <div class="fbox fz16">
+      <div class="fbox fz14">
         <div class="flex">
           <Icon type="person"></Icon>
           发布者：{{row.name}}
         </div>
       </div>
-      <div class="fz16">状态：<span class="b2 c3 meeting-version">{{getChecked(row.checked)}}</span></div>
-      <div class="fbox fz16">
+      <div class="fz14">状态：<span class="b2 c3 meeting-version">{{getChecked(row.checked)}}</span></div>
+      <div class="fbox">
         <div class="flex">
-          <div>报名截止时间：{{row.applyBeginTime}} ~ {{row.applyEndTime}}</div>
+          <div>报名截止时间：{{new Date(row.applyBeginTime.time).format("yyyy-MM-dd hh:mm:ss")}} ~ {{new Date(row.applyEndTime.time).format("yyyy-MM-dd hh:mm:ss")}}</div>
         </div>
       </div>
-      <div class="fbox fz16">
+      <div class="fbox">
         <div class="flex">
-          <div>活动截止时间：{{row.beginTime}} ~ {{row.endTime}}</div>
+          <div>活动截止时间：{{new Date(row.beginTime.time).format("yyyy-MM-dd hh:mm:ss")}} ~ {{new Date(row.endTime.time).format("yyyy-MM-dd hh:mm:ss")}}</div>
         </div>
       </div>
-      <div class="fbox fz16">
+      <div class="fbox">
         <div class="flex">
-          <Icon type="ios-location"></Icon>
-          {{row.address}}
+          <Icon type="ios-location"></Icon> {{row.address}}
         </div>
       </div>
-      <div class="fbox fz16">
+      <div class="fbox">
         <div class="flex">
           <Button v-if="row.checked == 0" type="primary" @click="exmine">{{button}}</Button>
         </div>
