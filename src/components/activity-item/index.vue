@@ -6,9 +6,10 @@
     </div>
     <div class="info-wrapper flex c2">
       <h3 class="fz13">{{row.name}}&nbsp;&nbsp;<a class="fz14" @click="clickItem"> 查看详情</a></h3>
+      <Button class="manage-btn" v-if="row.checked == 0" type="primary" @click="exmine">{{button}}</Button>
       <div class="fbox">
         <div class="flex">
-          <div class="">状态：<span class="b2 c3 meeting-version">{{getChecked(row.checked)}}</span> <Button v-if="row.checked == 0" type="primary" @click="exmine">{{button}}</Button></div>
+          <div class="">状态：<span class="b2 c3 meeting-version">{{getChecked(row.checked)}}</span> </div>
         </div>
       </div>
       <div class="fbox">
@@ -83,6 +84,12 @@
     padding: 10px 20px;
     line-height: 28px;
   }
+
+.manage-btn{
+  position: absolute;
+  top: 23px;
+  right: 30px;
+}
 
   .meeting-version {
     padding: 2px 8px;
