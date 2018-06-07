@@ -34,7 +34,7 @@
           <div class="list-wrapper">
             <ul class="list">
               <li class="list-item fbox" v-for="item in [1,2,3,4,5,6,7,8]">
-                <Button class="manage-btn" type="primary">管理</Button>
+                <Button class="manage-btn" type="primary" @click="routePush('/base/overview')">管理</Button>
                 <div class="pic-wrapper">
                   <img width="100%" height="100%" v-lazy="loadImg">
                   <span class="tips b1 c">进行中</span>
@@ -51,13 +51,13 @@
                     <div class="flex"><Icon type="ios-location"></Icon> 北京市北京市东城区</div>
                   </div>
                   <div class="fbox tools-wrapper">
-                    <div class="flex"><a class="c2"><Icon type="ios-paper-outline c1"></Icon> 基本信息</a></div>
-                    <div class="flex"><a class="c2"><Icon type="ios-paper-outline c1"></Icon> 门票管理</a></div>
-                    <div class="flex"><a class="c2"><Icon type="ios-paper-outline c1"></Icon> 会议邀请</a></div>
-                    <div class="flex"><a class="c2"><Icon type="ios-paper-outline c1"></Icon> 人员管理</a></div>
-                    <div class="flex"><a class="c2"><Icon type="ios-paper-outline c1"></Icon> 订单管理</a></div>
-                    <div class="flex"><a class="c2"><Icon type="ios-paper-outline c1"></Icon> 微信墙</a></div>
-                    <div class="flex"><a class="c2"><Icon type="ios-paper-outline c1"></Icon> 参会统计</a></div>
+                    <div class="flex"><a class="c2"  @click="routePush('/base/info')"><Icon type="ios-paper-outline c1"></Icon> 基本信息</a></div>
+                    <div class="flex"><a class="c2"  @click="routePush('/base/entrylist')"><Icon type="ios-paper-outline c1"></Icon> 门票管理</a></div>
+                    <div class="flex"><a class="c2"  @click="routePush('/base/invitelist')"><Icon type="ios-paper-outline c1"></Icon> 会议邀请</a></div>
+                    <div class="flex"><a class="c2"  @click="routePush('/base/userlist')"><Icon type="ios-paper-outline c1"></Icon> 人员管理</a></div>
+                    <div class="flex"><a class="c2"  @click="routePush('/base/orderlist')"><Icon type="ios-paper-outline c1"></Icon> 订单管理</a></div>
+                    <div class="flex"><a class="c2"  @click="routePush('/base/walllist')"><Icon type="ios-paper-outline c1"></Icon> 微信墙</a></div>
+                    <div class="flex"><a class="c2"  @click="routePush('/base/joinStatistics')"><Icon type="ios-paper-outline c1"></Icon> 参会统计</a></div>
                     <div class="flex"><a class="c2"><Icon type="ios-paper-outline c1"></Icon> 复制会议</a></div>
                   </div>
                 </div>

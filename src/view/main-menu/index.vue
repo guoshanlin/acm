@@ -70,10 +70,6 @@
 </script>
 
 <style scoped>
-  .wrapper-content{
-    min-height: 100%;
-    background-color: #f5f5f5;
-  }
   .app-header{
     width: 100%;
     height: 50px;

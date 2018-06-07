@@ -63,6 +63,56 @@ export default new Router({
           path: '/examineDetails',
           name: '活动详情',
           component: (resolve) => require(['../view/examine-details'], resolve)
+        },
+        {
+          path: '/base',
+          component: (resolve) => require(['../view/base'], resolve),
+          children: [
+            {
+              path: 'overview',
+              component: (resolve) => require(['../view/overview'], resolve)
+            },
+            {
+              path: 'info',
+              component: (resolve) => require(['../view/info'], resolve)
+            },
+            {
+              path: 'entrylist',
+              component: (resolve) => require(['../view/entrylist'], resolve)
+            },
+            {
+              path: 'invitelist',
+              component: (resolve) => require(['../view/invitelist'], resolve)
+            },
+            {
+              path: 'sign',
+              component: (resolve) => require(['../view/sign'], resolve)
+            },
+            {
+              path: 'walllist',
+              component: (resolve) => require(['../view/walllist'], resolve)
+            },
+            {
+              path: 'userlist',
+              component: (resolve) => require(['../view/userlist'], resolve)
+            },
+            {
+              path: 'orderlist',
+              component: (resolve) => require(['../view/orderlist'], resolve)
+            },
+            {
+              path: 'joinStatistics',
+              component: (resolve) => require(['../view/join-statistics'], resolve)
+            },
+            {
+              path: 'interactivityStatistics',
+              component: (resolve) => require(['../view/interactivity-statistics'], resolve)
+            },
+            {
+              path: 'flowedStatistics',
+              component: (resolve) => require(['../view/flowed-statistics'], resolve)
+            }
+          ]
         }
       ]
     },
