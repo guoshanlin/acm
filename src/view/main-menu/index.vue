@@ -3,7 +3,7 @@
   <div class="wrapper-content">
     <div class="app-header b c3">
       <Row type="flex" justify="end">
-        <i-col class="header-col"><a class="c2" @click="routePush('/index')">返回首页</a></i-col>
+        <i-col class="header-col"><a class="c3" @click="routePush('/index')">返回首页</a></i-col>
         <i-col class="header-col">店铺认证</i-col>
         <i-col class="header-col">套餐升级</i-col>
         <i-col class="header-col">
