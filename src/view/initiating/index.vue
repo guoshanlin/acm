@@ -1,5 +1,5 @@
 <template>
-  <div class="initiating fz16">
+  <div class="initiating wrapper-box b">
      <div class="initiating-form-item">
         <h3 class="t-left">基本信息</h3>
          <div>
@@ -95,7 +95,7 @@
                    <Row type="flex" class="code-row-bg">
                      <i-col :span="16">
                         <div class="container-img">
-                            <img height="300px" width="100%" :src="fromVal.posterUrl">
+                            <img height="300px" width="100%"  v-lazy="fromVal.posterUrl">
                         </div>
                      </i-col>
                      <i-col :span="8">
@@ -246,7 +246,6 @@
             }
           }
       }
-      const imgUrl = require('../../assets/login_2.jpg')
       return {
         fromVal: {
           type: 'exhibition',
@@ -256,7 +255,7 @@
             city: '深圳市',
             area: ''
           },
-          posterUrl: imgUrl,
+          posterUrl: '',
           number: 0,
           applyTime: [],
           time: [],
@@ -405,7 +404,8 @@
           applyEndTime: this.formatterTime(this.fromVal.applyTime[1]), // 活动开始时间
           beginTime: this.formatterTime(this.fromVal.time[0]), // 活动开始时间
           endTime: this.formatterTime(this.fromVal.time[1]), // 活动结束时间
-          checked: 0 // 审核状态
+          checked: 0, // 审核状态
+          principal: ''
         }
         if (this.verification(_params, this.msgTip)) {
             this.requestAjax('post', 'activitys', _params).then((data) => {
@@ -444,11 +444,13 @@
 </script>
 
 <style>
-  .initiating{padding: 30px 15%;background-color: #b1e8d2;}
-  .initiating .initiating-form-item{padding:0 5px; line-height: 30px;background-color: #fff; border-radius: 5px; margin-bottom: 20px;}
+/*  .initiating{padding: 30px 15%;background-color: #b1e8d2;}*/
+ /* .initiating{padding:10px;}*/
+  .initiating .initiating-form-item{line-height: 30px; margin-bottom: 20px}
+  .initiating .initiating-form-item>div{ border: 1px solid #e3e2e5; padding: 10px; border-radius: 5px}
   .initiating div{line-height: 30px}
-  .form-title{ width:150px; }
-  .form-fill{ width: calc(100% - 150px);}
+  .form-title{ width:100px; }
+  .form-fill{ width: calc(100% - 100px);}
   .form-sub{margin: 10px;}
   .form-sub button{ margin: 0 10px;}
   .form-group{margin: 5px 0px;}

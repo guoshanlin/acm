@@ -3,9 +3,10 @@
   <div class="wrapper-content">
     <div class="app-header b c3">
       <Row type="flex" justify="end">
-        <Col class="header-col">店铺认证</Col>
-        <Col class="header-col">套餐升级</Col>
-        <Col class="header-col">
+        <i-col class="header-col"><a class="c2" @click="routePush('/index')">返回首页</a></i-col>
+        <i-col class="header-col">店铺认证</i-col>
+        <i-col class="header-col">套餐升级</i-col>
+        <i-col class="header-col">
         <Dropdown>
           <a href="javascript:void(0)" class="c3">
             我的展会
@@ -17,12 +18,12 @@
             <DropdownItem divided>退出</DropdownItem>
           </DropdownMenu>
         </Dropdown>
-        </Col>
+        </i-col>
       </Row>
     </div>
     <div class="cloud-left-menu">
 
-      <div class="user-pic-wrapper posct">
+      <div class="user-pic-wrapper posct" @click="routePush('/index')">
         <img src="https://image-c.weimobwmc.com/sass-admin/ea93f479be764d85a94b74a99b92006c.png">
       </div>
 

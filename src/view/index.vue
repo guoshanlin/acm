@@ -4,12 +4,12 @@
     <top-header></top-header>
     <div class="index-tab">
       <Row type="flex" justify="center">
-        <i-col><h3 @click="routePush('/index/home')"><a>首页</a></h3></i-col>
-        <i-col><h3 @click="routePush('/index/home')"><a>行业</a></h3></i-col>
-        <i-col><h3 @click="routePush('/index/home')"><a>生活</a></h3></i-col>
-        <i-col><h3 @click="routePush('/index/home')"><a>亲子</a></h3></i-col>
-        <i-col><h3 @click="routePush('/index/home')"><a>学习</a></h3></i-col>
-        <i-col><h3 @click="routePush('/index/home')"><a>展会</a></h3></i-col>
+        <i-col><h3 @click="routePush('/index')"><a>首页</a></h3></i-col>
+        <i-col><h3 @click="routePush('/index')"><a>行业</a></h3></i-col>
+        <i-col><h3 @click="routePush('/index')"><a>生活</a></h3></i-col>
+        <i-col><h3 @click="routePush('/index')"><a>亲子</a></h3></i-col>
+        <i-col><h3 @click="routePush('/index')"><a>学习</a></h3></i-col>
+        <i-col><h3 @click="routePush('/index')"><a>展会</a></h3></i-col>
       </Row>
     </div>
     <div class="layout-content min-height clearFix m-0">

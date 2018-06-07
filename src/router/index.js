@@ -21,7 +21,14 @@ export default new Router({
       children: [
         {
           path: '/meeting',
-          component: (resolve) => require(['../view/meeting'], resolve)
+          component: (resolve) => require(['../view/meeting'], resolve),
+          children: [
+            {
+              path: '/meeting/initiating',
+              name: '发起活动',
+              component: (resolve) => require(['../view/initiating/index'], resolve)
+            }
+          ]
         },
         {
           path: '/marketing',
@@ -122,7 +129,7 @@ export default new Router({
       component: (resolve) => require(['../view/index'], resolve),
         children: [
           {
-            path: '/index/home',
+            path: '/index',
             name: '首页',
             component: (resolve) => require(['../view/home/index'], resolve)
           },

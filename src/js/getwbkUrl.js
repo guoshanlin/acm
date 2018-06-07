@@ -7,9 +7,9 @@ export default {
      */
     const requestUrl = {
       // 登录
-      login: {url: 'users/login', pre: preuUrl},
+      login: {url: 'members/login', pre: preuUrl},
       // 退出登录
-      logout: {url: 'users/logout', pre: preuUrl},
+      logout: {url: 'members/logout', pre: preuUrl},
       // get查询用户 post添加或修改用户用信息
       members: {url: 'members', pre: preuUrl},
       // 删除用户

@@ -22,7 +22,7 @@
           <div v-if="hasUser" class="lc-block toggled" id="l-login">
             <Form ref="formInline" :model="formInline" :rules="ruleInline" inline>
               <FormItem prop="user">
-                <i-input type="text" v-model="formInline.user" placeholder="请输入账号 手机/邮箱">
+                <i-input type="text" v-model="formInline.user" placeholder="请输入账号手机">
                   <Icon type="ios-person-outline" slot="prepend"></Icon>
                 </i-input>
               </FormItem>
@@ -75,7 +75,7 @@
                  <div v-show="loginFail" id="registerMsg" class="in-line"><Icon type="sad-outline"></Icon><span>注册失败</span></div>
                </FormItem>
                <FormItem class="t-center">
-                 <Button type="primary" @click="handleSubmit('formInline')">注册</Button>
+                 <Button type="primary" @click="handleSubmit('formRegister')">注册</Button>
                </FormItem>
                <FormItem>
                  <div class="t-right"><a @click="hasUser=!hasUser">{{hasUser? '免费注册' :'已有账号登录'}}</a></div>
@@ -102,6 +102,15 @@
           callback(new Error('请输入正确的手机号'))
         } else {
             callback()
+        }
+      }
+      const checkUserPhone = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入用户手机号'))
+        } else if (!/^1\d{10}$/.test(value)) {
+          callback(new Error('请输入正确的手机号'))
+        } else {
+          callback()
         }
       }
       const validatePass = (rule, value, callback) => {
@@ -141,11 +150,11 @@
           passwordCheck: '',
           checkbox: []
         },
-        hasUser: false,
+        hasUser: true,
         isShowModal: true,
         ruleInline: {
           user: [
-            { required: true, message: '请输入用户名', trigger: 'blur' }
+            { required: true, validator: checkUserPhone, trigger: 'blur' }
           ],
           password: [
             { required: true, message: '请输入密码', trigger: 'blur' }
@@ -187,11 +196,14 @@
       handleSubmit (name) {
         this.$refs[name].validate((valid) => {
           if (valid) {
-            this.login()
+            if (name === 'formRegister') {
+              this.register()
+            } else {
+              this.login()
+            }
           }
         })
       },
-
       /**
        *
        * 登录
@@ -199,45 +211,58 @@
       login () {
         const _type = 'POST'
         const _params = {
-          userName: this.formInline.user,
+          phone: this.formInline.user,
           passWord: this.formInline.password
         }
         const _url = 'login'
-        this.requestAjax(_type, _url, _params, (res) => {
-          this.loginThen(res)
+        this.requestAjax(_type, _url, _params).then((data) => {
+          if (data.success) {
+            this.loginFail = false
+            this.setUserDate(data.data.user)
+            setUserInfo(data.data.user)
+            this.$emit('onCancel')
+          } else {
+            this.loginFail = true
+          }
         })
       },
-
       /**
-       * 登录后的处理方法
-       * @param res
+       * 隐藏modal
        */
-      loginThen (res) {
-        const _data = res.data
-        if (_data.success) {
-          this.loginFail = false
-          this.setUserDate(_data.data.user)
-          setUserInfo(_data.data.user)
-          //   this.$Message.success('登录成功')
-          this.$router.push('/index/role')
-        } else if (!_data.message) {
-          this.loginFail = true
-          this.$Message.error('登录失败')
-        }
-      },
       cancel () {
         this.$emit('onCancel')
+      },
+      register () {
+        const _type = 'POST'
+        const _params = {
+          phone: this.formRegister.phone,
+          passWord: this.formRegister.password,
+          email: this.formRegister.email
+        }
+        const _url = 'members'
+        this.requestAjax(_type, _url, _params).then((data) => {
+          if (data.success) {
+            this.loginFail = false
+            this.$Message.success('注册成功')
+            this.hasUser = true
+            this.formInline.user = _params.phone
+            this.formInline.password = _params.password
+            this.$refs.formRegister.resetFields()
+          } else {
+            this.loginFail = true
+          }
+        })
       }
     },
     mounted () {
       this.$nextTick(() => {
-        document.onkeydown = (event) => {
+/*        document.onkeydown = (event) => {
           var e = event || window.event
           if (e && e.keyCode === 13) {
             this.handleSubmit('formInline')
             e.preventDefault()
           }
-        }
+        }*/
       })
     }
   }

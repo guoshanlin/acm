@@ -1,16 +1,20 @@
 <template>
-  <div style="height: 200px;background-color: #92ccb3">
-    这是home首页
+  <div>
+     <i-swiper></i-swiper>
   </div>
 </template>
 
 <script>
+  import iSwiper from 'components/swiper/index.vue'
   export default {
     name: 'index',
     data () {
       return {
 
       }
+    },
+    components: {
+      iSwiper
     }
   }
 </script>

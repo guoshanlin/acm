@@ -1,14 +1,14 @@
 <template>
   <div class="wrapper">
     <Row>
-      <Col span="18">
-        <div class=" b wrapper-box">
+      <i-col span="18">
+        <div class=" b wrapper-box" v-if="!initiating">
           <Affix :offset-top="10" style="padding:5px 0px;">
             <Row type="flex" :gutter=5>
               <i-col span="12">
                 <Row type="flex" justify="start">
                   <i-col>
-                    <Button type="primary" @click="addMeeting">创建会议</Button>
+                    <Button type="primary" @click="addMeeting()">创建会议</Button>
                   </i-col>
                 </Row>
               </i-col>
@@ -75,8 +75,11 @@
             </div>
           </div>
         </div>
-      </Col>
-      <Col span="6">
+        <div class="initiating" v-if="initiating">
+          <router-view></router-view>
+        </div>
+      </i-col>
+      <i-col span="6">
         <div class=" b wrapper-box m-l10">
           <div class="clear rig-title">
             <h3 class="c2">会务</h3>
@@ -115,15 +118,16 @@
             <li><a class="c2">如何查看报名的具体人员情况？</a></li>
           </ul>
         </div>
-      </Col>
+      </i-col>
     </Row>
   </div>
 </template>
 
 <script>
   export default {
-    data() {
+    data () {
       return {
+        initiating: false,
         keyWord: '',
         total: 0,
         parms: {
@@ -134,20 +138,34 @@
         loadImg: "https://static.veer.com/veer/static/resources/FourPack/2018-06-04/9dc68eb66cfc44ceb921a8c8c2cc8c0a.jpg"
       }
     },
-    created() {
+    created () {
+      if (this.$route.path === '/meeting') {
+        this.initiating = false
+      } else {
+        this.initiating = true
+      }
+      console.log(this.$route.path)
       setTimeout(() => {
 
       }, 20)
     },
+    watch: {
+      '$route' (to, from) {
+        if (to.path === '/meeting') {
+          this.initiating = false
+        }
+      }
+    },
     methods: {
-      searchDriver(){
+      searchDriver (){
         this.$Message.warning('搜索')
       },
-      addMeeting(){
-        this.$Message.warning('创建会议')
-      },
-      menuSelect(name){
+      menuSelect (name) {
         this.$Message.warning(name)
+      },
+      addMeeting () {
+        this.initiating = true
+        this.routePush('/meeting/initiating')
       },
       /**
        *跳页
@@ -164,7 +182,7 @@
       changeSize (v) {
         this.parms.limit = v
         this.$Message.warning(v)
-      },
+      }
     }
   }
 </script>

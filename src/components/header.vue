@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Menu mode="horizontal" class="headPrimary" active-name="1" theme="light">
+    <Menu mode="horizontal" class="headPrimary meeting-menu" active-name="1" theme="light">
       <div class="clearFix">
         <!--<列表导栏>-->
         <div class="float-l">
@@ -12,7 +12,7 @@
            <div>
              <Row type="flex" justify="center" class="code-row-bg">
                <i-col><div class="header-nav"><a @click="loginShow = true">注册/登录</a></div></i-col>
-               <i-col><div class="header-nav"><a @click="routePush('/index/role')">活动管理</a></div></i-col>
+               <i-col><div class="header-nav"><a @click="routePush('/meeting')">主办方管理中心</a></div></i-col>
                <i-col><div class="header-nav"><a>网站地图</a></div></i-col>
                <i-col><div class="header-nav"><a>联系我们</a></div></i-col>
                <i-col><div class="header-nav"><a>帮助中心</a></div></i-col>
@@ -96,7 +96,7 @@
 </script>
 
 <style>
-  #app .ivu-menu-horizontal{height: 130px;}
+  .meeting-menu {height: 130px;}
   /*.ivu-menu.ivu-menu-horizontal .ivu-row-flex{height:130px;}*/
   .headPrimary {min-width: 992px;background: #b1e8d2}
    #login{display: inline-block; height: 60px; width:280px;background:url("../assets/logo_core.png") no-repeat; background-size: 90% 90%;margin-top: 35px; margin-left: 25px;}
