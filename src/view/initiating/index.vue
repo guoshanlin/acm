@@ -222,6 +222,7 @@
   import iUeditor from 'components/modal/ueditor.vue'
   import iForm from 'components/registration-form/index.vue'
   import iSpecies from 'components/ticket-species/index.vue'
+  import {mapGetters} from 'vuex'
 
   import locationData from 'js/address/location'
   export default {
@@ -363,6 +364,11 @@
        }
       }
     },
+    computed: {
+      ...mapGetters([
+        'userData'
+      ])
+    },
     components: {
       iUeditor,
       iForm,
@@ -391,6 +397,7 @@
       release () {
         const ticket = this.$refs.species.getTicketData()
         const _params = {
+          type: '活动',
           name: this.fromVal.title, // 活动名称
           demand: '', // 活动要求
           content: this.fromVal.detailedContent, // 活动内容
@@ -405,7 +412,8 @@
           beginTime: this.formatterTime(this.fromVal.time[0]), // 活动开始时间
           endTime: this.formatterTime(this.fromVal.time[1]), // 活动结束时间
           checked: 0, // 审核状态
-          principal: ''
+          principal: '',
+          memberId: this.userData.id
         }
         if (this.verification(_params, this.msgTip)) {
             this.requestAjax('post', 'activitys', _params).then((data) => {
