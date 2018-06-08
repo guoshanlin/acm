@@ -50,6 +50,7 @@
         data: [],
         total: 0,
         parms: {
+          sort: 'createTime',
           checked: 0,
           limit: 20,
           offset: 1
@@ -170,7 +171,6 @@
           if (data.success) {
             this.$Message.success(msg + '用户成功')
             this.inputForm.modalshow = false
-            this.submitAjax()
           } else if (!data.message) {
             this.$Message.success(msg + '用户失败')
           }

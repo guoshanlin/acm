@@ -13,7 +13,9 @@ export default {
       let newParams = {}
       Object.assign(newParams, params)
       // 添加rr时间戳参数值清除缓存用
-      if (type != 'post') newParams.rr = parseInt(new Date().getTime())
+      if (type != 'post' && type != 'POST') {
+        newParams.rr = parseInt(new Date().getTime())
+      }
       // 分页计算开始
       if (newParams.offset && newParams.offset > 0) {
         newParams.offset = parseInt(newParams.offset - 1) * newParams.limit
@@ -174,7 +176,6 @@ export default {
         if (time === undefined || time === null || time === '') {
           return ''
         }
-        console.log(time)
         return Date.formatByTimes(time.time, 'yyyy-MM-dd hh:mm:ss')
       }
     /**

@@ -15,6 +15,11 @@
       <div class="fz14">状态：<span class="b2 c3 meeting-version">{{getChecked(row.checked)}}</span></div>
       <div class="fbox">
         <div class="flex">
+          <div>发布时间：{{formatterObjTime(row.createTime)}}</div>
+        </div>
+      </div>
+      <div class="fbox">
+        <div class="flex">
           <div>报名截止时间：{{formatterObjTime(row.applyBeginTime)}} ~ {{formatterObjTime(row.applyEndTime)}}</div>
         </div>
       </div>
@@ -42,7 +47,7 @@
     name: 'index',
     data () {
       return {
-        loadImg: 'https://static.veer.com/veer/static/resources/FourPack/2018-06-04/9dc68eb66cfc44ceb921a8c8c2cc8c0a.jpg'
+        loadImg:  process.env.NODE_ENV === 'production' ? this.row.posterUrl : process.env.API + this.row.posterUrl
       }
     },
     props: {
@@ -85,7 +90,8 @@
 
   .info-datails {
     padding: 10px 30px;
-    line-height: 40px;
+    line-height: 34px;
+    height: 280px;
   }
 
   .meeting-version {

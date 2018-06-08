@@ -11,6 +11,9 @@
         <div class="flex">
           <div class="">状态：<span class="b2 c3 meeting-version">{{getChecked(row.checked)}}</span> </div>
         </div>
+        <div class="flex">
+          <div class="">发布时间：{{formatterObjTime(row.createTime)}}</div>
+        </div>
       </div>
       <div class="fbox">
         <div class="flex">
@@ -39,7 +42,7 @@
     name: 'index',
     data () {
       return {
-        loadImg: 'https://static.veer.com/veer/static/resources/FourPack/2018-06-04/9dc68eb66cfc44ceb921a8c8c2cc8c0a.jpg'
+        loadImg: process.env.NODE_ENV === 'production' ? this.row.posterUrl : process.env.API + this.row.posterUrl
       }
     },
     props: {

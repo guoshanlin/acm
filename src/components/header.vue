@@ -96,7 +96,7 @@
 </script>
 
 <style>
-  .meeting-menu {height: 130px;}
+  .meeting-menu {height: 130px !important;background: #b1e8d2!important;}
   /*.ivu-menu.ivu-menu-horizontal .ivu-row-flex{height:130px;}*/
   .headPrimary {min-width: 992px;background: #b1e8d2}
    #login{display: inline-block; height: 60px; width:280px;background:url("../assets/logo_core.png") no-repeat; background-size: 90% 90%;margin-top: 35px; margin-left: 25px;}

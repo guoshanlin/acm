@@ -24,7 +24,7 @@
     <div class="cloud-left-menu">
 
       <div class="user-pic-wrapper posct" @click="routePush('/index')">
-        <img src="/static/img/logo_core.dea3de2.png">
+        <img src="../../assets/logo_core.png">
       </div>
 
       <Menu theme="dark" :active-name="activeNenu" width="160px"  class="menu-wrapper" @on-select="changeMenu">

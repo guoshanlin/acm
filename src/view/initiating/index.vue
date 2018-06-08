@@ -80,8 +80,8 @@
                <div><span class="red">*</span>活动人数:</div>
              </div>
              <div class="float-r form-fill">
-               <div class="t-left">
-                 <InputNumber class="full-width" v-model="fromVal.number" placeholder="最多允许的人数,0不限制活动名额" :min="0"></InputNumber>
+               <div class="t-left" title="最多允许的人数,0不限制参与人数">
+                 <InputNumber class="full-width" v-model="fromVal.number" placeholder="最多允许的人数,0不限制参与人数" :min="0"></InputNumber>
                </div>
              </div>
              <div class="clearFix"></div>
@@ -94,8 +94,7 @@
                <div class="t-center">
                    <Row type="flex" class="code-row-bg">
                      <i-col :span="16">
-                        <div class="container-img" v-html="imgHtml">
-                        </div>
+                        <div class="container-img" v-html="imgHtml"></div>
                      </i-col>
                      <i-col :span="8">
                         <div class="upload">
@@ -452,7 +451,7 @@
         let path = this.testImg(file)
         if (!path) return false
 
-        this.imgHtml = '<img src=" ' + path + '">'
+        this.imgHtml = '<img class="img" src=" ' + path + '">'
         this.dataFile = file
         return false
         this.requestFile('POST', 'upload', formData).then((data) => {
@@ -466,13 +465,11 @@
 </script>
 
 <style>
-/*  .initiating{padding: 30px 15%;background-color: #b1e8d2;}*/
- /* .initiating{padding:10px;}*/
   .initiating .initiating-form-item{line-height: 30px; margin-bottom: 20px}
   .initiating .initiating-form-item>div{ border: 1px solid #e3e2e5; padding: 10px; border-radius: 5px}
   .initiating div{line-height: 30px}
-  .form-title{ width:100px; }
-  .form-fill{ width: calc(100% - 100px);}
+  .form-title{ width:100px !important; }
+  .form-fill{ width: calc(100% - 100px) !important;}
   .form-sub{margin: 10px;}
   .form-sub button{ margin: 0 10px;}
   .form-group{margin: 5px 0px;}
@@ -487,6 +484,6 @@
   .initiating .ivu-select-multiple .ivu-select-item-selected{background-color: rgba(153, 199, 238, 0.36)}
   .initiating .ivu-select-multiple .ivu-select-item-selected:after{display: none;}
   .red{color: #FF0000}
-  .container-img { border: 1px solid #e3e2e5; background-color: #eeeeee; width: 600px;padding: 10px;}
-  .container-img img{width: 580px;}
+  .container-img { border: 1px solid #e3e2e5; background-color: #eeeeee; width: 100%;padding: 10px;}
+  .initiating img{width:100% !important;}
 </style>

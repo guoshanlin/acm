@@ -85,8 +85,8 @@
                   })])
             }
           },*/
-          {
-           /* width: 150,*/
+        /*  {
+           /!* width: 150,*!/
             title: '类别',
             render: (h, params) => {
               return h('Select', {
@@ -107,9 +107,9 @@
                   }, '普通')
                 ])
             }
-          },
+          },*/
           {
-            width: 180,
+            width: 220,
             title: '普通票价',
             render: (h, params) => {
               return h('div', [
@@ -119,9 +119,10 @@
                   props: {value: +params.row.price, placeholder: params.row.placeholder, disabled: params.row.type === 'free' ? true : false},
                   on: {
                     'on-change': (value) => {
-                      this.data[params.index].price = value
+                      this.remData[params.index].price = value
                     },
                     'on-blur': () => {
+                      this.data[params.index].price = this.remData[params.index].price
                       //this.onChange(this.remData[params.index].price, 'price', params.index)
                     }
                   }
@@ -129,7 +130,6 @@
             }
           },
           {
-            width: 180,
             title: '会员票价',
             render: (h, params) => {
               return h('div', [
@@ -139,9 +139,10 @@
                   props: {value: +params.row.vPrice, placeholder: params.row.placeholder, disabled: params.row.type === 'free' ? true : false},
                   on: {
                     'on-change': (value) => {
-                      this.data[params.index].vPrice = value
+                      this.remData[params.index].vPrice = value
                     },
                     'on-blur': () => {
+                      this.data[params.index].vPrice = this.remData[params.index].vPrice
                      // this.onChange(this.remData[params.index].vPrice, 'vPrice', params.index)
                     }
                   }
@@ -149,7 +150,7 @@
             }
           },
           {
-            width: 150,
+            width: 220,
             title: '限额',
             render: (h, params) => {
               return h('div', [
@@ -162,7 +163,8 @@
                       this.remData[params.index].quota = value
                     },
                     'on-blur': (event) => {
-                      this.onChange(this.remData[params.index].quota, 'quota', params.index)
+                      this.data[params.index].quota = this.remData[params.index].quota
+                  /*    this.onChange(this.remData[params.index].quota, 'quota', params.index)*/
                     }
                   }
                 })])

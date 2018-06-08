@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api/':{
-        target:'http://192.168.1.100/acm/',
+        target:'http://192.168.1.130/acm/',
         //target:'http://192.168.1.248/acm/',
         changeOrigin:true,
         pathRewrite:{
@@ -59,7 +59,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: '/acm/',
 
     /**
      * Source Maps

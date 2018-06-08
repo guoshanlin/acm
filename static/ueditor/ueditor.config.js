@@ -22,7 +22,7 @@
     // var URL = window.UEDITOR_HOME_URL || getUEBasePath();
     console.log( getUEBasePath())
     console.log( window.UEDITOR_HOME_URL)
-  var URL = window.UEDITOR_HOME_URL || '/static/ueditor/';
+  var URL = window.UEDITOR_HOME_URL ||  process.env.API + 'static/ueditor/';
   console.log(URL)
 
   /**

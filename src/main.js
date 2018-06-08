@@ -9,7 +9,7 @@ import iView from 'iview'
 import 'iview/dist/styles/iview.css' // 使用 CSS
 import 'js/common'
 import axios from 'axios'
-// import Promise from 'promise-polyfill'
+import 'babel-polyfill'
 import Scrollbar from 'smooth-scrollbar'
 //  公用请求方法
 import publicUtils from 'js/publicUtils'
