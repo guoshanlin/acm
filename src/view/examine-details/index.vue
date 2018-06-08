@@ -3,6 +3,34 @@
     <div class="datails-item">
       <datails-item :row='data' :button="buttonName"  @exmine="exmine"></datails-item>
     </div>
+    <div class="datails-item m-t10">
+      <div class="fbox">
+         <div class="datails-flex-item t-right"><h3>活动标签:</h3></div>
+         <div class="flex t-left">
+           <Tag color="blue" v-for="item in label" :key="item">{{item}}</Tag>
+         </div>
+      </div>
+    </div>
+    <div class="datails-item m-t10">
+      <div class="fbox">
+        <div class="datails-flex-item t-right"><h3>详情摘要:</h3></div>
+        <div class="flex t-left">
+           <div>
+             <pre v-html = 'data.remark'></pre>
+           </div>
+        </div>
+      </div>
+    </div>
+    <div class="datails-item m-t10">
+      <div class="fbox">
+        <div class="datails-flex-item t-right"><h3>详细内容:</h3></div>
+        <div class="flex t-left">
+          <div>
+            <pre v-html = 'data.content'></pre>
+          </div>
+        </div>
+      </div>
+    </div>
     <!--新增表单承载标签-->
     <input-from v-if="inputForm.show" @changeOptions="getExmineVal" :options="inputForm.option" :value="inputForm.value" :modalDisabled="inputForm.modalDisabled" :modalshow="inputForm.modalshow"/>
   </div>
@@ -17,6 +45,7 @@
     data () {
       return {
         data: {},
+        label: [],
         buttonName: '审核',
         inputForm: {
           show: false,
@@ -126,6 +155,7 @@
         this.requestAjax(_type, _url, _params).then((data) => {
           if (!data.message) {
             this.data = data.data.rows[0]
+            this.label = this.data.label.split(',')
           }
         })
       }
@@ -140,5 +170,6 @@
 
 <style>
   .wrapper{margin: 10px}
- .datails-item{position: relative}
+  .datails-flex-item { display: inline-block; width: 100px; margin-right: 10px}
+  .datails-item{position: relative; border: 1px solid #e3e2e5; padding: 10px; border-radius: 5px; line-height: 26px;}
 </style>
