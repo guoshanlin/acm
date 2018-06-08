@@ -20,12 +20,12 @@
       </div>
       <div class="fbox">
         <div class="flex">
-          <div>报名截止时间：{{formatterObjTime(row.applyBeginTime)}} ~ {{formatterObjTime(row.applyEndTime)}}</div>
+          <div>报名时间：{{formatterObjTime(row.applyBeginTime)}} ~ {{formatterObjTime(row.applyEndTime)}}</div>
         </div>
       </div>
       <div class="fbox">
         <div class="flex">
-          <div>活动截止时间：{{formatterObjTime(row.beginTime)}} ~ {{formatterObjTime(row.endTime)}}</div>
+          <div>活动时间：{{formatterObjTime(row.beginTime)}} ~ {{formatterObjTime(row.endTime)}}</div>
         </div>
       </div>
       <div class="fbox">
@@ -47,12 +47,17 @@
     name: 'index',
     data () {
       return {
-        loadImg:  process.env.NODE_ENV === 'production' ? this.row.posterUrl : process.env.API + this.row.posterUrl
+        loadImg: process.env.NODE_ENV === 'production' ? this.row.posterUrl : process.env.API + this.row.posterUrl
       }
     },
     props: {
       row: '',
       button: ''
+    },
+    watch: {
+      row (val) {
+        this.loadImg = process.env.NODE_ENV === 'production' ? val.posterUrl : process.env.API + val.posterUrl
+      }
     },
     methods: {
       clickItem () {

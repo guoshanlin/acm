@@ -165,7 +165,7 @@ export default {
         if (time === undefined || time === null || time === '') {
           return ''
         }
-        return Date.formatByTimes(time.getTime(), 'yyyy-MM-dd hh:mm:ss')
+        return Date.formatByTimes(time.getTime(), 'yyyy-MM-dd hh:mm')
       }
      /**
      * 转义时间戳
@@ -176,7 +176,26 @@ export default {
         if (time === undefined || time === null || time === '') {
           return ''
         }
-        return Date.formatByTimes(time.time, 'yyyy-MM-dd hh:mm:ss')
+        return Date.formatByTimes(time.time, 'yyyy-MM-dd hh:mm')
+      }
+    /**
+     * 比较时间大小
+     * @param bTime
+     * @param eTime
+     * @returns {*}
+     */
+     Vue.prototype.compareTime = function (bTime, eTime) {
+       if (bTime && bTime) {
+         let _bTime = bTime.replace(/-/g, '/')
+         let _eTime = eTime.replace(/-/g, '/')
+         if (new Date(_bTime).getTime() >= new Date(_eTime).getTime()) {
+           return true
+         } else {
+           return false
+         }
+       } else {
+         return false
+       }
       }
     /**
      * 验证图片格式大小

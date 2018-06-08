@@ -17,7 +17,7 @@
       </div>
       <div class="fbox">
         <div class="flex">
-          <div>报名截止时间：{{formatterObjTime(row.applyBeginTime)}} ~ {{formatterObjTime(row.applyEndTime)}}</div>
+          <div>报名时间：{{formatterObjTime(row.applyBeginTime)}} ~ {{formatterObjTime(row.applyEndTime)}}</div>
         </div>
         <div class="flex">
           <Icon type="person"></Icon>
@@ -26,7 +26,7 @@
       </div>
       <div class="fbox">
         <div class="flex">
-          <div>活动截止时间：{{formatterObjTime(row.beginTime)}} ~ {{formatterObjTime(row.endTime)}}</div>
+          <div>活动时间：{{formatterObjTime(row.beginTime)}} ~ {{formatterObjTime(row.endTime)}}</div>
         </div>
         <div class="flex">
           <Icon type="ios-location"></Icon>

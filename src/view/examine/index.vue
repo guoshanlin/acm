@@ -50,7 +50,7 @@
         data: [],
         total: 0,
         parms: {
-          sort: 'createTime',
+        /*  sort: 'createTime',*/
           checked: 0,
           limit: 20,
           offset: 1
@@ -136,7 +136,8 @@
         this.initItem()
       },
       searchDriver () {
-        this.$Message.warning('搜索')
+        this.parms.keyWord = this.keyWord
+        this.initItem()
       },
       /**
        * 审核

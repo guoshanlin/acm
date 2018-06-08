@@ -59,7 +59,18 @@
              </div>
              <div class="float-r form-fill">
                <div class="t-left">
-                 <DatePicker v-model="fromVal.time" class="full-width" type="datetimerange" format="yyyy-MM-dd HH:mm:ss" placeholder="请选择活动时间（活动开始时间 - 活动结束时间）"></DatePicker>
+                 <!--     applyBeginTime: '',
+              applyEndTime: '',
+              beginTime: '',
+              endTime: '',-->
+                 <Row>
+                   <i-col span="12">
+                     <DatePicker v-model="fromVal.beginTime" class="full-width" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="活动开始时间 "></DatePicker>
+                   </i-col>
+                   <i-col span="12">
+                     <DatePicker v-model="fromVal.endTime" class="full-width" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="活动结束时间"></DatePicker>
+                   </i-col>
+                 </Row>
                </div>
              </div>
              <div class="clearFix"></div>
@@ -70,7 +81,14 @@
              </div>
              <div class="float-r form-fill">
                <div class="t-left">
-                 <DatePicker v-model="fromVal.applyTime" class="full-width" type="datetimerange" format="yyyy-MM-dd HH:mm:ss" placeholder="请选择报名时间（报名开始时间 - 报名结束时间）"></DatePicker>
+                 <Row>
+                   <i-col span="12">
+                 <DatePicker v-model="fromVal.applyBeginTime" class="full-width" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="报名开始时间"></DatePicker>
+                   </i-col>
+                   <i-col span="12">
+                 <DatePicker v-model="fromVal.applyEndTime" class="full-width" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="报名结束时间"></DatePicker>
+                   </i-col>
+                 </Row>
                </div>
              </div>
              <div class="clearFix"></div>
@@ -208,7 +226,7 @@
      </div>
      <div class="form-sub">
          <Row type="flex" justify="center" class="code-row-bg">
-           <i-col><i-button type="primary" @click="release">发布</i-button></i-col>
+           <i-col><i-button type="primary" @click="release" :disabled="disabled">发布</i-button></i-col>
         <!--   <i-col><i-button>存草稿</i-button></i-col>-->
         <!--   <i-col><i-button>预览</i-button></i-col>-->
          </Row>
@@ -258,6 +276,10 @@
           },
           posterUrl: '',
           number: 0,
+          applyBeginTime: '',
+          applyEndTime: '',
+          beginTime: '',
+          endTime: '',
           applyTime: [],
           time: [],
           industry: '不限',
@@ -338,10 +360,10 @@
         radio: {
           industry: ['不限', 'IT互联网', '金融', '制造业', '医疗卫生', '文娱', '服务业', '教育', '交通运输', '地产', '能源', '农林渔牧', '其他'],
            classify: [
-              {title: '行业', radio: ['IT互联网', '金融', '制造业', '医疗卫生', '文娱', '服务业', '教育', '交通运输', '地产', '能源', '农林渔牧', '其他']},
-              {title: '生活', radio: ['文艺演出', '公益活动', '户外出游', '运动健身', '交友聚会', '休闲娱乐', '体育赛事', '手工制作', '拓展训练', '丽人时尚', '艺术摄影']},
-              {title: '亲子', radio: ['益智潮玩', '儿童摄影', '主题乐园', '父母提升', '才艺启蒙', '亲子DIY', '体格锻炼']},
-              {title: '学习', radio: ['学习分享', '培训考证', '知识讲座']}
+              {title: '行业', radio: ['IT互联网', '创业', '科技', '金融','游戏','文娱','电商','教育','营销','设计','地产','医疗','服务业']},
+              {title: '生活', radio: ['演出', '文艺', '手工', '公益','户外出游','运动健康','聚会交友','休闲娱乐','投资理财','时尚','心理','体育赛事']},
+              {title: '亲子', radio: ['儿童才艺', '益智潮玩', '儿童剧/展览','亲子旅游','早教/升学']},
+              {title: '学习', radio: ['课程', '读书', '职场','社团','讲座']}
             ]
         },
         uEditorOptions: {
@@ -364,7 +386,8 @@
           beginTime: {msg: '请选择活动开始时间', required: true},
           endTime: {msg: '请选择活动结束时间', required: true},
           remark: {msg: '活动摘要不能为空', required: true}
-       }
+       },
+        disabled: false
       }
     },
     computed: {
@@ -410,10 +433,10 @@
           nonMBPrice: ticket[0].type === ' free' ? '' : ticket[0].price, // 非会员价格
           address: this.fromVal.address.province + this.fromVal.address.city + this.fromVal.address.area, // 地址
           posterUrl: this.fromVal.posterUrl, // 海报url
-          applyBeginTime: this.formatterTime(this.fromVal.applyTime[0]), // 活动开始时间
-          applyEndTime: this.formatterTime(this.fromVal.applyTime[1]), // 活动开始时间
-          beginTime: this.formatterTime(this.fromVal.time[0]), // 活动开始时间
-          endTime: this.formatterTime(this.fromVal.time[1]), // 活动结束时间
+          applyBeginTime: this.fromVal.applyBeginTime, // 活动开始时间
+          applyEndTime: this.fromVal.applyEndTime, // 活动开始时间
+          beginTime: this.fromVal.beginTime, // 活动开始时间
+          endTime: this.fromVal.endTime, // 活动结束时间
           checked: 0, // 审核状态
           style: this.fromVal.classify,
           label: this.fromVal.tag.length > 0 ? this.fromVal.tag.join(',') : '',
@@ -430,10 +453,13 @@
            fileData.append('' + key, _params[key])
          }
           _params.file = fileData
+        this.disabled = true
         if (this.verification(_params, this.msgTip)) {
             this.requestFile('post', 'activitys', fileData).then((data) => {
               if (data.success) {
                 this.$Message.success('发布成功')
+                this.disabled = false
+                this.routePush('/meeting')
               } else {
                 this.$Message.success('发布失败')
               }

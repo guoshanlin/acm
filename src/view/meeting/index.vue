@@ -68,7 +68,7 @@
           <div class="clear rig-title m-b10">
             <h3 class="c2">会务官方公众号</h3>
           </div>
-          <img src="https://image-c.weimobwmc.com/sass-admin/c91ce187d5df48cf949ea997af2821cd.png" width="100%"/>
+          <img v-lazy="loadImg" width="100%"/>
         </div>
         <div class=" b wrapper-box m-l10 m-t10">
           <div class="clear rig-title">
@@ -111,7 +111,7 @@
           limit: 20,
           offset: 1
         },
-        loadImg: "https://static.veer.com/veer/static/resources/FourPack/2018-06-04/9dc68eb66cfc44ceb921a8c8c2cc8c0a.jpg"
+        loadImg: ''
       }
     },
     created () {
@@ -129,12 +129,14 @@
       '$route' (to, from) {
         if (to.path === '/meeting') {
           this.initiating = false
+          this.initItem()
         }
       }
     },
     methods: {
       searchDriver () {
-        this.$Message.warning('搜索')
+        this.parms.keyWord = this.keyWord
+        this.initItem()
       },
       menuSelect (name) {
         this.$Message.warning(name)
