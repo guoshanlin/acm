@@ -9,10 +9,10 @@
           <Button type="primary"  class="m-r15 m-l5" icon="ios-search" @click="searchDriver">搜索</Button>
         </i-col>
       </Row>
-      <Menu mode="horizontal" active-name="1" @on-select="menuSelect" class="menu-tab">
-        <MenuItem name="1">待审核</MenuItem>
-        <MenuItem name="2">已通过</MenuItem>
-        <MenuItem name="3">未通过</MenuItem>
+      <Menu mode="horizontal" active-name="0" @on-select="menuSelect" class="menu-tab">
+        <MenuItem name="0">待审核</MenuItem>
+        <MenuItem name="1">已通过</MenuItem>
+        <MenuItem name="2">未通过</MenuItem>
       </Menu>
       <div class="list-wrapper">
         <ul class="list">
@@ -45,11 +45,12 @@
     name: 'index',
     data () {
       return {
-        keyWord:'',
+        keyWord: '',
         buttonName: '审核',
         data: [],
         total: 0,
         parms: {
+          checked: 0,
           limit: 20,
           offset: 1
         },
@@ -67,22 +68,24 @@
                   id: 'checked',
                   type: 'radio',
                   titlespan: 5,
-                  colspan: 7,
+                  colspan: 19,
                   required: true
-                },
+                }
+              ],
+              [
                 {
-                  title: '是否强力推荐',
+                  title: '首页推广',
                   id: 'recommend',
                   type: 'radio',
                   titlespan: 5,
-                  colspan: 7,
+                  colspan: 19,
                   required: true
                 }
               ],
               [
                 {
                   title: '审批意见',
-                  id: 'remark',
+                  id: 'checkedRemark',
                   type: 'textarea',
                   titlespan: 5,
                   colspan: 19,
@@ -97,9 +100,9 @@
             }]
           },
           value: {
-            checked: 'true',
-            recommend: 'false',
-            remark: ''
+            checked: '1',
+            recommend: '0',
+            checkedRemark: ''
           }
         }
       }
@@ -128,9 +131,10 @@
        * @param name
        */
       menuSelect (name) {
-        this.$Message.warning(name)
+        this.parms.checked = name
+        this.initItem()
       },
-      searchDriver(){
+      searchDriver () {
         this.$Message.warning('搜索')
       },
       /**
@@ -166,7 +170,7 @@
           if (data.success) {
             this.$Message.success(msg + '用户成功')
             this.inputForm.modalshow = false
-            this.loadTable()
+            this.submitAjax()
           } else if (!data.message) {
             this.$Message.success(msg + '用户失败')
           }

@@ -174,7 +174,43 @@ export default {
         if (time === undefined || time === null || time === '') {
           return ''
         }
+        console.log(time)
         return Date.formatByTimes(time.time, 'yyyy-MM-dd hh:mm:ss')
+      }
+    /**
+     * 验证图片格式大小
+     * @param file
+     * @returns {*}
+     */
+    Vue.prototype.testImg = function (file) {
+        const maxSize = 1024 * 1000 * 2 // 2M
+  /*      const imgWith = 1080
+        const imgHeight = 640*/
+        let arr = file.name.split('.')
+        if (['bmp', 'jpg', 'jpeg', 'png', 'gif'].indexOf(arr[arr.length - 1]) === -1) {
+          this.$Message.error(file.name + '不是图片，不能导入')
+          return false
+        }
+        if (file.size > maxSize) {
+          this.$Message.error('图片大小不能超过2M')
+          return false
+        }
+        let path
+    /*    let img = new Image()*/
+        if (document.all) {
+          file.select()
+          path = document.selection.createRange().text
+        } else {
+          path = window.URL.createObjectURL(file) // FF 7.0以上
+        }
+     /*   img.src = path
+        console.log(img)
+        console.log(img.width, img.height)*/
+   /*     if (img.width !== imgWith || img.height !== imgHeight) {
+          this.$Message.error('图片规格必须为1080 * 640')
+          return false
+        }*/
+        return path
       }
   }
 }

@@ -19,7 +19,7 @@
            </div>-->
            <div class="form-group">
              <div class="float-l form-title">
-               <div>活动标题:</div>
+               <div><span class="red">*</span>活动标题:</div>
              </div>
              <div class="float-r form-fill">
                <div>
@@ -30,7 +30,7 @@
            </div>
            <div class="form-group">
              <div class="float-l form-title">
-               <div>活动地点:</div>
+               <div><span class="red">*</span>活动地点:</div>
              </div>
              <div class="float-r form-fill">
                <div>
@@ -55,7 +55,7 @@
            </div>
            <div class="form-group">
              <div class="float-l form-title">
-               <div>活动时间:</div>
+               <div><span class="red">*</span>活动时间:</div>
              </div>
              <div class="float-r form-fill">
                <div class="t-left">
@@ -66,7 +66,7 @@
            </div>
            <div class="form-group">
              <div class="float-l form-title">
-               <div>报名截止时间:</div>
+               <div><span class="red">*</span>报名截止时间:</div>
              </div>
              <div class="float-r form-fill">
                <div class="t-left">
@@ -77,7 +77,7 @@
            </div>
            <div class="form-group">
              <div class="float-l form-title">
-               <div>活动人数:</div>
+               <div><span class="red">*</span>活动人数:</div>
              </div>
              <div class="float-r form-fill">
                <div class="t-left">
@@ -94,8 +94,7 @@
                <div class="t-center">
                    <Row type="flex" class="code-row-bg">
                      <i-col :span="16">
-                        <div class="container-img">
-                            <img height="300px" width="100%"  v-lazy="fromVal.posterUrl">
+                        <div class="container-img" v-html="imgHtml">
                         </div>
                      </i-col>
                      <i-col :span="8">
@@ -117,7 +116,7 @@
              </div>
              <div class="clearFix"></div>
            </div>
-           <div class="form-group">
+<!--           <div class="form-group">
              <div class="float-l form-title">
                <div>所属行业:</div>
              </div>
@@ -129,7 +128,7 @@
                </div>
              </div>
              <div class="clearFix"></div>
-           </div>
+           </div>-->
            <div class="form-group">
              <div class="float-l form-title">
                <div>活动分类:</div>
@@ -165,7 +164,7 @@
            </div>
            <div class="form-group">
              <div class="float-l form-title">
-               <div>活动摘要:</div>
+               <div><span class="red">*</span>活动摘要:</div>
              </div>
              <div class="float-r form-fill">
                <div class="t-left">
@@ -176,7 +175,7 @@
            </div>
            <div class="form-group">
              <div class="float-l form-title">
-               <div>详细内容:</div>
+               <div><span class="red">*</span>详细内容:</div>
              </div>
              <div class="float-r form-fill">
                <div class="t-left">
@@ -185,17 +184,17 @@
              </div>
              <div class="clearFix"></div>
            </div>
-           <div class="form-group t-center save-button">
+  <!--         <div class="form-group t-center save-button">
              <Button type="success">保存信息</Button>
-           </div>
+           </div>-->
          </div>
      </div>
-     <div class="initiating-form-item registration-tip" v-if="!registrationForm" @click="registrationForm = true">
+<!--     <div class="initiating-form-item registration-tip" v-if="!registrationForm" @click="registrationForm = true">
         <h3 class="t-left">设置报名表单</h3>
        <div>
           如果您需要收集报名者的必要信息，可添加此项设置<Icon type="plus-circled"></Icon>
        </div>
-     </div>
+     </div>-->
     <div class="initiating-form-item" v-if="registrationForm">
       <h3 class="t-left">设置报名表单</h3>
       <div>
@@ -211,8 +210,8 @@
      <div class="form-sub">
          <Row type="flex" justify="center" class="code-row-bg">
            <i-col><i-button type="primary" @click="release">发布</i-button></i-col>
-           <i-col><i-button>存草稿</i-button></i-col>
-           <i-col><i-button>预览</i-button></i-col>
+        <!--   <i-col><i-button>存草稿</i-button></i-col>-->
+        <!--   <i-col><i-button>预览</i-button></i-col>-->
          </Row>
      </div>
   </div>
@@ -248,6 +247,8 @@
           }
       }
       return {
+    //    imgHtml: '<div style="height:300px; line-height: 300px" class="c3">图片格式为1080 * 640px，大小不超过2M</div>',
+        imgHtml: '<div style="height:300px; line-height: 300px" class="c3">大小不超过2M</div>',
         fromVal: {
           type: 'exhibition',
           title: '',
@@ -338,6 +339,7 @@
         radio: {
           industry: ['不限', 'IT互联网', '金融', '制造业', '医疗卫生', '文娱', '服务业', '教育', '交通运输', '地产', '能源', '农林渔牧', '其他'],
            classify: [
+              {title: '行业', radio: ['IT互联网', '金融', '制造业', '医疗卫生', '文娱', '服务业', '教育', '交通运输', '地产', '能源', '农林渔牧', '其他']},
               {title: '生活', radio: ['文艺演出', '公益活动', '户外出游', '运动健身', '交友聚会', '休闲娱乐', '体育赛事', '手工制作', '拓展训练', '丽人时尚', '艺术摄影']},
               {title: '亲子', radio: ['益智潮玩', '儿童摄影', '主题乐园', '父母提升', '才艺启蒙', '亲子DIY', '体格锻炼']},
               {title: '学习', radio: ['学习分享', '培训考证', '知识讲座']}
@@ -351,16 +353,18 @@
           }
         },
         registrationForm: false,
+        dataFile: '',
         msgTip: {
           name: {msg: '活动名称不能为空', required: true},
-          content: {msg: '活动内容不能为空', required: true},
+          content: {msg: '详细内容不能为空', required: true},
           count: {msg: '参与人数不能为空', required: true},
           isNeedPay: {msg: '是否付费', required: true},
           address: {msg: '请设置活动地址', required: true},
-          applyBeginTime: {msg: '报名开始时间', required: true},
-          applyEndTime: {msg: '报名结束时间', required: true},
-          beginTime: {msg: '活动开始时间', required: true},
-          endTime: {msg: '活动结束时间', required: true}
+          applyBeginTime: {msg: '请选择报名开始时间', required: true},
+          applyEndTime: {msg: '请选择报名结束时间', required: true},
+          beginTime: {msg: '请选择活动开始时间', required: true},
+          endTime: {msg: '请选择活动结束时间', required: true},
+          remark: {msg: '活动摘要不能为空', required: true}
        }
       }
     },
@@ -412,11 +416,23 @@
           beginTime: this.formatterTime(this.fromVal.time[0]), // 活动开始时间
           endTime: this.formatterTime(this.fromVal.time[1]), // 活动结束时间
           checked: 0, // 审核状态
+          style: this.fromVal.classify,
+          label: this.fromVal.tag.length > 0 ? this.fromVal.tag.join(',') : '',
           principal: '',
-          memberId: this.userData.id
+          remark: this.fromVal.abstract
+          //memberId: this.userData.id,
+       /*   dataFile: this.dataFile*/
         }
+        let fileData = new FormData()
+          fileData.append('file', this.dataFile)
+
+          fileData.append('type', 'account')
+         for (let key in _params) {
+           fileData.append('' + key, _params[key])
+         }
+          _params.file = fileData
         if (this.verification(_params, this.msgTip)) {
-            this.requestAjax('post', 'activitys', _params).then((data) => {
+            this.requestFile('post', 'activitys', fileData).then((data) => {
               if (data.success) {
                 this.$Message.success('发布成功')
               } else {
@@ -433,16 +449,14 @@
        * @returns {boolean}
        */
       handleUpload: function (file) {
-        let arr = file.name.split('.')
-        if (['bmp', 'jpg', 'jpeg', 'png', 'gif'].indexOf(arr[arr.length - 1]) === -1) {
-          this.$Message.error(file.name + '不是图片，不能导入')
-          return false
-        }
-        let formData = new FormData()
-        formData.append('file', file)
-        formData.append('type', 'account')
+        let path = this.testImg(file)
+        if (!path) return false
+
+        this.imgHtml = '<img src=" ' + path + '">'
+        this.dataFile = file
+        return false
         this.requestFile('POST', 'upload', formData).then((data) => {
-          this.fromVal.posterUrl = process.env.API + data.msg
+         // this.fromVal.posterUrl = process.env.API + data.msg
         })
         return false
       }
@@ -472,4 +486,7 @@
   .initiating .ivu-select-multiple .ivu-select-item{display: inline-block; margin: 2px}
   .initiating .ivu-select-multiple .ivu-select-item-selected{background-color: rgba(153, 199, 238, 0.36)}
   .initiating .ivu-select-multiple .ivu-select-item-selected:after{display: none;}
+  .red{color: #FF0000}
+  .container-img { border: 1px solid #e3e2e5; background-color: #eeeeee; width: 600px;padding: 10px;}
+  .container-img img{width: 580px;}
 </style>

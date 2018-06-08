@@ -182,12 +182,13 @@
         },
         radios: {
           checked: [
-            {value: 'true', name: '是'},
-            {value: 'false', name: '否'}
+            {value: '1', name: '通过'},
+            {value: '2', name: '不通过'}
           ],
           recommend: [
-            {value: 'true', name: '是'},
-            {value: 'false', name: '否'}
+            {value: '0', name: '无'},
+            {value: '1', name: '精选'},
+            {value: '2', name: '推荐'}
           ]
         },
         checkboxes: {

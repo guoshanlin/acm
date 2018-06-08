@@ -24,7 +24,7 @@
     <div class="cloud-left-menu">
 
       <div class="user-pic-wrapper posct" @click="routePush('/index')">
-        <img src="https://image-c.weimobwmc.com/sass-admin/ea93f479be764d85a94b74a99b92006c.png">
+        <img src="/static/img/logo_core.dea3de2.png">
       </div>
 
       <Menu theme="dark" :active-name="activeNenu" width="160px"  class="menu-wrapper" @on-select="changeMenu">
@@ -33,7 +33,7 @@
         </template>
       </Menu>
 
-      <div class="c3 posct" style="position:absolute;width: 100%;height:40px;bottom:0;"><img width="60" src="../../assets/logo_core.png" ></div>
+<!--      <div class="c3 posct" style="position:absolute;width: 100%;height:40px;bottom:0;"><img width="60" src="../../assets/logo_core.png" ></div>-->
     </div>
     <div class="app-content">
       <router-view></router-view>
@@ -102,9 +102,7 @@
     height: 120px;
   }
   .user-pic-wrapper img{
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+    width: 100px;
   }
 
   .menu-wrapper{

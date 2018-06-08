@@ -32,22 +32,24 @@
                   id: 'checked',
                   type: 'radio',
                   titlespan: 5,
-                  colspan: 7,
+                  colspan: 19,
                   required: true
-                },
+                }
+              ],
+              [
                 {
-                  title: '是否强力推荐',
+                  title: '首页推广',
                   id: 'recommend',
                   type: 'radio',
                   titlespan: 5,
-                  colspan: 7,
+                  colspan: 19,
                   required: true
                 }
               ],
               [
                 {
                   title: '审批意见',
-                  id: 'remark',
+                  id: 'checkedRemark',
                   type: 'textarea',
                   titlespan: 5,
                   colspan: 19,
@@ -62,9 +64,9 @@
             }]
           },
           value: {
-            checked: 'true',
-            recommend: 'false',
-            remark: ''
+            checked: '1',
+            recommend: '0',
+            checkedRemark: ''
           }
         }
       }
@@ -107,7 +109,7 @@
           if (data.success) {
             this.$Message.success(msg + '用户成功')
             this.inputForm.modalshow = false
-            this.loadTable()
+            this.initItem()
           } else if (!data.message) {
             this.$Message.success(msg + '用户失败')
           }
