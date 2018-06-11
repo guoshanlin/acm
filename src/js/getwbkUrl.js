@@ -16,8 +16,12 @@ export default {
       deleteMembers: {url: 'members/{id}', pre: preuUrl},
       // 上传文件
       upload: {url: 'files/upload', pre: preuUrl},
+      // 上传成员附件
+      uploadNumber: {url: 'members/upload', pre: preuUrl},
       // 查询添加活动
-      activitys: {url: 'activitys', pre: preuUrl}
+      activitys: {url: 'activitys', pre: preuUrl},
+      // 下载会员导入木本
+      filesDown: {url: 'files/down', pre: preuUrl}
     }
     /**
      * 获取url

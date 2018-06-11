@@ -21,7 +21,7 @@
                 <div class="fbox fz14">
                   <div class="flex">
                     <Icon type="person"></Icon>
-                    发布者：{{row.name}}
+                    发布者：{{row.memberNickName}}
                   </div>
                 </div>
                 <div class="fbox">

@@ -14,6 +14,9 @@
                 <Button type="primary">导入</Button>
               </Upload>
             </i-col>
+            <i-col>
+              <Button class="m-l10" type="primary" @click="loadXlx">下载导入模板</Button>
+            </i-col>
           </Row>
 
         </i-col>
@@ -191,8 +194,7 @@
         const _params = this.parms
         const _url = 'members'
         this.requestAjax(_type, _url, _params).then((data) => {
-          if (!data.message) {
-            console.log(data)
+          if (data.success) {
             this.total = !isNaN(+data.data.total) ? +data.data.total : 0
             this.loading = '暂无数据'
             this.data = data.data.rows
@@ -595,7 +597,7 @@
         let formData = new FormData()
         formData.append('file', file)
         formData.append('type', 'account')
-        this.requestFile('POST', 'upload', formData).then((data) => {
+        this.requestFile('POST', 'uploadNumber', formData).then((data) => {
           if (data.err == '') {
             this.$Message.success('导入成功')
             this.loadTable()
@@ -606,6 +608,9 @@
           this.$Message.error('导入失败')
         })
         return false
+      },
+      loadXlx () {
+        this.requestAjax('get', 'filesDown', {path: '/xheditor/soft/template/template_member.xls'})
       }
     },
     mounted () {

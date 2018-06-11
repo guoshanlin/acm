@@ -35,12 +35,40 @@
             UE.delEditor(this.id)
         },
         beforeCreate () {
+          let _this = this
           this.$nextTick(() => {
                 // 保证 this.$el 已经插入文档
                 this.editor = UE.getEditor(this.id, this.config)
                 this.editor.commands['uploadimg'] = {
                   execCommand: function () {
-                    this.execCommand('insertHtml', "<img src='https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo_top_ca79a146.png' />")
+                    let damo = document.createElement('div') // 创建上传附件damo
+                    damo.innerHTML = '<input type="file">'
+                    damo.childNodes[0].click() // 触发附件上传功能
+                    damo.childNodes[0].onchange = (event) => { // 监听上传附件change后上传附件；
+                      if (damo.childNodes[0].files.length > 1) {
+                        _this.$Message.error('一次只能上传一个附件')
+                        return
+                      }
+                      const file = damo.childNodes[0].files[0]
+                      if (file.size > 2000 * 1024) {
+                        _this.$Message.error('文件超出大小限制')
+                        return
+                      }
+                      let arr = file.name.split('.')
+                      if (['bmp', 'jpg', 'jpeg', 'png', 'gif'].indexOf(arr[arr.length - 1]) === -1) {
+                        _this.$Message.error(file.name + '文件格式错误')
+                        return
+                      }
+                      const formData = new FormData()
+                      formData.append('file', file)
+                      _this.requestFile('post', 'upload', formData).then((data) => {
+                        if (data.err == '') {
+                          this.execCommand('insertHtml', "<img width='300' src='" + data.msg + "' />")
+                        }
+                      }, () => {
+                        _this.$Message.error('上传图片失败')
+                      })
+                    }
                     return true
                   },
                   queryCommandState: function () { }

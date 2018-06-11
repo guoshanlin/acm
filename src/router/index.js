@@ -21,10 +21,14 @@ export default new Router({
       children: [
         {
           path: '/meeting',
-          component: (resolve) => require(['../view/meeting'], resolve),
+          component: (resolve) => require(['../view/meeting'], resolve)
+        },
+        {
+          path: '/initiatingActivity',
+          component: (resolve) => require(['../view/initiating-activity'], resolve),
           children: [
             {
-              path: '/meeting/initiating',
+              path: '/initiatingActivity',
               name: '发起活动',
               component: (resolve) => require(['../view/initiating/index'], resolve)
             }
@@ -132,40 +136,6 @@ export default new Router({
             path: '/index',
             name: '首页',
             component: (resolve) => require(['../view/home/index'], resolve)
-          },
-          {
-            path: '/index/initiating',
-            name: '发起活动',
-            component: (resolve) => require(['../view/initiating/index'], resolve)
-          },
-          {
-            path: '/index/activeManagement',
-            name: '活动管理',
-            component: (resolve) => require(['../view/activeManagement/index'], resolve),
-            children: [
-              {
-                path: '/index/role',
-                name: '会员管理',
-                component: (resolve) => require(['../view/table/role'], resolve)
-              },
-              {
-                path: '/index/examine',
-                name: '审批管理',
-                component: (resolve) => require(['../view/examine/index'], resolve),
-                chilren: [
-                  {
-                    path: '/index/examine/examineDetails',
-                    name: '活动详情',
-                    component: (resolve) => require(['../view/examine-details/index'], resolve)
-                  }
-                ]
-              },
-              {
-                path: '/index/examineDetails',
-                name: '活动详情',
-                component: (resolve) => require(['../view/examine-details/index'], resolve)
-              }
-            ]
           }
         ]
     }

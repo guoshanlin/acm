@@ -37,7 +37,7 @@
                  <div class="header-nav"><i-button type="primary">搜索</i-button></div>
                </i-col>
                <i-col>
-                 <div class="header-nav"><i-button type="primary" @click="routePush('/meeting/initiating')">发起活动</i-button></div>
+                 <div class="header-nav"><i-button type="primary" @click="initiatingActivity">发起活动</i-button></div>
                </i-col>
              </Row>
            </div>
@@ -85,7 +85,7 @@
         const _params = {}
         const _url = 'logout'
         this.requestAjax(_type, _url, _params).then((res) => {}, () => {})
-        this.showAdmin= false
+        this.showAdmin = false
         setIsLogin(false)
         this.setIsLogin(false)
       },
@@ -105,7 +105,14 @@
             break
           default:
         }
-      }
+      },
+     initiatingActivity () {
+        if (this.isLogin) {
+          this.routePush('/initiatingActivity')
+        } else {
+          this.$Message.error('请先登入')
+        }
+     }
     },
     mounted () {
       this.$nextTick(() => {

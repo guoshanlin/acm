@@ -169,7 +169,7 @@ export default {
         if (time === undefined || time === null || time === '') {
           return ''
         }
-        return Date.formatByTimes(time.getTime(), 'yyyy-MM-dd hh:mm')
+        return Date.formatByTimes(time.getTime(), 'yyyy-MM-dd hh:mm:ss')
       }
      /**
      * 转义时间戳

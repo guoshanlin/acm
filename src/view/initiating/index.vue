@@ -443,7 +443,7 @@
           principal: '',
           remark: this.fromVal.abstract
           //memberId: this.userData.id,
-       /*   dataFile: this.dataFile*/
+          /*   dataFile: this.dataFile*/
         }
         let fileData = new FormData()
           fileData.append('file', this.dataFile)

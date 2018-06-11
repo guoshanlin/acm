@@ -2,13 +2,13 @@
   <div class="wrapper">
     <Row>
       <i-col span="18">
-        <div class=" b wrapper-box" v-if="!initiating">
+        <div class=" b wrapper-box">
           <Affix :offset-top="10" style="padding:5px 0px;">
             <Row type="flex" :gutter=5>
               <i-col span="12">
                 <Row type="flex" justify="start">
                   <i-col>
-                    <Button type="primary" @click="addMeeting()">创建活动</Button>
+                    <Button type="primary" @click="addMeeting()">发起活动</Button>
                   </i-col>
                 </Row>
               </i-col>
@@ -50,49 +50,9 @@
             </div>
           </div>
         </div>
-        <div class="initiating" v-if="initiating">
-          <router-view></router-view>
-        </div>
       </i-col>
       <i-col span="6">
-        <div class=" b wrapper-box m-l10">
-          <div class="clear rig-title">
-            <h3 class="c2">活动</h3>
-          </div>
-          <ul class="rig-list-wrapper">
-            <li>可使用场次<span class="c4 fr">0场</span></li>
-            <li>已创建场次<span class="fr">0场</span></li>
-          </ul>
-          <Button type="error" size="large" class="meeting-go-buy">立即订购</Button>
-        </div>
-        <div class="b wrapper-box m-l10 m-t10">
-          <div class="clear rig-title m-b10">
-            <h3 class="c2">活动官方公众号</h3>
-          </div>
-          <img v-lazy="loadImg" width="100%"/>
-        </div>
-        <div class=" b wrapper-box m-l10 m-t10">
-          <div class="clear rig-title">
-            <h3 class="c2">使用指南</h3>
-          </div>
-          <ul class="rig-list-wrapper">
-            <li><a class="c2">会前设置</a></li>
-            <li><a class="c2">会中设置</a></li>
-            <li><a class="c2">参会管理</a></li>
-            <li><a class="c2">数据统计</a></li>
-          </ul>
-        </div>
-        <div class=" b wrapper-box m-l10 m-t10">
-          <div class="clear rig-title">
-            <h3 class="c2">使用指南</h3>
-          </div>
-          <ul class="rig-list-wrapper">
-            <li><a class="c2">如何进入微盟活动小程序？</a></li>
-            <li><a class="c2">活动邀请函如何修改基本信息？</a></li>
-            <li><a class="c2">活动邀请函如何修改活动议程？</a></li>
-            <li><a class="c2">如何查看报名的具体人员情况？</a></li>
-          </ul>
-        </div>
+        <right-aside></right-aside>
       </i-col>
     </Row>
   </div>
@@ -100,10 +60,10 @@
 
 <script>
   import meetingItem from 'components/meeting-item/index'
+  import rightAside from 'components/right-aside/index'
   export default {
     data () {
       return {
-        initiating: false,
         keyWord: '',
         total: 0,
         data: [],
@@ -115,37 +75,17 @@
         loadImg: ''
       }
     },
-    created () {
-      if (this.$route.path === '/meeting') {
-        this.initiating = false
-      } else {
-        this.initiating = true
-      }
-      console.log(this.$route.path)
-      setTimeout(() => {
-
-      }, 20)
-    },
-    watch: {
-      '$route' (to, from) {
-        if (to.path === '/meeting') {
-          this.initiating = false
-          this.initItem()
-        }
-      }
-    },
     methods: {
       searchDriver () {
         this.parms.keyWord = this.keyWord
         this.initItem()
       },
       menuSelect (name) {
-        this.parms.status = name
+        this.parms.status = name == 'all' ? '' : name
         this.initItem()
       },
       addMeeting () {
-        this.initiating = true
-        this.routePush('/meeting/initiating')
+        this.routePush('/initiatingActivity')
       },
       /**
        *跳页
@@ -179,14 +119,13 @@
       }
     },
     components: {
-      meetingItem
+      meetingItem,
+      rightAside
     },
     mounted () {
       this.$nextTick(() => {
         this.initItem()
-        if (!this.initiating) {
-           document.querySelector('.ivu-page-options-elevator').title = '输入后回车跳至指定页'
-        }
+        document.querySelector('.ivu-page-options-elevator').title = '输入后回车跳至指定页'
         clearInterval(this.timer)
         this.timer = setInterval(() => {
           this.initItem()
@@ -210,28 +149,5 @@
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 10px;
-  }
-  .rig-list-wrapper{padding: 10px 0}
-  .rig-list-wrapper li{
-    line-height: 40px;
-  }
-  .rig-list-wrapper li:nth-child(n+2){border-top: 1px solid #f4f4f4;}
-  .meeting-go-buy{
-    display: block;
-    margin: 0 auto;
-    width: 80%;
-  }
-  .rig-list-wrapper li a:hover{
-    color: #118fff!important;
-  }
-  .rig-title h3:before{
-    content: '';
-    display: block;
-    width: 3px;
-    height: 14px;
-    background: #2589ff;
-    display: inline-block;
-    margin-right: 5px;
-    vertical-align: -2px;
   }
 </style>

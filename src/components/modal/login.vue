@@ -68,6 +68,9 @@
                <FormItem label="确认密码" prop="passwordCheck">
                  <i-input type="password" v-model="formRegister.passwordCheck" placeholder="请再次输入密码"></i-input>
                </FormItem>
+               <FormItem label="昵称" prop="nickName">
+                 <i-input type="text" v-model="formRegister.nickName" placeholder="请输入昵称"></i-input>
+               </FormItem>
                <FormItem class="t-center">
                  <CheckboxGroup v-model="formInline.formRegister" class="in-line">
                    <Checkbox label="agree">我已阅读并同意 <a> 用户隐私及服务协议</a></Checkbox>
@@ -148,6 +151,7 @@
           email: '',
           password: '',
           passwordCheck: '',
+          nickName: '',
           checkbox: []
         },
         hasUser: true,
@@ -173,7 +177,10 @@
           ],
           passwordCheck: [
             { required: true, validator: validatePassCheck, trigger: 'blur' }
-          ]
+          ],
+          nickName: [
+              { required: true, message: '请输入昵称', trigger: 'blur' }
+            ]
         }
       }
     },
@@ -243,7 +250,8 @@
         const _params = {
           phone: this.formRegister.phone,
           passWord: this.formRegister.password,
-          email: this.formRegister.email
+          email: this.formRegister.email,
+          nickName: this.formRegister.nickName
         }
         const _url = 'members'
         this.requestAjax(_type, _url, _params).then((data) => {

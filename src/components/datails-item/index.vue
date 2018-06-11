@@ -10,7 +10,7 @@
       <div class="fbox fz14">
         <div class="flex">
           <Icon type="person"></Icon>
-          发布者：{{row.name}}
+          发布者：{{row.memberNickName}}
         </div>
       </div>
      <!-- <div class="fz14">状态：<span class="b2 c3 meeting-version">{{getActiveStatus(row.status)}}</span></div>-->
