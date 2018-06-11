@@ -308,7 +308,7 @@
             {value: '沙龙', label: '沙龙'},
             {value: '聚会', label: '聚会'},
             {value: '论坛', label: '论坛'},
-            {value: '会议', label: '会议'},
+            {value: '活动', label: '活动'},
             {value: '交流', label: '交流'},
             {value: '展览', label: '展览'},
             {value: '摄影', label: '摄影'},
@@ -317,7 +317,7 @@
             {value: '艺术', label: '艺术'},
             {value: '文学', label: '文学'},
             {value: '文化', label: '文化'},
-            {value: '活动', label: '活动'},
+            {value: '会议', label: '会议'},
             {value: '儿童', label: '儿童'},
             {value: '演讲', label: '演讲'},
             {value: '融资', label: '融资'},
@@ -433,11 +433,11 @@
           nonMBPrice: ticket[0].type === ' free' ? '' : ticket[0].price, // 非会员价格
           address: this.fromVal.address.province + this.fromVal.address.city + this.fromVal.address.area, // 地址
           posterUrl: this.fromVal.posterUrl, // 海报url
-          applyBeginTime: this.fromVal.applyBeginTime, // 活动开始时间
-          applyEndTime: this.fromVal.applyEndTime, // 活动开始时间
-          beginTime: this.fromVal.beginTime, // 活动开始时间
-          endTime: this.fromVal.endTime, // 活动结束时间
-          checked: 0, // 审核状态
+          applyBeginTime: this.formatterTime(this.fromVal.applyBeginTime), // 活动开始时间
+          applyEndTime: this.formatterTime(this.fromVal.applyEndTime), // 活动开始时间
+          beginTime: this.formatterTime(this.fromVal.beginTime), // 活动开始时间
+          endTime: this.formatterTime(this.fromVal.endTime), // 活动结束时间
+          status: 0, // 审核状态
           style: this.fromVal.classify,
           label: this.fromVal.tag.length > 0 ? this.fromVal.tag.join(',') : '',
           principal: '',

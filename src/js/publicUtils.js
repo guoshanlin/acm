@@ -76,11 +76,15 @@ export default {
      * @param number
      * @returns {string}
      */
-    Vue.prototype.getChecked = function (number) {
+    Vue.prototype.getActiveStatus = function (number) {
+/*    【-1：审核不通过】【0：未审核】【1：未开始】【2：执行中】【3：暂停】【99：结束】*/
        switch ('' + number) {
+         case '-1': return '审核未通过'
          case '0': return '待审核'
-         case '1': return '已通过'
-         case '2': return '未通过'
+         case '1': return '未开始'
+         case '2': return '进行中'
+         case '3': return '暂停'
+         case '99': return '结束'
          default: return number
        }
     }

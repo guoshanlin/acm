@@ -2,8 +2,8 @@
   <div class="fbox">
     <div class="pic-datails">
       <img v-if="row && row.posterUrl && row.posterUrl.indexOf('xheditor') != -1" width="100%" height="100%" :src="loadImg">
-      <img v-if="row && row.posterUrl == ''" width="100%" height="100%" v-lazy="loadUrl">
-      <span class="tips b1 c">进行中</span>
+      <img v-else width="100%" height="100%" v-lazy="loadUrl">
+      <span class="tips b1 c">{{getActiveStatus(row.status)}}</span>
     </div>
     <div class="info-datails flex c2">
       <h3 class="fz24">{{row.name}}</h3>
@@ -13,7 +13,7 @@
           发布者：{{row.name}}
         </div>
       </div>
-      <div class="fz14">状态：<span class="b2 c3 meeting-version">{{getChecked(row.checked)}}</span></div>
+     <!-- <div class="fz14">状态：<span class="b2 c3 meeting-version">{{getActiveStatus(row.status)}}</span></div>-->
       <div class="fbox">
         <div class="flex">
           <div>发布时间：{{formatterObjTime(row.createTime)}}</div>
@@ -36,7 +36,7 @@
       </div>
       <div class="fbox">
         <div class="flex">
-          <Button v-if="row.checked == 0" type="primary" @click="exmine">{{button}}</Button>
+          <Button v-if="row.status == 0 &&  button" type="primary" @click="exmine">{{button}}</Button>
         </div>
       </div>
     </div>

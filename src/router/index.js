@@ -13,7 +13,7 @@ export default new Router({
     { path: '*', component: (resolve) => require(['../components/404'], resolve) },
     {
       path: '/',
-      redirect: '/index/home'
+      redirect: '/index'
     },
     {
       path: '/meeting',

@@ -27,15 +27,15 @@
           {
             title: "概况",
             child: [
-              {path: "/base/overview", title: "会议概况"}
+              {path: "/base/overview", title: "活动概况"}
             ]
           },
           {
             title: "会前",
             child: [
-              {path: "/base/info", title: "会议信息"},
+              {path: "/base/info", title: "活动信息"},
               {path: "/base/entrylist", title: "门票管理"},
-              {path: "/base/invitelist", title: "会议邀请"}
+              {path: "/base/invitelist", title: "活动邀请"}
             ]
           },
           {

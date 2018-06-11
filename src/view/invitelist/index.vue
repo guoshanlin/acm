@@ -1,6 +1,6 @@
 <template>
   <div class="b wrapper-box">
-    会议邀请
+    活动邀请
   </div>
 </template>
 

@@ -8,14 +8,14 @@
               <i-col span="12">
                 <Row type="flex" justify="start">
                   <i-col>
-                    <Button type="primary" @click="addMeeting()">创建会议</Button>
+                    <Button type="primary" @click="addMeeting()">创建活动</Button>
                   </i-col>
                 </Row>
               </i-col>
               <i-col span="12">
                 <Row type="flex" justify="end">
                   <i-col>
-                    <i-input class="width-letf" placeholder="请输入会议名称" v-model="keyWord"></i-input>
+                    <i-input class="width-letf" placeholder="请输入活动名称" v-model="keyWord"></i-input>
                   </i-col>
                   <i-col>
                     <Button type="primary"  class="m-r15 m-l5" icon="ios-search" @click="searchDriver">搜索</Button>
@@ -24,11 +24,12 @@
               </i-col>
             </Row>
           </Affix>
-          <Menu mode="horizontal" active-name="1" @on-select="menuSelect">
-            <MenuItem name="1">全部会议</MenuItem>
-            <MenuItem name="2">未开始</MenuItem>
-            <MenuItem name="3">进行中</MenuItem>
-            <MenuItem name="4">已结束</MenuItem>
+          <Menu mode="horizontal" active-name="all" @on-select="menuSelect">
+            <MenuItem name="all">全部活动</MenuItem>
+            <MenuItem name="0,1,3">未开始</MenuItem>
+            <MenuItem name="2">进行中</MenuItem>
+            <MenuItem name="99">已结束</MenuItem>
+            <MenuItem name="-1">未通过</MenuItem>
           </Menu>
 
           <div class="list-wrapper">
@@ -56,7 +57,7 @@
       <i-col span="6">
         <div class=" b wrapper-box m-l10">
           <div class="clear rig-title">
-            <h3 class="c2">会务</h3>
+            <h3 class="c2">活动</h3>
           </div>
           <ul class="rig-list-wrapper">
             <li>可使用场次<span class="c4 fr">0场</span></li>
@@ -66,7 +67,7 @@
         </div>
         <div class="b wrapper-box m-l10 m-t10">
           <div class="clear rig-title m-b10">
-            <h3 class="c2">会务官方公众号</h3>
+            <h3 class="c2">活动官方公众号</h3>
           </div>
           <img v-lazy="loadImg" width="100%"/>
         </div>
@@ -86,9 +87,9 @@
             <h3 class="c2">使用指南</h3>
           </div>
           <ul class="rig-list-wrapper">
-            <li><a class="c2">如何进入微盟会务小程序？</a></li>
-            <li><a class="c2">会议邀请函如何修改基本信息？</a></li>
-            <li><a class="c2">会议邀请函如何修改会议议程？</a></li>
+            <li><a class="c2">如何进入微盟活动小程序？</a></li>
+            <li><a class="c2">活动邀请函如何修改基本信息？</a></li>
+            <li><a class="c2">活动邀请函如何修改活动议程？</a></li>
             <li><a class="c2">如何查看报名的具体人员情况？</a></li>
           </ul>
         </div>
@@ -139,7 +140,8 @@
         this.initItem()
       },
       menuSelect (name) {
-        this.$Message.warning(name)
+        this.parms.status = name
+        this.initItem()
       },
       addMeeting () {
         this.initiating = true

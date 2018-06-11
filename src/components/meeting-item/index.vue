@@ -3,13 +3,13 @@
     <Button class="manage-btn" type="primary" @click="routePush('/base/overview')">管理</Button>
     <div class="pic-wrapper">
       <img width="100%" height="100%" v-lazy="loadImg">
-      <span class="tips b1 c">进行中</span>
+      <span class="tips b1 c">{{getActiveStatus(row.status)}}</span>
     </div>
     <div class="info-wrapper flex c2">
       <h3 class="fz13">{{row.name}}</h3>
       <div class="fbox">
         <div class="flex">
-          <div>会议ID：{{row.id}} <span class="b2 c3 meeting-version">体验版</span></div>
+          <div>活动ID：{{row.id}} <span class="b2 c3 meeting-version">体验版</span></div>
         </div>
         <div class="flex">
           <div class="">发布时间：{{formatterObjTime(row.createTime)}}</div>
@@ -42,7 +42,7 @@
           门票管理</a></div>
         <div class="flex"><a class="c2" @click="routePush('/base/invitelist',row.id)">
           <Icon type="ios-paper-outline c1"></Icon>
-          会议邀请</a></div>
+          活动邀请</a></div>
         <div class="flex"><a class="c2" @click="routePush('/base/userlist',row.id)">
           <Icon type="ios-paper-outline c1"></Icon>
           人员管理</a></div>
@@ -57,7 +57,7 @@
           参会统计</a></div>
         <div class="flex"><a class="c2">
           <Icon type="ios-paper-outline c1"></Icon>
-          复制会议</a></div>
+          复制活动</a></div>
       </div>
     </div>
   </div>

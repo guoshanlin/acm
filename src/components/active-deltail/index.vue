@@ -1,60 +1,61 @@
 <template>
-  <div class="wrapper b wrapper-box">
-    <div style="position: relative">
-      <Row type="flex" justify="end" class="search-wrapper">
-        <i-col>
-          <i-input class="width-letf" placeholder="请输入活动名称" v-model="keyWord"></i-input>
-        </i-col>
-        <i-col>
-          <Button type="primary"  class="m-r15 m-l5" icon="ios-search" @click="searchDriver">搜索</Button>
-        </i-col>
-      </Row>
-      <Menu mode="horizontal" active-name="0" @on-select="menuSelect" class="menu-tab">
-        <MenuItem name="0">待审核</MenuItem>
-        <MenuItem name=">0">已通过</MenuItem>
-        <MenuItem name="<0">未通过</MenuItem>
-      </Menu>
-      <div class="list-wrapper">
-        <ul class="list">
-          <li class="list-item" v-for="item in data" :key="item.id">
-            <activity-item :row='item' :button="buttonName" @click="itemDetails" @exmine="exmine"></activity-item>
-          </li>
-        </ul>
-      </div>
-      <!--分页-->
-      <div style="text-align: right; padding-top: 5px;">
-        <Page show-total show-sizer show-elevator style="display: inline-block;" placement="top"
-              :total="total"
-              :page-size="parms.limit"
-              :current="parms.offset"
-              @on-change="changePage"
-              @on-page-size-change="changeSize"></Page>
-      </div>
-      <!--新增表单承载标签-->
-      <input-from v-if="inputForm.show" @changeOptions="getExmineVal" :options="inputForm.option" :value="inputForm.value" :modalDisabled="inputForm.modalDisabled"
-                  :modalshow="inputForm.modalshow"/>
+  <div  class="wrapper b wrapper-box">
+    <div class="datails-item">
+      <datails-item :row='data' :button="buttonName"  @exmine="exmine"></datails-item>
     </div>
+    <div class="datails-item m-t10">
+      <div class="fbox">
+        <div class="datails-flex-item t-right"><h3>票种:</h3></div>
+        <div class="flex t-left">
+          <div v-if="data.isNeedPay == 0">免费</div>
+          <div v-if="data.isNeedPay == 1">&nbsp;<span class="span-title">非会员价:</span>&nbsp;{{data.nonMBPrice}}元&nbsp;&nbsp;&nbsp;<span class="span-title">会员价:</span>&nbsp;{{data.mbPrice}}元</div>
+        </div>
+      </div>
+    </div>
+    <div class="datails-item m-t10">
+      <div class="fbox">
+        <div class="datails-flex-item t-right"><h3>活动标签:</h3></div>
+        <div class="flex t-left">
+          <Tag v-if="data.label != ''" color="blue" v-for="item in label" :key="item">{{item}}</Tag>
+        </div>
+      </div>
+    </div>
+    <div class="datails-item m-t10">
+      <div class="fbox">
+        <div class="datails-flex-item t-right"><h3>详情摘要:</h3></div>
+        <div class="flex t-left">
+          <div>
+            <pre v-html = 'data.remark'></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="datails-item m-t10">
+      <div class="fbox">
+        <div class="datails-flex-item t-right"><h3>详细内容:</h3></div>
+        <div class="flex t-left">
+          <div>
+            <pre v-html = 'data.content'></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--新增表单承载标签-->
+    <input-from v-if="inputForm.show" @changeOptions="getExmineVal" :options="inputForm.option" :value="inputForm.value" :modalDisabled="inputForm.modalDisabled" :modalshow="inputForm.modalshow"/>
   </div>
 </template>
 
 <script>
-  import activityItem from 'components/activity-item/index'
+  import datailsItem from 'components/datails-item/index'
   import inputFrom from 'components/modal/inputFrom.vue'
 
   export default {
     name: 'index',
     data () {
       return {
-        keyWord: '',
-        buttonName: '审核',
-        data: [],
-        total: 0,
-        parms: {
-        /*  sort: 'createTime',*/
-          status: 0,
-          limit: 20,
-          offset: 1
-        },
+        data: {},
+        label: [],
+        buttonName: this.$route.path.indexOf('examineDetails') != -1 ? '审核' : '',
         inputForm: {
           show: false,
           modalDisabled: false,
@@ -109,36 +110,13 @@
       }
     },
     components: {
-      activityItem,
+      datailsItem,
       inputFrom
     },
+    props: {
+      id: ''
+    },
     methods: {
-      /**
-       *跳页
-       * @param v
-       */
-      changePage (v) {
-        this.parms.offset = v
-      },
-      /**
-       *改变页面展示用户条数
-       * @param v
-       */
-      changeSize (v) {
-        this.parms.limit = v
-      },
-      /**
-       * 切换tab
-       * @param name
-       */
-      menuSelect (name) {
-        this.parms.status = name
-        this.initItem()
-      },
-      searchDriver () {
-        this.parms.keyWord = this.keyWord
-        this.initItem()
-      },
       /**
        * 审核
        * @param row
@@ -174,6 +152,7 @@
           if (data.success) {
             this.$Message.success(msg + '用户成功')
             this.inputForm.modalshow = false
+            this.initItem()
           } else if (!data.message) {
             this.$Message.success(msg + '用户失败')
           }
@@ -183,36 +162,21 @@
           this.inputForm.modalDisabled = false
         })
       },
-      /**
-       * 查看详情
-       * @param row
-       */
-      itemDetails (row) {
-        this.routePush('/examineDetails', row.id)
-      },
-      /**
-       * 加载活动
-       */
       initItem () {
         const _type = 'GET'
-        const _params = this.parms
+        const _params = {id: this.id}
         const _url = 'activitys'
         this.requestAjax(_type, _url, _params).then((data) => {
           if (!data.message) {
-            this.total = !isNaN(+data.data.total) ? +data.data.total : 0
-            this.data = data.data.rows
+            this.data = data.data.rows[0]
+            this.label = this.data.label.split(',')
           }
         })
       }
     },
-    mounted () {
+    beforeCreate () {
       this.$nextTick(() => {
         this.initItem()
-        document.querySelector('.ivu-page-options-elevator').title = '输入后回车跳至指定页'
-        clearInterval(this.timer)
-        this.timer = setInterval(() => {
-          this.initItem()
-        }, 60 * 1000)
       })
     }
   }
@@ -220,18 +184,14 @@
 
 <style>
   .wrapper{margin: 10px}
-  .search-wrapper{
-    position: absolute;
-    top: 10px;
-    right: 0px;
-    z-index: 901;
+  .datails-flex-item { display: inline-block; width: 100px; margin-right: 10px}
+  .span-title{ font-weight: bold}
+  .datails-item{position: relative; border: 1px solid #e3e2e5; padding: 10px; border-radius: 5px; line-height: 26px;}
+  pre {
+    white-space: pre-wrap; /*css-3*/
+    white-space: -moz-pre-wrap; /*Mozilla,since1999*/
+    white-space: -pre-wrap; /*Opera4-6*/
+    white-space: -o-pre-wrap; /*Opera7*/
+    word-wrap: break-word; /*InternetExplorer5.5+*/
   }
-.list-wrapper{margin: 10px 0;}
-.list-item{
-  position: relative;
-  border: 1px solid #e3e2e5;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
-}
 </style>

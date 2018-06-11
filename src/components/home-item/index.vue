@@ -1,41 +1,47 @@
 <template>
-  <div>
-    <div v-for="(row, index)in  option.rows" :key = 'index'>
-      <div class="">
-        <h3>{{row.title}}</h3>
+  <div class="home-item">
+      <div class="fbox home-item-title">
+        <div class="home-title">
+          <h2>{{option.title}}</h2>
+        </div>
+        <div class="flex t-right">
+          <a>更多》</a>
+        </div>
       </div>
       <div>
-        <div class="index-home">
-          <img width="100%" height="100%" v-lazy="loadImg">
-          <span class="tips b1 c">进行中</span>
-        </div>
-        <div class="info-home flex c2">
-          <h3 class="fz24">{{row.name}}</h3>
-          <div class="fbox fz14">
-            <div class="flex">
-              <Icon type="person"></Icon>
-              发布者：{{row.name}}
+        <Row>
+          <i-col :span="12" v-for="(row, index) in  option.rows" :key ='index' v-if="index < 4">
+            <div class="home-item-content">
+              <div class="index-home">
+                <img width="100%" height="100%" v-lazy="url + row.posterUrl">
+                <span class="tips b1 c">进行中</span>
+              </div>
+              <div class="info-home flex c2">
+                <h3 class="fz24">{{row.name}}</h3>
+                <div class="fbox fz14">
+                  <div class="flex">
+                    <Icon type="person"></Icon>
+                    发布者：{{row.name}}
+                  </div>
+                </div>
+                <div class="fbox">
+                  <div class="flex">
+                    <div>活动时间：{{formatterObjTime(row.beginTime)}} ~ {{formatterObjTime(row.endTime)}}</div>
+                  </div>
+                </div>
+                <div class="fbox">
+                  <div class="flex">
+                    <Icon type="ios-location"></Icon> {{row.address}}
+                  </div>
+                  <div class="flex t-right">
+                    <Icon type="eye"></Icon>浏览数：{{row.count}}
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="fz14">状态：<span class="b2 c3 meeting-version">{{getChecked(row.checked)}}</span></div>
-          <div class="fbox">
-            <div class="flex">
-              <div>活动时间：{{formatterObjTime(row.beginTime)}} ~ {{formatterObjTime(row.endTime)}}</div>
-            </div>
-          </div>
-          <div class="fbox">
-            <div class="flex">
-              <Icon type="ios-location"></Icon> {{row.address}}
-            </div>
-          </div>
-          <div class="fbox">
-            <div class="flex">
-              <Button v-if="row.checked == 0" type="primary" @click="exmine">{{button}}</Button>
-            </div>
-          </div>
-        </div>
+          </i-col>
+        </Row>
       </div>
-    </div>
   </div>
 </template>
 
@@ -44,17 +50,12 @@
     name: 'index',
     data () {
       return {
-        loadImg: process.env.NODE_ENV === 'production' ? this.row.posterUrl : process.env.API + this.row.posterUrl
+        url: process.env.NODE_ENV === 'production' ? '' : process.env.API
       }
     },
     props: {
       option: '',
       button: ''
-    },
-    watch: {
-      row (val) {
-        this.loadImg = process.env.NODE_ENV === 'production' ? val.posterUrl : process.env.API + val.posterUrl
-      }
     },
     methods: {
       clickItem () {
@@ -68,19 +69,15 @@
 </script>
 
 <style>
-  .manage-btn {
-    position: absolute;
-    top: 23px;
-    right: 30px;
-  }
+  .home-item{position: relative; border: 1px solid #e3e2e5; padding: 10px; border-radius: 5px; margin: 10px;}
 
-  .index-home {
-    width: 500px;
-    height: 300px;
-    position: relative;
-    border-radius: 4px;
-    overflow: hidden;
-  }
+  .index-home {height: 300px;position: relative;border-radius: 4px;overflow: hidden;}
+
+  .home-item-title{border-bottom:2px solid #1c2438; margin-bottom: 10px; line-height: 40px;}
+
+  .home-item-title .home-title{width: 200px;}
+
+  .home-item-content{border: 1px solid #e3e2e5;padding: 10px;border-radius: 5px;line-height: 26px; margin: 5px; cursor: pointer;}
 
   .index-home .tips {
     position: absolute;
@@ -93,7 +90,7 @@
   .info-home {
     padding: 10px 30px;
     line-height: 34px;
-    height: 280px;
+    height: 160px;
   }
 
   .meeting-version {

@@ -1,7 +1,8 @@
-<style scoped>
+<style>
+  .ueditor div{line-height: 20px}
 </style>
 <template>
-    <div :id="id"></div>
+    <div :id="id" class="ueditor"></div>
 </template>
 <script type="es6">
     import '../../../static/ueditor/ueditor.config'
@@ -37,6 +38,13 @@
           this.$nextTick(() => {
                 // 保证 this.$el 已经插入文档
                 this.editor = UE.getEditor(this.id, this.config)
+                this.editor.commands['uploadimg'] = {
+                  execCommand: function () {
+                    this.execCommand('insertHtml', "<img src='https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo_top_ca79a146.png' />")
+                    return true
+                  },
+                  queryCommandState: function () { }
+                }
                 // 编辑器准备就绪后会触发该事件
                 this.editor.ready(() => {
                     // 设置编辑器的内容，可修改编辑器当前的html内容
