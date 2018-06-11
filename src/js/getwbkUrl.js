@@ -21,7 +21,8 @@ export default {
       // 查询添加活动
       activitys: {url: 'activitys', pre: preuUrl},
       // 下载会员导入木本
-      filesDown: {url: 'files/down', pre: preuUrl}
+      filesDown: {url: 'files/down', pre: preuUrl},
+      ticket: {url: 'ticket', pre: preuUrl}
     }
     /**
      * 获取url

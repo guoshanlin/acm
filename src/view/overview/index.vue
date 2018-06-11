@@ -45,7 +45,7 @@
         <a class="c1 fr" @click="routePush('/base/interactivityStatistics')">详情</a>
       </div>
       <div class="posct m-t10 statistics-wrapper" style="padding: 80px 0">
-          暂无统计数据
+        暂无统计数据
       </div>
     </div>
   </div>
@@ -59,16 +59,22 @@
     },
     created() {
       setTimeout(() => {
-
+        this.getTicket()
       }, 20)
     },
-    methods: {}
+    methods: {
+      getTicket() {
+        this.requestAjax("get", "ticket", {}).then((data) => {
+          console.log(JSON.stringify(data))
+        })
+      }
+    }
   }
 </script>
 
 <style scoped>
 
-  .statistics-wrapper{
+  .statistics-wrapper {
     padding: 36px 0;
     border-top: 1px solid #e3e2e5;
   }

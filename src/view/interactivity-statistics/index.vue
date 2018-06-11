@@ -1,6 +1,7 @@
 <template>
   <div class="b wrapper-box">
-    数据统计
+    <h3 class="fz14">互动统计</h3>
+    <div class="posct wrapper-border m-t10" style="height: 260px;">暂无互动统计数据</div>
   </div>
 </template>
 
