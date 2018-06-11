@@ -49,7 +49,7 @@
                 <i-input class="width-letf" placeholder="请输入关键字" v-model="formData.keyWord"></i-input>
               </i-col>
               <i-col>
-                <Button type="primary"  class="m-r15 m-l5" icon="ios-search" @click="searchDriver">搜索</Button>
+                <Button type="primary"  class="m-l5" icon="ios-search" @click="searchDriver">搜索</Button>
               </i-col>
             </Row>
           </i-col>
@@ -57,11 +57,11 @@
         <div class="m-t10">
           <Row type="flex" justify="start">
             <i-col span="16" style="line-height: 24px">
-              已选择 <span class="c1">0</span> 人
-              <Button type="primary" :disabled="disabledEvent">批量审核</Button>
-              <Button type="primary" :disabled="disabledEvent">标记已签到</Button>
-              <Button type="primary" :disabled="disabledEvent">标记未签到</Button>
-              <Button type="primary" :disabled="disabledEvent">发送电子票</Button>
+              已选择 <span class="c1">{{selectList.length}}</span> 人
+              <Button type="primary" :disabled="selectList.length > 0 ? false : true">批量审核</Button>
+              <Button type="primary" :disabled="selectList.length > 0 ? false : true">标记已签到</Button>
+              <Button type="primary" :disabled="selectList.length > 0 ? false : true">标记未签到</Button>
+              <Button type="primary" :disabled="selectList.length > 0 ? false : true">发送电子票</Button>
             </i-col>
             <i-col span="8">
               <Row type="flex" justify="end">
@@ -76,8 +76,8 @@
         </div>
       </Form>
     </div>
-    <div class="content-wrapper m-t10 wrapper-border m-t10">
-      <Table border ref="selection" @on-selection-change="onTableSelect" :columns="columns4" :data="data1" class="m-t10"></Table>
+    <div class="content-wrapper m-t10 wrapper-border">
+      <Table border ref="selection" @on-selection-change="onTableSelect" :columns="columns4" :data="data1" ></Table>
     </div>
   </div>
 </template>
@@ -96,8 +96,7 @@
           checkinType: "签到方式",
           sendMsgFlag: "是否发送电子票",
         },
-
-        disabledEvent: true,
+        selectList: [],
         columns4: [
           {
             type: 'selection',
@@ -123,7 +122,7 @@
                   style: {marginRight: '5px'},
                   on: {
                     click: () => {
-                      this.show(params.index)
+                      this.$Message.warning('详情')
                     }
                   }
                 }, '详情'),
@@ -132,7 +131,7 @@
                   style: {marginRight: '5px'},
                   on: {
                     click: () => {
-                      this.remove(params.index)
+                      this.$Message.warning('编辑')
                     }
                   }
                 }, '编辑'),
@@ -140,7 +139,7 @@
                   props: {type: 'error',size: 'small'},
                   on: {
                     click: () => {
-                      this.remove(params.index)
+                      this.$Message.warning('删除')
                     }
                   }
                 }, '删除')
@@ -184,7 +183,7 @@
     methods: {
       onTableSelect (rows) {
         console.log("===========" + rows)
-        this.disabledEvent = rows.length == 0 ? true: false
+        this.selectList = rows
       },
       searchDriver(){
         this.$Message.warning('搜索')
