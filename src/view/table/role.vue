@@ -122,7 +122,8 @@
               return this.tdRender(h, params)
             }},*/
           {title: '操作',
-            width: 130,
+            width: 100,
+            align: 'center',
             render: (h, params) => {
               return h('div', [
                 h('Button', {
@@ -134,7 +135,7 @@
                     }
                   }
                 }, '修改'),
-                h('Button', {
+                /*h('Button', {
                   style: {marginRight: '5px'},
                   props: {type: 'warning', size: 'small'},
                   nativeOn: {
@@ -142,7 +143,7 @@
                       this.confirmDelete(params.row.id) // sys/deleteStudentInfo
                     }
                   }
-                }, '删除')
+                }, '删除')*/
               ])
             }
           }

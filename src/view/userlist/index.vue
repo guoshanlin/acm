@@ -49,7 +49,7 @@
                 <i-input class="width-letf" placeholder="请输入关键字" v-model="formData.keyWord"></i-input>
               </i-col>
               <i-col>
-                <Button type="primary"  class="m-l5" icon="ios-search" @click="searchDriver">搜索</Button>
+                <Button type="primary" class="m-l5" icon="ios-search" @click="searchDriver">搜索</Button>
               </i-col>
             </Row>
           </i-col>
@@ -68,7 +68,7 @@
                 <i-col>
                   <Button type="primary">单个添加</Button>
                   <Button type="primary">批量导入</Button>
-                  <Button type="primary">导出</Button>
+                  <Button type="primary" @click="exportTable">导出</Button>
                 </i-col>
               </Row>
             </i-col>
@@ -77,7 +77,8 @@
       </Form>
     </div>
     <div class="content-wrapper m-t10 wrapper-border">
-      <Table border ref="selection" @on-selection-change="onTableSelect" :columns="columns4" :data="data1" ></Table>
+      <Table id="usetlistTable" :width="tableWidth" border ref="$table" @on-selection-change="onTableSelect"
+             :columns="col" :data="tableData"></Table>
     </div>
   </div>
 </template>
@@ -87,6 +88,7 @@
     name: "index",
     data() {
       return {
+        tableWidth: document.documentElement.clientWidth - 379,
         formData: {
           keyWord: '',
           trading: "不限",
@@ -97,28 +99,88 @@
           sendMsgFlag: "是否发送电子票",
         },
         selectList: [],
-        columns4: [
+        col: [
           {
             type: 'selection',
             width: 60,
+            fixed: 'left',
             align: 'center'
           },
           {
-            title: 'Name',
-            key: 'name'
+            title: '头像昵称',
+            width: 220,
+            render: (h, params) => {
+              return h('div', [
+                h('Avatar', {
+                  style: {marginRight: '5px'},
+                  props: {
+                    src: 'http://localhost:8080/api//files/xheditor/20180611/jpg/%E5%A4%A7%E5%8A%9E%E5%85%AC%E5%8C%BA2.jpg'
+                  }
+                }),
+                h('span', params.row.name)
+              ])
+            }
           },
           {
-            title: 'Age',
-            key: 'age'
+            title: '参会人信息',
+            width: 220,
+            render: (h, params) => {
+              return h('div', [
+                h('Avatar', {
+                  style: {marginRight: '5px'},
+                  props: {
+                    src: 'http://localhost:8080/api//files/xheditor/20180611/jpg/%E5%A4%A7%E5%8A%9E%E5%85%AC%E5%8C%BA2.jpg'
+                  }
+                }),
+                h('span', params.row.name)
+              ])
+            }
+          },
+          {
+            title: "来源",
+            align: 'center',
+            width: 100,
+            key: "origin"
+          },
+          {
+            title: "座位",
+            align: 'center',
+            width: 100,
+            key: "age"
+          },
+          {
+            title: "是否发送电子票",
+            align: 'center',
+            width: 130,
+            key: "origin"
+          },
+          {
+            title: "参会状态",
+            align: 'center',
+            width: 100,
+            key: "origin"
+          },
+          {
+            title: "签到状态",
+            align: 'center',
+            width: 100,
+            key: "origin"
+          },
+          {
+            title: "签到方式",
+            align: 'center',
+            width: 100,
+            key: "origin"
           },
           {
             title: '操作',
             width: 170,
+            fixed: 'right',
             align: 'center',
             render: (h, params) => {
               return h('div', [
                 h('Button', {
-                  props: {type: 'primary',size: 'small'},
+                  props: {type: 'primary', size: 'small'},
                   style: {marginRight: '5px'},
                   on: {
                     click: () => {
@@ -127,7 +189,7 @@
                   }
                 }, '详情'),
                 h('Button', {
-                  props: {type: 'primary',size: 'small'},
+                  props: {type: 'primary', size: 'small'},
                   style: {marginRight: '5px'},
                   on: {
                     click: () => {
@@ -136,7 +198,7 @@
                   }
                 }, '编辑'),
                 h('Button', {
-                  props: {type: 'error',size: 'small'},
+                  props: {type: 'error', size: 'small'},
                   on: {
                     click: () => {
                       this.$Message.warning('删除')
@@ -147,28 +209,32 @@
             }
           }
         ],
-        data1: [
+        tableData: [
           {
             name: 'John Brown',
             age: 18,
+            origin: "后台添加",
             address: 'New York No. 1 Lake Park',
             date: '2016-10-03'
           },
           {
             name: 'Jim Green',
             age: 24,
+            origin: "后台添加",
             address: 'London No. 1 Lake Park',
             date: '2016-10-01'
           },
           {
             name: 'Joe Black',
             age: 30,
+            origin: "后台添加",
             address: 'Sydney No. 1 Lake Park',
             date: '2016-10-02'
           },
           {
             name: 'Jon Snow',
             age: 26,
+            origin: "后台添加",
             address: 'Ottawa No. 2 Lake Park',
             date: '2016-10-04'
           }
@@ -181,13 +247,16 @@
       }, 20)
     },
     methods: {
-      onTableSelect (rows) {
+      onTableSelect(rows) {
         console.log("===========" + rows)
         this.selectList = rows
       },
-      searchDriver(){
+      searchDriver() {
         this.$Message.warning('搜索')
       },
+      exportTable: function () {
+        this.$refs.$table.exportCsv({filename: "user.csv"})
+      }
     }
   }
 </script>
