@@ -24,11 +24,18 @@
 <script>
   import topHeader from 'components/header'
   import iFooter from 'components/footer'
+
+  import {mapGetters} from 'vuex'
   export default {
     data () {
       return {}
     },
     methods: {
+    },
+    computed: {
+      ...mapGetters([
+        'isLogin'
+      ])
     },
     components: {
       topHeader,

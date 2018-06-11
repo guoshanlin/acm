@@ -1,7 +1,8 @@
 <template>
   <div class="fbox">
     <div class="pic-datails">
-      <img width="100%" height="100%" v-lazy="loadImg">
+      <img v-if="row && row.posterUrl && row.posterUrl.indexOf('xheditor') != -1" width="100%" height="100%" :src="loadImg">
+      <img v-if="row && row.posterUrl == ''" width="100%" height="100%" v-lazy="loadUrl">
       <span class="tips b1 c">进行中</span>
     </div>
     <div class="info-datails flex c2">
@@ -47,7 +48,8 @@
     name: 'index',
     data () {
       return {
-        loadImg: process.env.NODE_ENV === 'production' ? this.row.posterUrl : process.env.API + this.row.posterUrl
+        loadImg: '',
+        loadUrl: ''
       }
     },
     props: {
@@ -66,6 +68,11 @@
       exmine () {
         this.$emit('exmine', this.row)
       }
+    },
+    beforeCreate () {
+      this.$nextTick(() => {
+        this.loadImg = process.env.NODE_ENV === 'production' ? this.row.posterUrl : process.env.API + this.row.posterUrl
+      })
     }
   }
 </script>

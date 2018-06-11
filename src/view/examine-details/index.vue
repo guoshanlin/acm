@@ -5,6 +5,15 @@
     </div>
     <div class="datails-item m-t10">
       <div class="fbox">
+         <div class="datails-flex-item t-right"><h3>票种:</h3></div>
+         <div class="flex t-left">
+           <div v-if="data.isNeedPay == 0">免费</div>
+           <div v-if="data.isNeedPay == 1">&nbsp;<span class="span-title">非会员价:</span>&nbsp;{{data.nonMBPrice}}元&nbsp;&nbsp;&nbsp;<span class="span-title">会员价:</span>&nbsp;{{data.mbPrice}}元</div>
+         </div>
+      </div>
+    </div>
+    <div class="datails-item m-t10">
+      <div class="fbox">
          <div class="datails-flex-item t-right"><h3>活动标签:</h3></div>
          <div class="flex t-left">
            <Tag color="blue" v-for="item in label" :key="item">{{item}}</Tag>
@@ -171,5 +180,13 @@
 <style>
   .wrapper{margin: 10px}
   .datails-flex-item { display: inline-block; width: 100px; margin-right: 10px}
+  .span-title{ font-weight: bold}
   .datails-item{position: relative; border: 1px solid #e3e2e5; padding: 10px; border-radius: 5px; line-height: 26px;}
+  pre {
+    white-space: pre-wrap; /*css-3*/
+    white-space: -moz-pre-wrap; /*Mozilla,since1999*/
+    white-space: -pre-wrap; /*Opera4-6*/
+    white-space: -o-pre-wrap; /*Opera7*/
+    word-wrap: break-word; /*InternetExplorer5.5+*/
+  }
 </style>

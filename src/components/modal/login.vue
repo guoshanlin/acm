@@ -90,7 +90,7 @@
 
 <script>
 
-  import {setUserInfo} from 'js/cache'
+  import {setUserInfo, setIsLogin} from 'js/cache'
   import {mapMutations, mapGetters} from 'vuex'
 
   export default {
@@ -179,7 +179,8 @@
     },
     computed: {
       ...mapGetters([
-        'userData'
+        'userData',
+        'isLogin'
       ])
     },
     destroyed () {
@@ -187,7 +188,8 @@
     },
     methods: {
       ...mapMutations({
-        setUserDate: 'SET_USERDATA'
+        setUserDate: 'SET_USERDATA',
+        setIsLogin: 'SET_ISLOGIN'
       }),
       /**
        * 登录前的验证
@@ -215,12 +217,16 @@
           passWord: this.formInline.password
         }
         const _url = 'login'
+        setIsLogin(false)
+        this.setIsLogin(false)
         this.requestAjax(_type, _url, _params).then((data) => {
           if (data.success) {
             this.loginFail = false
             this.setUserDate(data.data.member)
+            this.setIsLogin(true)
             setUserInfo(data.data.member)
-            this.$emit('onCancel')
+            setIsLogin(true)
+            this.$emit('onCancel', {login: true})
           } else {
             this.loginFail = true
           }

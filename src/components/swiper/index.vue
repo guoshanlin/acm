@@ -1,7 +1,7 @@
 <template>
   <div class="swiper">
     <swiper :options="swiperOption">
-      <swiper-slide v-for="(item, index) in slides" :key="index"><img :src="item"></swiper-slide>
+      <swiper-slide v-for="(item, index) in rows" :key="index"><img :src="item"></swiper-slide>
       <div class="swiper-button-prev" slot="button-prev"></div>
       <div class="swiper-button-next" slot="button-next"></div>
       <div class="swiper-pagination" slot="pagination"></div>
@@ -16,14 +16,6 @@
     name: 'index',
     data () {
       return {
-        slides: [
-          'http://cdn.huodongxing.com/Content/app/appom/993069407002304.jpg',
-          'http://cdn.huodongxing.com/Content/app/appom/893071387995808.jpeg',
-          'http://cdn.huodongxing.com/Content/app/appom/793072403595469.jpg',
-          'http://cdn.huodongxing.com/Content/app/appom/843071389755810.jpg',
-          'http://cdn.huodongxing.com/Content/app/appom/223070723428571.jpg'
-        ],
-        // 轮播config
         swiperOption: {
           watchSlidesProgress: true,
           loop: true,
@@ -46,6 +38,9 @@
 
         }
       }
+    },
+    props: {
+      rows: ''
     },
     components: {
       swiper,

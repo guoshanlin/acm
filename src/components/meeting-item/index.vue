@@ -9,7 +9,7 @@
       <h3 class="fz13">{{row.name}}</h3>
       <div class="fbox">
         <div class="flex">
-          <div>会议ID：16434 <span class="b2 c3 meeting-version">体验版</span></div>
+          <div>会议ID：{{row.id}} <span class="b2 c3 meeting-version">体验版</span></div>
         </div>
         <div class="flex">
           <div class="">发布时间：{{formatterObjTime(row.createTime)}}</div>

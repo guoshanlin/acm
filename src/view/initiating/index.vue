@@ -461,9 +461,11 @@
                 this.disabled = false
                 this.routePush('/meeting')
               } else {
+                this.disabled = false
                 this.$Message.success('发布失败')
               }
             },(err) => {
+              this.disabled = false
               this.$Message.success('发布失败')
             })
         }

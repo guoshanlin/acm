@@ -11,8 +11,16 @@
         <div class="float-r header-r">
            <div>
              <Row type="flex" justify="center" class="code-row-bg">
-               <i-col><div class="header-nav"><a @click="loginShow = true">注册/登录</a></div></i-col>
-               <i-col><div class="header-nav"><a @click="routePush('/meeting')">主办方管理中心</a></div></i-col>
+               <i-col><div class="header-nav"><a v-if="!showAdmin" @click="loginShow = true">注册/登录</a></div>
+                 <Dropdown  v-if="showAdmin"  class="drop-index-header" @on-click="handleSubmit">
+                   <a href="javascript:void(0)" class="c3">{{userData.phone}}<Icon type="arrow-down-b"></Icon></a>
+                   <DropdownMenu slot="list">
+                     <DropdownItem name="my">我的活动</DropdownItem>
+                     <DropdownItem  name="logout" divided>退出</DropdownItem>
+                   </DropdownMenu>
+                 </Dropdown>
+               </i-col>
+               <i-col><div class="header-nav" v-if="showAdmin"><a @click="routePush('/meeting')">主办方管理中心</a></div></i-col>
                <i-col><div class="header-nav"><a>网站地图</a></div></i-col>
                <i-col><div class="header-nav"><a>联系我们</a></div></i-col>
                <i-col><div class="header-nav"><a>帮助中心</a></div></i-col>
@@ -29,7 +37,7 @@
                  <div class="header-nav"><i-button type="primary">搜索</i-button></div>
                </i-col>
                <i-col>
-                 <div class="header-nav"><i-button type="primary" @click="routePush('/index/initiating')">发起活动</i-button></div>
+                 <div class="header-nav"><i-button type="primary" @click="routePush('/meeting/initiating')">发起活动</i-button></div>
                </i-col>
              </Row>
            </div>
@@ -38,30 +46,36 @@
       </div>
     </Menu>
     <div v-if="loginShow">
-      <i-login @onCancel="loginShow = false"></i-login>
+      <i-login @onCancel="onCancel"></i-login>
     </div>
   </div>
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
+  import {setIsLogin} from 'js/cache'
+  import {mapMutations, mapGetters} from 'vuex'
   import iLogin from 'components/modal/login'
   export default {
     data () {
       return {
+        showAdmin: false,
         searchKey: '',
         loginShow: false
       }
     },
     computed: {
       ...mapGetters([
-        'userData'
+        'userData',
+        'isLogin'
       ])
     },
     destroyed () {
 
     },
     methods: {
+      ...mapMutations({
+        setIsLogin: 'SET_ISLOGIN'
+      }),
       /**
        *
        * 退出登录
@@ -70,23 +84,33 @@
         const _type = 'POST'
         const _params = {}
         const _url = 'logout'
-        this.requestAjax(_type, _url, _params, (res) => {
-          this.logoutThen(res)
-        })
+        this.requestAjax(_type, _url, _params).then((res) => {}, () => {})
+        this.showAdmin= false
+        setIsLogin(false)
+        this.setIsLogin(false)
       },
-      /**
-       * 退出后触发
-       * @param res
-       */
-      logoutThen (res) {
-         if (res.data.success) {
-           /*this.$router.push('/login')*/
-         }
+      onCancel (obj) {
+        this.loginShow = false
+        if (obj && obj.login) {
+          this.showAdmin = obj.login
+        }
+      },
+      handleSubmit (name) {
+        console.log(name)
+        switch ('' + name) {
+          case 'my': // 我的活动/展会
+            break
+          case 'logout': // 退出登录
+            this.logout()
+            break
+          default:
+        }
       }
     },
     mounted () {
       this.$nextTick(() => {
-
+        console.log(this.isLogin)
+        this.showAdmin = this.isLogin
       })
     },
     components: {
@@ -104,4 +128,5 @@
   .header-r>div{height: 65px; line-height: 65px;}
   .header-nav{margin: 0px 15px;}
   .header-nav a{color:#000000;}
+  .drop-index-header .ivu-select-dropdown{top:50px !important;}
 </style>

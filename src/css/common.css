@@ -81,7 +81,7 @@ table {border-collapse: collapse;border-spacing: 0;}
 .t-left{text-align: left!important;}
 .t-right{text-align: right!important;}
 .t-center{text-align: center!important;}
-.in-line{display: inline-block!important;}
+.in-line{display: inline-block;}
 
 .l-h20{line-height: 20px!important;}
 .l-h30{line-height: 30px!important;}
@@ -162,4 +162,24 @@ table {border-collapse: collapse;border-spacing: 0;}
 
 .ivu-tooltip-inner{
   white-space: normal;
+}
+
+
+.ivu-time-picker-cells-ul {
+  padding-bottom: 0px !important;
+}
+.ivu-time-picker-cells-list {
+  height: 150px;
+  max-height: none !important;
+}
+.ivu-date-picker-cells {
+  margin: 0 10px !important;
+}
+.ivu-date-picker-cells span em {
+  height: 20px !important;
+  line-height: 20px !important;
+  margin: 0 2px !important;
+}
+span.ivu-date-picker-cells-cell {
+  height: 20px !important;
 }
