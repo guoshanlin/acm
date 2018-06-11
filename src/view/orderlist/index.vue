@@ -26,7 +26,7 @@
               </i-col>
               <i-col>
                 <Button type="primary" class="m-l5" icon="ios-search" @click="searchDriver">搜索</Button>
-                <Button type="primary">导出</Button>
+                <Button type="primary" @click="exportTable">导出</Button>
               </i-col>
             </Row>
           </i-col>
@@ -49,7 +49,7 @@
       </Form>
     </div>
     <div class="content-wrapper m-t10 wrapper-border">
-      <Table id="usetlistTable" :width="tableWidth" border ref="selection" @on-selection-change="onTableSelect"
+      <Table id="usetlistTable" :width="tableWidth" border ref="$table" @on-selection-change="onTableSelect"
              :columns="col" :data="tableData"></Table>
     </div>
   </div>
@@ -219,6 +219,9 @@
       },
       orderStatusChange(v){
         this.$Message.warning(v)
+      },
+      exportTable: function () {
+        this.$refs.$table.exportCsv({filename: "order.csv"})
       }
     }
   }

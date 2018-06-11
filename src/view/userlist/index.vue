@@ -68,7 +68,7 @@
                 <i-col>
                   <Button type="primary">单个添加</Button>
                   <Button type="primary">批量导入</Button>
-                  <Button type="primary">导出</Button>
+                  <Button type="primary" @click="exportTable">导出</Button>
                 </i-col>
               </Row>
             </i-col>
@@ -77,7 +77,7 @@
       </Form>
     </div>
     <div class="content-wrapper m-t10 wrapper-border">
-      <Table id="usetlistTable" :width="tableWidth" border ref="selection" @on-selection-change="onTableSelect"
+      <Table id="usetlistTable" :width="tableWidth" border ref="$table" @on-selection-change="onTableSelect"
              :columns="col" :data="tableData"></Table>
     </div>
   </div>
@@ -254,6 +254,9 @@
       searchDriver() {
         this.$Message.warning('搜索')
       },
+      exportTable: function () {
+        this.$refs.$table.exportCsv({filename: "user.csv"})
+      }
     }
   }
 </script>
