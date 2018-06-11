@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper fbox">
-    <div class="wrapper-box b" style="width: 140px;margin-right: 10px;height: fit-content;">
+    <div class="wrapper-box b" style="min-width: 140px;margin-right: 10px;height: fit-content;">
 
       <Menu theme="light" :active-name="activeNenu" width="auto"  class="menu-wrapper" @on-select="changeMenu">
         <template  v-for="(item,i) in menuList">
