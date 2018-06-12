@@ -75,7 +75,7 @@
     },
     methods: {
       changeMenu(name){
-        this.$router.push(name)
+        this.routePush(name, this.$route.query.id)
       }
     }
   }

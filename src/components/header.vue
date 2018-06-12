@@ -13,7 +13,7 @@
              <Row type="flex" justify="center" class="code-row-bg">
                <i-col><div class="header-nav"><a v-if="!showAdmin" @click="loginShow = true">注册/登录</a></div>
                  <Dropdown  v-if="showAdmin"  class="drop-index-header" @on-click="handleSubmit">
-                   <a href="javascript:void(0)" class="c3">{{userData.phone}}<Icon type="arrow-down-b"></Icon></a>
+                   <a href="javascript:void(0)" class="c3">{{userData.nickName}}/{{userData.phone}}<Icon type="arrow-down-b"></Icon></a>
                    <DropdownMenu slot="list">
                      <DropdownItem name="my">我的活动</DropdownItem>
                      <DropdownItem  name="logout" divided>退出</DropdownItem>

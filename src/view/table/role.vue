@@ -58,7 +58,6 @@
       window.onresize = function () {
       }
       clearInterval(this.timer)
-      this.destroyALLScroll()
     },
     data () {
       return {
@@ -487,7 +486,7 @@
           channel: _b ? '' + row.channel : '0',
           level: _b ? '' + row.level : '0',
           address: _b ? row.address : '',
-          validTime: _b ? this.formatterObjTime(row.validTime) : ''
+          validTime: _b ? '' + this.formatterObjTime(row.validTime, 'yyyy-MM-dd hh:mm:ss') : ''
         }
         if (_b) {
           this.inputForm.value.id = row.id

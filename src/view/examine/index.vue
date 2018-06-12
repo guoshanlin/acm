@@ -205,6 +205,7 @@
         const _type = 'GET'
         const _params = this.parms
         const _url = 'activitys'
+        this.data = []
         this.requestAjax(_type, _url, _params).then((data) => {
           if (!data.message) {
             this.total = !isNaN(+data.data.total) ? +data.data.total : 0
@@ -223,6 +224,10 @@
           this.initItem()
         }, 60 * 1000)
       })
+    },
+    destroyed () {
+      window.onresize = function () {}
+      clearInterval(this.timer)
     }
   }
 </script>

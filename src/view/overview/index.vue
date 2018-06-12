@@ -64,7 +64,8 @@
     },
     methods: {
       getTicket() {
-        this.requestAjax("get", "ticket", {}).then((data) => {
+        console.log(this.$route.query.id)
+        this.requestAjax("get", "report", {id: this.$route.query.id}).then((data) => {
           console.log(JSON.stringify(data))
         })
       }

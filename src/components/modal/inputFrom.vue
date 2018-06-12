@@ -95,18 +95,10 @@
                   <Option v-for="item in select[rows.id]" :value="item.value" :key="item.value">{{ item.label }}
                   </Option>
                 </Select>
-
-                <Date-picker v-if="rows.type=='time'"
-                             :value="fromVal[rows.id]"
-                             type="datetime"
-                             format="yyyy-MM-dd HH:mm:ss"
-                             :placeholder="rows.required ? '请选择日期和时间(必选）':'请选择日期和时间'"
-                             style="width:100%"
-                             @on-change="handleChange(arguments[0], rows.id)"
-                             :editable="editable"
-                             @on-clear="handleChange('clear', rows.id)">
-
-                </Date-picker>
+                <div v-if="rows.type=='time'" class="ivu-input-wrapper ivu-input-type">
+                  <i class="ivu-icon ivu-icon-ios-calendar-outline ivu-input-icon ivu-input-icon-normal"></i>
+                  <input :id="rows.id" :value="fromVal[rows.id]" autocomplete="off" spellcheck="false" type="text" :placeholder="rows.required ? '请选择日期和时间(必选）':'请选择日期和时间'" class="ivu-input" @click='initTime(rows.id)'>
+                </div>
               </i-col>
             </div>
         </Row>
@@ -119,6 +111,8 @@
   </Modal>
 </template>
 <script type="es6">
+  import utils from 'js/utils'
+
   export default {
     data () {
       return {
@@ -280,36 +274,24 @@
             if (v.valueType !== undefined && this.fromVal[v.id] !== '') {
               let testValue = false
               // 验证ip格式
-              if (v.valueType === 'ip') { // 验证ip格式
-                let reg = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
-                if (!reg.test(this.fromVal[v.id])) {
+              if (v.valueType === 'ip' && !utils.isIp(this.fromVal[v.id])) {
                   testValue = true
-                }
               }
               // 验证固定电话格式
-              if (v.valueType === 'telephone') {
-                let regPhone = /^(^0\d{2}-?\d{8}$)|(^0\d{3}-?\d{7}$)|(^0\d2-?\d{8}$)|(^0\d3-?\d{7}$)$/
-                if (!regPhone.test(this.fromVal[v.id])) {
+              if (v.valueType === 'telephone' && !utils.isMobile(this.fromVal[v.id])) {
                   testValue = true
-                }
               }
               // 验证手机号格式
-              if (v.valueType === 'mobilePhone') {
-                let regMobile = /^1[3,5,8]\d{9}$/
-                if (!regMobile.test(this.fromVal[v.id])) {
+              if (v.valueType === 'mobilePhone' && utils.isPhone(this.fromVal[v.id])) {
                   testValue = true
-                }
               }
-              // 验证手机号格式
-              if (v.valueType === 'idCard' && !this.testId(this.fromVal[v.id])) {
+              // 验证身份证号格式
+              if (v.valueType === 'idCard' && !utils.IdentityCodeValid(this.fromVal[v.id])) {
                   testValue = true
               }
               // 验证邮箱格式
-              if (v.valueType === 'email') {
-                let regEmail = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
-                if (!regEmail.test(this.fromVal[v.id])) {
-                  testValue = true
-                }
+              if (v.valueType === 'email' && !utils.isEmail(this.fromVal[v.id])) {
+                testValue = true
               }
               if (testValue) {
                 this.$Message.error(v.title + '输入格式不合理')
@@ -396,48 +378,21 @@
         }
       },
       /**
-       * 验证身份证
-       * @param idCard
-       * @returns {*}
+       * 时间框架初始化
+       * @param bId
        */
-      testId (idCard) {
-        // 15位和18位身份证号码的正则表达式
-        let regIdCard = /^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/
-
-        // 如果通过该验证，说明身份证格式正确，但准确性还需计算
-        if (regIdCard.test(idCard)) {
-          if (idCard.length === 18) {
-            let idCardWi = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2) // 将前17位加权因子保存在数组里
-            let idCardY = new Array(1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2) // 这是除以11后，可能产生的11位余数、验证码，也保存成数组
-            let idCardWiSum=0 // 用来保存前17位各自乖以加权因子后的总和
-            for (let i = 0; i < 17; i++) {
-              idCardWiSum += idCard.substring(i, i + 1) * idCardWi[i]
-            }
-
-            let idCardMod = idCardWiSum % 11 // 计算出校验码所在数组的位置
-            let idCardLast = idCard.substring(17) // 得到最后一位身份证号码
-
-            // 如果等于2，则说明校验码是10，身份证号码最后一位应该是X
-            if (idCardMod === 2) {
-              if (idCardLast === 'X' || idCardLast === 'x') {
-                return true
-              } else {
-                return false
-              }
-            } else {
-              // 用计算出的验证码与最后一位身份证号码匹配，如果一致，说明通过，否则是无效的身份证号码
-              if (idCardLast === idCardY[idCardMod]) {
-                return true
-              } else {
-                return false
-              }
-            }
+      initTime (bId) {
+        let _this = this
+        WdatePicker({
+          el: '' + bId,
+          dateFmt: 'yyyy-MM-dd HH:mm:ss',
+          autoPickDate: false,
+          onpicking: function (dp) {
+            console.log('initTime', dp.cal.getNewDateStr())
+            _this.fromVal[bId] = dp.cal.getNewDateStr()
           }
-          return true
-        } else {
-          return false
-        }
-      }
+        })
+      },
     }
   }
 </script>

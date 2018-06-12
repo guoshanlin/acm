@@ -22,7 +22,10 @@ export default {
       activitys: {url: 'activitys', pre: preuUrl},
       // 下载会员导入木本
       filesDown: {url: 'files/down', pre: preuUrl},
-      ticket: {url: 'ticket', pre: preuUrl}
+      // 查询票券信息
+      ticket: {url: 'ticket', pre: preuUrl},
+      // 查询活动信息
+      report: {url: 'activitys/report', pre: preuUrl}
     }
     /**
      * 获取url

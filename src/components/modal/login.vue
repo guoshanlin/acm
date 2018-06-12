@@ -95,13 +95,14 @@
 
   import {setUserInfo, setIsLogin} from 'js/cache'
   import {mapMutations, mapGetters} from 'vuex'
+  import utils from 'js/utils'
 
   export default {
     data () {
       const checkPhone = (rule, value, callback) => {
           if (value === '') {
             callback(new Error('请输入手机号'))
-          } else if (!/^1\d{10}$/.test(value)) {
+          } else if (utils.isPhone(value)) {
           callback(new Error('请输入正确的手机号'))
         } else {
             callback()

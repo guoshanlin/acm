@@ -32,7 +32,7 @@
         <h3 class="c2">使用指南</h3>
       </div>
       <ul class="rig-list-wrapper">
-        <li><a class="c2">如何进入微盟活动小程序？</a></li>
+        <li><a class="c2">如何进入科微活动小程序？</a></li>
         <li><a class="c2">活动邀请函如何修改基本信息？</a></li>
         <li><a class="c2">活动邀请函如何修改活动议程？</a></li>
         <li><a class="c2">如何查看报名的具体人员情况？</a></li>

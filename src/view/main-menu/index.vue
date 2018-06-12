@@ -8,7 +8,7 @@
         <i-col class="header-col">套餐升级</i-col>-->
         <i-col class="header-col">
         <Dropdown @on-click="handleSubmit">
-          <a href="javascript:void(0)" class="c3">{{userData.phone}}<Icon type="arrow-down-b"></Icon>
+          <a href="javascript:void(0)" class="c3">{{userData.nickName}}/{{userData.phone}}<Icon type="arrow-down-b"></Icon>
           </a>
           <DropdownMenu slot="list">
            <!-- <DropdownItem>商户列表</DropdownItem>-->
@@ -21,7 +21,7 @@
     </div>
     <div class="cloud-left-menu">
 
-      <div class="user-pic-wrapper posct" @click="routePush('/index')">
+      <div class="user-pic-wrapper posct cursor-p" @click="routePush('/index')">
         <img src="../../assets/logo_core.png">
       </div>
 

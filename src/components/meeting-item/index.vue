@@ -1,6 +1,6 @@
 <template>
   <div class="fbox meeting-item">
-    <Button class="manage-btn" type="primary" @click="routePush('/base/overview')">管理</Button>
+    <Button class="manage-btn" type="primary" @click="routePush('/base/overview',row.id)">管理</Button>
     <div class="pic-wrapper">
       <img width="100%" height="100%" v-lazy="loadImg">
       <span class="tips b1 c">{{getActiveStatus(row.status)}}</span>

@@ -176,11 +176,11 @@ export default {
      * @param time
      * @returns {*}
      */
-    Vue.prototype.formatterObjTime = function (time) {
+    Vue.prototype.formatterObjTime = function (time, type) {
         if (time === undefined || time === null || time === '') {
           return ''
         }
-        return Date.formatByTimes(time.time, 'yyyy-MM-dd hh:mm')
+        return Date.formatByTimes(time.time, type || 'yyyy-MM-dd hh:mm')
       }
     /**
      * 比较时间大小
