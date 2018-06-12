@@ -251,7 +251,7 @@
         this.tableDetails.show = true
         this.tableDetails.modalshow = true
         this.tableDetails.option = {
-          title: '用户详情',
+          title: '会员详情',
           width: '768',
           tabPane: false,
           uEditor: false,
@@ -317,7 +317,7 @@
         this.inputForm.show = true
         this.inputForm.modalDisabled = false
         this.inputForm.option = {
-          title: _b ? '修改用户' : '新增用户',
+          title: _b ? '修改会员' : '新增会员',
           width: '768',
           opintions: [
             [
@@ -524,15 +524,15 @@
         const _type = 'POST'
         this.requestAjax(_type, url, obj).then((data) => {
           if (data.success) {
-            this.$Message.success(this.clickType + '用户成功')
+            this.$Message.success(this.clickType + '会员成功')
             this.inputForm.modalshow = false
             this.loadTable()
           } else if (!data.message) {
-            this.$Message.success(this.clickType + '用户失败')
+            this.$Message.success(this.clickType + '会员失败')
           }
           this.inputForm.modalDisabled = false
         }, (err) => {
-          this.$Message.success(this.clickType + '用户失败')
+          this.$Message.success(this.clickType + '会员失败')
           this.inputForm.modalDisabled = false
         })
       },
@@ -541,7 +541,7 @@
        */
       deleteAll () {
         if (this.selectRows === '' || this.selectRows.length === 0) {
-          this.$Message.error('请选择要删除的用户')
+          this.$Message.error('请选择要删除的会员')
           return
         }
         let id = []

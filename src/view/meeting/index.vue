@@ -61,7 +61,14 @@
 <script>
   import meetingItem from 'components/meeting-item/index'
   import rightAside from 'components/right-aside/index'
+  import {mapGetters} from 'vuex'
+
   export default {
+    computed: {
+      ...mapGetters([
+        'userData'
+      ])
+    },
     data () {
       return {
         keyWord: '',
@@ -93,7 +100,7 @@
        */
       changePage (v) {
         this.parms.offset = v
-        this.$Message.warning(v)
+        this.initItem()
       },
       /**
        *改变页面展示用户条数
@@ -101,7 +108,7 @@
        */
       changeSize (v) {
         this.parms.limit = v
-        this.$Message.warning(v)
+        this.initItem()
       },
       /**
        * 加载活动
@@ -124,6 +131,7 @@
     },
     mounted () {
       this.$nextTick(() => {
+        this.parms.memberId = this.userData.id
         this.initItem()
         document.querySelector('.ivu-page-options-elevator').title = '输入后回车跳至指定页'
         clearInterval(this.timer)

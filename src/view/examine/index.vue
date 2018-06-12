@@ -40,6 +40,7 @@
 <script>
   import activityItem from 'components/activity-item/index'
   import inputFrom from 'components/modal/inputFrom.vue'
+  import {mapGetters} from 'vuex'
 
   export default {
     name: 'index',
@@ -108,6 +109,11 @@
         }
       }
     },
+    computed: {
+      ...mapGetters([
+        'userData'
+      ])
+    },
     components: {
       activityItem,
       inputFrom
@@ -119,6 +125,7 @@
        */
       changePage (v) {
         this.parms.offset = v
+        this.initItem()
       },
       /**
        *改变页面展示用户条数
@@ -126,6 +133,7 @@
        */
       changeSize (v) {
         this.parms.limit = v
+        this.initItem()
       },
       /**
        * 切换tab
@@ -207,6 +215,7 @@
     },
     mounted () {
       this.$nextTick(() => {
+        this.parms.memberId = this.userData.id
         this.initItem()
         document.querySelector('.ivu-page-options-elevator').title = '输入后回车跳至指定页'
         clearInterval(this.timer)

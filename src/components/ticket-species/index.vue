@@ -39,7 +39,6 @@
               })
             }},
           {
-            width: 150,
             title: '票种',
             render: (h, params) => {
               return h('Select', {
@@ -109,7 +108,6 @@
             }
           },*/
           {
-            width: 220,
             title: '普通票价',
             render: (h, params) => {
               return h('div', [
@@ -148,8 +146,8 @@
                   }
                 })])
             }
-          },
-          {
+          }
+ /*         {
             width: 220,
             title: '限额',
             render: (h, params) => {
@@ -164,12 +162,12 @@
                     },
                     'on-blur': (event) => {
                       this.data[params.index].quota = this.remData[params.index].quota
-                  /*    this.onChange(this.remData[params.index].quota, 'quota', params.index)*/
+                  /!*    this.onChange(this.remData[params.index].quota, 'quota', params.index)*!/
                     }
                   }
                 })])
             }
-          }
+          }*/
         /*  {
             title: '操作',
             width: 150,

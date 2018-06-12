@@ -59,19 +59,8 @@
              </div>
              <div class="float-r form-fill">
                <div class="t-left">
-                 <!--     applyBeginTime: '',
-              applyEndTime: '',
-              beginTime: '',
-              endTime: '',-->
-                 <Row>
-                   <i-col span="12">
-                     <DatePicker v-model="fromVal.beginTime" class="full-width" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="活动开始时间 "></DatePicker>
-                   </i-col>
-                   <i-col span="12">
-                     <DatePicker v-model="fromVal.endTime" class="full-width" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="活动结束时间"></DatePicker>
-                   </i-col>
-                 </Row>
-               </div>
+                  <i-time ref="timePicker" :ids='timePicker.timeArr' :placeholder="timePicker.placeholderArr" :span="timePicker.spanArr"></i-time>
+                </div>
              </div>
              <div class="clearFix"></div>
            </div>
@@ -81,14 +70,7 @@
              </div>
              <div class="float-r form-fill">
                <div class="t-left">
-                 <Row>
-                   <i-col span="12">
-                 <DatePicker v-model="fromVal.applyBeginTime" class="full-width" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="报名开始时间"></DatePicker>
-                   </i-col>
-                   <i-col span="12">
-                 <DatePicker v-model="fromVal.applyEndTime" class="full-width" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="报名结束时间"></DatePicker>
-                   </i-col>
-                 </Row>
+                 <i-time ref="timeApply" :ids='timeApply.timeArr' :placeholder="timeApply.placeholderArr" :span="timeApply.spanArr"></i-time>
                </div>
              </div>
              <div class="clearFix"></div>
@@ -236,6 +218,7 @@
 
 <script>
   import iUeditor from 'components/modal/ueditor.vue'
+  import iTime from 'components/date-picker/index.vue'
   import iForm from 'components/registration-form/index.vue'
   import iSpecies from 'components/ticket-species/index.vue'
   import {mapGetters} from 'vuex'
@@ -378,7 +361,7 @@
         msgTip: {
           name: {msg: '活动名称不能为空', required: true},
           content: {msg: '详细内容不能为空', required: true},
-          count: {msg: '参与人数不能为空', required: true},
+          number: {msg: '参与人数不能为空', required: true},
           isNeedPay: {msg: '是否付费', required: true},
           address: {msg: '请设置活动地址', required: true},
           applyBeginTime: {msg: '请选择报名开始时间', required: true},
@@ -387,7 +370,17 @@
           endTime: {msg: '请选择活动结束时间', required: true},
           remark: {msg: '活动摘要不能为空', required: true}
        },
-        disabled: false
+        disabled: false,
+        timePicker: {
+          timeArr: ['beginTime', 'endTime'],
+          placeholderArr: ['活动开始时间', '活动结束时间'],
+          spanArr: [12, 12]
+        },
+        timeApply: {
+          timeArr: ['applyBeginTime', 'applyEndTime'],
+          placeholderArr: ['报名开始时间', '报名结束时间'],
+          spanArr: [12, 12]
+        }
       }
     },
     computed: {
@@ -398,7 +391,8 @@
     components: {
       iUeditor,
       iForm,
-      iSpecies
+      iSpecies,
+      iTime
     },
     methods: {
       getVal (val) {
@@ -427,16 +421,20 @@
           name: this.fromVal.title, // 活动名称
           demand: '', // 活动要求
           content: this.fromVal.detailedContent, // 活动内容
-          count: this.fromVal.number, // 人数
-          isNeedPay: ticket[0].type === ' free' ? 0 : 1, // 是否付费【1付费，0免费】
-          mbPrice: ticket[0].type === ' free' ? '' : ticket[0].vPrice, // 会员价格
-          nonMBPrice: ticket[0].type === ' free' ? '' : ticket[0].price, // 非会员价格
+          number: this.fromVal.number, // 人数
+          isNeedPay: ticket[0].type == 'free' ? 0 : 1, // 是否付费【1付费，0免费】
+          mbPrice: ticket[0].type == 'free' ? '' : ticket[0].vPrice, // 会员价格
+          nonMBPrice: ticket[0].type == 'free' ? '' : ticket[0].price, // 非会员价格
           address: this.fromVal.address.province + this.fromVal.address.city + this.fromVal.address.area, // 地址
           posterUrl: this.fromVal.posterUrl, // 海报url
-          applyBeginTime: this.formatterTime(this.fromVal.applyBeginTime), // 活动开始时间
+          applyBeginTime: this.$refs.timeApply.getValue().applyBeginTime, // 活动开始时间
+          applyEndTime: this.$refs.timeApply.getValue().applyEndTime, // 活动开始时间
+          beginTime: this.$refs.timePicker.getValue().beginTime, // 活动开始时间
+          endTime: this.$refs.timePicker.getValue().endTime, // 活动结束时间
+/*          applyBeginTime: this.formatterTime(this.fromVal.applyBeginTime), // 活动开始时间
           applyEndTime: this.formatterTime(this.fromVal.applyEndTime), // 活动开始时间
           beginTime: this.formatterTime(this.fromVal.beginTime), // 活动开始时间
-          endTime: this.formatterTime(this.fromVal.endTime), // 活动结束时间
+          endTime: this.formatterTime(this.fromVal.endTime), // 活动结束时间*/
           status: 0, // 审核状态
           style: this.fromVal.classify,
           label: this.fromVal.tag.length > 0 ? this.fromVal.tag.join(',') : '',
@@ -453,8 +451,8 @@
            fileData.append('' + key, _params[key])
          }
           _params.file = fileData
-        this.disabled = true
         if (this.verification(_params, this.msgTip)) {
+            this.disabled = true
             this.requestFile('post', 'activitys', fileData).then((data) => {
               if (data.success) {
                 this.$Message.success('发布成功')
