@@ -72,13 +72,11 @@
                  <i-input type="text" v-model="formRegister.nickName" placeholder="请输入昵称"></i-input>
                </FormItem>
                <FormItem class="t-center">
-                 <CheckboxGroup v-model="formInline.formRegister" class="in-line">
-                   <Checkbox label="agree">我已阅读并同意 <a> 用户隐私及服务协议</a></Checkbox>
-                 </CheckboxGroup>
-                 <div v-show="registerMsg" id="registerMsg" class="in-line"><Icon type="sad-outline"></Icon><span>注册失败</span></div>
+                  <Checkbox v-model="formRegister.checkbox" class="in-line">我已阅读并同意 <a> 用户隐私及服务协议</a></Checkbox>
+                  <div v-show="registerMsg" id="registerMsg" class="in-line"><Icon type="sad-outline"></Icon><span>注册失败</span></div>
                </FormItem>
                <FormItem class="t-center">
-                 <Button type="primary" @click="handleSubmit('formRegister')">注册</Button>
+                 <Button type="primary" @click="handleSubmit('formRegister')" :disabled="!formRegister.checkbox">注册</Button>
                </FormItem>
                <FormItem>
                  <div class="t-right"><a @click="hasUser=!hasUser">{{hasUser? '免费注册' :'已有账号登录'}}</a></div>
@@ -154,7 +152,7 @@
           password: '',
           passwordCheck: '',
           nickName: '',
-          checkbox: []
+          checkbox: false
         },
         hasUser: true,
         isShowModal: true,

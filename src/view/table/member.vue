@@ -68,18 +68,8 @@
           {title: '性别',
             key: 'sex',
             width: 80,
-            sortable: false,
-            render: (h, params) => {
-              return h('div', {
-                'class': 'td-render',
-                domProps: {
-                  title: params.row[params.column.key] === 1 ? '男' : '女'
-                },
-                style: {
-                  cursor: 'pointer'
-                }
-              }, params.row[params.column.key] === 1 ? '男' : '女')
-            }},
+            sortable: false
+          },
           {title: '手机', width: 120, key: 'phone', sortable: false},
           {title: '邮箱', key: 'email', sortable: false},
           {title: '地址',
@@ -174,6 +164,8 @@
             this.total = !isNaN(+data.data.total) ? +data.data.total : 0
             this.loading = '暂无数据'
             this.data = data.data.rows
+          } else {
+            this.data = []
           }
         })
       },
@@ -240,7 +232,7 @@
             ],
             [
               {title: '邮箱', value: row.email, show: true, type: ''},
-              {title: '性别', value: row.sex === 1 ? '男' : '女', show: true, type: ''}
+              {title: '性别', value: row.sex, show: true, type: ''}
             ],
             [
               {title: '身份证', value: row.cardNumber, show: true, type: ''},
@@ -429,7 +421,7 @@
           name: _b ? row.name : '',
           email: _b ? row.email : '',
           phone: _b ? row.phone : '',
-          sex: _b ? '' + row.sex : '1',
+          sex: _b ? '' + row.sex : '男',
           type: _b ? '' + row.type : '0',
           cardNumber: _b ? row.cardNumber : '',
           hobby: _b ? row.hobby : '',
@@ -550,7 +542,7 @@
         formData.append('file', file)
         formData.append('type', 'account')
         this.requestFile('POST', 'vipsUpload', formData).then((data) => {
-          if (data.err == '') {
+          if (data.success) {
             this.$Message.success('导入成功')
             this.loadTable()
           } else {

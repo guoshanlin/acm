@@ -33,7 +33,7 @@
                   <div class="flex">
                     <Icon type="ios-location"></Icon> {{row.address}}
                   </div>
-                  <div class="flex t-right">
+                  <div class="t-right">
                     <Icon type="eye"></Icon>浏览数：{{row.count}}
                   </div>
                 </div>

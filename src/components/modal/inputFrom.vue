@@ -6,6 +6,7 @@
   .inputForm .ivu-col p{line-height: 30px}
   .talbeDetails .td{padding-left: 6px;  border: 1px solid #cccccc;}
   .talbeDetails .td-c{background-color: #F0F0EE;}
+  .red_tip{display: inline-block; width:10px; height: 20px; color: #FF0000}
 </style>
 <template>
   <Modal
@@ -19,7 +20,7 @@
         <Row :gutter=5>
            <div  v-for="rows in row" :key="rows.title">
               <i-col :span="rows.titlespan">
-                <p class="width-right m-l10">{{rows.title}}:</p>
+                <p class="width-right m-l10"><span class="red_tip">{{rows.required ? '*' : ''}}</span>{{rows.title}}:</p>
               </i-col>
               <i-col :span="rows.colspan">
 
@@ -127,11 +128,11 @@
         select: {
           sex: [
             {
-              value: '1',
+              value: '男',
               label: '男'
             },
             {
-              value: '2',
+              value: '女',
               label: '女'
             }
           ],

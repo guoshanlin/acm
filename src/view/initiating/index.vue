@@ -491,10 +491,12 @@
        * @param value
        */
      timeChange (id, value) {
-       switch('' + id) {
+       console.log(id)
+       switch ('' + id) {
          case 'beginTime':
            let _applyBeginTime = this.$refs.timeApply.getValue().applyBeginTime
-           if (_applyBeginTime!= '' && value != '' && this.formatterTimeCompare(_applyBeginTime, value) == '<=') {
+           console.log(value,_applyBeginTime)
+           if (_applyBeginTime!= '' && value != '' && this.formatterTimeCompare(value,_applyBeginTime) == '<=') {
              this.$Message.error('活动开始时间不能小于报名开始时间')
              this.$refs.timePicker.setEmptyBTime()
            }

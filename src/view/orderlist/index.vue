@@ -72,7 +72,7 @@
           {
             title: "订单编号",
             align: 'left',
-            width: 100,
+            width: 180,
             key: "id"
           },
           {

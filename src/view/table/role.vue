@@ -6,7 +6,7 @@
         <i-col span="12">
           <Row type="flex" justify="start">
             <i-col>
-              <Button type="primary" @click="addOrModify">新增</Button>
+          <!--    <Button type="primary" @click="addOrModify">新增</Button>-->
 <!--              <Button type="warning" " @click="deleteAll">删除</Button>-->
             </i-col>
           </Row>
@@ -53,35 +53,15 @@
     },
     data () {
       return {
-      /*  height: '' + (document.body.offsetHeight - 325),*/
         columns: [
           {title: '姓名', key: 'name', width: 120, sortable: false},
-       /*   {title: '昵称', key: 'nickName', width: 100, sortable: false},*/
+
           {title: '性别',
             key: 'sex',
             width: 80,
-            sortable: false,
-            render: (h, params) => {
-              return h('div', {
-                'class': 'td-render',
-                domProps: {
-                  title: params.row[params.column.key] === 1 ? '男' : '女'
-                },
-                style: {
-                  cursor: 'pointer'
-                }
-              }, params.row[params.column.key] === 1 ? '男' : '女')
-            }},
+            sortable: false},
           {title: '手机', key: 'phone', width: 160, sortable: false},
           {title: '邮箱', key: 'email', width: 170, sortable: false},
-    /*      {title: '微信', key: 'wechat', width: 160, sortable: false},*/
-/*          {title: '身份证',
-            key: 'cardNumber',
-            width: 160,
-            sortable: false,
-            render: (h, params) => {
-              return this.tdRender(h, params)
-            }},*/
           {title: '地址',
             key: 'address',
             sortable: false,
@@ -105,13 +85,6 @@
                 }
               }, params.row[params.column.key] === 1 ? '会员' : '非会员')
             }},
-/*          {title: '渠道',
-            key: 'channel',
-            width: 80,
-            sortable: false,
-            render: (h, params) => {
-              return this.tdRender(h, params)
-            }},*/
           {title: '操作',
             width: 140,
             align: 'center',
@@ -128,13 +101,16 @@
                 }, '修改'),
                 h('Button', {
                   style: {marginRight: '5px'},
-                  props: {type: 'warning', size: 'small'},
+                  props: {type: params.row.status == 1 ? 'warning' : 'success', size: 'small'},
                   nativeOn: {
                     click: () => {
-                      this.confirmDelete(params.row.id) // sys/deleteStudentInfo
+                      this.requestAjax('post', 'members', {id: params.row.id, status: params.row.status == 1 ? 0 : 1}).then((data) => {
+                        if (data.success) this.loadTable()
+                      })
+                    /*  this.confirmDelete(params.row.id) // sys/deleteStudentInfo*/
                     }
                   }
-                }, '删除')
+                }, params.row.status == 1 ? '禁用' : '启用')
               ])
             }
           }
@@ -190,6 +166,8 @@
             this.total = !isNaN(+data.data.total) ? +data.data.total : 0
             this.loading = '暂无数据'
             this.data = data.data.rows
+          } else {
+            this.data = []
           }
         })
       },
@@ -247,8 +225,6 @@
           tabPane: false,
           uEditor: false,
           rowId: '',
-          // name nickName phone wechat email sex
-          // cardNumber type hobby company position channel level address type validTime
           opintions: [
             [
               {title: '姓名', value: row.name, show: true, type: ''},
@@ -260,7 +236,7 @@
             ],
             [
               {title: '邮箱', value: row.email, show: true, type: ''},
-              {title: '性别', value: row.sex === 1 ? '男' : '女', show: true, type: ''}
+              {title: '性别', value: row.sex, show: true, type: ''}
             ],
             [
               {title: '身份证', value: row.cardNumber, show: true, type: ''},
@@ -469,7 +445,7 @@
           email: _b ? row.email : '',
           phone: _b ? row.phone : '',
           wechat: _b ? row.wechat : '',
-          sex: _b ? '' + row.sex : '1',
+          sex: _b ? '' + row.sex : '男',
           type: _b ? '' + row.type : '0',
           cardNumber: _b ? row.cardNumber : '',
           hobby: _b ? row.hobby : '',
@@ -578,10 +554,7 @@
     },
     mounted () {
       this.$nextTick(() => {
-        window.onresize = () => {
-         /* this.height = '' + (document.body.offsetHeight - 325)*/
-        //  this.initAllTableScroll()
-        }
+        window.onresize = () => {}
         this.loadTable()
       //  this.initAllTableScroll()
         document.querySelector('.ivu-page-options-elevator').title = '输入后回车跳至指定页'

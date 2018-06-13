@@ -156,6 +156,7 @@
         this.requestAjax(_type, url, obj).then((data) => {
           if (data.success) {
             this.$Message.success(msg + '成功')
+            this.buttonName = ''
             this.inputForm.modalshow = false
             this.initItem()
           } else if (!data.message) {

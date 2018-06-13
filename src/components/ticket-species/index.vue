@@ -117,10 +117,12 @@
                   props: {value: +params.row.price, placeholder: params.row.placeholder, disabled: params.row.type === 'free' ? true : false},
                   on: {
                     'on-change': (value) => {
+                      console.log(value)
                       this.remData[params.index].price = value
                     },
                     'on-blur': () => {
                       this.data[params.index].price = this.remData[params.index].price
+                      this.data[params.index].price = ('' + this.remData[params.index].price).replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3')
                       //this.onChange(this.remData[params.index].price, 'price', params.index)
                     }
                   }
@@ -141,6 +143,7 @@
                     },
                     'on-blur': () => {
                       this.data[params.index].vPrice = this.remData[params.index].vPrice
+                      this.data[params.index].vPrice = ('' + this.remData[params.index].vPrice).replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3')
                      // this.onChange(this.remData[params.index].vPrice, 'vPrice', params.index)
                     }
                   }

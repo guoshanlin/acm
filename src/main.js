@@ -17,6 +17,7 @@ import publicUtils from 'js/publicUtils'
 import getwbkUrl from 'js/getwbkUrl'
 import VueLazyload from 'vue-lazyload'
 import InitScroll from 'js/initScroll'
+import config from "../config";
 
 axios.defaults.baseURL = process.env.API
 Vue.prototype.axios = axios
@@ -44,3 +45,7 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
+
+let urlWdatePicker = process.env.NODE_ENV === 'production' ? config.build.assetsPublicPath : config.dev.assetsPublicPath
+document.write('<script type="text/javascript" src="' + urlWdatePicker + 'static/My97DatePicker/WdatePicker.js"></script>')
+ urlWdatePicker = null

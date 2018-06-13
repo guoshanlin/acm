@@ -4,13 +4,13 @@
       <Row>
         <i-col :span="span[0]">
           <div class="ivu-input-wrapper ivu-input-type">
-            <i class="ivu-icon ivu-icon-ios-calendar-outline ivu-input-icon ivu-input-icon-normal"></i>
+            <i class="ivu-icon ivu-icon-ios-calendar-outline ivu-input-icon ivu-input-icon-normal" @click='initTime(ids[0])'></i>
             <input :id="ids[0]" :value="value[ids[0]]" type="text" :placeholder="placeholder[0]" class="ivu-input" @click='initBTime(ids[0],ids[1])'>
           </div>
         </i-col>
         <i-col :span="span[1]">
           <div class="ivu-input-wrapper ivu-input-type">
-            <i class="ivu-icon ivu-icon-ios-calendar-outline ivu-input-icon ivu-input-icon-normal"></i>
+            <i class="ivu-icon ivu-icon-ios-calendar-outline ivu-input-icon ivu-input-icon-normal" @click='initTime(ids[1])'></i>
             <input :id="ids[1]" :value="value[ids[1]]" type="text" :placeholder="placeholder[1]" class="ivu-input" @click='initETime(ids[0],ids[1])'>
           </div>
         </i-col>
@@ -18,7 +18,7 @@
     </div>
     <div v-if="ids.length == 1">
       <div class="ivu-input-wrapper ivu-input-type">
-        <i class="ivu-icon ivu-icon-ios-calendar-outline ivu-input-icon ivu-input-icon-normal"></i>
+        <i class="ivu-icon ivu-icon-ios-calendar-outline ivu-input-icon ivu-input-icon-normal" @click='initTime(ids[0])'></i>
         <input :id="ids[0]" :value="value[ids[0]]"  type="text" :placeholder="placeholder[0]" class="ivu-input" @click='initTime(ids[0])'>
       </div>
     </div>
