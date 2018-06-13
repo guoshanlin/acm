@@ -56,6 +56,7 @@
         data: {},
         label: [],
         buttonName: this.$route.path.indexOf('examineDetails') != -1 ? '审核' : '',
+        buttonType: 'examine',
         inputForm: {
           show: false,
           modalDisabled: false,
@@ -122,6 +123,10 @@
        * @param row
        */
       exmine (row) {
+        if (this.buttonType == 'cancel') {
+          this.submitAjax('activitys', {id: row.id, status: 3}, '取消')
+          return
+        }
         this.inputForm.modalshow = true
         this.inputForm.show = true
         this.inputForm.modalDisabled = false
@@ -150,15 +155,15 @@
         const _type = 'POST'
         this.requestAjax(_type, url, obj).then((data) => {
           if (data.success) {
-            this.$Message.success(msg + '用户成功')
+            this.$Message.success(msg + '成功')
             this.inputForm.modalshow = false
             this.initItem()
           } else if (!data.message) {
-            this.$Message.success(msg + '用户失败')
+            this.$Message.success(msg + '失败')
           }
           this.inputForm.modalDisabled = false
-        },(err) => {
-          this.$Message.success(msg + '用户失败')
+        }, (err) => {
+          this.$Message.success(msg + '失败')
           this.inputForm.modalDisabled = false
         })
       },
@@ -169,6 +174,10 @@
         this.requestAjax(_type, _url, _params).then((data) => {
           if (!data.message) {
             this.data = data.data.rows[0]
+            if (this.data.status == 1 && this.$route.path.indexOf('examineDetails') == -1) {
+              this.buttonName = '取消'
+              this.buttonType = 'cancel'
+            }
             this.label = this.data.label.split(',')
           }
         })

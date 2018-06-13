@@ -70,76 +70,58 @@
         selectList: [],
         col: [
           {
-            title: '头像昵称',
-            width: 220,
+            title: "订单编号",
+            align: 'left',
+            width: 100,
+            key: "id"
+          },
+          {
+            title: "下单时间",
+            align: 'left',
+            width: 140,
+            key: "createTime",
             render: (h, params) => {
-              return h('div', [
-                h('Avatar', {
-                  style: {marginRight: '5px'},
-                  props: {
-                    src: 'http://localhost:8080/api//files/xheditor/20180611/jpg/%E5%A4%A7%E5%8A%9E%E5%85%AC%E5%8C%BA2.jpg'
-                  }
-                }),
-                h('span', params.row.name)
-              ])
+              return h('div', this.formatterObjTime(params.row.createTime))
+           }},
+          {
+            title: "订单状态",
+            align: 'left',
+            width: 100,
+            key: "status",
+            render: (h, params) => {
+              return h('div', this.formatterOrders(params.row.status))
             }
           },
           {
-            title: '参会人信息',
-            width: 220,
-            render: (h, params) => {
-              return h('div', [
-                h('Avatar', {
-                  style: {marginRight: '5px'},
-                  props: {
-                    src: 'http://localhost:8080/api//files/xheditor/20180611/jpg/%E5%A4%A7%E5%8A%9E%E5%85%AC%E5%8C%BA2.jpg'
-                  }
-                }),
-                h('span', params.row.name)
-              ])
-            }
+            title: "手机",
+            align: 'left',
+            key: "memberPhone"
           },
           {
-            title: "来源",
-            align: 'center',
-            width: 100,
-            key: "origin"
+            title: "微信号",
+            align: 'left',
+            key: "number"
           },
           {
-            title: "座位",
-            align: 'center',
-            width: 100,
-            key: "age"
+            title: "单价",
+            align: 'left',
+            key: "number"
           },
           {
-            title: "是否发送电子票",
-            align: 'center',
-            width: 130,
-            key: "origin"
+            title: "数量",
+            align: 'left',
+            key: "number"
           },
           {
-            title: "参会状态",
-            align: 'center',
-            width: 100,
-            key: "origin"
-          },
-          {
-            title: "签到状态",
-            align: 'center',
-            width: 100,
-            key: "origin"
-          },
-          {
-            title: "签到方式",
-            align: 'center',
-            width: 100,
-            key: "origin"
+            title: "实付金额",
+            align: 'left',
+            key: "priceActual"
           },
           {
             title: '操作',
             width: 170,
-            fixed: 'right',
-            align: 'center',
+           // fixed: 'right',
+            align: 'left',
             render: (h, params) => {
               return h('div', [
                 h('Button', {
@@ -172,56 +154,41 @@
             }
           }
         ],
-        tableData: [
-          {
-            name: 'John Brown',
-            age: 18,
-            origin: "后台添加",
-            address: 'New York No. 1 Lake Park',
-            date: '2016-10-03'
-          },
-          {
-            name: 'Jim Green',
-            age: 24,
-            origin: "后台添加",
-            address: 'London No. 1 Lake Park',
-            date: '2016-10-01'
-          },
-          {
-            name: 'Joe Black',
-            age: 30,
-            origin: "后台添加",
-            address: 'Sydney No. 1 Lake Park',
-            date: '2016-10-02'
-          },
-          {
-            name: 'Jon Snow',
-            age: 26,
-            origin: "后台添加",
-            address: 'Ottawa No. 2 Lake Park',
-            date: '2016-10-04'
-          }
-        ]
+        tableData: []
       }
     },
     created() {
       setTimeout(() => {
-
+        this.initTable()
       }, 20)
     },
     methods: {
-      onTableSelect(rows) {
-        console.log("===========" + rows)
+      onTableSelect (rows) {
+        console.log('===========' + rows)
         this.selectList = rows
       },
-      searchDriver() {
+      searchDriver () {
         this.$Message.warning('搜索')
       },
-      orderStatusChange(v){
+      orderStatusChange (v) {
         this.$Message.warning(v)
       },
       exportTable: function () {
-        this.$refs.$table.exportCsv({filename: "order.csv"})
+        this.$refs.$table.exportCsv({filename: 'order.csv'})
+      },
+      initTable () {
+        /*orders*/
+   /*     this.loading = '数据加载中...请稍等！'*/
+        const _type = 'GET'
+        const _params = this.formData
+        const _url = 'orders'
+        this.requestAjax(_type, _url, _params).then((data) => {
+          if (data.success) {
+        /*    this.total = !isNaN(+data.data.total) ? +data.data.total : 0
+            this.loading = '暂无数据'*/
+            this.tableData = data.data.rows
+          }
+        })
       }
     }
   }

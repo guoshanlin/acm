@@ -41,7 +41,7 @@
                      </Select>
                    </i-col>
                    <i-col span="5">
-                     <Select v-model="fromVal.address.city" placeholder="请选择市区" filterable>
+                     <Select v-model="fromVal.address.city" placeholder="请选择市区" :filterable="false">
                        <Option v-for="item in select.city" :value="item.value" :key="item.value">{{ item.label }}</Option>
                      </Select>
                    </i-col>
@@ -59,7 +59,7 @@
              </div>
              <div class="float-r form-fill">
                <div class="t-left">
-                  <i-time ref="timePicker" :ids='timePicker.timeArr' :placeholder="timePicker.placeholderArr" :span="timePicker.spanArr"></i-time>
+                  <i-time ref="timePicker" :ids='timePicker.timeArr' :placeholder="timePicker.placeholderArr" :span="timePicker.spanArr" @on-change="timeChange"></i-time>
                 </div>
              </div>
              <div class="clearFix"></div>
@@ -70,7 +70,7 @@
              </div>
              <div class="float-r form-fill">
                <div class="t-left">
-                 <i-time ref="timeApply" :ids='timeApply.timeArr' :placeholder="timeApply.placeholderArr" :span="timeApply.spanArr"></i-time>
+                 <i-time ref="timeApply" :ids='timeApply.timeArr' :placeholder="timeApply.placeholderArr" :span="timeApply.spanArr" @on-change="timeChange"></i-time>
                </div>
              </div>
              <div class="clearFix"></div>
@@ -484,7 +484,44 @@
          // this.fromVal.posterUrl = process.env.API + data.msg
         })
         return false
-      }
+      },
+      /**
+       * 验证时间大小
+       * @param id
+       * @param value
+       */
+     timeChange (id, value) {
+       switch('' + id) {
+         case 'beginTime':
+           let _applyBeginTime = this.$refs.timeApply.getValue().applyBeginTime
+           if (_applyBeginTime!= '' && value != '' && this.formatterTimeCompare(_applyBeginTime, value) == '<=') {
+             this.$Message.error('活动开始时间不能小于报名开始时间')
+             this.$refs.timePicker.setEmptyBTime()
+           }
+           break
+         case 'endTime':
+           let _applyEndTime = this.$refs.timeApply.getValue().applyEndTime
+           if (_applyEndTime!= '' && value != '' && this.formatterTimeCompare(value, _applyEndTime) == '<=') {
+             this.$Message.error('活动结束时间不能小于报名结束时间')
+             this.$refs.timePicker.setEmptyETime()
+           }
+           break
+         case 'applyBeginTime':
+           let _beginTime = this.$refs.timePicker.getValue().beginTime
+           if (_beginTime != '' && value != '' && this.formatterTimeCompare(_beginTime,value) == '<=') {
+             this.$Message.error('报名开始时间不能大于活动开始时间')
+             this.$refs.timeApply.setEmptyBTime()
+           }
+           break
+         case 'applyEndTime':
+           let _endTime = this.$refs.timePicker.getValue().endTime
+           if (_endTime != '' && value != '' && this.formatterTimeCompare(_endTime, value) == '<=') {
+             this.$Message.error('报名结束时间不能大于活动结束时间')
+             this.$refs.timeApply.setEmptyETime()
+           }
+         break
+       }
+     }
     }
   }
 

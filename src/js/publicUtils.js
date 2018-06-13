@@ -1,5 +1,5 @@
 export default {
-  install (Vue, options) {
+  install(Vue, options) {
     /**
      * 公用请求方法 以params形式提交参数
      * @param type
@@ -27,8 +27,8 @@ export default {
           url: this.getWbkUrl(url, urlId),
           params: newParams
         }).then((data) => {
-              resolve(data.data)
-          }).catch((error) => {
+          resolve(data.data)
+        }).catch((error) => {
           reject(error)
         })
       })
@@ -61,32 +61,39 @@ export default {
      * @returns {*}
      */
     Vue.prototype.tdRender = function (h, params) {
-        return h('div', {
-          'class': 'td-render',
-          domProps: {
-            title: params.row[params.column.key]
-          },
-          style: {
-            cursor: 'pointer'
-          }
-        }, params.row[params.column.key])
-      }
+      return h('div', {
+        'class': 'td-render',
+        domProps: {
+          title: params.row[params.column.key]
+        },
+        style: {
+          cursor: 'pointer'
+        }
+      }, params.row[params.column.key])
+    }
     /**
      * 创建用户渠道转义
      * @param number
      * @returns {string}
      */
     Vue.prototype.getActiveStatus = function (number) {
-/*    【-1：审核不通过】【0：未审核】【1：未开始】【2：执行中】【3：暂停】【99：结束】*/
-       switch ('' + number) {
-         case '-1': return '审核未通过'
-         case '0': return '待审核'
-         case '1': return '未开始'
-         case '2': return '进行中'
-         case '3': return '暂停'
-         case '99': return '结束'
-         default: return number
-       }
+      /*    【-1：审核不通过】【0：未审核】【1：未开始】【2：执行中】【3：暂停】【99：结束】*/
+      switch ('' + number) {
+        case '-1':
+          return '审核未通过'
+        case '0':
+          return '待审核'
+        case '1':
+          return '未开始'
+        case '2':
+          return '进行中'
+        case '3':
+          return '暂停'
+        case '99':
+          return '结束'
+        default:
+          return number
+      }
     }
     /**
      * 转义状态
@@ -94,13 +101,35 @@ export default {
      * @returns {string}
      */
     Vue.prototype.getUserChannel = function (number) {
-       switch ('' + number) {
-         case '0': return '人工创建'
-         case '1': return 'EXCEL导入'
-         case '2': return '微信生成'
-         case '3': return '邀请生成'
-         default: return number
-       }
+      switch ('' + number) {
+        case '0':
+          return '人工创建'
+        case '1':
+          return 'EXCEL导入'
+        case '2':
+          return '微信生成'
+        case '3':
+          return '邀请生成'
+        default:
+          return number
+      }
+    }
+    /**
+     * 转义订单状态
+     * @param number
+     * @returns {string}
+     */
+    Vue.prototype.formatterOrders = function (number) {
+      switch ('' + number) {
+        case '0':
+          return '待支付'
+        case '1':
+          return '支付成功'
+        case '2':
+          return '已取消'
+        default:
+          return number
+      }
     }
     /**
      * 设置定时器
@@ -109,27 +138,27 @@ export default {
      * @returns {Function}
      */
     Vue.prototype.debounce = function (func, delay) {
-        let timer
-        return function (...args) {
-          if (timer) {
-            clearTimeout(timer)
-          }
-          timer = setTimeout(() => {
-            func.apply(this, args)
-          }, delay)
+      let timer
+      return function (...args) {
+        if (timer) {
+          clearTimeout(timer)
         }
+        timer = setTimeout(() => {
+          func.apply(this, args)
+        }, delay)
       }
+    }
     /**
      * 公用页面跳转
      * @param url
      */
     Vue.prototype.routePush = function (url, id) {
-        if (id) {
-          this.$router.push({path: url, query: {id: id}})
-        } else {
-          this.$router.push(url)
-        }
+      if (id) {
+        this.$router.push({path: url, query: {id: id}})
+      } else {
+        this.$router.push(url)
       }
+    }
     /**
      * 验证非空
      * @param val
@@ -142,7 +171,7 @@ export default {
       if (val.length === 0) return true
       if (!/[^(^\s*)|(\s*$)]/.test(val)) return true
       return false
-      }
+    }
     /**
      * 验证非空
      * @param params
@@ -150,91 +179,106 @@ export default {
      * @returns {boolean}
      */
     Vue.prototype.verification = function (params, verification) {
-         let mark = true
-          for (let key in verification) {
-             if (this.isEmpty(params[key])) {
-               mark = false
-               this.$Message.error(verification[key].msg)
-               break
-             }
-          }
-          return mark
+      let mark = true
+      for (let key in verification) {
+        if (this.isEmpty(params[key])) {
+          mark = false
+          this.$Message.error(verification[key].msg)
+          break
+        }
       }
+      return mark
+    }
     /**
      * 转义时间
      * @param time
      * @returns {*}
      */
     Vue.prototype.formatterTime = function (time) {
-        if (time === undefined || time === null || time === '') {
-          return ''
-        }
-        return Date.formatByTimes(time.getTime(), 'yyyy-MM-dd hh:mm:ss')
+      if (time === undefined || time === null || time === '') {
+        return ''
       }
-     /**
+      return Date.formatByTimes(time.getTime(), 'yyyy-MM-dd hh:mm:ss')
+    }
+    /**
      * 转义时间戳
      * @param time
      * @returns {*}
      */
     Vue.prototype.formatterObjTime = function (time, type) {
-        if (time === undefined || time === null || time === '') {
-          return ''
-        }
-        return Date.formatByTimes(time.time, type || 'yyyy-MM-dd hh:mm')
+      if (time === undefined || time === null || time === '') {
+        return ''
       }
+      return Date.formatByTimes(time.time, type || 'yyyy-MM-dd hh:mm')
+    }
     /**
      * 比较时间大小
      * @param bTime
      * @param eTime
      * @returns {*}
      */
-     Vue.prototype.compareTime = function (bTime, eTime) {
-       if (bTime && bTime) {
-         let _bTime = bTime.replace(/-/g, '/')
-         let _eTime = eTime.replace(/-/g, '/')
-         if (new Date(_bTime).getTime() >= new Date(_eTime).getTime()) {
-           return true
-         } else {
-           return false
-         }
-       } else {
-         return false
-       }
+    Vue.prototype.compareTime = function (bTime, eTime) {
+      if (bTime && bTime) {
+        let _bTime = bTime.replace(/-/g, '/')
+        let _eTime = eTime.replace(/-/g, '/')
+        if (new Date(_bTime).getTime() >= new Date(_eTime).getTime()) {
+          return true
+        } else {
+          return false
+        }
+      } else {
+        return false
       }
+    }
     /**
      * 验证图片格式大小
      * @param file
      * @returns {*}
      */
     Vue.prototype.testImg = function (file) {
-        const maxSize = 1024 * 1000 * 2 // 2M
-  /*      const imgWith = 1080
-        const imgHeight = 640*/
-        let arr = file.name.split('.')
-        if (['bmp', 'jpg', 'jpeg', 'png', 'gif'].indexOf(arr[arr.length - 1]) === -1) {
-          this.$Message.error(file.name + '不是图片，不能导入')
-          return false
-        }
-        if (file.size > maxSize) {
-          this.$Message.error('图片大小不能超过2M')
-          return false
-        }
-        let path
-    /*    let img = new Image()*/
-        if (document.all) {
-          file.select()
-          path = document.selection.createRange().text
-        } else {
-          path = window.URL.createObjectURL(file) // FF 7.0以上
-        }
-     /*   img.src = path
-        console.log(img)
-        console.log(img.width, img.height)*/
-   /*     if (img.width !== imgWith || img.height !== imgHeight) {
-          this.$Message.error('图片规格必须为1080 * 640')
-          return false
-        }*/
-        return path
+      const maxSize = 1024 * 1000 * 2 // 2M
+      /*      const imgWith = 1080
+            const imgHeight = 640*/
+      let arr = file.name.split('.')
+      if (['bmp', 'jpg', 'jpeg', 'png', 'gif'].indexOf(arr[arr.length - 1]) === -1) {
+        this.$Message.error(file.name + '不是图片，不能导入')
+        return false
       }
+      if (file.size > maxSize) {
+        this.$Message.error('图片大小不能超过2M')
+        return false
+      }
+      let path
+      /*    let img = new Image()*/
+      if (document.all) {
+        file.select()
+        path = document.selection.createRange().text
+      } else {
+        path = window.URL.createObjectURL(file) // FF 7.0以上
+      }
+      /*   img.src = path
+         console.log(img)
+         console.log(img.width, img.height)*/
+      /*     if (img.width !== imgWith || img.height !== imgHeight) {
+             this.$Message.error('图片规格必须为1080 * 640')
+             return false
+           }*/
+      return path
+    }
+    /**
+     * 比较时间大小
+     * @param time
+     * @param nowTime
+     * @returns {string}
+     */
+    Vue.prototype.formatterTimeCompare = function (bTime, eTime) {
+      let _bTime = new Date(bTime.replace(/-/g, '/'))
+      let _eTime = new Date(eTime.replace(/-/g, '/'))
+      if (_bTime.getTime() <= _eTime.getTime()) {
+        return '<='
+      } else {
+        return '>'
+      }
+    }
   }
 }

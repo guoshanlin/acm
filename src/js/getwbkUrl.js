@@ -25,7 +25,16 @@ export default {
       // 查询票券信息
       ticket: {url: 'ticket', pre: preuUrl},
       // 查询活动信息
-      report: {url: 'activitys/report', pre: preuUrl}
+      report: {url: 'activitys/report', pre: preuUrl},
+      // 订单信息
+      orders: {url: 'orders', pre: preuUrl},
+      // 会员信息
+      vips: {url: 'vips', pre: preuUrl},
+      // 导入会员信息
+     vipsUpload: {url: 'vips/upload', pre: preuUrl},
+     // 删除查询会员信息
+      vipsId: {url: 'vips/{id}', pre: preuUrl}
+
     }
     /**
      * 获取url

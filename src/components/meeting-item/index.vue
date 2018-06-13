@@ -1,6 +1,7 @@
 <template>
   <div class="fbox meeting-item">
     <Button class="manage-btn" type="primary" @click="routePush('/base/overview',row.id)">管理</Button>
+    <Button v-if='row.status == 1 && row.numberActual < row.number' class="manage-btn-c" @click="cancel">取消</Button>
     <div class="pic-wrapper">
       <img width="100%" height="100%" v-lazy="loadImg">
       <span class="tips b1 c">{{getActiveStatus(row.status)}}</span>
@@ -75,6 +76,20 @@
     props: {
       row: '',
       button: ''
+    },
+    methods: {
+      cancel () {
+        this.requestAjax('post', 'activitys', {id: this.row.id, status: 3}).then((data) => {
+          if (data.success) {
+            this.$Message.success('取消成功')
+            this.$emit('cancel')
+          } else {
+            this.$Message.success('取消失败')
+          }
+        }, () => {
+          this.$Message.success('取消失败')
+        })
+      }
     }
   }
 </script>
@@ -86,6 +101,11 @@
   .manage-btn{
     position: absolute;
     top: 23px;
+    right: 30px;
+  }
+  .manage-btn-c{
+    position: absolute;
+    top: 65px;
     right: 30px;
   }
   .pic-wrapper{

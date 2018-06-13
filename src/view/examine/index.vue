@@ -180,14 +180,15 @@
         const _type = 'POST'
         this.requestAjax(_type, url, obj).then((data) => {
           if (data.success) {
-            this.$Message.success(msg + '用户成功')
+            this.$Message.success(msg + '成功')
             this.inputForm.modalshow = false
+            this.initItem()
           } else if (!data.message) {
-            this.$Message.success(msg + '用户失败')
+            this.$Message.success(msg + '失败')
           }
           this.inputForm.modalDisabled = false
         },(err) => {
-          this.$Message.success(msg + '用户失败')
+          this.$Message.success(msg + '失败')
           this.inputForm.modalDisabled = false
         })
       },
@@ -216,7 +217,7 @@
     },
     mounted () {
       this.$nextTick(() => {
-        this.parms.memberId = this.userData.id
+        //this.parms.memberId = this.userData.id
         this.initItem()
         document.querySelector('.ivu-page-options-elevator').title = '输入后回车跳至指定页'
         clearInterval(this.timer)

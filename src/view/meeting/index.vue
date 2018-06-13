@@ -3,8 +3,7 @@
     <Row>
       <i-col span="18">
         <div class=" b wrapper-box">
-          <Affix :offset-top="10" style="padding:5px 0px;">
-            <Row type="flex" :gutter=5>
+          <Row type="flex" :gutter=5>
               <i-col span="12">
                 <Row type="flex" justify="start">
                   <i-col>
@@ -23,10 +22,10 @@
                 </Row>
               </i-col>
             </Row>
-          </Affix>
+
           <Menu mode="horizontal" active-name="all" @on-select="menuSelect">
             <MenuItem name="all">全部活动</MenuItem>
-            <MenuItem name="0,1,3">未开始</MenuItem>
+            <MenuItem name="0,1">未开始</MenuItem>
             <MenuItem name="2">进行中</MenuItem>
             <MenuItem name="99">已结束</MenuItem>
             <MenuItem name="-1">未通过</MenuItem>
@@ -35,7 +34,7 @@
           <div class="list-wrapper">
             <ul class="list">
               <li class="list-item fbox" v-for="item in data" :key="item.id">
-                <meeting-item :row="item"></meeting-item>
+                <meeting-item :row="item" @cancel="cancel"></meeting-item>
               </li>
             </ul>
 
@@ -89,6 +88,8 @@
       },
       menuSelect (name) {
         this.parms.status = name == 'all' ? '' : name
+/*        this.keyWord = ''
+        this.parms.keyWord = ''*/
         this.initItem()
       },
       addMeeting () {
@@ -124,6 +125,12 @@
             this.data = data.data.rows
           }
         })
+      },
+      /**
+       * 取消活动
+       */
+      cancel () {
+        this.initItem()
       }
     },
     components: {

@@ -75,7 +75,7 @@
                  <CheckboxGroup v-model="formInline.formRegister" class="in-line">
                    <Checkbox label="agree">我已阅读并同意 <a> 用户隐私及服务协议</a></Checkbox>
                  </CheckboxGroup>
-                 <div v-show="loginFail" id="registerMsg" class="in-line"><Icon type="sad-outline"></Icon><span>注册失败</span></div>
+                 <div v-show="registerMsg" id="registerMsg" class="in-line"><Icon type="sad-outline"></Icon><span>注册失败</span></div>
                </FormItem>
                <FormItem class="t-center">
                  <Button type="primary" @click="handleSubmit('formRegister')">注册</Button>
@@ -111,7 +111,7 @@
       const checkUserPhone = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入用户手机号'))
-        } else if (!/^1\d{10}$/.test(value)) {
+        } else if (utils.isPhone(value)) {
           callback(new Error('请输入正确的手机号'))
         } else {
           callback()
@@ -142,6 +142,7 @@
       }
       return {
         loginFail: false,
+        registerMsg: false,
         formInline: {
           user: '',
           password: '',
@@ -257,14 +258,14 @@
         const _url = 'members'
         this.requestAjax(_type, _url, _params).then((data) => {
           if (data.success) {
-            this.loginFail = false
+            this.registerMsg = false
             this.$Message.success('注册成功')
             this.hasUser = true
             this.formInline.user = _params.phone
             this.formInline.password = _params.password
             this.$refs.formRegister.resetFields()
           } else {
-            this.loginFail = true
+            this.registerMsg = true
           }
         })
       }

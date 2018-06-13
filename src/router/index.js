@@ -62,8 +62,13 @@ export default new Router({
         },
         {
           path: '/role',
-          name: '会员管理',
+          name: '用户管理',
           component: (resolve) => require(['../view/table/role'], resolve)
+        },
+        {
+          path: '/member',
+          name: '会员管理',
+          component: (resolve) => require(['../view/table/member'], resolve)
         },
         {
           path: '/examine',

@@ -1,13 +1,21 @@
 <template>
   <div class="wrapper b wrapper-box">
    <!-- <Affix :offset-top="10" style="padding:5px 0px;">-->
-      <Row type="flex" :gutter=5 class="m-b15">
+      <Row type="flex" :gutter=5>
         <!--<列表导栏>-->
         <i-col span="12">
           <Row type="flex" justify="start">
             <i-col>
               <Button type="primary" @click="addOrModify">新增</Button>
 <!--              <Button type="warning" " @click="deleteAll">删除</Button>-->
+            </i-col>
+            <i-col>
+              <Upload class="m-l10" :action="getWbkUrl('upload')" :before-upload="handleUpload">
+                <Button type="primary">导入</Button>
+              </Upload>
+            </i-col>
+            <i-col>
+              <Button class="m-l10" type="primary" @click="loadXlx">下载导入模板</Button>
             </i-col>
           </Row>
 
@@ -72,27 +80,19 @@
                 }
               }, params.row[params.column.key] === 1 ? '男' : '女')
             }},
-          {title: '手机', key: 'phone', width: 160, sortable: false},
-          {title: '邮箱', key: 'email', width: 170, sortable: false},
-    /*      {title: '微信', key: 'wechat', width: 160, sortable: false},*/
-/*          {title: '身份证',
-            key: 'cardNumber',
-            width: 160,
-            sortable: false,
-            render: (h, params) => {
-              return this.tdRender(h, params)
-            }},*/
+          {title: '手机', width: 120, key: 'phone', sortable: false},
+          {title: '邮箱', key: 'email', sortable: false},
           {title: '地址',
             key: 'address',
             sortable: false,
             render: (h, params) => {
               return this.tdRender(h, params)
             }},
-          {title: '公司', key: 'company', width: 160, sortable: false},
-          {title: '职位', key: 'position', width: 120, sortable: false},
+          {title: '公司', width: 170, key: 'company', sortable: false},
+          {title: '职位', width: 120, key: 'position', sortable: false},
           {title: '级别',
             key: 'level',
-            width: 100,
+            width: 80,
             sortable: false,
             render: (h, params) => {
               return h('div', {
@@ -105,16 +105,9 @@
                 }
               }, params.row[params.column.key] === 1 ? '会员' : '非会员')
             }},
-/*          {title: '渠道',
-            key: 'channel',
-            width: 80,
-            sortable: false,
-            render: (h, params) => {
-              return this.tdRender(h, params)
-            }},*/
           {title: '操作',
-            width: 140,
             align: 'center',
+            width: 120,
             render: (h, params) => {
               return h('div', [
                 h('Button', {
@@ -125,16 +118,7 @@
                       this.addOrModify(params.row, '修改')
                     }
                   }
-                }, '修改'),
-                h('Button', {
-                  style: {marginRight: '5px'},
-                  props: {type: 'warning', size: 'small'},
-                  nativeOn: {
-                    click: () => {
-                      this.confirmDelete(params.row.id) // sys/deleteStudentInfo
-                    }
-                  }
-                }, '删除')
+                }, '修改')
               ])
             }
           }
@@ -184,7 +168,7 @@
         this.loading = '数据加载中...请稍等！'
         const _type = 'GET'
         const _params = this.parms
-        const _url = 'members'
+        const _url = 'vips'
         this.requestAjax(_type, _url, _params).then((data) => {
           if (data.success) {
             this.total = !isNaN(+data.data.total) ? +data.data.total : 0
@@ -242,7 +226,7 @@
         this.tableDetails.show = true
         this.tableDetails.modalshow = true
         this.tableDetails.option = {
-          title: '用户详情',
+          title: '会员详情',
           width: '768',
           tabPane: false,
           uEditor: false,
@@ -252,11 +236,7 @@
           opintions: [
             [
               {title: '姓名', value: row.name, show: true, type: ''},
-              {title: '昵称', value: row.nickName, show: true, type: ''}
-            ],
-            [
-              {title: '手机', value: row.phone, show: true, type: ''},
-              {title: '微信', value: row.wechat, show: true, type: ''}
+              {title: '手机', value: row.phone, show: true, type: ''}
             ],
             [
               {title: '邮箱', value: row.email, show: true, type: ''},
@@ -308,7 +288,7 @@
         this.inputForm.show = true
         this.inputForm.modalDisabled = false
         this.inputForm.option = {
-          title: _b ? '修改用户' : '新增用户',
+          title: _b ? '修改会员' : '新增会员',
           width: '768',
           opintions: [
             [
@@ -321,16 +301,6 @@
                 required: true
               },
               {
-                title: '昵称',
-                id: 'nickName',
-                type: 'input',
-                titlespan: 3,
-                colspan: 9,
-                required: true
-              }
-            ],
-            [
-              {
                 title: '手机',
                 id: 'phone',
                 type: 'input',
@@ -338,14 +308,6 @@
                 colspan: 9,
                 required: true,
                 valueType: 'mobilePhone'
-              },
-              {
-                title: '微信',
-                id: 'wechat',
-                type: 'input',
-                titlespan: 3,
-                colspan: 9,
-                required: false
               }
             ],
             [
@@ -465,10 +427,8 @@
 
         this.inputForm.value = {
           name: _b ? row.name : '',
-          nickName: _b ? row.nickName : '',
           email: _b ? row.email : '',
           phone: _b ? row.phone : '',
-          wechat: _b ? row.wechat : '',
           sex: _b ? '' + row.sex : '1',
           type: _b ? '' + row.type : '0',
           cardNumber: _b ? row.cardNumber : '',
@@ -501,7 +461,7 @@
         switch (this.clickType) {
           case '新增':
           case '修改':
-            this.submitAjax('members', newVal)
+            this.submitAjax('vips', newVal)
             break
           default:
         }
@@ -515,15 +475,15 @@
         const _type = 'POST'
         this.requestAjax(_type, url, obj).then((data) => {
           if (data.success) {
-            this.$Message.success(this.clickType + '用户成功')
+            this.$Message.success(this.clickType + '会员成功')
             this.inputForm.modalshow = false
             this.loadTable()
           } else if (!data.message) {
-            this.$Message.success(this.clickType + '用户失败')
+            this.$Message.success(this.clickType + '会员失败')
           }
           this.inputForm.modalDisabled = false
         }, (err) => {
-          this.$Message.success(this.clickType + '用户失败')
+          this.$Message.success(this.clickType + '会员失败')
           this.inputForm.modalDisabled = false
         })
       },
@@ -532,7 +492,7 @@
        */
       deleteAll () {
         if (this.selectRows === '' || this.selectRows.length === 0) {
-          this.$Message.error('请选择要删除的用户')
+          this.$Message.error('请选择要删除的会员')
           return
         }
         let id = []
@@ -564,7 +524,7 @@
        */
       deleteUserInfo (id) {
         const _type = 'DELETE'
-        const _url = 'deleteMembers'
+        const _url = 'vipsId'
         const _params = {}
         this.requestAjax(_type, _url, _params, id).then((data) => {
             if (data.success) {
@@ -574,6 +534,35 @@
               this.$Message.error('删除失败')
             }
         })
+      },
+      /**
+       * 上传文件
+       * @param file
+       * @returns {boolean}
+       */
+      handleUpload (file) {
+        let arr = file.name.split('.')
+        if (['xls', 'xlsx', 'xlsm', 'xlt', 'xltx', 'xltm'].indexOf(arr[arr.length - 1]) === -1) {
+          this.$Message.error(file.name + '非excel文件，不能导入')
+          return false
+        }
+        let formData = new FormData()
+        formData.append('file', file)
+        formData.append('type', 'account')
+        this.requestFile('POST', 'vipsUpload', formData).then((data) => {
+          if (data.err == '') {
+            this.$Message.success('导入成功')
+            this.loadTable()
+          } else {
+            this.$Message.error('导入失败')
+          }
+        },(err) => {
+          this.$Message.error('导入失败')
+        })
+        return false
+      },
+      loadXlx () {
+        window.location.href = process.env.API + this.getWbkUrl('filesDown') + '?path=/xheditor/soft/template/template_member.xls'
       }
     },
     mounted () {

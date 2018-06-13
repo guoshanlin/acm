@@ -5,13 +5,13 @@
         <i-col :span="span[0]">
           <div class="ivu-input-wrapper ivu-input-type">
             <i class="ivu-icon ivu-icon-ios-calendar-outline ivu-input-icon ivu-input-icon-normal"></i>
-            <input :id="ids[0]" v-model="value[ids[0]]" autocomplete="off" spellcheck="false" type="text" :placeholder="placeholder[0]" class="ivu-input" @click='initBTime(ids[0],ids[1])'>
+            <input :id="ids[0]" :value="value[ids[0]]" type="text" :placeholder="placeholder[0]" class="ivu-input" @click='initBTime(ids[0],ids[1])'>
           </div>
         </i-col>
         <i-col :span="span[1]">
           <div class="ivu-input-wrapper ivu-input-type">
             <i class="ivu-icon ivu-icon-ios-calendar-outline ivu-input-icon ivu-input-icon-normal"></i>
-            <input :id="ids[1]" v-model="value[ids[1]]" autocomplete="off" spellcheck="false" type="text" :placeholder="placeholder[1]" class="ivu-input" @click='initETime(ids[0],ids[1])'>
+            <input :id="ids[1]" :value="value[ids[1]]" type="text" :placeholder="placeholder[1]" class="ivu-input" @click='initETime(ids[0],ids[1])'>
           </div>
         </i-col>
       </Row>
@@ -19,7 +19,7 @@
     <div v-if="ids.length == 1">
       <div class="ivu-input-wrapper ivu-input-type">
         <i class="ivu-icon ivu-icon-ios-calendar-outline ivu-input-icon ivu-input-icon-normal"></i>
-        <input :id="ids[0]" v-model="value[ids[0]]" autocomplete="off" spellcheck="false" type="text" :placeholder="placeholder[0]" class="ivu-input" @click='initTime(ids[0])'>
+        <input :id="ids[0]" :value="value[ids[0]]"  type="text" :placeholder="placeholder[0]" class="ivu-input" @click='initTime(ids[0])'>
       </div>
     </div>
   </div>
@@ -71,8 +71,10 @@
           autoPickDate: false,
           maxDate: '#F{$dp.$D(' + endID + ')}',
           onpicking: function (dp) {
-            console.log('initBTime', dp.cal.getNewDateStr())
             _this.value[bId] = dp.cal.getNewDateStr()
+          },
+          onpicked: function () {
+            _this.$emit('on-change', bId, _this.value[bId])
           }
         })
       },
@@ -84,13 +86,26 @@
           autoPickDate: false,
           minDate: '#F{$dp.$D(\'' + bId + '\')||\'1990-01-01 00:00\'}',
           onpicking: function (dp) {
-            console.log('initETime', dp.cal.getNewDateStr())
             _this.value[endID] = dp.cal.getNewDateStr()
+          },
+          onpicked: function () {
+            _this.$emit('on-change', endID, _this.value[endID])
           }
         })
       },
       getValue () {
         return this.value
+      },
+      setEmptyBTime () {
+        this.value[this.ids[1]] = ''
+        this.setValueEmpty(this.ids[0])
+      },
+      setEmptyETime () {
+        this.value[this.ids[1]] = ''
+        this.setValueEmpty(this.ids[1])
+      },
+      setValueEmpty (id) {
+         document.getElementById('' + id).value = ''
       }
     },
     beforeCreate () {
