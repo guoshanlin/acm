@@ -81,7 +81,7 @@
     </div>
   </Modal>
 </template>
-<script type="es6">
+<script>
   export default {
     data() {
       return {

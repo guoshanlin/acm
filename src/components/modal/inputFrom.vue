@@ -37,6 +37,11 @@
                        v-model="fromVal[rows.id]"
                        :disabled="rows.disabled"
                        :maxlength="rows.maxLength!=undefined ? rows.maxLength: 50"></i-input>
+                <i-input type="text" v-if="rows.type=='passWord'"
+                       :placeholder="rows.required ? '请输入...(必填）':'请输入...'"
+                        v-model="fromVal[rows.id]"
+                       :disabled="rows.disabled"
+                       :maxlength="rows.maxLength!=undefined ? rows.maxLength: 50"></i-input>
 
                 <i-input v-if="rows.type=='textarea'"
                        v-model="fromVal[rows.id]"
@@ -111,7 +116,7 @@
     </div>
   </Modal>
 </template>
-<script type="es6">
+<script>
   import utils from 'js/utils'
 
   export default {

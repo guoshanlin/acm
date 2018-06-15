@@ -1,16 +1,44 @@
 <template>
   <div class="b wrapper-box">
-    活动邀请
+    <h3 class="fz14">活动邀请</h3>
+    <div class="content-wrapper m-t10 wrapper-border">
+      <div class="fbox m-b10">
+        <div class="flex invitelist-item wrapper-border">
+          <div class="fbox">
+            <div class="invitelist-wrapper">
+              <img width="100%" height="100%" src="../../assets/spread.jpg">
+            </div>
+            <div class="info-wrapper flex c2">
+                <div class="fbox l-h40">
+                  <div class="flex">
+                    <h4>活动二维码</h4>
+                  </div>
+                  <div class="flex t-right">
+                    <a :href="url">下载活动二维码</a>
+                  </div>
+                </div>
+               <div class="invitelist-tip">下载活动二维码，用户通过微信扫描二维码进入小程序报名</div>
+            </div>
+          </div>
+        </div>
+        <div  class="flex m-b10">
+
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
   export default {
     name: "index",
-    data() {
-      return {}
+    data () {
+      return {
+        loadImg: '../../assets/spread.jpg',
+        url: 'https://pmp.coreware.cn/acm/weixin/createwxaqrcode?toUrl=pages/exhibition-details/exhibition-details?id=' + this.$route.query.id
+      }
     },
-    created() {
+    created () {
       setTimeout(() => {
 
       }, 20)
@@ -19,6 +47,24 @@
   }
 </script>
 
-<style scoped>
+<style>
+  .invitelist-item{
+    width: 100%;
+  }
+  .invitelist-wrapper{
+    width: 130px;
+    height: 130px;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .invitelist-item .info-wrapper{
+    padding: 10px;
+    line-height: 20px;
+  }
+  .invitelist-tip{
+    margin-top: 5px;
+    width: 60%;
+  }
 
 </style>

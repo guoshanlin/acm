@@ -7,7 +7,18 @@
           <i-col span="12">
             <Row type="flex" justify="start">
               <i-col>
-                <Select v-model="formData.ticket" style="width:100px">
+                <Row type="flex" justify="start">
+                  <i-col style="line-height: 24px">
+                    订单状态：
+                    <RadioGroup @on-change="orderStatusChange" v-model="formData.status" type="button">
+                      <Radio label="">全部</Radio>
+                      <Radio label="0">待支付</Radio>
+                      <Radio label="1">已支付</Radio>
+                      <Radio label="2">已取消</Radio>
+                    </RadioGroup>
+                  </i-col>
+                </Row>
+             <!--   <Select v-model="formData.ticket" style="width:100px">
                   <Option value="报名名称">报名名称</Option>
                   <Option value="免费报名">免费报名</Option>
                 </Select>
@@ -15,7 +26,7 @@
                   <Option value="订单号">订单号</Option>
                   <Option value="联系人姓名">联系人姓名</Option>
                   <Option value="联系人手机号">联系人手机号</Option>
-                </Select>
+                </Select>-->
               </i-col>
             </Row>
           </i-col>
@@ -31,26 +42,20 @@
             </Row>
           </i-col>
         </Row>
-        <div class="m-t10">
-          <Row type="flex" justify="start">
-            <i-col style="line-height: 24px">
-             订单状态
-              <RadioGroup @on-change="orderStatusChange" v-model="formData.orderStatus" type="button">
-                <Radio label="全部"></Radio>
-                <Radio label="待支付"></Radio>
-                <Radio label="待领取"></Radio>
-                <Radio label="待审核"></Radio>
-                <Radio label="已完成"></Radio>
-                <Radio label="已取消"></Radio>
-              </RadioGroup>
-            </i-col>
-          </Row>
-        </div>
       </Form>
     </div>
     <div class="content-wrapper m-t10 wrapper-border">
       <Table id="usetlistTable" :width="tableWidth" border ref="$table" @on-selection-change="onTableSelect"
              :columns="col" :data="tableData"></Table>
+      <!--分页-->
+      <div style="text-align: right; padding-top: 5px;">
+        <Page show-total show-sizer show-elevator style="display: inline-block;" placement="top"
+              :total="total"
+              :page-size="formData.limit"
+              :current="formData.offset"
+              @on-change="changePage"
+              @on-page-size-change="changeSize"></Page>
+      </div>
     </div>
   </div>
 </template>
@@ -63,10 +68,14 @@
         tableWidth: document.documentElement.clientWidth - 379,
         formData: {
           keyWord: '',
-          orderStatus: "全部",
+          limit: 20,
+          offset: 1,
+          status: ''
+/*          orderStatus: "全部",
           ticket: "报名名称",
-          searchType: "订单号",
+          searchType: "订单号",*/
         },
+        total: 0,
         selectList: [],
         col: [
           {
@@ -98,60 +107,24 @@
             key: "memberPhone"
           },
           {
-            title: "微信号",
-            align: 'left',
-            key: "number"
-          },
-          {
-            title: "单价",
-            align: 'left',
-            key: "number"
-          },
-          {
             title: "数量",
             align: 'left',
             key: "number"
           },
           {
-            title: "实付金额",
+            title: "应付",
             align: 'left',
-            key: "priceActual"
+            key: "priceTotal"
           },
           {
-            title: '操作',
-            width: 170,
-           // fixed: 'right',
+            title: "折扣价",
             align: 'left',
-            render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {type: 'primary', size: 'small'},
-                  style: {marginRight: '5px'},
-                  on: {
-                    click: () => {
-                      this.$Message.warning('详情')
-                    }
-                  }
-                }, '详情'),
-                h('Button', {
-                  props: {type: 'primary', size: 'small'},
-                  style: {marginRight: '5px'},
-                  on: {
-                    click: () => {
-                      this.$Message.warning('编辑')
-                    }
-                  }
-                }, '编辑'),
-                h('Button', {
-                  props: {type: 'error', size: 'small'},
-                  on: {
-                    click: () => {
-                      this.$Message.warning('删除')
-                    }
-                  }
-                }, '删除')
-              ]);
-            }
+            key: "priceDiscount"
+          },
+          {
+            title: "实际支付",
+            align: 'left',
+            key: "priceActual"
           }
         ],
         tableData: []
@@ -163,6 +136,22 @@
       }, 20)
     },
     methods: {
+      /**
+       *跳页
+       * @param v
+       */
+      changePage (v) {
+        this.formData.offset = v
+        this.initTable()
+      },
+      /**
+       *改变页面展示用户条数
+       * @param v
+       */
+      changeSize (v) {
+        this.formData.limit = v
+        this.initTable()
+      },
       onTableSelect (rows) {
         console.log('===========' + rows)
         this.selectList = rows
@@ -171,7 +160,8 @@
         this.$Message.warning('搜索')
       },
       orderStatusChange (v) {
-        this.$Message.warning(v)
+        this.formData.status = v
+        this.initTable()
       },
       exportTable: function () {
         this.$refs.$table.exportCsv({filename: 'order.csv'})
@@ -184,8 +174,8 @@
         const _url = 'orders'
         this.requestAjax(_type, _url, _params).then((data) => {
           if (data.success) {
-        /*    this.total = !isNaN(+data.data.total) ? +data.data.total : 0
-            this.loading = '暂无数据'*/
+           this.total = !isNaN(+data.data.total) ? +data.data.total : 0
+          /*  this.loading = '暂无数据'*/
             this.tableData = data.data.rows
           }
         })

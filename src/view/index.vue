@@ -4,12 +4,12 @@
     <top-header></top-header>
     <div class="index-tab">
       <Row type="flex" justify="center">
-        <i-col><h3 @click="routePush('/index')"><a>首页</a></h3></i-col>
-        <i-col><h3 @click="routePush('/index')"><a>行业</a></h3></i-col>
-        <i-col><h3 @click="routePush('/index')"><a>生活</a></h3></i-col>
-        <i-col><h3 @click="routePush('/index')"><a>亲子</a></h3></i-col>
-        <i-col><h3 @click="routePush('/index')"><a>学习</a></h3></i-col>
-        <i-col><h3 @click="routePush('/index')"><a>展会</a></h3></i-col>
+        <i-col><h3 :class="active.index" @click="tabSwitch('/index','index')"><a>首页</a></h3></i-col>
+        <i-col><h3 :class="active.industry" @click="tabSwitch('/index/industry','industry')"><a>行业</a></h3></i-col>
+        <i-col><h3 :class="active.life" @click="tabSwitch('/index/life','life')"><a>生活</a></h3></i-col>
+        <i-col><h3 :class="active.parenting" @click="tabSwitch('/index/parenting','parenting')"><a>亲子</a></h3></i-col>
+        <i-col><h3 :class="active.learn" @click="tabSwitch('/index/learn','learn')"><a>学习</a></h3></i-col>
+<!--        <i-col><h3 @click="routePush('/index')"><a>展会</a></h3></i-col>-->
       </Row>
     </div>
     <div class="layout-content min-height clearFix m-0">
@@ -28,9 +28,27 @@
   import {mapGetters} from 'vuex'
   export default {
     data () {
-      return {}
+      return {
+        active: {
+          index: 'active',
+          industry: '',
+          life: '',
+          parenting: '',
+          learn: ''
+        }
+      }
     },
     methods: {
+      tabSwitch (url,type) {
+        for (let key in this.active) {
+          if (type == key) {
+            this.active[key] = 'active'
+          } else {
+            this.active[key] = ''
+          }
+        }
+       this.routePush(url)
+      }
     },
     computed: {
       ...mapGetters([
@@ -50,6 +68,7 @@
   .index-tab{height: 50px;line-height: 50px;background-color: #44bb9a}
   .index-tab h3{height: 50px;}
   .index-tab h3:hover{background-color: #0CAE6C;}
+  .index-tab h3.active{background-color: #3bae20;}
   .index-tab a{display: inline-block; height: 45px; font-size: 20px;padding: 0 30px;color: #fff}
   .min-height{ min-height: calc( 100% - 220px)}
 </style>

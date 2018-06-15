@@ -33,7 +33,9 @@ export default {
       // 导入会员信息
      vipsUpload: {url: 'vips/upload', pre: preuUrl},
      // 删除查询会员信息
-      vipsId: {url: 'vips/{id}', pre: preuUrl}
+      vipsId: {url: 'vips/{id}', pre: preuUrl},
+      // 修改用户密码
+      updatePwd: {url: 'members/updatePwd', pre: preuUrl}
 
     }
     /**

@@ -50,7 +50,7 @@
     <table-details v-if="tableDetails.show" :modalshow=tableDetails.modalshow :newValue=tableDetails.option  @getValue="tableDetailsMethods"></table-details>
   </div>
 </template>
-<script type="es6">
+<script>
  import inputFrom from 'components/modal/inputFrom.vue'
  import tableDetails from 'components/modal/tableDetails.vue'
   export default {

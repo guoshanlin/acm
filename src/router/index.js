@@ -141,6 +141,31 @@ export default new Router({
             path: '/index',
             name: '首页',
             component: (resolve) => require(['../view/home/index'], resolve)
+          },
+          {
+            path: '/index/activities',
+            name: '首页详情',
+            component: (resolve) => require(['../view/activities/index'], resolve)
+          },
+          {
+            path: '/index/industry',
+            name: '行业',
+            component: (resolve) => require(['../view/industry/index'], resolve)
+          },
+          {
+            path: '/index/life',
+            name: '生活',
+            component: (resolve) => require(['../view/life/index'], resolve)
+          },
+          {
+            path: '/index/parenting',
+            name: '亲子',
+            component: (resolve) => require(['../view/parenting/index'], resolve)
+          },
+          {
+            path: '/index/learn',
+            name: '学习',
+            component: (resolve) => require(['../view/learn/index'], resolve)
           }
         ]
     }

@@ -87,10 +87,10 @@
         this.initItem()
       },
       menuSelect (name) {
-        this.parms.status = name == 'all' ? '' : name
-/*        this.keyWord = ''
-        this.parms.keyWord = ''*/
-        this.initItem()
+        if((name == 'all' &&  this.parms.status!= '') || (name != 'all' && this.parms.status!= name) ){
+          this.parms.status = name == 'all' ? '' : name
+          this.initItem()
+        }
       },
       addMeeting () {
         this.routePush('/initiatingActivity')

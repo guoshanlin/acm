@@ -140,8 +140,10 @@
        * @param name
        */
       menuSelect (name) {
-        this.parms.status = name
-        this.initItem()
+        if (this.parms.status != name) {
+          this.parms.status = name
+          this.initItem()
+        }
       },
       searchDriver () {
         this.parms.keyWord = this.keyWord

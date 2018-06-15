@@ -40,9 +40,36 @@
                 :modalshow="inputForm.modalshow"/>
     <!--详情列表承载标签-->
     <table-details v-if="tableDetails.show" :modalshow=tableDetails.modalshow :newValue=tableDetails.option  @getValue="tableDetailsMethods"></table-details>
+    <Modal
+      title="修改密码"
+      v-model="password.isShowModal"
+      :mask-closable="false"
+      @on-cancel="password.isShowModal = false"
+      class-name="vertical-center-modal inputForm bottom" :width="512">
+      <div>
+          <Row :gutter=5>
+            <i-col :span="6">
+              <p class="width-right m-l10"><span class="red_tip">*</span>新密码:</p>
+            </i-col>
+            <i-col :span="18">
+              <i-input type="password" placeholder=" 请输入..." v-model="password.password"></i-input>
+            </i-col>
+            <i-col :span="6">
+              <p class="width-right m-l10"><span class="red_tip">*</span>确认密码:</p>
+            </i-col>
+            <i-col :span="18">
+              <i-input type="password" placeholder=" 请输入..." v-model="password.newPassword"></i-input>
+            </i-col>
+          </Row>
+      </div>
+      <div slot="footer">
+        <i-button type="ghost" @click="password.isShowModal = false">取消</i-button>
+        <i-button type="primary" @click="handle">确认</i-button>
+      </div>
+    </Modal>
   </div>
 </template>
-<script type="es6">
+<script>
  import inputFrom from 'components/modal/inputFrom.vue'
  import tableDetails from 'components/modal/tableDetails.vue'
   export default {
@@ -55,11 +82,7 @@
       return {
         columns: [
           {title: '姓名', key: 'name', width: 120, sortable: false},
-
-          {title: '性别',
-            key: 'sex',
-            width: 80,
-            sortable: false},
+          {title: '性别', key: 'sex', width: 80, sortable: false},
           {title: '手机', key: 'phone', width: 160, sortable: false},
           {title: '邮箱', key: 'email', width: 170, sortable: false},
           {title: '地址',
@@ -86,7 +109,7 @@
               }, params.row[params.column.key] === 1 ? '会员' : '非会员')
             }},
           {title: '操作',
-            width: 140,
+            width: 180,
             align: 'center',
             render: (h, params) => {
               return h('div', [
@@ -110,7 +133,19 @@
                     /*  this.confirmDelete(params.row.id) // sys/deleteStudentInfo*/
                     }
                   }
-                }, params.row.status == 1 ? '禁用' : '启用')
+                }, params.row.status == 1 ? '禁用' : '启用'),
+                h('Button', {
+                  style: {marginRight: '5px'},
+                  props: {type: 'error', size: 'small'},
+                  nativeOn: {
+                    click: () => {
+                      this.password.password = ''
+                      this.password.newPassword = ''
+                     this.checkUser = params.row
+                      this.password.isShowModal = true
+                    }
+                  }
+                }, '重置')
               ])
             }
           }
@@ -138,7 +173,13 @@
           modalshow: false,
           option: {}
         }, // 详情参数
-        timer: {}
+        timer: {},
+        checkUser: '',
+        password: {
+          isShowModal: false,
+          password: '',
+          newPassword: ''
+        }
       }
     },
     computed: {},
@@ -549,6 +590,31 @@
             } else {
               this.$Message.error('删除失败')
             }
+        })
+      },
+      /**
+       *密码重置
+       */
+      handle () {
+        if (this.passWord.passWord == '') {
+          this.$Message.error('请输入新密码')
+          return
+        }
+        if (this.passWord.passWord == '') {
+          this.$Message.error('请再次输入确认密码')
+          return
+        }
+        if (this.passWord.passWord != this.passWord.newPassWord) {
+          this.$Message.error('修改的两次密码输入不一致')
+          return
+        }
+        this.requestAjax('post', 'members', {id: this.checkUser.id, passWord: this.passWord.passWord}).then((data)=>{
+          if (data.success) {
+            this.password.isShowModal = false
+            this.$Message.success('密码重置成功')
+          } else {
+            this.$Message.error('密码重置失败')
+          }
         })
       }
     },

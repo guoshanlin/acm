@@ -1,7 +1,7 @@
 <template>
   <div class="swiper">
     <swiper :options="swiperOption">
-      <swiper-slide v-for="(item, index) in rows" :key="index"><img :src="item"></swiper-slide>
+      <swiper-slide v-for="(item, index) in rows" :key="index"><img width='100%' height='100%' v-lazy="item.url" @click="routePush('/index/activities',item.id)"></swiper-slide>
       <div class="swiper-button-prev" slot="button-prev"></div>
       <div class="swiper-button-next" slot="button-next"></div>
       <div class="swiper-pagination" slot="pagination"></div>

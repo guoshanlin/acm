@@ -13,6 +13,7 @@
           <DropdownMenu slot="list">
            <!-- <DropdownItem>商户列表</DropdownItem>-->
             <DropdownItem name="my">我的活动</DropdownItem>
+            <DropdownItem name="password" divided>修改密码</DropdownItem>
             <DropdownItem  name="logout" divided>退出</DropdownItem>
           </DropdownMenu>
         </Dropdown>
@@ -36,16 +37,18 @@
     <div class="app-content">
       <router-view></router-view>
     </div>
+    <i-password :show="passModalShow" @cancel="passModalShow = false"></i-password>
   </div>
 
 </template>
 
 <script>
-  import {setIsLogin} from 'js/cache'
+  import {setIsLogin, setUserInfo} from 'js/cache'
   import {mapMutations, mapGetters} from 'vuex'
+  import iPassword from 'components/modal/password'
 
   export default {
-    data() {
+    data () {
       return {
         activeNenu: this.$route.path,
         menuList: [
@@ -56,7 +59,8 @@
           {path: "/marketing", title: "营销"},
           {path: "/promotion", title: "推广"},
           {path: "/examine", title: "审批管理"},
-        ]
+        ],
+        passModalShow: false
       }
     },
     created () {
@@ -67,6 +71,9 @@
         }
       }, 20)
     },
+    components: {
+      iPassword
+    },
     computed: {
       ...mapGetters([
         'userData',
@@ -75,6 +82,7 @@
     },
     methods: {
       ...mapMutations({
+        setUserDate: 'SET_USERDATA',
         setIsLogin: 'SET_ISLOGIN'
       }),
       changeMenu (name) {
@@ -88,10 +96,19 @@
         const _type = 'POST'
         const _params = {}
         const _url = 'logout'
-        this.requestAjax(_type, _url, _params).then((res) => {}, () => {})
-        this.routePush('/index')
-        setIsLogin(false)
-        this.setIsLogin(false)
+        this.requestAjax(_type, _url, _params).then((res) => {
+          setIsLogin(false)
+          this.setIsLogin(false)
+          this.setUserDate(null)
+          setUserInfo(null)
+          this.routePush('/index')
+        }, () => {
+          setIsLogin(false)
+          this.setIsLogin(false)
+          this.setUserDate(null)
+          setUserInfo(null)
+          this.routePush('/index')
+        })
       },
       handleSubmit (name) {
         switch ('' + name) {
@@ -99,6 +116,9 @@
             break
           case 'logout': // 退出登录
             this.logout()
+            break
+          case 'password': // 修改密码
+           this.passModalShow = true
             break
           default:
         }

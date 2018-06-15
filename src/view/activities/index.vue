@@ -1,6 +1,6 @@
 <template>
   <div>
-    <active-deltail :id="rowId" type="examine"></active-deltail>
+    <active-deltail :id="rowId" type="activities"></active-deltail>
   </div>
 </template>
 
@@ -17,11 +17,6 @@
     components: {
       activeDeltail
     },
-    mounted () {
-      this.$nextTick(() => {
-       // this.initItem()
-      })
-    }
   }
 </script>
 

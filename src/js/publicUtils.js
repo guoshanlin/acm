@@ -236,7 +236,7 @@ export default {
      * @returns {*}
      */
     Vue.prototype.testImg = function (file) {
-      const maxSize = 1024 * 1000 * 2 // 2M
+      const maxSize = 1024 * 1000 * 4 // 2M
       /*      const imgWith = 1080
             const imgHeight = 640*/
       let arr = file.name.split('.')
@@ -245,7 +245,7 @@ export default {
         return false
       }
       if (file.size > maxSize) {
-        this.$Message.error('图片大小不能超过2M')
+        this.$Message.error('图片大小不能超过4M')
         return false
       }
       let path

@@ -94,6 +94,9 @@
         })
       },
       getValue () {
+        for (let i = 0; i < this.ids.length; i++) {
+          this.value[this.ids[i]] = document.getElementById('' + this.ids[i]).value
+        }
         return this.value
       },
       setEmptyBTime () {

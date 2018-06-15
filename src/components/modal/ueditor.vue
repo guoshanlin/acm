@@ -4,7 +4,7 @@
 <template>
     <div :id="id" class="ueditor"></div>
 </template>
-<script type="es6">
+<script>
     import '../../../static/ueditor/ueditor.config'
     import '../../../static//ueditor/ueditor.all'
     import '../../../static//ueditor/lang/zh-cn/zh-cn'

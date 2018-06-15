@@ -7,7 +7,7 @@
     </Menu>
     <div class="content-wrapper">
       <div v-if="activeName == 1">
-        <active-deltail :id="rowId"></active-deltail>
+        <active-deltail :id="rowId" type="info"></active-deltail>
       </div>
     </div>
   </div>

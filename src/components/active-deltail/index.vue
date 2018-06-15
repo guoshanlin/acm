@@ -5,6 +5,14 @@
     </div>
     <div class="datails-item m-t10">
       <div class="fbox">
+        <div class="datails-flex-item t-right"><h3>活动分类:</h3></div>
+        <div class="flex t-left">
+          <div>{{data.style}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="datails-item m-t10">
+      <div class="fbox">
         <div class="datails-flex-item t-right"><h3>票种:</h3></div>
         <div class="flex t-left">
           <div v-if="data.isNeedPay == 0">免费</div>
@@ -55,7 +63,7 @@
       return {
         data: {},
         label: [],
-        buttonName: this.$route.path.indexOf('examineDetails') != -1 ? '审核' : '',
+        buttonName: '',
         buttonType: 'examine',
         inputForm: {
           show: false,
@@ -115,7 +123,8 @@
       inputFrom
     },
     props: {
-      id: ''
+      id: '',
+      type: ''
     },
     methods: {
       /**
@@ -123,7 +132,9 @@
        * @param row
        */
       exmine (row) {
-        if (this.buttonType == 'cancel') {
+        if (this.buttonType == 'info') {
+          this.$Message.warning('点击了取消')
+          return
           this.submitAjax('activitys', {id: row.id, status: 3}, '取消')
           return
         }
@@ -157,6 +168,7 @@
           if (data.success) {
             this.$Message.success(msg + '成功')
             this.buttonName = ''
+            this.buttonType = ''
             this.inputForm.modalshow = false
             this.initItem()
           } else if (!data.message) {
@@ -175,9 +187,15 @@
         this.requestAjax(_type, _url, _params).then((data) => {
           if (!data.message) {
             this.data = data.data.rows[0]
-            if (this.data.status == 1 && this.$route.path.indexOf('examineDetails') == -1) {
+            if (this.data.status == 1 && this.type == 'info') {
               this.buttonName = '取消'
-              this.buttonType = 'cancel'
+              this.buttonType = 'info'
+            } else if (this.type == 'examine' && this.data.status == 0) {
+              this.buttonName = '审核'
+              this.buttonType = 'examine'
+            } else {
+              this.buttonName = ''
+              this.buttonType = ''
             }
             this.label = this.data.label.split(',')
           }

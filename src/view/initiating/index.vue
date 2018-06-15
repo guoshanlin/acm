@@ -66,7 +66,7 @@
            </div>
            <div class="form-group">
              <div class="float-l form-title">
-               <div><span class="red">*</span>报名截止时间:</div>
+               <div><span class="red">*</span>报名时间:</div>
              </div>
              <div class="float-r form-fill">
                <div class="t-left">
@@ -77,7 +77,7 @@
            </div>
            <div class="form-group">
              <div class="float-l form-title">
-               <div><span class="red">*</span>活动人数:</div>
+               <div><span class="red">*</span>成团人数:</div>
              </div>
              <div class="float-r form-fill">
                <div class="t-left" title="最多允许的人数,0不限制参与人数">

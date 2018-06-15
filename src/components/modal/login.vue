@@ -229,8 +229,8 @@
         this.requestAjax(_type, _url, _params).then((data) => {
           if (data.success) {
             this.loginFail = false
-            this.setUserDate(data.data.member)
             this.setIsLogin(true)
+            this.setUserDate(data.data.member)
             setUserInfo(data.data.member)
             setIsLogin(true)
             this.$emit('onCancel', {login: true})

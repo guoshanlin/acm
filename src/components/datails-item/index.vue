@@ -36,13 +36,16 @@
       </div>
       <div class="fbox">
         <div class="flex">
-           <div>活动参与名额：{{row.number == 0 ? '不限': row.number + '人'}}</div>
+           <div>成团人数：{{row.number == 0 ? '不限': row.number + '人'}}</div>
+        </div>
+        <div class="flex">
+          <div>报名人数：{{row.numberActual + '人'}}</div>
         </div>
       </div>
       <div class="fbox">
         <div class="flex">
           <Button v-if="row.status == 0 &&  button" type="primary" @click="exmine">{{button}}</Button>
-          <Button v-if="row.status ==1 &&  button && row.numberActual < row.number" @click="exmine">{{button}}</Button>
+          <Button v-if="row.status == 1 &&  button && row.numberActual < row.number" @click="exmine">{{button}}</Button>
         </div>
       </div>
     </div>
