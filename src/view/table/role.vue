@@ -609,7 +609,7 @@
           this.$Message.error('修改的两次密码输入不一致')
           return
         }
-        this.requestAjax('post', 'members', {id: this.checkUser.id, password: this.password.password}).then((data)=>{
+        this.requestAjax('post', 'members', {id: this.checkUser.id, passWord: this.password.password}).then((data)=>{
           if (data.success) {
             this.password.isShowModal = false
             this.$Message.success('密码重置成功')

@@ -88,7 +88,7 @@
            </div>
            <div class="form-group">
              <div class="float-l form-title">
-               <div>活动海报:</div>
+               <div><span class="red">*</span>活动海报:</div>
              </div>
              <div class="float-r form-fill">
                <div class="t-center">
@@ -442,6 +442,10 @@
           remark: this.fromVal.abstract
           //memberId: this.userData.id,
           /*   dataFile: this.dataFile*/
+        }
+        if (this.dataFile == '') {
+          this.$Message.error('请上传活动海报')
+          return
         }
         let fileData = new FormData()
           fileData.append('file', this.dataFile)

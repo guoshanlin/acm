@@ -147,7 +147,7 @@
   .meeting-menu {height: 130px !important;background: #b1e8d2!important;}
   /*.ivu-menu.ivu-menu-horizontal .ivu-row-flex{height:130px;}*/
   .headPrimary {min-width: 992px;background: #b1e8d2}
-   #login{display: inline-block; height: 60px; width:280px;background:url("../assets/logo_core.png") no-repeat; background-size: 90% 90%;margin-top: 35px; margin-left: 25px;}
+   #login{display: inline-block; height: 85px; width:221px;background:url("../assets/logo_core.gif") no-repeat; margin-top: 25px; margin-left: 25px;}
   .header-r{ width: calc(100% - 335px);height: 130px;}
   .header-r>div{height: 65px; line-height: 65px;}
   .header-nav{margin: 0px 15px;}

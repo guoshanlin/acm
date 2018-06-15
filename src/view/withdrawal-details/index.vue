@@ -10,7 +10,7 @@
                 申请时间
               </i-col>
               <i-col>
-                <DatePicker class="m-l10" type="datetimerange" format="yyyy-MM-dd" placeholder="请选择时间段" style="width: 240px"></DatePicker>
+                <DatePicker class="m-l10" v-model="formData.time" type="datetimerange" format="yyyy-MM-dd" placeholder="请选择时间段" style="width: 240px"></DatePicker>
               </i-col>
             </Row>
           </i-col>
@@ -32,19 +32,29 @@
             </i-col>
             <i-col>
               <RadioGroup v-model="formData.trading">
-                <Radio label="不限"></Radio>
-                <Radio label="处理中"></Radio>
-                <Radio label="提现成功"></Radio>
-                <Radio label="提现失败"></Radio>
-                <Radio label="打款失败"></Radio>
+                <Radio label="">不限</Radio>
+                <Radio label="0">处理中</Radio>
+                <Radio label="1">提现成功</Radio>
+                <Radio label="2">提现失败</Radio>
+                <Radio label="3">打款失败</Radio>
               </RadioGroup>
             </i-col>
           </Row>
         </div>
       </Form>
     </div>
-    <div class="content-wrapper m-t10 posct" style="min-height: 240px">
-      暂无数据
+    <div class="content-wrapper m-t10" style="min-height: 240px">
+      <i-table :columns="columns" :data="data" border size="small" ref="table"></i-table>
+    </div>
+    <div class="content-wrapper m-t10">
+      <div style="text-align: right; padding-top: 5px;">
+        <Page show-total show-sizer show-elevator style="display: inline-block;" placement="top"
+              :total="total"
+              :page-size="formData.limit"
+              :current="formData.offset"
+              @on-change="changePage"
+              @on-page-size-change="changeSize"></Page>
+      </div>
     </div>
   </div>
 </template>
@@ -56,9 +66,21 @@
       return {
         formData: {
           keyWord: '',
-          trading: "不限",
-          select: '交易时间'
-        }
+          trading: '',
+          time: '',
+          limit: 20,
+          offset: 1
+        },
+        columns: [
+          {title: '业务流水', key: 'name', width: 180, sortable: false},
+          {title: '订单编号', key: 'sex', sortable: false},
+          {title: '申请时间', key: 'phone', width: 140, sortable: false},
+          {title: '提现金额', key: 'email', width: 140, sortable: false},
+          {title: '交易状态', key: 'position', width: 140, sortable: false},
+          {title: '到账时间', key: 'position', width: 180, sortable: false}
+        ],
+        data: [],
+        total: 0
       }
     },
     created() {
@@ -70,6 +92,20 @@
       searchDriver(){
         this.$Message.warning('搜索')
       },
+      /**
+       *跳页
+       * @param v
+       */
+      changePage (v) {
+        this.formData.offset = v
+      },
+      /**
+       *改变页面展示用户条数
+       * @param v
+       */
+      changeSize (v) {
+        this.formData.limit = v
+      }
     }
   }
 </script>

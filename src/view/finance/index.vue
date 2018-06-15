@@ -1,6 +1,6 @@
 <template>
-  <div class="wrapper fbox">
-    <div class="wrapper-box b" style="width: 140px;margin-right: 10px;height: fit-content;">
+  <div class="wrapper clearFix">
+    <div class="wrapper-box b float-l" style="width: 140px;margin-right: 10px;height: fit-content;">
 
       <Menu theme="light" :active-name="activeNenu" width="auto"  class="menu-wrapper" @on-select="changeMenu">
         <MenuGroup title="财务管理">
@@ -11,8 +11,8 @@
       </Menu>
 
     </div>
-    <div class="flex">
-      <router-view></router-view>
+    <div class="float-l" style="width:calc(100% - 160px);">
+        <router-view></router-view>
     </div>
   </div>
 </template>

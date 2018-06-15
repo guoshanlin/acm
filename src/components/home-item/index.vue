@@ -8,7 +8,7 @@
           <a>更多》</a>
         </div>
       </div>
-      <div>
+      <div class="home-modular">
         <Row>
           <i-col :span="12" v-for="(row, index) in  option.rows" :key ='index' v-if="index < 4">
             <div class="home-item-content" @click="routePush('/index/activities',row.id,'home')">
@@ -92,7 +92,7 @@
     line-height: 34px;
     height: 160px;
   }
-
+  .home-modular{min-height: 400px}
   .meeting-version {
     padding: 2px 8px;
     border-radius: 3px;

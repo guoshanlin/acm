@@ -1,6 +1,6 @@
 <template>
   <div class="swiper">
-    <swiper :options="swiperOption">
+    <swiper :options="swiperOption" v-if='rows.length>0'>
       <swiper-slide v-for="(item, index) in rows" :key="index"><img width='100%' height='100%' v-lazy="item.url" @click="routePush('/index/activities',item.id,'home')"></swiper-slide>
       <div class="swiper-button-prev" slot="button-prev"></div>
       <div class="swiper-button-next" slot="button-next"></div>
@@ -22,7 +22,7 @@
           loopedSlides: 5,
           speed: 500,
           autoplay: {
-            el: 5000,
+            el: 10000,
             disableOnInteraction: false
           },
           // 如果自行设计了插件，那么插件的一些配置相关参数，也应该出现在这个对象中，如下debugger

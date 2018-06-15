@@ -25,7 +25,8 @@ export default {
         this.axios({
           method: type,
           url: this.getWbkUrl(url, urlId),
-          params: newParams
+          params: newParams,
+          withCredentials:true
         }).then((data) => {
           resolve(data.data)
         }).catch((error) => {
@@ -46,7 +47,8 @@ export default {
         this.axios({
           method: type,
           url: this.getWbkUrl(url, urlId),
-          data: data
+          data: data,
+          withCredentials:true
         }).then((data) => {
           resolve(data.data)
         }).catch((error) => {

@@ -23,7 +23,7 @@
     <div class="cloud-left-menu">
 
       <div class="user-pic-wrapper posct cursor-p" @click="routePush('/index')">
-        <img src="../../assets/logo_core.png">
+        <img src="../../assets/logo_core.gif">
       </div>
 
       <Menu theme="dark" :active-name="activeNenu" width="160px"  class="menu-wrapper" @on-select="changeMenu">
@@ -156,10 +156,10 @@
     background: #222430;
   }
   .user-pic-wrapper{
-    height: 120px;
+    height: 140px;
   }
   .user-pic-wrapper img{
-    width: 100px;
+    width: 140px;
   }
 
   .menu-wrapper{

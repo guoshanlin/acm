@@ -14,7 +14,7 @@
     <div class="wrapper-box m-t15">
       <div class="fbox">
         <div class="flex wrapper-box">
-          <div class="list-item" v-for="item in data" :key="item.id">
+          <div class="list-item" v-for="item in data" :key="item.id" @click="routePush('/index/activities',item.id,'parenting')">
             <activity-item :row='item'></activity-item>
           </div>
         </div>
@@ -120,6 +120,7 @@
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 10px;
+    cursor: pointer;
   }
   .parenting .ivu-radio-group-button .ivu-radio-wrapper:last-child,.ivu-radio-group-button.ivu-radio-group-small .ivu-radio-wrapper:first-child{border-radius:0;}
 </style>

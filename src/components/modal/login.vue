@@ -4,9 +4,9 @@
   #login-div  .ivu-form-item:last-child,#login-div .ivu-form-item:nth-last-child(2) {margin-bottom:0px}
   #login-div .ivu-form-item-required {display: block;}
   #loginMsg,#registerMsg{color: #FF0000;margin-right: 0px;width: 200px;text-align:  right;}
-  .ivu-modal-footer{border-top: 0px}
-  .ivu-modal-header{border-bottom: 0px}
-  .ivu-modal-content{ background-color: #e2e2de}
+  .login-div .ivu-modal-footer{border-top: 0px}
+  .login-div .ivu-modal-header{border-bottom: 0px}
+  .login-div .ivu-modal-content{ background-color: #e2e2de}
 
 </style>
 
@@ -17,7 +17,7 @@
       v-model="isShowModal"
       :mask-closable="false"
       @on-cancel="cancel"
-      class-name="vertical-center-modal" width="560">
+      class-name="vertical-center-modal login-div" width="560">
       <div id="login-div">
           <div v-if="hasUser" class="lc-block toggled" id="l-login">
             <Form ref="formInline" :model="formInline" :rules="ruleInline" inline>

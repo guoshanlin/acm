@@ -2,7 +2,7 @@
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
 
-const path = require('path')
+var path = require('path')
 
 module.exports = {
   dev: {
@@ -14,6 +14,7 @@ module.exports = {
       '/api/':{
         target:'https://pmp.coreware.cn/acm/',
         //target:'http://192.168.1.248/acm/',
+        //target:'http://192.168.1.246/acm/',
         changeOrigin:true,
         pathRewrite:{
           '^/api/':''

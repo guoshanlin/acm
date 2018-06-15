@@ -66,13 +66,17 @@
       loadActivity () {
         for (let i = 0; i < 3; i++) {
           this.requestAjax('get', 'activitys', {importance:i}).then((data) => {
-            if (i == 1) {
-              this.row = []
-              for (let n = 0; n < 5; n++) {
-                this.row.push({id: data.data.rows[n].id, url: this.url + data.data.rows[n].posterUrl})
+            if (data.success) {
+              if (i == 1) {
+                this.row = []
+                for (let n = 0; n < data.data.rows.length; n++) {
+                  if (n < 5) {
+                    this.row.push({id: data.data.rows[n].id, url: this.url + data.data.rows[n].posterUrl})
+                  }
+                }
               }
+              this.option[i].rows = data.data.rows
             }
-            this.option[i].rows = data.data.rows
           })
         }
       }

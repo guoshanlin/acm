@@ -4,7 +4,7 @@
     <top-header></top-header>
     <div class="index-tab">
       <Row type="flex" justify="center">
-        <i-col><h3 :class="active.index" @click="tabSwitch('/index','index')"><a>首页</a></h3></i-col>
+        <i-col><h3 :class="active.home" @click="tabSwitch('/index','home')"><a>首页</a></h3></i-col>
         <i-col><h3 :class="active.industry" @click="tabSwitch('/index/industry','industry')"><a>行业</a></h3></i-col>
         <i-col><h3 :class="active.life" @click="tabSwitch('/index/life','life')"><a>生活</a></h3></i-col>
         <i-col><h3 :class="active.parenting" @click="tabSwitch('/index/parenting','parenting')"><a>亲子</a></h3></i-col>
@@ -30,7 +30,7 @@
     data () {
       return {
         active: {
-          index: 'active',
+          home: 'active',
           industry: '',
           life: '',
           parenting: '',
@@ -39,7 +39,7 @@
       }
     },
     methods: {
-      tabSwitch (url,type) {
+      tabSwitch (url, type) {
         for (let key in this.active) {
           if (type == key) {
             this.active[key] = 'active'
@@ -58,6 +58,37 @@
     components: {
       topHeader,
       iFooter
+    },
+    mounted () {
+     this.$nextTick(() => {
+       if (this.$route.query.type) {
+         for (let key in this.active) {
+           if (this.$route.query.type == key) {
+             this.active[key] = 'active'
+           } else {
+             this.active[key] = ''
+           }
+         }
+       } else {
+         this.active = {home: '', industry: '', life: '', parenting: '', learn: ''}
+         switch ('' + this.$route.path) {
+           case '/index/industry':
+             this.active.industry = 'active'
+                 break
+           case '/index/life':
+             this.active.life = 'active'
+             break
+           case '/index/parenting':
+             this.active.parenting = 'active'
+             break
+           case '/index/learn':
+             this.active.learn = 'active'
+             break
+           default:
+             this.active.home = 'active'
+         }
+       }
+     })
     }
   }
 </script>
