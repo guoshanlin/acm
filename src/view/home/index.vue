@@ -1,22 +1,22 @@
 <template>
-  <div>
+  <div class="home-page">
      <i-swiper :rows = row></i-swiper>
     <div style="padding: 10px;">
-       <Row>
-          <i-col :span="19">
+       <div class="fbox">
+          <div class="flex">
              <home-item :option="option[1]"></home-item>
              <home-item :option="option[2]"></home-item>
              <home-item :option="option[0]"></home-item>
-          </i-col>
-          <i-col :span="5">
-            <div style="height: 200px; width: 100%; border:1px solid #eeeeee;background-color: #2baee9">
+          </div>
+          <div class="right-bar">
+            <div class="wrapper-box" style="height: 200px;">
               热榜1
             </div>
-            <div style="height: 200px; width: 100%; border:1px solid #eeeeee;background-color: #2baee9; margin-top: 10px">
+            <div class="wrapper-box m-t10" style="height: 200px;">
               热榜2
             </div>
-          </i-col>
-       </Row>
+          </div>
+       </div>
     </div>
   </div>
 </template>
@@ -86,5 +86,5 @@
 </script>
 
 <style>
-
+  .home-page{background-color: #ffffff}
 </style>

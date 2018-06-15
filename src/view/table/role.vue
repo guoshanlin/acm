@@ -596,19 +596,20 @@
        *密码重置
        */
       handle () {
-        if (this.passWord.passWord == '') {
+        if (this.password.password == '') {
           this.$Message.error('请输入新密码')
           return
         }
-        if (this.passWord.passWord == '') {
+        if (this.password.password == '') {
           this.$Message.error('请再次输入确认密码')
           return
         }
-        if (this.passWord.passWord != this.passWord.newPassWord) {
+        console.log(this.password)
+        if (this.password.password != this.password.newPassword) {
           this.$Message.error('修改的两次密码输入不一致')
           return
         }
-        this.requestAjax('post', 'members', {id: this.checkUser.id, passWord: this.passWord.passWord}).then((data)=>{
+        this.requestAjax('post', 'members', {id: this.checkUser.id, password: this.password.password}).then((data)=>{
           if (data.success) {
             this.password.isShowModal = false
             this.$Message.success('密码重置成功')

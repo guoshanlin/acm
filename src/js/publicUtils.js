@@ -152,8 +152,10 @@ export default {
      * 公用页面跳转
      * @param url
      */
-    Vue.prototype.routePush = function (url, id) {
-      if (id) {
+    Vue.prototype.routePush = function (url, id, type) {
+      if (id && type) {
+        this.$router.push({path: url, query: {id: id, type: type}})
+      } else if (id) {
         this.$router.push({path: url, query: {id: id}})
       } else {
         this.$router.push(url)

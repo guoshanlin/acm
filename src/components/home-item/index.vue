@@ -11,7 +11,7 @@
       <div>
         <Row>
           <i-col :span="12" v-for="(row, index) in  option.rows" :key ='index' v-if="index < 4">
-            <div class="home-item-content" @click="routePush('/index/activities',row.id)">
+            <div class="home-item-content" @click="routePush('/index/activities',row.id,'home')">
               <div class="index-home">
                 <img width="100%" height="100%" v-lazy="url + row.posterUrl">
                 <span class="tips b1 c">进行中</span>

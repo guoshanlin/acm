@@ -87,12 +87,14 @@
        */
       logout () {
         this.requestAjax('POST', 'logout', {}).then((res) => {
+          this.showAdmin = false
           setIsLogin(false)
           this.setIsLogin(false)
           this.setUserDate(null)
           setUserInfo(null)
           this.routePush('/index')
         }, () => {
+          this.showAdmin = false
           setIsLogin(false)
           this.setIsLogin(false)
           this.setUserDate(null)

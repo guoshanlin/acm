@@ -12,9 +12,21 @@
       </div>
     </div>
     <div class="wrapper-box m-t15">
-        <div class="list-item" v-for="item in data" :key="item.id">
-          <activity-item :row='item'></activity-item>
+      <div class="fbox">
+        <div class="flex wrapper-box ">
+          <div class="list-item" v-for="item in data" :key="item.id">
+            <activity-item :row='item'></activity-item>
+          </div>
         </div>
+        <div class="right-bar m-l10">
+          <div class="wrapper-box" style="height: 200px;">
+            热榜1
+          </div>
+          <div class="wrapper-box m-t10" style="height: 200px;">
+            热榜2
+          </div>
+        </div>
+      </div>
     </div>
     <div class="wrapper-box m-t15">
       <div style="text-align: right; padding-top: 5px;">
