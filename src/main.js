@@ -18,6 +18,7 @@ import getwbkUrl from 'js/getwbkUrl'
 import VueLazyload from 'vue-lazyload'
 import InitScroll from 'js/initScroll'
 import config from "../config"
+import './theme/iview/index.less'
 
 axios.defaults.baseURL = process.env.API
 Vue.prototype.axios = axios

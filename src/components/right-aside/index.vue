@@ -14,7 +14,7 @@
       <div class="clear rig-title m-b10">
         <h3 class="c2">活动官方公众号</h3>
       </div>
-      <img v-lazy="loadImg" width="100%"/>
+      <img src="../../assets/jrh_code.png" width="100%"/>
     </div>
     <div class=" b wrapper-box m-l10 m-t10">
       <div class="clear rig-title">
@@ -46,7 +46,6 @@
     name: 'index',
     data() {
       return {
-        loadImg: ''
       }
     }
   }

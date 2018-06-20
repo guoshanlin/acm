@@ -98,6 +98,13 @@
           checkinType: "签到方式",
           sendMsgFlag: "是否发送电子票",
         },
+        requestParms: {
+          keyWord: '',
+          limit: 20,
+          offset: 1,
+          status: '',
+          activityId: this.$route.query.id
+        },
         selectList: [],
         col: [
           {
@@ -108,69 +115,59 @@
           },
           {
             title: '头像昵称',
-            width: 220,
+            width: 200,
             render: (h, params) => {
               return h('div', [
                 h('Avatar', {
                   style: {marginRight: '5px'},
                   props: {
-                    src: 'http://localhost:8080/api//files/xheditor/20180611/jpg/%E5%A4%A7%E5%8A%9E%E5%85%AC%E5%8C%BA2.jpg'
+                    src: params.row.userPic
                   }
                 }),
-                h('span', params.row.name)
+                h('span', params.row.nickName)
               ])
             }
           },
           {
-            title: '参会人信息',
-            width: 220,
-            render: (h, params) => {
-              return h('div', [
-                h('Avatar', {
-                  style: {marginRight: '5px'},
-                  props: {
-                    src: 'http://localhost:8080/api//files/xheditor/20180611/jpg/%E5%A4%A7%E5%8A%9E%E5%85%AC%E5%8C%BA2.jpg'
-                  }
-                }),
-                h('span', params.row.name)
-              ])
-            }
+            title: '名称',
+            width: 180,
+            key: "memberName"
           },
           {
-            title: "来源",
+            title: '是否会员',
             align: 'center',
             width: 100,
-            key: "origin"
+            key: "isVip"
           },
           {
-            title: "座位",
+            title: "参会码",
             align: 'center',
             width: 100,
-            key: "age"
+            key: "codeNumber"
           },
           {
-            title: "是否发送电子票",
+            title: "手机号",
             align: 'center',
             width: 130,
-            key: "origin"
-          },
-          {
-            title: "参会状态",
-            align: 'center',
-            width: 100,
-            key: "origin"
+            key: "memberPhone"
           },
           {
             title: "签到状态",
             align: 'center',
             width: 100,
-            key: "origin"
+            key: "status"
           },
           {
             title: "签到方式",
             align: 'center',
             width: 100,
-            key: "origin"
+            key: "signType"
+          },
+          {
+            title: "签到时间",
+            align: 'center',
+            width: 160,
+            key: "signTime"
           },
           {
             title: '操作',
@@ -209,41 +206,12 @@
             }
           }
         ],
-        tableData: [
-          {
-            name: 'John Brown',
-            age: 18,
-            origin: "后台添加",
-            address: 'New York No. 1 Lake Park',
-            date: '2016-10-03'
-          },
-          {
-            name: 'Jim Green',
-            age: 24,
-            origin: "后台添加",
-            address: 'London No. 1 Lake Park',
-            date: '2016-10-01'
-          },
-          {
-            name: 'Joe Black',
-            age: 30,
-            origin: "后台添加",
-            address: 'Sydney No. 1 Lake Park',
-            date: '2016-10-02'
-          },
-          {
-            name: 'Jon Snow',
-            age: 26,
-            origin: "后台添加",
-            address: 'Ottawa No. 2 Lake Park',
-            date: '2016-10-04'
-          }
-        ]
+        tableData: []
       }
     },
     created() {
       setTimeout(() => {
-
+        this.requestData()
       }, 20)
     },
     methods: {
@@ -256,8 +224,50 @@
       },
       exportTable: function () {
         this.$refs.$table.exportCsv({filename: "user.csv"})
+      },
+      requestData() {
+        this.requestAjax('GET', 'ticket', this.requestParms).then((data) => {
+          console.log(JSON.stringify(data))
+          if (data.success) {
+            this._parseData(data.data.rows)
+          } else {
+
+          }
+        })
+      },
+      _parseData(data){
+        if(data.length == 0) return
+        let list = []
+        data.forEach((v, i) => {
+          list.push({
+            memberName: v.memberName,
+            nickName: v.memberNickName,
+            userPic: v.memberImg,
+            memberPhone: v.memberPhone,
+            codeNumber: v.codeNumber,
+            memberPhone: v.memberPhone,
+            status: v.status == 0 ? "未签到": "已签到",
+            signType: this._parseSignType(v.signType),
+            signTime: v.signTime ? new Date(v.signTime.time).format("yyyy-MM-dd hh:mm:ss"): "-",
+            isVip: v.isVip ? v.isVip : ""
+          })
+        })
+        this.tableData = list
+      },
+      _parseSignType(status){
+        switch (status) {
+          case 0:
+            return "票券二维码"
+          case 1:
+            return "活动二维码"
+          case 2:
+            return "票券序列号"
+          default:
+            return "-"
+        }
       }
-    }
+
+  }
   }
 </script>
 
