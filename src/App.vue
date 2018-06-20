@@ -12,6 +12,7 @@
 </script>
 
 <style>
+  @import 'iview/dist/styles/iview.css';
   /*公用css*/
   @import 'css/common.css';
 

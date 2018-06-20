@@ -95,6 +95,13 @@
                 }
               }, params.row[params.column.key] === 1 ? '会员' : '非会员')
             }},
+          {title: '会员有效期',
+            key: 'validTime',
+            width: 140,
+            sortable: false,
+            render: (h, params) => {
+              return h('div', this.formatterObjTime(params.row.validTime))
+            }},
           {title: '操作',
             align: 'center',
             width: 120,

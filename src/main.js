@@ -6,7 +6,7 @@ import router from './router'
 import store from 'store'
 
 import iView from 'iview'
-import 'iview/dist/styles/iview.css' // 使用 CSS
+/*import 'iview/dist/styles/iview.css' // 使用 CSS*/
 import 'js/common'
 import axios from 'axios'
 import 'babel-polyfill'

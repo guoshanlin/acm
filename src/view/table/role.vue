@@ -93,21 +93,6 @@
             }},
           {title: '公司', key: 'company', width: 160, sortable: false},
           {title: '职位', key: 'position', width: 120, sortable: false},
-          {title: '级别',
-            key: 'level',
-            width: 100,
-            sortable: false,
-            render: (h, params) => {
-              return h('div', {
-                'class': 'td-render',
-                domProps: {
-                  title: params.row[params.column.key] === 1 ? '会员' : '非会员'
-                },
-                style: {
-                  cursor: 'pointer'
-                }
-              }, params.row[params.column.key] === 1 ? '会员' : '非会员')
-            }},
           {title: '操作',
             width: 180,
             align: 'center',
@@ -130,7 +115,6 @@
                       this.requestAjax('post', 'members', {id: params.row.id, status: params.row.status == 1 ? 0 : 1}).then((data) => {
                         if (data.success) this.loadTable()
                       })
-                    /*  this.confirmDelete(params.row.id) // sys/deleteStudentInfo*/
                     }
                   }
                 }, params.row.status == 1 ? '禁用' : '启用'),
@@ -291,10 +275,6 @@
               {title: '爱好', value: row.hobby, show: true, type: ''},
               {title: '渠道', value: this.getUserChannel(row.channel), show: true, type: ''}
             ],
-            [
-              {title: '级别', value: row.level === 1 ? '会员' : '非会员', show: true, type: ''},
-              {title: '会员有效期', value: this.formatterObjTime(row.validTime), show: true, type: ''}
-            ],
               [
               {title: '地址', value: row.address, colspan: 3, show: true, type: ''}
             ]
@@ -444,25 +424,6 @@
             ],
             [
               {
-                title: '级别',
-                id: 'level',
-                type: 'select',
-                titlespan: 3,
-                colspan: 9,
-                relation: '',
-                required: false
-              },
-              {
-                title: '会员有效期',
-                id: 'validTime',
-                type: 'time',
-                titlespan: 3,
-                colspan: 9,
-                required: false
-              }
-            ],
-            [
-              {
                 title: '地址',
                 id: 'address',
                 type: 'input',
@@ -493,9 +454,7 @@
           company: _b ? row.company : '',
           position: _b ? row.position : '',
           channel: _b ? '' + row.channel : '0',
-          level: _b ? '' + row.level : '0',
-          address: _b ? row.address : '',
-          validTime: _b ? '' + this.formatterObjTime(row.validTime, 'yyyy-MM-dd hh:mm:ss') : ''
+          address: _b ? row.address : ''
         }
         if (_b) {
           this.inputForm.value.id = row.id
