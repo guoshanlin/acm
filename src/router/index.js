@@ -16,6 +16,10 @@ export default new Router({
       redirect: '/index'
     },
     {
+      path: '/login',
+      component: (resolve) => require(['../view/login'], resolve)
+    },
+    {
       path: '/meeting',
       component: (resolve) => require(['../view/main-menu'], resolve),
       children: [
