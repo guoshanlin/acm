@@ -20,6 +20,10 @@ export default new Router({
       component: (resolve) => require(['../view/login'], resolve)
     },
     {
+      path: '/register',
+      component: (resolve) => require(['../view/login'], resolve)
+    },
+    {
       path: '/meeting',
       component: (resolve) => require(['../view/main-menu'], resolve),
       children: [

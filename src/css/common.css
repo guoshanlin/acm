@@ -197,3 +197,7 @@ span.ivu-date-picker-cells-cell {
   color: #fff;
   font-size: 18px;
 }
+
+.login-wrapper .ivu-form-item{
+  margin-bottom: 26px;
+}

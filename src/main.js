@@ -17,7 +17,7 @@ import publicUtils from 'js/publicUtils'
 import getwbkUrl from 'js/getwbkUrl'
 import VueLazyload from 'vue-lazyload'
 import InitScroll from 'js/initScroll'
-import config from "../config";
+import config from "../config"
 
 axios.defaults.baseURL = process.env.API
 Vue.prototype.axios = axios
