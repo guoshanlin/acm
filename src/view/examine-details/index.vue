@@ -1,6 +1,11 @@
 <template>
   <div>
-    <active-deltail :id="rowId" type="examine"></active-deltail>
+   <!-- <div>
+      <i-button @click="copy">复制</i-button>
+    </div>-->
+  <!--  <div id="copy">-->
+      <active-deltail :id="rowId" type="examine" ref="activDeltail"></active-deltail>
+ <!--   </div>-->
   </div>
 </template>
 
@@ -9,7 +14,7 @@
 
   export default {
     name: 'index',
-    data () {
+    data() {
       return {
         rowId: this.$route.query.id
       }
@@ -17,9 +22,20 @@
     components: {
       activeDeltail
     },
+    methods: {
+      copy () {
+          let range = document.createRange()
+          range.selectNode(document.getElementById('copy'))
+          let selection = window.getSelection()
+          if (selection.rangeCount > 0) selection.removeAllRanges()
+          selection.addRange(range)
+          document.execCommand('copy')
+          alert('复制成功！')
+      }
+    },
     mounted () {
       this.$nextTick(() => {
-       // this.initItem()
+        // this.initItem()
       })
     }
   }

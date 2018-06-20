@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api/':{
-        target:'https://pmp.coreware.cn/acm/',
+        target:'https://pmp.coreware.cn/gather/',
         //target:'http://192.168.1.248/acm/',
         //target:'http://192.168.1.246/acm/',
         changeOrigin:true,
@@ -60,7 +60,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/acm/',
+    assetsPublicPath: '/gather/',
 
     /**
      * Source Maps

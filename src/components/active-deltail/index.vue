@@ -1,5 +1,5 @@
 <template>
-  <div  class="wrapper b wrapper-box">
+  <div class="wrapper b wrapper-box">
     <div class="datails-item">
       <datails-item :row='data' :button="buttonName"  @exmine="exmine"></datails-item>
     </div>
@@ -133,8 +133,6 @@
        */
       exmine (row) {
         if (this.buttonType == 'info') {
-          this.$Message.warning('点击了取消')
-          return
           this.submitAjax('activitys', {id: row.id, status: 3}, '取消')
           return
         }

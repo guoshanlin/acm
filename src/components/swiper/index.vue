@@ -18,7 +18,7 @@
       return {
         swiperOption: {
           watchSlidesProgress: true,
-          loop: true,
+          loop: this.rows.length > 1 ? true : false,
           loopedSlides: 5,
           speed: 500,
           autoplay: {

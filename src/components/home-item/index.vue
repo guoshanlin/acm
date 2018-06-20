@@ -17,7 +17,7 @@
                 <span class="tips b1 c">进行中</span>
               </div>
               <div class="info-home flex c2">
-                <h3 class="fz24">{{row.name}}</h3>
+                <h3 class="fz24 td-render" :title="row.name">{{row.name}}</h3>
                 <div class="fbox fz14">
                   <div class="flex">
                     <Icon type="person"></Icon>

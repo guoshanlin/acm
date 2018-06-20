@@ -86,8 +86,6 @@
     },
     methods: {
       cancel () {
-        this.$Message.warning('点击了取消')
-        return
         this.requestAjax('post', 'activitys', {id: this.row.id, status: 3}).then((data) => {
           if (data.success) {
             this.$Message.success('取消成功')

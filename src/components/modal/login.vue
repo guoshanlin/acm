@@ -1,7 +1,7 @@
 <style>
   #login-div .lc-block:not(.lcb-alt) {padding: 0px 35px;}
-  #login-div .ivu-form-item {display: block;width: 100%;}
-  #login-div  .ivu-form-item:last-child,#login-div .ivu-form-item:nth-last-child(2) {margin-bottom:0px}
+  #login-div .ivu-form-item {display: block;width: 100%;margin-bottom: 24px!important;}
+  #login-div  .ivu-form-item:last-child,#login-div .ivu-form-item:nth-last-child(2) {margin-bottom:0px!important;}
   #login-div .ivu-form-item-required {display: block;}
   #loginMsg,#registerMsg{color: #FF0000;margin-right: 0px;width: 200px;text-align:  right;}
   .login-div .ivu-modal-footer{border-top: 0px}

@@ -90,7 +90,7 @@ export default {
         case '2':
           return '进行中'
         case '3':
-          return '暂停'
+          return '已取消'
         case '99':
           return '结束'
         default:

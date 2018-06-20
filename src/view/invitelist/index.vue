@@ -35,7 +35,7 @@
     data () {
       return {
         loadImg: '../../assets/spread.jpg',
-        url: 'https://pmp.coreware.cn/acm/weixin/createwxaqrcode?toUrl=pages/exhibition-details/exhibition-details?id=' + this.$route.query.id
+        url: 'https://pmp.coreware.cn/gather/weixin/createwxaqrcode?toUrl=pages/exhibition-details/exhibition-details?id=' + this.$route.query.id
       }
     },
     created () {

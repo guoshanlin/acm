@@ -51,15 +51,7 @@
     data () {
       return {
         activeNenu: this.$route.path,
-        menuList: [
-          {path: "/meeting", title: "活动"},
-          {path: "/role", title: "用户管理"},
-          {path: "/member", title: "会员管理"},
-          {path: "/finance/myAccount", title: "财务"},
-          {path: "/marketing", title: "营销"},
-          {path: "/promotion", title: "推广"},
-          {path: "/examine", title: "审批管理"},
-        ],
+        menuList:'',
         passModalShow: false
       }
     },
@@ -122,6 +114,27 @@
             break
           default:
         }
+      }
+    },
+    mounted () {
+      if (this.userData.role == 99 || this.userData.role == 98) {
+        this.menuList = [
+          {path: '/meeting', title: '活动'},
+          {path: '/role', title: '用户管理'},
+          {path: '/member', title: '会员管理'},
+          {path: '/finance/myAccount', title: '财务'},
+          {path: '/marketing', title: '营销'},
+          {path: '/promotion', title: '推广'},
+          {path: 'examine', title: '审批管理'}
+        ]
+      } else {
+        this.menuList = [
+          {path: '/meeting', title: '活动'},
+          {path: '/member', title: '会员管理'},
+          {path: '/finance/myAccount', title: '财务'},
+          {path: '/marketing', title: '营销'},
+          {path: '/promotion', title: '推广'}
+        ]
       }
     }
   }
