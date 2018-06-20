@@ -184,3 +184,16 @@ span.ivu-date-picker-cells-cell {
   height: 20px !important;
 }
 .right-bar{width: 300px; margin-top: 10px}
+
+
+.login-wrapper .ivu-input{
+  padding: 18px 7px
+}
+
+.login-wrapper .ivu-input-group-prepend{
+  padding: 4px 12px;
+  background-color: #118fff;
+  border: 1px solid #118fff;
+  color: #fff;
+  font-size: 18px;
+}
