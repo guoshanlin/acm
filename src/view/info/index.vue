@@ -14,7 +14,7 @@
 </template>
 
 <script>
-  import activeDeltail from 'components/active-deltail/index'
+  import activeDeltail from 'components/active-deltail/meeting-deltail'
   export default {
     name: "index",
     data () {

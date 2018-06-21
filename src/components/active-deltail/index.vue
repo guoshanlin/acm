@@ -1,66 +1,87 @@
 <template>
-  <div class="wrapper b wrapper-box">
-    <div class="datails-item">
-      <datails-item :row='data' :button="buttonName"  @exmine="exmine"></datails-item>
-    </div>
-    <div class="datails-item m-t10">
-      <div class="fbox">
-        <div class="datails-flex-item t-right"><h3>活动分类:</h3></div>
-        <div class="flex t-left">
-          <div>{{data.style}}</div>
+  <div>
+<!--    <div class="copy">
+      <i-button @click="copy">截取活动为图片</i-button>
+    </div>-->
+    <!--<div id="img">-->
+      <!--<img v-lazy="src">-->
+    <!--</div>-->
+    <div id="deltail">
+      <div class="wrapper b wrapper-box">
+        <div class="datails-item">
+          <datails-item :row='data' :button="buttonName"  @exmine="exmine"></datails-item>
         </div>
-      </div>
-    </div>
-    <div class="datails-item m-t10">
-      <div class="fbox">
-        <div class="datails-flex-item t-right"><h3>票种:</h3></div>
-        <div class="flex t-left">
-          <div v-if="data.isNeedPay == 0">免费</div>
-          <div v-if="data.isNeedPay == 1">&nbsp;<span class="span-title">非会员价:</span>&nbsp;{{data.nonMBPrice}}元&nbsp;&nbsp;&nbsp;<span class="span-title">会员价:</span>&nbsp;{{data.mbPrice}}元</div>
-        </div>
-      </div>
-    </div>
-    <div class="datails-item m-t10">
-      <div class="fbox">
-        <div class="datails-flex-item t-right"><h3>活动标签:</h3></div>
-        <div class="flex t-left">
-          <Tag v-if="data.label != ''" color="blue" v-for="item in label" :key="item">{{item}}</Tag>
-        </div>
-      </div>
-    </div>
-    <div class="datails-item m-t10">
-      <div class="fbox">
-        <div class="datails-flex-item t-right"><h3>详情摘要:</h3></div>
-        <div class="flex t-left">
-          <div>
-            <pre v-html = 'data.remark'></pre>
+        <div class="datails-item m-t10">
+          <div class="fbox">
+            <div class="datails-flex-item t-right"><h3>活动分类:</h3></div>
+            <div class="flex t-left">
+              <div>{{data.style}}</div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="datails-item m-t10">
-      <div class="fbox">
-        <div class="datails-flex-item t-right"><h3>详细内容:</h3></div>
-        <div class="flex t-left">
-          <div>
-            <pre v-html = 'data.content'></pre>
+        <div class="datails-item m-t10">
+          <div class="fbox">
+            <div class="datails-flex-item t-right"><h3>票种:</h3></div>
+            <div class="flex t-left">
+              <div v-if="data.isNeedPay == 0">免费</div>
+              <div v-if="data.isNeedPay == 1">&nbsp;<span class="span-title">非会员价:</span>&nbsp;{{data.nonMBPrice}}元&nbsp;&nbsp;&nbsp;<span class="span-title">会员价:</span>&nbsp;{{data.mbPrice}}元</div>
+            </div>
           </div>
         </div>
+        <div class="datails-item m-t10">
+          <div class="fbox">
+            <div class="datails-flex-item t-right"><h3>活动标签:</h3></div>
+            <div class="flex t-left">
+              <Tag v-if="data.label != ''" color="blue" v-for="item in label" :key="item">{{item}}</Tag>
+            </div>
+          </div>
+        </div>
+        <div class="datails-item m-t10">
+          <div class="fbox">
+            <div class="datails-flex-item t-right"><h3>活动摘要:</h3></div>
+            <div class="flex t-left">
+              <div>
+                <pre v-html = 'data.remark'></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="datails-item m-t10">
+          <div class="fbox">
+            <div class="datails-flex-item t-right"><h3>活动议程:</h3></div>
+            <div class="flex t-left">
+              <div>
+                <pre v-html = 'data.agenda'></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="datails-item m-t10">
+          <div class="fbox">
+            <div class="datails-flex-item t-right"><h3>详细内容:</h3></div>
+            <div class="flex t-left">
+              <div id="content">
+                <pre v-html = 'data.content'></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--新增表单承载标签-->
+        <input-from v-if="inputForm.show" @changeOptions="getExmineVal" :options="inputForm.option" :value="inputForm.value" :modalDisabled="inputForm.modalDisabled" :modalshow="inputForm.modalshow"/>
       </div>
     </div>
-    <!--新增表单承载标签-->
-    <input-from v-if="inputForm.show" @changeOptions="getExmineVal" :options="inputForm.option" :value="inputForm.value" :modalDisabled="inputForm.modalDisabled" :modalshow="inputForm.modalshow"/>
   </div>
 </template>
 
 <script>
   import datailsItem from 'components/datails-item/index'
   import inputFrom from 'components/modal/inputFrom.vue'
-
+  // import html2canvas from 'html2canvas'
   export default {
     name: 'index',
     data () {
       return {
+        src: '',
         data: {},
         label: [],
         buttonName: '',
@@ -196,8 +217,64 @@
               this.buttonType = ''
             }
             this.label = this.data.label.split(',')
+            this.$nextTick(() => {
+              this.bindAClick(document.querySelectorAll('#content img'))
+            })
           }
         })
+      },
+      copy () {
+        // let range = document.createRange()
+        // range.selectNode(document.getElementById('deltail'))
+        // let selection = window.getSelection()
+        // if (selection.rangeCount > 0) selection.removeAllRanges()
+        // selection.addRange(range)
+        // document.execCommand('copy')
+        // alert('复制成功！')
+
+        // html2canvas(document.getElementById('deltail')).then((canvas) => {
+          // document.getElementById('img').appendChild(canvas)
+          // var imgUri = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream')
+          // window.location.href = imgUri
+          // let range = document.createRange()
+          // range.selectNode(document.getElementById('img'))
+          // let selection = window.getSelection()
+          // if (selection.rangeCount > 0) selection.removeAllRanges()
+          // selection.addRange(range)
+          // document.execCommand('copy')
+          // alert('复制成功！')
+        // })
+        // let divContent = document.getElementById('deltail').innerHTML
+        // let data = 'data:image/svg+xml,' +
+        //   "<svg xmlns='http://www.w3.org/2000/svg'>" +
+        //   "<foreignObject width='100%' height='100%'>" +
+        //   "<div xmlns='http://www.w3.org/1999/xhtml' style='font-size:16px;font-family:Helvetica'>" +
+        //   divContent +
+        //   '</div>' +
+        //   '</foreignObject>' +
+        //   '</svg>'
+        // let img = new Image()
+        // img.src = data
+        // let canvas = document.createElement('canvas')
+        // let ctx = canvas.getContext('2d')
+        // img.crossOrigin = 'anonymous'
+        // img.src = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'></svg>"
+        // ctx.drawImage(img, 0, 0)
+        // let canvasbase = canvas.toDataURL()
+        // document.getElementById('img').appendChild(img)
+        // console.log(img)
+        // console.log(canvasbase)
+        // this.src = canvasbase
+      },
+      bindAClick (damo) {
+        if (damo != null && damo.length !== 0) {
+            for (let i = 0; i < damo.length; i++) {
+              let item = damo[i]
+              if (item.src.indexOf('http') == -1 && item.src.indexOf('http') == -1) {
+                item.src = process.env.API + item.src
+              }
+            }
+        }
       }
     },
     beforeCreate () {

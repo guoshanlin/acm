@@ -174,6 +174,17 @@
            </div>
            <div class="form-group">
              <div class="float-l form-title">
+               <div><span class="red">*</span>活动议程:</div>
+             </div>
+             <div class="float-r form-fill">
+               <div class="t-left">
+                 <i-input v-model="fromVal.agenda" type="textarea" :rows="4" placeholder="请填写活动议程"></i-input>
+               </div>
+             </div>
+             <div class="clearFix"></div>
+           </div>
+           <div class="form-group">
+             <div class="float-l form-title">
                <div><span class="red">*</span>详细内容:</div>
              </div>
              <div class="float-r form-fill">
@@ -269,7 +280,8 @@
           classify: '',
           tag: [],
           abstract: '',
-          detailedContent: ''
+          detailedContent: '',
+          agenda: ''
         },
         select: {
           province: province,
@@ -368,7 +380,8 @@
           applyEndTime: {msg: '请选择报名结束时间', required: true},
           beginTime: {msg: '请选择活动开始时间', required: true},
           endTime: {msg: '请选择活动结束时间', required: true},
-          remark: {msg: '活动摘要不能为空', required: true}
+          remark: {msg: '活动摘要不能为空', required: true},
+          agenda: {msg: '活动议程不能为空', required: true}
        },
         disabled: false,
         timePicker: {
@@ -439,7 +452,8 @@
           style: this.fromVal.classify,
           label: this.fromVal.tag.length > 0 ? this.fromVal.tag.join(',') : '',
           principal: '',
-          remark: this.fromVal.abstract
+          remark: this.fromVal.abstract,
+          agenda: this.fromVal.agenda
           //memberId: this.userData.id,
           /*   dataFile: this.dataFile*/
         }

@@ -16,7 +16,7 @@
     },
     components: {
       activeDeltail
-    },
+    }
   }
 </script>
 

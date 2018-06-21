@@ -1,5 +1,5 @@
 'use strict'
 module.exports = {
   NODE_ENV: '"production"',
-  API: '"/gather/"'
+  API: '"https://pmp.coreware.cn/gather/"'
 }
