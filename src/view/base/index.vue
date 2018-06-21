@@ -42,7 +42,7 @@
             title: "会中",
             child: [
               {path: "/base/sign", title: "签到管理"},
-              {path: "/base/walllist", title: "微信墙"}
+              {path: "/base/walllist", title: "微信互动"}
             ]
           },
           {

@@ -259,7 +259,7 @@
       }
       return {
     //    imgHtml: '<div style="height:300px; line-height: 300px" class="c3">图片格式为1080 * 640px，大小不超过2M</div>',
-        imgHtml: '<div style="height:300px; line-height: 300px" class="c3">大小不超过2M</div>',
+        imgHtml: '<div style="height:300px; line-height: 300px" class="c3">大小不超过4M</div>',
         fromVal: {
           type: 'exhibition',
           title: '',

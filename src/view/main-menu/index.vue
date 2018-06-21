@@ -125,7 +125,7 @@
           {path: '/finance/myAccount', title: '财务'},
           {path: '/marketing', title: '营销'},
           {path: '/promotion', title: '推广'},
-          {path: 'examine', title: '审批管理'}
+          {path: '/examine', title: '审批管理'}
         ]
       } else {
         this.menuList = [

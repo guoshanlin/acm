@@ -145,7 +145,7 @@
   .datails-flex-item { display: inline-block; width: 100px; margin-right: 10px}
   .span-title{ font-weight: bold}
   .meeting-deltail{position: relative}
-  .meeting-deltail .copy{position: absolute;top: 20px; right: 30px;}
+  .meeting-deltail .copy{position: absolute;top: 20px; right: 30px; z-index: 999}
   .datails-item{position: relative; border: 1px solid #e3e2e5; padding: 10px; border-radius: 5px; line-height: 26px;}
    pre {
     white-space: pre-wrap; /*css-3*/
