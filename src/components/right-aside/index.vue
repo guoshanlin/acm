@@ -65,7 +65,7 @@
   }
 
   .meeting-go-buy {
-    display: block;
+    display: block!important;
     margin: 0 auto;
     width: 80%;
   }

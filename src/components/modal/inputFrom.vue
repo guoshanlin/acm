@@ -195,6 +195,10 @@
           check: [
             {value: 'true', name: '是'},
             {value: 'false', name: '否'}
+          ],
+          importance: [
+            {value: '精选', name: '1'},
+            {value: '推荐', name: '2'}
           ]
         },
         timer: '',

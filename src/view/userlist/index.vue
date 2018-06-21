@@ -79,6 +79,16 @@
     <div class="content-wrapper m-t10 wrapper-border">
       <Table id="usetlistTable" :width="tableWidth" border ref="$table" @on-selection-change="onTableSelect"
              :columns="col" :data="tableData"></Table>
+
+      <!--分页-->
+      <div style="text-align: right; padding-top: 5px;">
+        <Page show-total show-sizer show-elevator style="display: inline-block;" placement="top"
+              :total="total"
+              :page-size="requestParms.limit"
+              :current="requestParms.offset"
+              @on-change="changePage"
+              @on-page-size-change="changeSize"></Page>
+      </div>
     </div>
   </div>
 </template>
@@ -98,6 +108,8 @@
           checkinType: "签到方式",
           sendMsgFlag: "是否发送电子票",
         },
+
+        total: 0,
         requestParms: {
           keyWord: '',
           limit: 20,
@@ -215,6 +227,22 @@
       }, 20)
     },
     methods: {
+      /**
+       *跳页
+       * @param v
+       */
+      changePage (v) {
+        this.requestParms.offset = v
+        this.requestData()
+      },
+      /**
+       *改变页面展示用户条数
+       * @param v
+       */
+      changeSize (v) {
+        this.requestParms.limit = v
+        this.requestData()
+      },
       onTableSelect(rows) {
         console.log("===========" + rows)
         this.selectList = rows
@@ -229,6 +257,7 @@
         this.requestAjax('GET', 'ticket', this.requestParms).then((data) => {
           console.log(JSON.stringify(data))
           if (data.success) {
+            this.total = !isNaN(+data.data.total) ? +data.data.total : 0
             this._parseData(data.data.rows)
           } else {
 
