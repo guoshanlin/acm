@@ -26,7 +26,10 @@ export default {
           method: type,
           url: this.getWbkUrl(url, urlId),
           params: newParams,
-          withCredentials:true
+          xhrFields: {
+            withCredentials: true
+          }
+          //withCredentials:true
         }).then((data) => {
           resolve(data.data)
         }).catch((error) => {
@@ -98,6 +101,23 @@ export default {
       }
     }
     /**
+     * 获取用户角色名称
+     * @param role
+     * @returns {*}
+     */
+    Vue.prototype.getRole = function (role) {
+      switch ('' + role) {
+        case '0':
+          return '普通用户'
+        case '98':
+          return '运营管理员'
+        case '99':
+          return '平台管理员'
+        default:
+          return role
+      }
+    }
+    /**
      * 转义状态
      * @param number
      * @returns {string}
@@ -129,6 +149,8 @@ export default {
           return '支付成功'
         case '2':
           return '已取消'
+        case '3':
+          return '支付成功'
         default:
           return number
       }

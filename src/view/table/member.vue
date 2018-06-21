@@ -294,139 +294,61 @@
         this.inputForm.modalDisabled = false
         this.inputForm.option = {
           title: _b ? '修改会员' : '新增会员',
-          width: '768',
+          width: '1040',
           opintions: [
             [
-              {
-                title: '姓名',
-                id: 'name',
-                type: 'input',
-                titlespan: 3,
-                colspan: 9,
-                required: true
-              },
-              {
-                title: '手机',
-                id: 'phone',
-                type: 'input',
-                titlespan: 3,
-                colspan: 9,
-                required: true,
-                valueType: 'mobilePhone'
-              }
+              {title: '姓名',id: 'name',type: 'input',titlespan: 2,colspan: 6,required: true },
+              {title: '手机',id: 'phone',type: 'input',titlespan: 2,colspan: 6,required: true,valueType: 'mobilePhone'},
+              {title: '邮箱',id: 'email',type: 'input',titlespan: 2,colspan: 6,required: true,valueType: 'email'},
             ],
             [
-              {
-                title: '邮箱',
-                id: 'email',
-                type: 'input',
-                titlespan: 3,
-                colspan: 9,
-                required: true,
-                valueType: 'email'
-              },
-              {
-                title: '性别',
-                id: 'sex',
-                type: 'select',
-                titlespan: 3,
-                colspan: 9,
-                required: false,
-                relation: ''
-              }
+              { title: '性别',id: 'sex',type: 'select',titlespan: 2,colspan: 6,required: false,relation: ''},
+              {title: '身份证号',id: 'cardNumber',type: 'input',titlespan: 2,colspan: 6,required: false,valueType: 'idCard'},
+              {title: '类型',id: 'type',type: 'select',titlespan: 2,colspan: 6,relation: '',required: false}
             ],
             [
-              {
-                title: '身份证号',
-                id: 'cardNumber',
-                type: 'input',
-                titlespan: 3,
-                colspan: 9,
-                required: false,
-                valueType: 'idCard'
-              },
-              {
-                title: '类型',
-                id: 'type',
-                type: 'select',
-                titlespan: 3,
-                colspan: 9,
-                relation: '',
-                required: false
-              }
+              {title: '爱好',id: 'hobby',type: 'input',titlespan: 2,colspan: 6,required: false},
+              {title: '公司',id: 'company',type: 'input',titlespan: 2,colspan: 6,required: false},
+              {title: '职位',id: 'position',type: 'input',titlespan: 2,colspan: 6,required: false},
             ],
             [
-              {
-                title: '爱好',
-                id: 'hobby',
-                type: 'input',
-                titlespan: 3,
-                colspan: 9,
-                required: false
-              },
-              {
-                title: '公司',
-                id: 'company',
-                type: 'input',
-                titlespan: 3,
-                colspan: 9,
-                required: false
-              }
+              {title: '渠道',id: 'channel',type: 'select',titlespan: 2,colspan: 6,relation: '',required: false},
+              {title: '级别',id: 'level',type: 'select',titlespan: 2,colspan: 6, relation: '',required: false},
+              {title: '会员期限',id: 'validTime',type: 'time',titlespan: 2,colspan: 6,required: false}
+            ],
+
+            [
+              {title: '微信号',id: 'wechat',type: 'input',titlespan: 2,colspan: 6, relation: '',required: false},
+              {title: '出生日期',id: 'birth',type: 'time',format: 'yyyy-MM-dd',titlespan: 2,colspan: 6,required: false},
+              {title: '所属行业',id: 'profession',type: 'input',titlespan: 2,colspan: 6, relation: '',required: false},
             ],
             [
-              {
-                title: '职位',
-                id: 'position',
-                type: 'input',
-                titlespan: 3,
-                colspan: 9,
-                required: false
-              },
-              {
-                title: '渠道',
-                id: 'channel',
-                type: 'select',
-                titlespan: 3,
-                colspan: 9,
-                relation: '',
-                required: false
-              }
+              {title: '工作年限',id: 'experienceYears',type: 'input',titlespan: 2,colspan: 6,required: false},
+              {title: '拥有资源',id: 'resources',type: 'input',titlespan: 2,colspan: 6, relation: '',required: false},
+              {title: '籍贯',id: 'hometown',type: 'input',titlespan: 2,colspan: 6,required: false}
             ],
             [
-              {
-                title: '级别',
-                id: 'level',
-                type: 'select',
-                titlespan: 3,
-                colspan: 9,
-                relation: '',
-                required: false
-              },
-              {
-                title: '会员有效期',
-                id: 'validTime',
-                type: 'time',
-                titlespan: 3,
-                colspan: 9,
-                required: false
-              }
+              {title: '学历',id: 'education',type: 'input',titlespan: 2,colspan: 6, relation: '',required: false},
+              {title: '毕业院校',id: 'institutions',type: 'input',titlespan: 2,colspan: 6,required: false},
+              {title: '想学技能',id: 'wannaSkills',type: 'input',titlespan: 2,colspan: 6, relation: '',required: false},
             ],
             [
-              {
-                title: '地址',
-                id: 'address',
-                type: 'input',
-                titlespan: 3,
-                colspan: 21,
-                required: false
-              }
+              {title: '擅长技能',id: 'goodSkills',type: 'input',titlespan: 2,colspan: 6,required: false},
+              {title: '分享日期',id: 'shareDate',type: 'time',format: 'yyyy-MM-dd',titlespan: 2,colspan: 6, relation: '',required: false},
+              {title: '会员卡号',id: 'vipNo',type: 'input',titlespan: 2,colspan: 6, relation: '',required: false},
+            ],
+            [
+              {title: '拥有技能',id: 'skills',type: 'input',titlespan: 2,colspan: 6,required: false},
+              {title: '想收获内容',id: 'gains',type: 'input',titlespan: 3,colspan: 6,required: false},
+            ],
+            [
+              {title: '地址',id: 'address',type: 'input',titlespan: 2,colspan: 22,required: false}
+            ],
+            [
+              {title: '分享知识',id: 'shareInfo',type: 'input',titlespan: 2,colspan: 22,required: false}
             ]
           ],
-          button: [{
-            type: 'primary',
-            title: _b ? '修改' : '提交',
-            click: 'handle'
-          }]
+          button: [{type: 'primary',title: _b ? '修改' : '提交',click: 'handle'}]
 
         }
 
@@ -443,7 +365,23 @@
           channel: _b ? '' + row.channel : '0',
           level: _b ? '' + row.level : '0',
           address: _b ? row.address : '',
-          validTime: _b ? '' + this.formatterObjTime(row.validTime, 'yyyy-MM-dd hh:mm:ss') : ''
+          validTime: _b ? '' + this.formatterObjTime(row.validTime, 'yyyy-MM-dd hh:mm:ss') : '',
+
+          wechat: _b ? row.wechat : '',
+          birth: _b ? row.birth : '',
+          profession: _b ? row.profession : '',
+          experienceYears: _b ? row.experienceYears : '',
+          resources: _b ? row.resources : '',
+          hometown: _b ? row.hometown : '',
+          education: _b ? row.education : '',
+          institutions: _b ? row.institutions : '',
+          wannaSkills: _b ? row.wannaSkills : '',
+          goodSkills: _b ? row.goodSkills : '',
+          shareDate: _b ? this.formatterObjTime(row.shareDate, 'yyyy-MM-dd') : '',
+          vipNo: _b ? row.vipNo : '',
+          skills: _b ? row.skills : '',
+          gains: _b ? row.gains : '',
+          shareInfo: _b ? row.shareInfo : ''
         }
         if (_b) {
           this.inputForm.value.id = row.id
@@ -462,6 +400,7 @@
         }
         let newVal = {}
         Object.assign(newVal, val)
+        console.log("newVal----------------"+JSON.stringify(newVal))
         this.inputForm.modalDisabled = true
         switch (this.clickType) {
           case '新增':

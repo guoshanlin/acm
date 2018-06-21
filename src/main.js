@@ -21,6 +21,13 @@ import config from "../config"
 import './theme/iview/index.less'
 
 axios.defaults.baseURL = process.env.API
+axios.defaults.withCredentials=true
+/*axios.create({
+  baseURL: process.env.API,
+  timeout: 5000,
+  // withCredentials: true
+})*/
+
 Vue.prototype.axios = axios
 Vue.prototype.Scrollbar = Scrollbar
 Vue.config.productionTip = false

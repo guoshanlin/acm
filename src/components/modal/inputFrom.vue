@@ -6,7 +6,7 @@
   .inputForm .ivu-col p{line-height: 30px}
   .talbeDetails .td{padding-left: 6px;  border: 1px solid #cccccc;}
   .talbeDetails .td-c{background-color: #F0F0EE;}
-  .red_tip{display: inline-block; width:10px; height: 20px; color: #FF0000}
+  .red_tip{display: inline-block; width:10px; height: 20px; color: #FF0000;vertical-align: sub;}
 </style>
 <template>
   <Modal
@@ -20,7 +20,7 @@
         <Row :gutter=5>
            <div  v-for="rows in row" :key="rows.title">
               <i-col :span="rows.titlespan">
-                <p class="width-right m-l10"><span class="red_tip">{{rows.required ? '*' : ''}}</span>{{rows.title}}:</p>
+                <p class="width-right m-l10"><span class="red_tip">{{rows.required ? '*' : ''}}</span>{{rows.title}}</p>
               </i-col>
               <i-col :span="rows.colspan">
 
@@ -106,7 +106,7 @@
                 </Select>
                 <div v-if="rows.type=='time'" class="ivu-input-wrapper ivu-input-type">
                   <i class="ivu-icon ivu-icon-ios-calendar-outline ivu-input-icon ivu-input-icon-normal"></i>
-                  <input :id="rows.id" :value="fromVal[rows.id]" autocomplete="off" spellcheck="false" type="text" :placeholder="rows.required ? '请选择日期和时间(必选）':'请选择日期和时间'" class="ivu-input" @click='initTime(rows.id)'>
+                  <input :id="rows.id" :value="fromVal[rows.id]" autocomplete="off" spellcheck="false" type="text" :placeholder="rows.required ? '请选择日期和时间(必选）':'请选择日期和时间'" class="ivu-input" @click='initTime(rows.id, rows.format)'>
                 </div>
                 <div  v-if="rows.type=='tip'" class="l-h30">{{rows.name}}{{fromVal[rows.id]}} 元  <span class="c1">（按照提现金额收取15%的手续费）</span></div>
               </i-col>
@@ -171,6 +171,30 @@
             {
               value: '3',
               label: '邀请生成'
+            }
+          ],
+          status: [
+            {
+              value: 0,
+              label: '禁用'
+            },
+            {
+              value: 1,
+              label: '启用'
+            }
+          ],
+          role: [
+            {
+              value: 0,
+              label: '普通用户'
+            },
+            {
+              value: 98,
+              label: '运营管理员'
+            },
+            {
+              value: 99,
+              label: '平台管理员'
             }
           ],
           level: [
@@ -481,11 +505,11 @@
        * 时间框架初始化
        * @param bId
        */
-      initTime (bId) {
+      initTime (bId, format) {
         let _this = this
         WdatePicker({
           el: '' + bId,
-          dateFmt: 'yyyy-MM-dd HH:mm:ss',
+          dateFmt: format ? format : 'yyyy-MM-dd HH:mm:ss',
           autoPickDate: false,
           onpicking: function (dp) {
             console.log('initTime', dp.cal.getNewDateStr())

@@ -55,7 +55,7 @@
                 <i-input type="text" v-model="formRegister.nickName" placeholder="请输入昵称"></i-input>
               </FormItem>
               <div>
-                <Checkbox v-model="formRegister.remember" class="in-line">我已阅读并同意 <a> 用户隐私及服务协议</a></Checkbox>
+                <Checkbox v-model="formRegister.remember" class="in-line">我已阅读并同意 <a class="c1"> 用户隐私及服务协议</a></Checkbox>
               </div>
               <div class="" style="margin-top: 14px">
                 <Button type="primary" long style="height: 38px" @click="registerEvent" :disabled="!formRegister.remember">注册</Button>
