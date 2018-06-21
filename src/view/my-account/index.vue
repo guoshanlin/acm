@@ -12,14 +12,14 @@
     </div>
     <div class="content-wrapper m-t20">
       <div class="clear m-t10 m-b10 ">
-        <div class="fl">可提现余额&nbsp;&nbsp;&nbsp;&nbsp;<span class="fz24 c1">0.00元</span></div>
-        <Button class="fr" type="primary" @click="applyWithdrawal">申请提现</Button>
+        <div class="fl">可提现余额&nbsp;&nbsp;&nbsp;&nbsp;<span class="fz24 c1">{{row.balance}}元</span></div>
+        <Button v-if="row.balance > 0" class="fr" type="primary" @click="applyWithdrawal">申请提现</Button>
       </div>
       <Row class="withdrawal">
         <i-col span="6">
           <div>未入账：0.00元</div>
-          <div>提现中：0.00元</div>
-          <div>已提现：0.00元</div>
+          <div>提现中：{{row.withdraw}}元</div>
+          <div>已提现：{{row.withdrawTotal - row.withdraw}}元</div>
         </i-col>
         <i-col span="6">
           <div><a class="c1" @click="routePush('/finance/incomeDetails')">收入明细</a></div>
@@ -30,34 +30,190 @@
             提现方式：银行卡&nbsp;&nbsp;&nbsp;&nbsp;<a class="c1" @click="editAccount">设置提现账户</a>
           </div>
           <div>
-            银行卡号：暂无
+            银行卡号：{{userData.bankCard == ''? '暂无': userData.bankCard}}
           </div>
           <div>
-            开户名：暂无
+            开户名：{{userData.bank == '' ? '暂无': userData.bank}}
           </div>
         </i-col>
       </Row>
     </div>
+    <!--新增表单承载标签-->
+    <input-from v-if="inputForm.show" @changeOptions="getInputVal" :options="inputForm.option" :value="inputForm.value" :modalDisabled="inputForm.modalDisabled"
+                :modalshow="inputForm.modalshow"/>
   </div>
 </template>
-
 <script>
-  export default {
-    name: "index",
-    data() {
-      return {}
-    },
-    created() {
-      setTimeout(() => {
+  import inputFrom from 'components/modal/inputFrom.vue'
+  import {mapGetters} from 'vuex'
 
+  export default {
+    name: 'index',
+    data () {
+      return {
+        row: '',
+        type: '',
+        inputForm: {
+          show: false,
+          modalDisabled: false,
+          modalshow: false,
+          option: {},
+          value: {},
+        } // 表单参数
+      }
+    },
+    created () {
+      setTimeout(() => {
+        this.loadItem()
       }, 20)
     },
+    components: {
+      inputFrom
+    },
+    computed: {
+      ...mapGetters([
+        'userData'
+      ])
+    },
     methods: {
-      applyWithdrawal() {
-        this.$Message.warning('申请提现')
+      loadItem () {
+        this.requestAjax('get', 'balanceLog', {}, this.userData.id).then((data) => {
+          if (data.success) {
+            this.row = data.data
+          }
+        })
       },
-      editAccount(){
-        this.$Message.warning('设置提现账户')
+      applyWithdrawal () {
+        // /balanceLog/createWithdrawOrder
+        this.type = 'applyWithdrawal'
+        this.inputForm.modalshow = true
+        this.inputForm.show = true
+        this.inputForm.modalDisabled = false
+        this.inputForm.option = {
+          title: '申请提现',
+          width: '512',
+          opintions: [
+            [
+              {
+                title: '提现金额',
+                id: 'amounts',
+                type: 'InputNumber',
+                titlespan: 6,
+                colspan: 18,
+                min: 0,
+                max: this.row.balance
+              }
+            ]
+          ],
+          button: [{
+            type: 'primary',
+            title: '确定',
+            click: 'handle'
+          }]
+        }
+        this.inputForm.value = {
+          memberId: this.userData.id,
+          amounts: ''
+        }
+        // this.$Message.warning('申请提现')
+      },
+      editAccount () {
+        this.type = 'editAccount'
+        this.inputForm.modalshow = true
+        this.inputForm.show = true
+        this.inputForm.modalDisabled = false
+        this.inputForm.option = {
+          title: '设置银行卡',
+          width: '512',
+          opintions: [
+            [
+              {
+                title: '用户名',
+                id: 'name',
+                type: 'input',
+                titlespan: 6,
+                colspan: 18,
+                disabled: true
+              }
+            ],
+            [
+              {
+                title: '卡号',
+                id: 'bankCard',
+                type: 'input',
+                titlespan: 6,
+                colspan: 18,
+                required: true,
+                valueType: 'bankCheck'
+              }
+            ],
+            [
+              {
+                title: '银行',
+                id: 'bank',
+                type: 'select',
+                titlespan: 6,
+                colspan: 18,
+                relation: '',
+                required: true
+              }
+            ]
+          ],
+          button: [{
+            type: 'primary',
+            title: '确定',
+            click: 'handle'
+          }]
+        }
+        this.inputForm.value = {
+          name: this.userData.name,
+          bankCard: '',
+          bank: ''
+        }
+        // this.$Message.warning('设置提现账户')
+      },
+      /**
+       *提交返回处理方法
+       * @param val
+       * @param type
+       */
+      getInputVal (val, type) {
+        this.inputForm.value = val // 表单填写的内容;
+        if (type === 'cancel') { // 按钮操作
+          this.inputForm.modalshow = false // 隐藏modal
+          return
+        }
+        let newVal = {}
+        Object.assign(newVal, val)
+        if (this.type == 'editAccount') {
+          newVal.id = this.userData.id
+          this.inputForm.modalDisabled = true
+          this.submitAjax('members', newVal, '设置银行卡')
+        } else {
+          this.inputForm.modalDisabled = true
+          this.submitAjax('createWithdrawOrder', newVal, '提现')
+        }
+      },
+      /**
+       * 提交表单
+       * @param url
+       * @param obj
+       */
+      submitAjax (url, obj, msg) {
+        const _type = 'POST'
+        this.requestAjax(_type, url, obj).then((data) => {
+          if (data.success) {
+            this.$Message.success(msg + '成功')
+            this.inputForm.modalshow = false
+            this.loadItem()
+          } else if (!data.message) {
+            this.$Message.success(msg + '失败')
+          }
+          this.inputForm.modalDisabled = false
+        }, (err) => {
+          this.$Message.success(msg + '失败')
+          this.inputForm.modalDisabled = false
+        })
       }
     }
   }
@@ -76,6 +232,5 @@
     line-height: 36px;
     border-top: 1px solid #e3e2e5;
   }
-
 
 </style>

@@ -61,6 +61,7 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
   export default {
     name: "index",
     data() {
@@ -135,6 +136,11 @@
         this.initTable()
       }, 20)
     },
+    computed: {
+      ...mapGetters([
+        'userData'
+      ])
+    },
     methods: {
       /**
        *跳页
@@ -170,7 +176,8 @@
         /*orders*/
    /*     this.loading = '数据加载中...请稍等！'*/
         const _type = 'GET'
-        const _params = this.formData
+        let _params = this.formData
+         _params.memberId = this.userData.id
         const _url = 'orders'
         this.requestAjax(_type, _url, _params).then((data) => {
           if (data.success) {

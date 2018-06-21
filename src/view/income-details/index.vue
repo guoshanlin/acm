@@ -5,17 +5,29 @@
       <Form :model="formData">
         <Row type="flex" :gutter=5>
           <i-col span="16">
-            <Row type="flex" justify="start">
-              <i-col>
-                <Select v-model="formData.select" style="width:120px">
-                  <Option value="0">交易时间</Option>
-                  <Option value="1">入账时间</Option>
-                </Select>
-              </i-col>
-              <i-col>
-                <DatePicker v-model="formData.time" class="m-l10" type="datetimerange" format="yyyy-MM-dd" placeholder="请选择时间段" style="width: 240px"></DatePicker>
-              </i-col>
-            </Row>
+            <!--<Row type="flex" justify="start">-->
+              <!--<i-col>-->
+                <!--<Select v-model="formData.select" style="width:120px">-->
+                  <!--<Option value="0">交易时间</Option>-->
+                  <!--<Option value="1">入账时间</Option>-->
+                <!--</Select>-->
+              <!--</i-col>-->
+              <!--<i-col>-->
+                <!--<DatePicker v-model="formData.time" class="m-l10" type="datetimerange" format="yyyy-MM-dd" placeholder="请选择时间段" style="width: 240px"></DatePicker>-->
+              <!--</i-col>-->
+            <!--</Row>-->
+            <!--<Row type="flex" justify="start">-->
+              <!--<i-col class="m-r10" style="line-height: 24px">-->
+                <!--交易状态-->
+              <!--</i-col>-->
+              <!--<i-col>-->
+                <!--<RadioGroup v-model="formData.trading">-->
+                  <!--<Radio label="">不限</Radio>-->
+                  <!--<Radio label="未入账">未入账</Radio>-->
+                  <!--<Radio label="已入账">已入账</Radio>-->
+                <!--</RadioGroup>-->
+              <!--</i-col>-->
+            <!--</Row>-->
           </i-col>
           <i-col span="8">
             <Row type="flex" justify="end">
@@ -28,20 +40,20 @@
             </Row>
           </i-col>
         </Row>
-        <div class="m-t10">
-          <Row type="flex" justify="start">
-            <i-col class="m-r10" style="line-height: 24px">
-               交易状态
-            </i-col>
-            <i-col>
-              <RadioGroup v-model="formData.trading">
-                <Radio label="">不限</Radio>
-                <Radio label="未入账">未入账</Radio>
-                <Radio label="已入账">已入账</Radio>
-              </RadioGroup>
-            </i-col>
-          </Row>
-        </div>
+        <!--<div class="m-t10">-->
+          <!--<Row type="flex" justify="start">-->
+            <!--<i-col class="m-r10" style="line-height: 24px">-->
+               <!--交易状态-->
+            <!--</i-col>-->
+            <!--<i-col>-->
+              <!--<RadioGroup v-model="formData.trading">-->
+                <!--<Radio label="">不限</Radio>-->
+                <!--<Radio label="未入账">未入账</Radio>-->
+                <!--<Radio label="已入账">已入账</Radio>-->
+              <!--</RadioGroup>-->
+            <!--</i-col>-->
+          <!--</Row>-->
+        <!--</div>-->
       </Form>
     </div>
     <div class="content-wrapper m-t10" style="min-height: 240px">
@@ -61,6 +73,7 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
   export default {
     name: 'index',
     data () {
@@ -68,33 +81,53 @@
       /*  tableWidth: document.documentElement.clientWidth - 390,*/
         formData: {
           keyWord: '',
-          trading: '',
-          select: '0',
-          time: '',
+          // trading: '',
+          optType: 0,
+          // select: '0',
+          // time: '',
           limit: 20,
           offset: 1
         },
         columns: [
-          {title: '活动名称', key: 'name', width: 180, sortable: false},
-          {title: '订单编号', key: 'sex', sortable: false},
-          {title: '交易人', key: 'phone', width: 140, sortable: false},
-          {title: '交易金额', key: 'email', width: 140, sortable: false},
-          {title: '交易时间', key: 'company', width: 180, sortable: false},
-          {title: '交易状态', key: 'position', width: 140, sortable: false},
-          {title: '入账时间', key: 'position', width: 180, sortable: false}
+          {title: '活动名称', key: 'objectName', sortable: false},
+          {title: '订单编号', key: 'id', sortable: false},
+          // {title: '交易人', key: 'phone', width: 140, sortable: false},
+          {title: '入账金额', key: 'optAmounts', sortable: false},
+          // {title: '入账时间', key: 'company', width: 180, sortable: false},
+          // {title: '交易状态', key: 'position', width: 140, sortable: false},
+          {title: '入账时间',
+            key: 'createTime',
+            sortable: false,
+            render: (h, params) => {
+              return h('div', this.formatterObjTime(params.row.createTime))
+            }}
         ],
         data: [],
         total: 0
       }
     },
-    created() {
+    created () {
       setTimeout(() => {
-
+        this.loadItem()
       }, 20)
     },
+    computed: {
+      ...mapGetters([
+        'userData'
+      ])
+    },
     methods: {
-      searchDriver(){
-        this.$Message.warning('搜索')
+      loadItem () {
+        this.formData.memberId = this.userData.id
+        this.requestAjax('get', 'balance', this.formData).then((data) => {
+          if (data.success) {
+            this.total = !isNaN(+data.data.total) ? +data.data.total : 0
+            this.data = data.data.rows
+          }
+        })
+      },
+      searchDriver () {
+        this.loadItem()
       },
       /**
        *跳页
@@ -102,6 +135,7 @@
        */
       changePage (v) {
         this.formData.offset = v
+        this.loadItem()
       },
       /**
        *改变页面展示用户条数
@@ -109,6 +143,7 @@
        */
       changeSize (v) {
         this.formData.limit = v
+        this.loadItem()
       }
     }
   }

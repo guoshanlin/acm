@@ -80,7 +80,9 @@
     },
     beforeCreate () {
       this.$nextTick(() => {
-        this.loadImg = process.env.NODE_ENV === 'production' ? this.row.posterUrl : process.env.API + this.row.posterUrl
+        if(this.row.posterUrl){
+          this.loadImg = process.env.NODE_ENV === 'production' ? process.env.API + 'files' + this.row.posterUrl.split('files')[1] : 'https://pmp.coreware.cn/gather' + this.row.posterUrl
+        }
       })
     }
   }
