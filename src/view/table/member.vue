@@ -53,6 +53,8 @@
 <script>
  import inputFrom from 'components/modal/inputFrom.vue'
  import tableDetails from 'components/modal/tableDetails.vue'
+ import iSpecies from 'components/ticket-species/index.vue'
+ import {mapGetters} from 'vuex'
   export default {
     destroyed () {
       window.onresize = function () {
@@ -146,7 +148,11 @@
         timer: {}
       }
     },
-    computed: {},
+    computed: {
+      ...mapGetters([
+        'userData'
+      ])
+    },
     components: {
        inputFrom,
       tableDetails
@@ -565,6 +571,7 @@
       }
     },
     mounted () {
+      this.parms.memberId = this.userData.id
       this.$nextTick(() => {
         window.onresize = () => {
          /* this.height = '' + (document.body.offsetHeight - 325)*/

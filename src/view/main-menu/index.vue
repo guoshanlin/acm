@@ -131,9 +131,7 @@
         this.menuList = [
           {path: '/meeting', title: '活动'},
           {path: '/member', title: '会员管理'},
-          {path: '/finance/myAccount', title: '财务'},
-          {path: '/marketing', title: '营销'},
-          {path: '/promotion', title: '推广'}
+          {path: '/finance/myAccount', title: '财务'}
         ]
       }
     }

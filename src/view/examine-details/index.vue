@@ -1,11 +1,11 @@
 <template>
   <div>
-   <!-- <div>
-      <i-button @click="copy">复制</i-button>
-    </div>-->
-  <!--  <div id="copy">-->
+    <!--<div>-->
+      <!--<i-button @click="copy">复制</i-button>-->
+    <!--</div>-->
+    <!--<div id="copy">-->
       <active-deltail :id="rowId" type="examine" ref="activDeltail"></active-deltail>
- <!--   </div>-->
+    <!--</div>-->
   </div>
 </template>
 
