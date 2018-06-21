@@ -27,6 +27,10 @@
                 <InputNumber style="width: 100%" v-if="rows.type=='InputNumber'" :max="rows.max" :min="rows.min"
                              :placeholder="rows.required ? '请输入...(必填）':'请输入...'"
                              v-model="fromVal[rows.id]"></InputNumber>
+                <InputNumber style="width: 100%" v-if="rows.type=='InputNumberMoney'" :max="rows.max" :min="rows.min"
+                             :placeholder="rows.required ? '请输入...(必填）':'请输入...'"
+                             :formatter="value => `${value}`.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')"
+                             v-model="fromVal[rows.id]" @on-change="moneyChange(arguments[0],rows.relation)"></InputNumber>
 
                 <InputNumber style="width: 100%" v-if="rows.type=='InputNumberPercent'" :max="maxIpnut[rows.id]"
                              :min="rows.min" :placeholder="rows.required ? '请输入...(必填）':'请输入...'"
@@ -53,8 +57,7 @@
                           @on-click="clickDropDown(arguments[0], rows.id)">
                   <i-input type="text" placeholder="请输入或选择类型..." v-model="fromVal[rows.id]" :maxlength="10"></i-input>
                   <DropdownMenu slot="list">
-                    <DropdownItem v-for="item in select[rows.id]" :name="item.value" :key="item.value">{{item.label }}&nbsp;({{item.value
-                      }})
+                    <DropdownItem v-for="item in select[rows.id]" :name="item.value" :key="item.value">{{item.label }}&nbsp;({{item.value}})
                     </DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
@@ -105,6 +108,7 @@
                   <i class="ivu-icon ivu-icon-ios-calendar-outline ivu-input-icon ivu-input-icon-normal"></i>
                   <input :id="rows.id" :value="fromVal[rows.id]" autocomplete="off" spellcheck="false" type="text" :placeholder="rows.required ? '请选择日期和时间(必选）':'请选择日期和时间'" class="ivu-input" @click='initTime(rows.id)'>
                 </div>
+                <div  v-if="rows.type=='tip'" class="l-h30">{{rows.name}}{{fromVal[rows.id]}} 元  <span class="c1">（按照提现金额收取15%的手续费）</span></div>
               </i-col>
             </div>
         </Row>
@@ -262,6 +266,10 @@
           checked: [
             {value: '1', name: '通过'},
             {value: '-1', name: '不通过'}
+          ],
+          status: [
+            {value: '2', name: '通过'},
+            {value: '3', name: '不通过'}
           ],
           importance: [
             {value: '0', name: '无'},
@@ -485,6 +493,13 @@
           }
         })
       },
+      moneyChange (val, id) {
+        if (val == 0) {
+          this.fromVal[id] = 0
+        } else {
+          this.fromVal[id] = Math.round((val * 0.15) * 100) / 100
+        }
+      }
     }
   }
 </script>

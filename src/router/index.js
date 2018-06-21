@@ -84,6 +84,16 @@ export default new Router({
           component: (resolve) => require(['../view/examine'], resolve)
         },
         {
+          path: '/payment',
+          name: '提现审批',
+          component: (resolve) => require(['../view/payment'], resolve)
+        },
+        {
+          path: '/paymentAudit',
+          name: '提现支付',
+          component: (resolve) => require(['../view/paymentAudit'], resolve)
+        },
+        {
           path: '/examineDetails',
           name: '活动详情',
           component: (resolve) => require(['../view/examine-details'], resolve)

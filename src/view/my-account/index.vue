@@ -3,7 +3,10 @@
     <div class="fbox">
       <h3 class="fz14 flex">我的账户</h3>
       <Tooltip
-        content="可提现余额：账户中可申请提现的金额，在订单支付完成且科微财务审核通过时入账，不包含提现中、已提现、未入账的金额。未入账：账户中等待入账的金额，在订单支付成功时计入，在订单支付完成且通过科微财务审核时扣除并计入可提现金额提现中：已从可提现余额中申请提现，等待打款至提现收款账号中的总金额已提现：已从可提现余额中申请提现，且已打款至提现收款账号中的总金额"
+        content="可提现余额：账户中可申请提现的金额，在订单支付完成且科微财务审核通过时入账，不包含提现中、已提现、未入账的金额。
+        未入账：账户中等待入账的金额，在订单支付成功时计入，在订单支付完成且通过科微财务审核时扣除并计入可提现金额。
+        提现中：已从可提现余额中申请提现，等待打款至提现收款账号中的总金额。
+        已提现：已从可提现余额中申请提现，且已打款至提现收款账号中的总金额。"
         placement="bottom-end">
         <div>数据说明
           <Icon type="help"></Icon>
@@ -14,6 +17,7 @@
       <div class="clear m-t10 m-b10 ">
         <div class="fl">可提现余额&nbsp;&nbsp;&nbsp;&nbsp;<span class="fz24 c1">{{row.balance}}元</span></div>
         <Button v-if="row.balance > 0" class="fr" type="primary" @click="applyWithdrawal">申请提现</Button>
+        <!--<Button class="fr" type="primary" @click="applyWithdrawal">申请提现</Button>-->
       </div>
       <Row class="withdrawal">
         <i-col span="6">
@@ -45,7 +49,8 @@
 </template>
 <script>
   import inputFrom from 'components/modal/inputFrom.vue'
-  import {mapGetters} from 'vuex'
+  import {setUserInfo, setIsLogin} from 'js/cache'
+  import {mapMutations, mapGetters} from 'vuex'
 
   export default {
     name: 'index',
@@ -58,7 +63,7 @@
           modalDisabled: false,
           modalshow: false,
           option: {},
-          value: {},
+          value: {}
         } // 表单参数
       }
     },
@@ -76,6 +81,9 @@
       ])
     },
     methods: {
+      ...mapMutations({
+        setUserDate: 'SET_USERDATA'
+      }),
       loadItem () {
         this.requestAjax('get', 'balanceLog', {}, this.userData.id).then((data) => {
           if (data.success) {
@@ -97,13 +105,44 @@
               {
                 title: '提现金额',
                 id: 'amounts',
-                type: 'InputNumber',
+                type: 'InputNumberMoney',
+                relation: 'poundage',
                 titlespan: 6,
                 colspan: 18,
                 min: 0,
-                max: this.row.balance
+                max: isNaN(+this.row.balance) ? 0 : +(this.row.balance * 0.85)
               }
-            ]
+            ],
+            [
+              {
+                title: '手续费',
+                id: 'poundage',
+                type: 'tip',
+                titlespan: 6,
+                colspan: 18
+              }
+            ],
+            [
+            {
+              title: '银行卡号',
+              id: 'bankCard',
+              type: 'input',
+              titlespan: 6,
+              colspan: 18,
+              required: true,
+              valueType: 'bankCheck'
+            } ],
+              [
+              {
+                title: '银行',
+                id: 'bank',
+                type: 'select',
+                titlespan: 6,
+                colspan: 18,
+                relation: '',
+                required: true
+              }
+              ]
           ],
           button: [{
             type: 'primary',
@@ -113,7 +152,10 @@
         }
         this.inputForm.value = {
           memberId: this.userData.id,
-          amounts: ''
+          amounts: 0,
+          poundage: 0,
+          bank: this.userData.bank,
+          bankCard: this.userData.bankCard
         }
         // this.$Message.warning('申请提现')
       },
@@ -191,6 +233,8 @@
           this.submitAjax('members', newVal, '设置银行卡')
         } else {
           this.inputForm.modalDisabled = true
+          newVal.objId = this.userData.bankCard
+          newVal.objName = this.userData.bank
           this.submitAjax('createWithdrawOrder', newVal, '提现')
         }
       },
@@ -204,6 +248,14 @@
         this.requestAjax(_type, url, obj).then((data) => {
           if (data.success) {
             this.$Message.success(msg + '成功')
+            if (url == 'members') {
+              let _obj = {}
+              Object.assign(_obj, this.userData)
+              _obj.bank = obj.bank
+              _obj.bankCard = obj.bankCard
+              this.setUserDate(_obj)
+              setUserInfo(_obj)
+            }
             this.inputForm.modalshow = false
             this.loadItem()
           } else if (!data.message) {
