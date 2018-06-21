@@ -5,6 +5,7 @@
       <Form :model="formData">
         <Row type="flex" :gutter=5>
           <i-col span="16">
+            <div class="l-h30">票券服务费说明：每张票券收取1元的服务费</div>
             <!--<Row type="flex" justify="start">-->
               <!--<i-col>-->
                 <!--<Select v-model="formData.select" style="width:120px">-->
@@ -92,10 +93,23 @@
           {title: '活动名称', key: 'objectName', sortable: false},
           {title: '订单编号', key: 'id', sortable: false},
           // {title: '交易人', key: 'phone', width: 140, sortable: false},
-          {title: '入账金额', key: 'optAmounts', sortable: false},
+          {title: '订单金额',
+            key: 'optAmounts',
+            sortable: false,
+            render: (h, params) => {
+              return h('div', this.formatterObjTime(params.row.optAmounts - params.row.ticketServiceFee))
+            }},
           // {title: '入账时间', key: 'company', width: 180, sortable: false},
           // {title: '交易状态', key: 'position', width: 140, sortable: false},
-          {title: '入账时间',
+           {title: '票券数', key: 'ticketCount', width: 140, sortable: false},
+           {title: '票券服务费', key: 'ticketServiceFee', width: 140, sortable: false},
+          {title: '入账金额',
+            key: 'optAmounts',
+            sortable: false,
+            render: (h, params) => {
+              return h('div', this.formatterObjTime(params.row.optAmounts - params.row.ticketServiceFee))
+            }},
+           {title: '入账时间',
             key: 'createTime',
             sortable: false,
             render: (h, params) => {

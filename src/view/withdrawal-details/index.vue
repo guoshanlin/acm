@@ -82,6 +82,7 @@
               return h('div', this.formatterObjTime(params.row.passTime))
             }},
           {title: '提现金额(元）', key: 'optAmounts', sortable: false},
+          {title: '提现手续费(元）', key: 'serviceFee', sortable: false},
           {title: '提现状态', key: 'position', sortable: false},
           {title: '到账时间',
             key: 'overTime',
