@@ -1,12 +1,10 @@
 <template>
-  <div>
+  <!--<div>-->
     <!--<div class="copy">-->
-      <!--<i-button @click="copy">截取活动为图片</i-button>-->
+      <!--<i-button @click="copy" type="primary">生成活动图片并下载</i-button>-->
     <!--</div>-->
-    <!--<div id="img">-->
-      <!--<img v-lazy="src">-->
-    <!--</div>-->
-    <div id="deltail">
+    <!--&lt;!&ndash;<div id="img"></div>&ndash;&gt;-->
+    <!--<div id="deltail">-->
       <div class="wrapper b wrapper-box">
         <div class="datails-item">
           <datails-item :row='data' :button="buttonName"  @exmine="exmine"></datails-item>
@@ -68,8 +66,8 @@
         </div>
         <!--新增表单承载标签-->
         <input-from v-if="inputForm.show" @changeOptions="getExmineVal" :options="inputForm.option" :value="inputForm.value" :modalDisabled="inputForm.modalDisabled" :modalshow="inputForm.modalshow"/>
-      </div>
-    </div>
+      <!--</div>-->
+    <!--</div>-->
   </div>
 </template>
 
@@ -225,17 +223,23 @@
         })
       },
       copy () {
-        let range = document.createRange()
-        range.selectNode(document.getElementById('deltail'))
-        let selection = window.getSelection()
-        if (selection.rangeCount > 0) selection.removeAllRanges()
-        selection.addRange(range)
-        document.execCommand('copy')
-        alert('复制成功！')
+        // let range = document.createRange()
+        // range.selectNode(document.getElementById('deltail'))
+        // let selection = window.getSelection()
+        // if (selection.rangeCount > 0) selection.removeAllRanges()
+        // selection.addRange(range)
+        // document.execCommand('copy')
+        // alert('复制成功！')
 
-        // html2canvas(document.getElementById('deltail')).then((canvas) => {
+        html2canvas(document.getElementById('deltail')).then((canvas) => {
           // document.getElementById('img').appendChild(canvas)
-          // var imgUri = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream')
+          let imgUri = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream')
+          let save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a')
+          save_link.href = imgUri
+          save_link.download = this.id + '.png'
+          let event = document.createEvent('MouseEvents')
+          event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
+          save_link.dispatchEvent(event)
           // window.location.href = imgUri
           // let range = document.createRange()
           // range.selectNode(document.getElementById('img'))
@@ -244,7 +248,7 @@
           // selection.addRange(range)
           // document.execCommand('copy')
           // alert('复制成功！')
-        // })
+        })
         // let divContent = document.getElementById('deltail').innerHTML
         // let data = 'data:image/svg+xml,' +
         //   "<svg xmlns='http://www.w3.org/2000/svg'>" +
@@ -271,10 +275,8 @@
         if (damo != null && damo.length !== 0) {
             for (let i = 0; i < damo.length; i++) {
               let item = damo[i]
-              console.log(item.src)
-              console.log(item.src.indexOf('files/xheditor') != -1)
               if (item.src.indexOf('files/xheditor') != -1) {
-                item.src = process.env.NODE_ENV === 'production' ? process.env.API + item.src.split('files')[1] : 'https://pmp.coreware.cn/gather/' + 'files' + item.src.split('files')[1]
+                item.src = process.env.NODE_ENV === 'production' ? process.env.API + 'files' + item.src.split('files')[1] : 'https://pmp.coreware.cn/gather/' + 'files' + item.src.split('files')[1]
               }
             }
         }
