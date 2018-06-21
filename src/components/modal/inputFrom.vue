@@ -178,6 +178,84 @@
               value: '1',
               label: '会员'
             }
+          ],
+          bank: [
+            {
+              value: '中国工商银行',
+              label: '中国工商银行'
+            },
+            {
+              value: '中国农业银行',
+              label: '中国农业银行'
+            },
+            {
+              value: '中国银行',
+              label: '中国银行'
+            },
+            {
+              value: '中国建设银行',
+              label: '中国建设银行'
+            },
+            {
+              value: '交通银行',
+              label: '交通银行'
+            },
+            {
+              value: '中信银行',
+              label: '中信银行'
+            },
+            {
+              value: '中国光大银行',
+              label: '中国光大银行'
+            },
+            {
+              value: '华夏银行',
+              label: '华夏银行'
+            },
+            {
+              value: '中国民生银行',
+              label: '中国民生银行'
+            },
+            {
+              value: '招商银行',
+              label: '招商银行'
+            },
+            {
+              value: '兴业银行',
+              label: '兴业银行'
+            },
+            {
+              value: '广发银行',
+              label: '广发银行'
+            },
+            {
+              value: '平安银行',
+              label: '平安银行'
+            },
+            {
+              value: '上海浦东发展银行',
+              label: '上海浦东发展银行'
+            },
+            {
+              value: '恒丰银行',
+              label: '恒丰银行'
+            },
+            {
+              value: '浙商银行',
+              label: '浙商银行'
+            },
+            {
+              value: '渤海银行',
+              label: '渤海银行'
+            },
+            {
+              value: '中国邮政储蓄银行',
+              label: '中国邮政储蓄银行'
+            },
+            {
+              value: '其他',
+              label: '其他'
+            }
           ]
         },
         radios: {
@@ -301,6 +379,10 @@
               }
               // 验证邮箱格式
               if (v.valueType === 'email' && !utils.isEmail(this.fromVal[v.id])) {
+                testValue = true
+              }
+              // 验证银行卡
+              if (v.valueType === 'bankCheck' && !utils.bankCheck(this.fromVal[v.id])) {
                 testValue = true
               }
               if (testValue) {

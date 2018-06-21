@@ -35,7 +35,13 @@ export default {
      // 删除查询会员信息
       vipsId: {url: 'vips/{id}', pre: preuUrl},
       // 修改用户密码
-      updatePwd: {url: 'members/updatePwd', pre: preuUrl}
+      updatePwd: {url: 'members/updatePwd', pre: preuUrl},
+      // 获取会员余额
+      balanceLog: {url: 'balanceLog/{id}', pre: preuUrl},
+      // 获取会员余额
+      balance: {url: 'balanceLog', pre: preuUrl},
+      // 申请提现
+      createWithdrawOrder: {url: 'balanceLog/createWithdrawOrder', pre: preuUrl}
 
     }
     /**
