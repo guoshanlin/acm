@@ -68,6 +68,7 @@
       return {
         tableWidth: document.documentElement.clientWidth - 379,
         formData: {
+          activityId: this.$route.query.id,
           keyWord: '',
           limit: 20,
           offset: 1,
@@ -103,8 +104,15 @@
             }
           },
           {
+            title: "姓名",
+            align: 'left',
+            width: 120,
+            key: "memberNickName"
+          },
+          {
             title: "手机",
             align: 'left',
+            width: 140,
             key: "memberPhone"
           },
           {

@@ -81,9 +81,33 @@
     data () {
       return {
         columns: [
-          {title: '姓名', key: 'name', width: 120, sortable: false},
+          {title: '头像昵称',
+            width: 200,
+            render: (h, params) => {
+              return h('div', [
+                h('Avatar', {
+                  style: {marginRight: '5px'},
+                  props: {
+                    src: params.row.img
+                  }
+                }),
+                h('span', params.row.name?params.row.name: params.row.nickName)
+              ])
+            }},
           {title: '性别', key: 'sex', width: 80, sortable: false},
+          {title: '状态', width: 80, sortable: false, render: (h, params) => {
+              return h('div', [
+                h('span', params.row.status == 0 ? "禁用": "启用")
+              ])
+            }},
+          {title: '角色', width: 120, sortable: false, render: (h, params) => {
+              return h('div', [
+                h('span', this.getRole(params.row.role ))
+              ])
+            }},
           {title: '手机', key: 'phone', width: 160, sortable: false},
+          {title: '开户行', key: 'bank', width: 120, sortable: false},
+          {title: '银行卡号', key: 'bankCard', width: 180, sortable: false},
           {title: '邮箱', key: 'email', width: 170, sortable: false},
           {title: '地址',
             key: 'address',
@@ -260,6 +284,14 @@
               {title: '微信', value: row.wechat, show: true, type: ''}
             ],
             [
+              {title: '状态', value: row.status == 0 ? "禁用": "启用", show: true, type: ''},
+              {title: '角色', value: this.getRole(row.role), show: true, type: ''}
+            ],
+            [
+              {title: '开户行', value: row.bank, show: true, type: ''},
+              {title: '银行卡号', value: row.bankCard, show: true, type: ''}
+            ],
+            [
               {title: '邮箱', value: row.email, show: true, type: ''},
               {title: '性别', value: row.sex, show: true, type: ''}
             ],
@@ -337,11 +369,48 @@
                 valueType: 'mobilePhone'
               },
               {
-                title: '微信',
+                title: '微信openId',
                 id: 'wechat',
                 type: 'input',
                 titlespan: 3,
                 colspan: 9,
+                required: false
+              }
+            ],
+            [
+              {
+                title: '状态',
+                id: 'status',
+                type: 'select',
+                titlespan: 3,
+                colspan: 9,
+                required: false
+              },
+              {
+                title: '角色',
+                id: 'role',
+                type: 'select',
+                titlespan: 3,
+                colspan: 9,
+                required: false
+              }
+            ],
+            [
+              {
+                title: '开户行',
+                id: 'bank',
+                type: 'select',
+                titlespan: 3,
+                colspan: 9,
+                required: false
+              },
+              {
+                title: '银行卡号',
+                id: 'bankCard',
+                type: 'input',
+                titlespan: 3,
+                colspan: 9,
+                valueType: 'bankCheck',
                 required: false
               }
             ],
@@ -438,7 +507,6 @@
             title: _b ? '修改' : '提交',
             click: 'handle'
           }]
-
         }
 
         this.inputForm.value = {
@@ -454,7 +522,11 @@
           company: _b ? row.company : '',
           position: _b ? row.position : '',
           channel: _b ? '' + row.channel : '0',
-          address: _b ? row.address : ''
+          address: _b ? row.address : '',
+          bank: _b ? row.bank : '',
+          bankCard: _b ? row.bankCard : '',
+          status: _b ? row.status : '',
+          role: _b ? row.role : ''
         }
         if (_b) {
           this.inputForm.value.id = row.id

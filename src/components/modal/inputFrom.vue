@@ -169,6 +169,30 @@
               label: '邀请生成'
             }
           ],
+          status: [
+            {
+              value: 0,
+              label: '禁用'
+            },
+            {
+              value: 1,
+              label: '启用'
+            }
+          ],
+          role: [
+            {
+              value: 0,
+              label: '普通用户'
+            },
+            {
+              value: 98,
+              label: '运营管理员'
+            },
+            {
+              value: 99,
+              label: '平台管理员'
+            }
+          ],
           level: [
             {
               value: '0',
