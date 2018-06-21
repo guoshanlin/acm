@@ -1,7 +1,7 @@
 <template>
   <div class="fbox">
     <div class="pic-datails">
-      <img v-if="row && row.posterUrl && row.posterUrl.indexOf('xheditor') != -1" width="100%" height="100%" :src="loadImg">
+      <img v-if="row && row.posterUrl && row.posterUrl.indexOf('xheditor') != -1" width="100%" height="100%" v-lazy="loadImg">
       <img v-else width="100%" height="100%" v-lazy="loadUrl">
       <span class="tips b1 c">{{getActiveStatus(row.status)}}</span>
     </div>
@@ -67,7 +67,7 @@
     },
     watch: {
       row (val) {
-        this.loadImg = process.env.NODE_ENV === 'production' ? val.posterUrl : process.env.API + val.posterUrl
+        this.loadImg = process.env.NODE_ENV === 'production' ? process.env.API + 'files' + val.posterUrl.split('files')[1] : 'https://pmp.coreware.cn/gather' + val.posterUrl
       }
     },
     methods: {

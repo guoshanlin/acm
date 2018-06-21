@@ -1,8 +1,8 @@
 <template>
   <div>
-<!--    <div class="copy">
-      <i-button @click="copy">截取活动为图片</i-button>
-    </div>-->
+    <!--<div class="copy">-->
+      <!--<i-button @click="copy">截取活动为图片</i-button>-->
+    <!--</div>-->
     <!--<div id="img">-->
       <!--<img v-lazy="src">-->
     <!--</div>-->
@@ -218,19 +218,20 @@
             }
             this.label = this.data.label.split(',')
             this.$nextTick(() => {
+              console.log(document.querySelectorAll('#content img'))
               this.bindAClick(document.querySelectorAll('#content img'))
             })
           }
         })
       },
       copy () {
-        // let range = document.createRange()
-        // range.selectNode(document.getElementById('deltail'))
-        // let selection = window.getSelection()
-        // if (selection.rangeCount > 0) selection.removeAllRanges()
-        // selection.addRange(range)
-        // document.execCommand('copy')
-        // alert('复制成功！')
+        let range = document.createRange()
+        range.selectNode(document.getElementById('deltail'))
+        let selection = window.getSelection()
+        if (selection.rangeCount > 0) selection.removeAllRanges()
+        selection.addRange(range)
+        document.execCommand('copy')
+        alert('复制成功！')
 
         // html2canvas(document.getElementById('deltail')).then((canvas) => {
           // document.getElementById('img').appendChild(canvas)
@@ -270,8 +271,10 @@
         if (damo != null && damo.length !== 0) {
             for (let i = 0; i < damo.length; i++) {
               let item = damo[i]
-              if (item.src.indexOf('http') == -1 && item.src.indexOf('http') == -1) {
-                item.src = process.env.API + item.src
+              console.log(item.src)
+              console.log(item.src.indexOf('files/xheditor') != -1)
+              if (item.src.indexOf('files/xheditor') != -1) {
+                item.src = process.env.NODE_ENV === 'production' ? process.env.API + item.src.split('files')[1] : 'https://pmp.coreware.cn/gather/' + 'files' + item.src.split('files')[1]
               }
             }
         }
