@@ -26,7 +26,10 @@ export default {
           method: type,
           url: this.getWbkUrl(url, urlId),
           params: newParams,
-          withCredentials:true
+          xhrFields: {
+            withCredentials: true
+          }
+          //withCredentials:true
         }).then((data) => {
           resolve(data.data)
         }).catch((error) => {
