@@ -110,7 +110,7 @@
         })
       },
       copy () {
-        html2canvas(document.getElementById('deltail')).then((canvas) => {
+        html2canvas(document.getElementById('deltail'),{useCORS: true}).then((canvas) => {
           // document.getElementById('img').appendChild(canvas)
           let imgUri = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream')
           let _save = document.createElementNS('http://www.w3.org/1999/xhtml', 'a')
