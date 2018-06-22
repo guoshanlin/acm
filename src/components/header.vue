@@ -116,6 +116,7 @@
         console.log(name)
         switch ('' + name) {
           case 'my': // 我的活动/展会
+            this.routePush('/meeting')
             break
           case 'logout': // 退出登录
             this.logout()

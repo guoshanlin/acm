@@ -12,7 +12,7 @@
           </a>
           <DropdownMenu slot="list">
            <!-- <DropdownItem>商户列表</DropdownItem>-->
-            <DropdownItem name="my">我的活动</DropdownItem>
+            <!--<DropdownItem name="my">我的活动</DropdownItem>-->
             <DropdownItem name="password" divided>修改密码</DropdownItem>
             <DropdownItem  name="logout" divided>退出</DropdownItem>
           </DropdownMenu>
@@ -28,7 +28,7 @@
 
       <Menu theme="dark" :active-name="activeNenu" width="160px"  class="menu-wrapper" @on-select="changeMenu">
         <template v-for="(item,i) in menuList">
-          <MenuItem :name="item.path" :key="i"><Icon type="document-text"></Icon>{{item.title}}</MenuItem>
+          <MenuItem :name="item.path" :key="i"><Icon :type="item.icon"></Icon>{{item.title}}</MenuItem>
         </template>
       </Menu>
 
@@ -104,8 +104,6 @@
       },
       handleSubmit (name) {
         switch ('' + name) {
-          case 'my': // 我的活动/展会
-            break
           case 'logout': // 退出登录
             this.logout()
             break
@@ -119,21 +117,21 @@
     mounted () {
       if (this.userData.role == 99 || this.userData.role == 98) {
         this.menuList = [
-          {path: '/meeting', title: '活动'},
-          {path: '/role', title: '用户管理'},
-          {path: '/member', title: '会员管理'},
-          {path: '/finance/myAccount', title: '财务'},
-          {path: '/marketing', title: '营销'},
-          {path: '/promotion', title: '推广'},
-          {path: '/examine', title: '活动审核'},
-          {path: '/payment', title: '提现审批'},
-          {path: '/paymentAudit', title: '提现支付'}
+          {icon: 'android-walk', path: '/meeting', title: '活动'},
+          {icon: 'person', path: '/role', title: '用户管理'},
+          {icon: 'ios-person-outline', path: '/member', title: '会员管理'},
+          {icon: 'social-yen', path: '/finance/myAccount', title: '财务'},
+          {icon: 'android-call', path: '/marketing', title: '营销'},
+          {icon: 'ios-world-outline', path: '/promotion', title: '推广'},
+          {icon: 'ios-compose', path: '/examine', title: '活动审核'},
+          {icon: 'android-checkmark-circle', path: '/payment', title: '提现审批'},
+          {icon: 'social-yen-outline', path: '/paymentAudit', title: '提现支付'}
         ]
       } else {
         this.menuList = [
-          {path: '/meeting', title: '活动'},
-          {path: '/member', title: '会员管理'},
-          {path: '/finance/myAccount', title: '财务'}
+          {icon: 'android-walk', path: '/meeting', title: '活动'},
+          {icon: 'ios-person-outline', path: '/member', title: '会员管理'},
+          {icon: 'social-yen', path: '/finance/myAccount', title: '财务'}
         ]
       }
     }

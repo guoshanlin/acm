@@ -1,17 +1,17 @@
 <template>
   <div class="wrapper clearFix">
-    <div class="wrapper-box b float-l" style="width: 140px;margin-right: 10px;height: fit-content;">
+    <div class="wrapper-box b float-l" style="width: 150px;margin-right: 10px;height: fit-content;">
 
       <Menu theme="light" :active-name="activeNenu" width="auto"  class="menu-wrapper" @on-select="changeMenu">
         <MenuGroup title="财务管理">
           <template v-for="(item,i) in menuList">
-            <MenuItem :name="item.path" :key="i"><Icon type="document-text"></Icon>{{item.title}}</MenuItem>
+            <MenuItem :name="item.path" :key="i"><Icon :type="item.icon"></Icon>{{item.title}}</MenuItem>
           </template>
         </MenuGroup>
       </Menu>
 
     </div>
-    <div class="float-l" style="width:calc(100% - 160px);">
+    <div class="float-l" style="width:calc(100% - 170px);">
         <router-view></router-view>
     </div>
   </div>
@@ -23,9 +23,9 @@
       return {
         activeNenu: this.$route.path,
         menuList: [
-          {path: "/finance/myAccount", title: "我的账户"},
-          {path: "/finance/incomeDetails", title: "收入明细"},
-          {path: "/finance/withdrawalDetails", title: "提现明细"}
+          {icon: 'ios-person', path: "/finance/myAccount", title: "我的账户"},
+          {icon: 'arrow-graph-up-right', path: "/finance/incomeDetails", title: "收入明细"},
+          {icon: 'arrow-graph-down-right', path: "/finance/withdrawalDetails", title: "提现明细"}
         ]
       }
     },

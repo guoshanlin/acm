@@ -209,8 +209,8 @@
         }
         this.inputForm.value = {
           name: this.userData.name,
-          bankCard: '',
-          bank: ''
+          bank: this.userData.bank,
+          bankCard: this.userData.bankCard
         }
         // this.$Message.warning('设置提现账户')
       },
