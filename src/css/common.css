@@ -57,10 +57,10 @@ table {border-collapse: collapse;border-spacing: 0;}
 .ct{text-align: center;}
 
 .b{background: #fff!important;}
-.b1{background: #8c0776!important;}
+.b1{background: #FF1111!important;}
 .b2{background: #eeefee}
 .c{color: #fff!important;}
-.c1{color: #8c0776!important;}
+.c1{color: #FF1111!important;}
 .c2{color: #333!important;}
 .c3{color: #757993!important;}
 .c4{color: #ff5050!important;}
@@ -192,8 +192,8 @@ span.ivu-date-picker-cells-cell {
 
 .login-wrapper .ivu-input-group-prepend{
   padding: 4px 12px;
-  background-color: #8c0776;
-  border: 1px solid #8c0776;
+  background-color: #FF1111;
+  border: 1px solid #FF1111;
   color: #fff;
   font-size: 18px;
 }

@@ -185,7 +185,7 @@
    /*     this.loading = '数据加载中...请稍等！'*/
         const _type = 'GET'
         let _params = this.formData
-         _params.memberId = this.userData.id
+         // _params.memberId = this.userData.id
         const _url = 'orders'
         this.requestAjax(_type, _url, _params).then((data) => {
           if (data.success) {

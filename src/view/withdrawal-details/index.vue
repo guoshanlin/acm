@@ -108,6 +108,7 @@
     methods: {
       loadItem () {
         this.formData.memberId = this.userData.id
+        // this.formData.memberId = 'L0V08T7H7MZVU9VS'
         this.requestAjax('get', 'balance', this.formData).then((data) => {
           if (data.success) {
             this.total = !isNaN(+data.data.total) ? +data.data.total : 0
