@@ -21,7 +21,7 @@
       </div>
       <Row class="withdrawal">
         <i-col span="6">
-          <div>未入账：0.00元</div>
+          <div>未入账：{{row.unrecorded ? row.unrecorded : 0}}元</div>
           <div>提现中：{{row.withdraw}}元</div>
           <div>已提现：{{row.withdrawTotal - row.withdraw}}元</div>
         </i-col>
