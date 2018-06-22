@@ -106,7 +106,7 @@
                 {
                   title: '首页推广',
                   id: 'importance',
-                  type: 'radio',
+                  type: 'checkbox',
                   titlespan: 5,
                   colspan: 19,
                   required: true
@@ -131,7 +131,7 @@
           },
           value: {
             checked: '1',
-            importance: '0',
+            importance: [],
             reviewRemark: ''
           }
         }
@@ -181,6 +181,16 @@
        */
       submitAjax (url, obj, msg) {
         const _type = 'POST'
+
+        if (obj.importance.length == 0) {
+          obj.importance = "0"
+        } else {
+          let importance = ["无", "精选", "推荐"], importanceList = []
+          obj.importance.forEach((v, i) => {
+            if (importance.indexOf(v) != -1) importanceList.push(importance.indexOf(v))
+          })
+          obj.importance = importanceList.join(",")
+        }
         this.requestAjax(_type, url, obj).then((data) => {
           if (data.success) {
             this.$Message.success(msg + '成功')

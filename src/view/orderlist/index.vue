@@ -133,6 +133,7 @@
           {
             title: "实际支付",
             align: 'left',
+            width: 100,
             key: "priceActual"
           }
         ],
