@@ -377,7 +377,7 @@
           institutions: _b ? row.institutions : '',
           wannaSkills: _b ? row.wannaSkills : '',
           goodSkills: _b ? row.goodSkills : '',
-          shareDate: _b ? this.formatterObjTime(row.shareDate, 'yyyy-MM-dd') : '',
+          shareDate: _b ? row.shareDate : '',
           vipNo: _b ? row.vipNo : '',
           skills: _b ? row.skills : '',
           gains: _b ? row.gains : '',
