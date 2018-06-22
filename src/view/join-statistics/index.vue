@@ -88,15 +88,15 @@
         </div>
         <div class="fbox fz14 m-t10 ct c3 statistics-wrapper">
           <div class="flex">
-            <span class="fz20 c2">1</span><br>
+            <span class="fz20 c2">{{data.ticket && data.ticket[0].报名人数 != null ? data.ticket[0].报名人数 : 0}}</span><br>
             <span>报名人数</span>
           </div>
           <div class="flex">
-            <span class="fz20 c2">1</span><br>
+            <span class="fz20 c2">{{data.ticket && data.ticket[0].签到人数 != null  ? data.ticket[0].签到人数 : 0 }}</span><br>
             <span>签到人数</span>
           </div>
           <div class="flex">
-            <span class="fz20 c2">1</span><br>
+            <span class="fz20 c2">{{data.ticket && data.ticket[0].签到率 != null ? data.ticket[0].签到率 + '%' : "0%"}}</span><br>
             <span>签到率</span>
           </div>
         </div>
@@ -252,12 +252,15 @@
             rate: '50%'
           }
         ],
-        orderStatus: "昨天"
+        orderStatus: "昨天",
+
+        id: this.$route.query.id,
+        data: '',
       }
     },
     created() {
       setTimeout(() => {
-
+        this.requestTicket()
       }, 20)
     },
     methods: {
@@ -267,6 +270,12 @@
       orderStatusChange(v){
         this.$Message.warning(v)
       },
+
+      requestTicket () {
+        this.requestAjax('get', 'report', {id: this.id}).then((data) => {
+          this.data = data.data
+        })
+      }
     }
   }
 </script>
