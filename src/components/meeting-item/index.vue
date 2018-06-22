@@ -59,7 +59,7 @@
             订单管理</a></div>
           <div class="flex"><a class="c2" @click="routePush('/base/walllist',row.id)">
             <Icon type="ios-paper-outline c1"></Icon>
-            微信墙</a></div>
+            微信互动</a></div>
           <div class="flex"><a class="c2" @click="routePush('/base/joinStatistics',row.id)">
             <Icon type="ios-paper-outline c1"></Icon>
             参会统计</a></div>

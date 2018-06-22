@@ -63,14 +63,23 @@
           modalDisabled: false,
           modalshow: false,
           option: {},
-          value: {}
+          value: {},
+          timer: {}
         } // 表单参数
       }
     },
     created () {
       setTimeout(() => {
         this.loadItem()
+        this.timer = setInterval(() => {
+          this.loadItem()
+        }, 60 * 1000)
       }, 20)
+    },
+    destroyed () {
+      window.onresize = function () {
+      }
+      clearInterval(this.timer)
     },
     components: {
       inputFrom

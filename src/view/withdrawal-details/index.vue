@@ -91,14 +91,23 @@
               return h('div', this.formatterObjTime(params.row.createTime))
             }}
         ],
+        timer: {},
         data: [],
         total: 0
       }
     },
-    created() {
+    created () {
       setTimeout(() => {
         this.loadItem()
+        this.timer = setInterval(() => {
+          this.loadItem()
+        }, 60 * 1000)
       }, 20)
+    },
+    destroyed () {
+      window.onresize = function () {
+      }
+      clearInterval(this.timer)
     },
     computed: {
       ...mapGetters([

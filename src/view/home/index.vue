@@ -29,11 +29,11 @@
     data () {
       return {
         row: [
-   /*       {id: 1, url: 'http://cdn.huodongxing.com/Content/app/appom/993069407002304.jpg'},
-          {id: 2, url: 'http://cdn.huodongxing.com/Content/app/appom/893071387995808.jpeg'},
-          {id: 3, url: 'http://cdn.huodongxing.com/Content/app/appom/793072403595469.jpg'},
-          {id: 4, url: 'http://cdn.huodongxing.com/Content/app/appom/843071389755810.jpg'},
-          {id: 5, url: 'http://cdn.huodongxing.com/Content/app/appom/223070723428571.jpg'}*/
+         // {id: 1, url: 'http://cdn.huodongxing.com/Content/app/appom/993069407002304.jpg'},
+         //  {id: 2, url: 'http://cdn.huodongxing.com/Content/app/appom/893071387995808.jpeg'},
+         //  {id: 3, url: 'http://cdn.huodongxing.com/Content/app/appom/793072403595469.jpg'},
+         //  {id: 4, url: 'http://cdn.huodongxing.com/Content/app/appom/843071389755810.jpg'},
+         //  {id: 5, url: 'http://cdn.huodongxing.com/Content/app/appom/223070723428571.jpg'}
         ],
         url: process.env.NODE_ENV === 'production' ? '' : process.env.API,
         option: [
@@ -65,7 +65,7 @@
       },
       loadActivity () {
         for (let i = 0; i < 3; i++) {
-          this.requestAjax('get', 'activitys', {importance:i}).then((data) => {
+          this.requestAjax('get', 'activitys', {importance: i, status: '>0'}).then((data) => {
             if (data.success) {
               if (i == 1) {
                 this.row = []

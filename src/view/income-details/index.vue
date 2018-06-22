@@ -114,13 +114,22 @@
             }}
         ],
         data: [],
-        total: 0
+        total: 0,
+        timer: {}
       }
     },
     created () {
       setTimeout(() => {
         this.loadItem()
+        this.timer = setInterval(() => {
+          this.loadItem()
+        }, 60 * 1000)
       }, 20)
+    },
+    destroyed () {
+      window.onresize = function () {
+      }
+      clearInterval(this.timer)
     },
     computed: {
       ...mapGetters([
