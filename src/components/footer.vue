@@ -9,5 +9,5 @@
 </script>
 
 <style>
-   .footer{background-color: #b1e8d2;padding: 10px 0;}
+   .footer{background-color: #712e2e;padding: 10px 0; color: #fff}
 </style>

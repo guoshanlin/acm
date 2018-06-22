@@ -118,8 +118,8 @@
       if (this.userData.role == 99 || this.userData.role == 98) {
         this.menuList = [
           {icon: 'android-walk', path: '/meeting', title: '活动'},
-          {icon: 'person', path: '/role', title: '用户管理'},
-          {icon: 'ios-person-outline', path: '/member', title: '会员管理'},
+          {icon: 'person', path: '/role', title: '用户'},
+          {icon: 'ios-person-outline', path: '/member', title: '会员'},
           {icon: 'social-yen', path: '/finance/myAccount', title: '财务'},
           {icon: 'android-call', path: '/marketing', title: '营销'},
           {icon: 'ios-world-outline', path: '/promotion', title: '推广'},
@@ -130,7 +130,7 @@
       } else {
         this.menuList = [
           {icon: 'android-walk', path: '/meeting', title: '活动'},
-          {icon: 'ios-person-outline', path: '/member', title: '会员管理'},
+          {icon: 'ios-person-outline', path: '/member', title: '会员'},
           {icon: 'social-yen', path: '/finance/myAccount', title: '财务'}
         ]
       }
@@ -164,7 +164,7 @@
     left: 0;
     width: 160px;
     z-index: 1000;
-    background: #222430;
+    background: #626369;
   }
   .user-pic-wrapper{
     height: 140px;
@@ -174,6 +174,6 @@
   }
 
   .menu-wrapper{
-    background: #222430;
+    background: #626369;
   }
 </style>

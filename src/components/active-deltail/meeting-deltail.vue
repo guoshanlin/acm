@@ -154,4 +154,5 @@
     white-space: -o-pre-wrap; /*Opera7*/
     word-wrap: break-word; /*InternetExplorer5.5+*/
   }
+  pre img{max-width: 80%;}
 </style>

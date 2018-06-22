@@ -66,7 +66,7 @@
     name: "index",
     data() {
       return {
-        tableWidth: document.documentElement.clientWidth - 379,
+        tableWidth: document.documentElement.clientWidth - 399,
         formData: {
           activityId: this.$route.query.id,
           keyWord: '',

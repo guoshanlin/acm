@@ -149,13 +149,13 @@
 </script>
 
 <style>
-  .meeting-menu {height: 130px !important;background: #b1e8d2!important;}
+  .meeting-menu {height: 130px !important;background: #712e2e!important;}
   /*.ivu-menu.ivu-menu-horizontal .ivu-row-flex{height:130px;}*/
-  .headPrimary {min-width: 992px;background: #b1e8d2}
+  .headPrimary {min-width: 992px;background: #712e2e}
    #login{display: inline-block; height: 85px; width:221px;background:url("../assets/logo_core.gif") no-repeat; margin-top: 25px; margin-left: 25px;}
   .header-r{ width: calc(100% - 335px);height: 130px;}
   .header-r>div{height: 65px; line-height: 65px;}
   .header-nav{margin: 0px 15px;}
-  .header-nav a{color:#000000;}
+  .header-nav a{color:#fff;}
   .drop-index-header .ivu-select-dropdown{top:50px !important;}
 </style>

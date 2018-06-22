@@ -96,10 +96,10 @@
 <style>
   .layout {background-size:cover;background-position:50% 50%;background-repeat: no-repeat;height: 100%; overflow-y: auto}
   .layout-copy {text-align: center; color: #9ea7b4;}
-  .index-tab{height: 50px;line-height: 50px;background-color: #44bb9a}
+  .index-tab{height: 50px;line-height: 50px;background-color: #712e2e}
   .index-tab h3{height: 50px;}
-  .index-tab h3:hover{background-color: #0CAE6C;}
-  .index-tab h3.active{background-color: #3bae20;}
+  .index-tab h3:hover{background-color: #60393B;}
+  .index-tab h3.active{background-color: #550704;}
   .index-tab a{display: inline-block; height: 45px; font-size: 20px;padding: 0 30px;color: #fff}
   .min-height{ min-height: calc( 100% - 220px)}
 </style>
