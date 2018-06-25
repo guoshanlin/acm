@@ -30,7 +30,7 @@
                 <InputNumber style="width: 100%" v-if="rows.type=='InputNumberMoney'" :max="rows.max" :min="rows.min"
                              :placeholder="rows.required ? '请输入...(必填）':'请输入...'"
                              :formatter="value => `${value}`.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')"
-                             v-model="fromVal[rows.id]" @on-change="moneyChange(arguments[0],rows.relation)"></InputNumber>
+                             v-model="fromVal[rows.id]" @on-change="moneyChange(arguments[0],rows)"></InputNumber>
 
                 <InputNumber style="width: 100%" v-if="rows.type=='InputNumberPercent'" :max="maxIpnut[rows.id]"
                              :min="rows.min" :placeholder="rows.required ? '请输入...(必填）':'请输入...'"
@@ -101,14 +101,13 @@
                         :filterable="rows.filterable"
                         @on-change="selectChange(arguments[0], rows.relation)"
                         :placement="placement">
-                  <Option v-for="item in select[rows.id]" :value="item.value" :key="item.value">{{ item.label }}
-                  </Option>
+                  <Option v-for="item in select[rows.id]" :value="item.value" :key="item.value">{{ item.label }}</Option>
                 </Select>
                 <div v-if="rows.type=='time'" class="ivu-input-wrapper ivu-input-type">
                   <i class="ivu-icon ivu-icon-ios-calendar-outline ivu-input-icon ivu-input-icon-normal"></i>
                   <input :id="rows.id" :value="fromVal[rows.id]" autocomplete="off" spellcheck="false" type="text" :placeholder="rows.required ? '请选择日期和时间(必选）':'请选择日期和时间'" class="ivu-input" @click='initTime(rows.id, rows.format)'>
                 </div>
-                <div  v-if="rows.type=='tip'" class="l-h30">{{rows.name}}{{fromVal[rows.id]}} 元  <span class="c1">（按照提现金额收取15%的手续费）</span></div>
+                <div v-if="rows.type=='tip'" class="l-h30">{{rows.name}}{{fromVal[rows.id]}} 元  <span class="c3">(按照提现金额收取15%的手续费)</span> <span v-if="enough" class="c1">余额不足</span></div>
               </i-col>
             </div>
         </Row>
@@ -116,7 +115,7 @@
     </div>
     <div slot="footer">
       <Button type="ghost" @click="cancel">取消</Button>
-      <Button v-for="item in options.button" :type="item.type" @click="handle(item.click)" :disabled="disabledButton" :key="item.title">{{item.title}}</Button>
+      <Button v-for="item in options.button" :type="item.type" @click="handle(item.click)" :disabled="disabledButton|| enough" :key="item.title">{{item.title}}</Button>
     </div>
   </Modal>
 </template>
@@ -133,6 +132,7 @@
         isShowModal: this.modalshow,
         opinions: '',
         messages: '',
+        enough: false,
         placement: 'bottom',
         select: {
           sex: [
@@ -517,11 +517,16 @@
           }
         })
       },
-      moneyChange (val, id) {
+      moneyChange (val, row) {
         if (val == 0) {
-          this.fromVal[id] = 0
+          this.fromVal[row.relation] = 0
         } else {
-          this.fromVal[id] = Math.round((val * 0.15) * 100) / 100
+          this.fromVal[row.relation] = Math.round((val * 0.15) * 100) / 100
+        }
+        if ((this.fromVal[row.relation] + val) <= row.max) {
+          this.enough = false
+        } else {
+          this.enough = true
         }
       }
     }

@@ -119,7 +119,7 @@
                 titlespan: 6,
                 colspan: 18,
                 min: 0,
-                max: isNaN(+this.row.balance) ? 0 : +(this.row.balance * 0.85)
+                max: this.row.balance
               }
             ],
             [
