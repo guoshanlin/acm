@@ -144,6 +144,7 @@
               titlespan: 6,
               colspan: 18,
               required: true,
+              disabled: true,
               valueType: 'bankCheck'
             } ],
               [
@@ -151,6 +152,7 @@
                 title: '银行',
                 id: 'bank',
                 type: 'select',
+                disabled: true,
                 titlespan: 6,
                 colspan: 18,
                 relation: '',
@@ -244,12 +246,18 @@
         if (this.type == 'editAccount') {
           newVal.id = this.userData.id
           this.inputForm.modalDisabled = true
-          this.submitAjax('members', newVal, '设置银行卡')
+          this.submitAjaxAmounts('members', newVal, '设置银行卡')
         } else {
+          // poundage: 0,
+          //   bank: this.userData.bank,
+          //   bankCard: this.userData.bankCard
           this.inputForm.modalDisabled = true
-          newVal.objId = this.userData.bankCard
-          newVal.objName = this.userData.bank
-          this.submitAjax('createWithdrawOrder', newVal, '提现')
+          newVal.poundage = undefined
+          newVal.objId = newVal.bankCard
+          newVal.objName = newVal.bank
+          newVal.bankCard = undefined
+          newVal.bank = undefined
+          this.submitAjaxAmounts('createWithdrawOrder', newVal, '提现')
         }
       },
       /**
@@ -257,11 +265,10 @@
        * @param url
        * @param obj
        */
-      submitAjax (url, obj, msg) {
+      submitAjaxAmounts (url, obj, msg) {
         const _type = 'POST'
         this.requestAjax(_type, url, obj).then((data) => {
           if (data.success) {
-            this.$Message.success(msg + '成功')
             if (url == 'members') {
               let _obj = {}
               Object.assign(_obj, this.userData)
@@ -270,9 +277,10 @@
               this.setUserDate(_obj)
               setUserInfo(_obj)
             }
+            this.$Message.success(msg + '成功')
             this.inputForm.modalshow = false
             this.loadItem()
-          } else if (!data.message) {
+          } else {
             this.$Message.success(msg + '失败')
           }
           this.inputForm.modalDisabled = false

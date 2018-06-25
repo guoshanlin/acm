@@ -178,6 +178,7 @@
             this.loading = '暂无数据'
             this.data = data.data.rows
           } else {
+            this.loading = '暂无数据'
             this.data = []
           }
         })
@@ -422,7 +423,7 @@
             this.$Message.success(this.clickType + '会员成功')
             this.inputForm.modalshow = false
             this.loadTable()
-          } else if (!data.message) {
+          } else {
             this.$Message.success(this.clickType + '会员失败')
           }
           this.inputForm.modalDisabled = false

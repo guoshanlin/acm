@@ -34,9 +34,10 @@ export default {
           }
         }).then((data) => {
           if (this.isOvertime(data.data)) {
-            resolve(data.data)
+             resolve(data.data)
           }
         }).catch((error) => {
+          console.log('error...')
           reject(error)
         })
       })
@@ -61,6 +62,7 @@ export default {
             resolve(data.data)
           }
         }).catch((error) => {
+          console.log('error...')
           reject(error)
         })
       })
@@ -317,7 +319,7 @@ export default {
       }
     }
     Vue.prototype.isOvertime = function (data) {
-      if (data.data.TimeOut) {
+      if (data.data && data.data.TimeOut) {
         store.state.isLogin = false
         setIsLogin(false)
         store.state.userData = null

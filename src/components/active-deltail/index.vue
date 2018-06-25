@@ -198,7 +198,7 @@
             this.buttonType = ''
             this.inputForm.modalshow = false
             this.initItem()
-          } else if (!data.message) {
+          } else {
             this.$Message.success(msg + '失败')
           }
           this.inputForm.modalDisabled = false
@@ -212,7 +212,7 @@
         const _params = {id: this.id}
         const _url = 'activitys'
         this.requestAjax(_type, _url, _params).then((data) => {
-          if (!data.message) {
+          if (data.success) {
             this.data = data.data.rows[0]
             if (this.data.status == 1 && this.type == 'info') {
               this.buttonName = '取消'

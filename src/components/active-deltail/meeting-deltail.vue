@@ -100,7 +100,7 @@
         const _params = {id: this.id}
         const _url = 'activitys'
         this.requestAjax(_type, _url, _params).then((data) => {
-          if (!data.message) {
+          if (data.success) {
             this.data = data.data.rows[0]
             this.label = this.data.label.split(',')
             this.$nextTick(() => {
