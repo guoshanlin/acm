@@ -135,6 +135,8 @@ table {border-collapse: collapse;border-spacing: 0;}
 .p-0{padding: 0!important;;}
 .m-0{margin: 0!important;;}
 
+.m-10{margin: 10px!important;}
+.p-10{padding: 10px!important;}
 .p-t60{padding-top: 60px!important;}
 .p-t100{padding-top:100px!important;}
 .p-t130{padding-top:130px!important;}
