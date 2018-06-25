@@ -176,14 +176,18 @@ export default {
      * 公用页面跳转
      * @param url
      */
-    Vue.prototype.routePush = function (url, id, type) {
-      if (id && type) {
-        this.$router.push({path: url, query: {id: id, type: type}})
-      } else if (id) {
-        this.$router.push({path: url, query: {id: id}})
-      } else {
-        this.$router.push(url)
+    Vue.prototype.routePush = function (url, id, type, obj) {
+      let newParams = {}
+      if (obj) {
+        Object.assign(newParams, obj)
       }
+      if (id) {
+        Object.assign(newParams, {id: id})
+      }
+      if (type) {
+        Object.assign(newParams, {type: type})
+      }
+      this.$router.push({path: url, query: newParams})
     }
     /**
      * 验证非空
