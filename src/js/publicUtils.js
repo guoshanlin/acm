@@ -164,6 +164,26 @@ export default {
       }
     }
     /**
+     * 转义订单状态
+     * @param number
+     * @returns {string}
+     */
+    Vue.prototype.formatterBalancelogStatus = function (number) {
+      //0到账；1待审批；2审批通过；3审批不通过
+      switch ('' + number) {
+        case '0':
+          return '已到账'
+        case '1':
+          return '待审批'
+        case '2':
+          return '待支付'
+        case '3':
+          return '审批未通过'
+        default:
+          return number
+      }
+    }
+    /**
      * 设置定时器
      * @param func
      * @param delay

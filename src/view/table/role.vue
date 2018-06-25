@@ -84,14 +84,17 @@
           {title: '头像昵称',
             width: 200,
             render: (h, params) => {
-              return h('div', [
+              return h('div',
+                { 'class': 'td-render',
+                domProps: {
+                  title: params.row.name ? params.row.name : params.row.nickName}}, [
                 h('Avatar', {
                   style: {marginRight: '5px'},
                   props: {
                     src: params.row.img
                   }
                 }),
-                h('span', params.row.name?params.row.name: params.row.nickName)
+                h('span', params.row.name ? params.row.name : params.row.nickName)
               ])
             }},
           {title: '性别', key: 'sex', width: 80, sortable: false},
@@ -105,18 +108,17 @@
                 h('span', this.getRole(params.row.role ))
               ])
             }},
-          {title: '手机', key: 'phone', width: 160, sortable: false},
-          {title: '开户行', key: 'bank', width: 120, sortable: false},
-          {title: '银行卡号', key: 'bankCard', width: 180, sortable: false},
-          {title: '邮箱', key: 'email', width: 170, sortable: false},
+          {title: '手机', key: 'phone', width: 160, sortable: false, render: this.tdRender},
+          {title: '开户行', key: 'bank', width: 120, sortable: false, render: this.tdRender},
+          {title: '银行卡号', key: 'bankCard', width: 180, sortable: false, render: this.tdRender},
+          {title: '邮箱', key: 'email', width: 170, sortable: false, render: this.tdRender},
           {title: '地址',
             key: 'address',
             sortable: false,
-            render: (h, params) => {
-              return this.tdRender(h, params)
-            }},
-          {title: '公司', key: 'company', width: 160, sortable: false},
-          {title: '职位', key: 'position', width: 120, sortable: false},
+            render: this.tdRender
+          },
+          {title: '公司', key: 'company', width: 160, sortable: false, render: this.tdRender},
+          {title: '职位', key: 'position', width: 120, sortable: false, render: this.tdRender},
           {title: '操作',
             width: 180,
             align: 'center',

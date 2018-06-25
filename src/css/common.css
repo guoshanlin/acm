@@ -201,3 +201,9 @@ span.ivu-date-picker-cells-cell {
 .login-wrapper .ivu-form-item{
   margin-bottom: 26px;
 }
+
+.td-render{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
