@@ -1,5 +1,8 @@
+import store from '../store'
+import {setIsLogin,setUserInfo} from './cache'
+
 export default {
-  install(Vue, options) {
+  install (Vue, options) {
     /**
      * 公用请求方法 以params形式提交参数
      * @param type
@@ -29,9 +32,10 @@ export default {
           xhrFields: {
             withCredentials: true
           }
-          //withCredentials:true
         }).then((data) => {
-          resolve(data.data)
+          if (this.isOvertime(data.data)) {
+            resolve(data.data)
+          }
         }).catch((error) => {
           reject(error)
         })
@@ -51,9 +55,11 @@ export default {
           method: type,
           url: this.getWbkUrl(url, urlId),
           data: data,
-          withCredentials:true
+          withCredentials: true
         }).then((data) => {
-          resolve(data.data)
+          if (this.isOvertime(data.data)) {
+            resolve(data.data)
+          }
         }).catch((error) => {
           reject(error)
         })
@@ -308,6 +314,19 @@ export default {
         return '<='
       } else {
         return '>'
+      }
+    }
+    Vue.prototype.isOvertime = function (data) {
+      if (data.data.TimeOut) {
+        store.state.isLogin = false
+        setIsLogin(false)
+        store.state.userData = null
+        setUserInfo(null)
+        this.$Message.warning({content: '登录超时, 请重新登录！', duration: 10, closable: true})
+        this.routePush('/login', '', '', {oldPath: this.$route.path})
+        return false
+      } else {
+        return true
       }
     }
   }

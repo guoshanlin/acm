@@ -2,16 +2,21 @@
   <div class="b wrapper-box ">
     <div class="fbox">
       <h3 class="fz14 flex">我的账户</h3>
-      <Tooltip
-        content="可提现余额：账户中可申请提现的金额，在订单支付完成且科微财务审核通过时入账，不包含提现中、已提现、未入账的金额。
-        未入账：账户中等待入账的金额，在订单支付成功时计入，在订单支付完成且通过科微财务审核时扣除并计入可提现金额。
-        提现中：已从可提现余额中申请提现，等待打款至提现收款账号中的总金额。
-        已提现：已从可提现余额中申请提现，且已打款至提现收款账号中的总金额。"
-        placement="bottom-end">
-        <div>数据说明
+      <Poptip trigger="hover" placement="bottom-end" width="500">
+        <div class="cursor-p">数据说明
           <Icon type="help"></Icon>
         </div>
-      </Tooltip>
+        <div class="poptip-slot" slot="content">
+          可提现余额：账户中可申请提现的金额，在订单支付完成且科微财务审核通过时入账，不包含提现中、已提现、未入账的金额。
+          <br>
+          未入账：账户中等待入账的金额，在订单支付成功时计入，在订单支付完成且通过科微财务审核时扣除并计入可提现金额。
+          <br>
+          提现中：已从可提现余额中申请提现，等待打款至提现收款账号中的总金额。
+          <br>
+          已提现：已从可提现余额中申请提现，且已打款至提现收款账号中的总金额。
+          <br>
+        </div>
+      </Poptip>
     </div>
     <div class="content-wrapper m-t20">
       <div class="clear m-t10 m-b10 ">
@@ -293,5 +298,7 @@
     line-height: 36px;
     border-top: 1px solid #e3e2e5;
   }
-
+  .poptip-slot{
+    white-space: normal;
+  }
 </style>

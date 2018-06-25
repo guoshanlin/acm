@@ -125,6 +125,7 @@
         if (damo != null && damo.length !== 0) {
           for (let i = 0; i < damo.length; i++) {
             let item = damo[i]
+            // item.crossOrigin = 'Anonymous'
             if (item.src.indexOf('files/xheditor') != -1) {
               item.src = process.env.NODE_ENV === 'production' ? process.env.API + 'files' + item.src.split('files')[1] : 'https://pmp.coreware.cn/gather/' + 'files' + item.src.split('files')[1]
             }

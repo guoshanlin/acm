@@ -182,16 +182,16 @@
     },
     computed: {
       ...mapGetters([
-        'userData',
+        'userData'
       ])
     },
-    created() {
+    created () {
       setTimeout(() => {
       }, 20)
     },
-    watch:{
-      "$route"(to , from){
-        this.switchFlag = to.path == "/login"
+    watch: {
+      '$route' (to, from) {
+        this.switchFlag = to.path == '/login'
       }
     },
     methods: {
@@ -199,7 +199,7 @@
         setUserDate: 'SET_USERDATA',
         setIsLogin: 'SET_ISLOGIN'
       }),
-      switchEvent() {
+      switchEvent () {
         this.routePush( this.switchFlag ? '/register' : '/login')
       },
       loginEvent() {
@@ -220,7 +220,12 @@
             this.setUserDate(data.data.member)
             setUserInfo(data.data.member)
             setIsLogin(true)
-            this.routePush('/index')
+            if (this.$route.query.oldPath) {
+              this.routePush(this.$route.query.oldPath)
+            } else {
+              // this.routePush('/index')
+              this.routePush('/meeting')
+            }
           } else {
             this.$Message.error(data.desc)
           }
