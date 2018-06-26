@@ -12,23 +12,23 @@
         </div>
         <div class="fbox fz14 m-t10 ct c3 statistics-wrapper">
           <div class="flex">
-            <span class="fz20 c2">1</span><br>
+            <span class="fz20 c2">{{reportEntered.activity ? reportEntered.activity.number : 0}}</span><br>
             <span>总人数</span>
           </div>
           <div class="flex">
-            <span class="fz20 c2">1</span><br>
+            <span class="fz20 c2">{{reportEntered.activity ? reportEntered.activity.numberActual : 0}}</span><br>
             <span>实际报名</span>
           </div>
           <div class="flex">
-            <span class="fz20 c2">100%</span><br>
+            <span class="fz20 c2">{{reportEntered.activity ? reportEntered.activity.numberRete : 0}}%</span><br>
             <span>报名率</span>
           </div>
         </div>
         <div>
           <div class="clear m-b10">
-            <Button class="fr" type="primary">导出</Button>
+            <Button class="fr" type="primary"  @click="exportTableData('orderInfo')">导出</Button>
           </div>
-          <Table border ref="$table" :columns="registerRateCol" :data="registerRateData"></Table>
+          <Table border ref="$orderInfo" :columns="registerRateCol" :data="registerRateData"></Table>
         </div>
         <div class="m-t30">
           <div class="clear">
@@ -56,11 +56,11 @@
         </div>
         <div class="fbox fz14 m-t10 ct c3 statistics-wrapper">
           <div class="flex">
-            <span class="fz20 c2">1</span><br>
+            <span class="fz20 c2">{{reportEntered.orders ? reportEntered.orders[0].number : 0}}</span><br>
             <span>订单数</span>
           </div>
           <div class="flex">
-            <span class="fz20 c2">1</span><br>
+            <span class="fz20 c2">{{reportEntered.orders ? reportEntered.orders[0].ticketNumber : 0}}</span><br>
             <span>售出票数</span>
           </div>
           <div class="flex">
@@ -113,6 +113,7 @@
 </template>
 
 <script>
+
   export default {
     name: "index",
     data() {
@@ -144,17 +145,15 @@
         registerRateData: [
           {
             name: '免费报名',
-            total: 18,
-            origin: "John Brown",
-            actual: '10',
-            rate: '50%'
+            total: 0,
+            actual: '0',
+            rate: '0%'
           },
           {
             name: '付费报名',
-            total: 18,
-            origin: "后台添加",
-            actual: '12',
-            rate: '50%'
+            total: 0,
+            actual: '0',
+            rate: '0%'
           }
         ],
 
@@ -245,12 +244,14 @@
         orderStatus: "昨天",
 
         id: this.$route.query.id,
-        data: '',
-        reportSign: {number: 0,signNumber: 0,signRete: 0}
+        reportSign: {number: 0,signNumber: 0,signRete: 0},    // 签到统计数据
+        reportEntered: {}     // 报名统计数据
       }
     },
     created() {
       setTimeout(() => {
+        // 报名统计
+        this.requesrReportEntered()
         // 签到统计
         this.requestReportSign()
       }, 20)
@@ -262,6 +263,7 @@
       orderStatusChange(v){
         this.$Message.warning(v)
       },
+      // 签到统计
       requestReportSign () {
         this.requestAjax('get', 'reportSign', {id: this.id}).then(res => {
           if(res.success){
@@ -272,6 +274,27 @@
             for(let i =0, ilen = this.signInData.length; i < ilen; i++){
               this.signInData[i].total = data["signType" + i]
               this.signInData[i].rate = data["signTypeRete" + i] + "%"
+            }
+          }
+        })
+      },
+      // 报名统计
+      requesrReportEntered(){
+        this.requestAjax('get', 'reportEntered', {id: this.id}).then(res => {
+          if(res.success){
+            this.reportEntered = res.data
+            if(this.reportEntered.orderInfo){
+              this.registerRateData = [{
+                name: '免费报名',
+                total: this.reportEntered.orderInfo[0].freeNumber,
+                actual: this.reportEntered.orderInfo[0].freeActualNumber,
+                rate: this.reportEntered.orderInfo[0].freeRete + '%'
+              }, {
+                  name: '付费报名',
+                  total: this.reportEntered.orderInfo[0].chargeActualNumber,
+                  actual: this.reportEntered.orderInfo[0].chargeNumber,
+                  rate: this.reportEntered.orderInfo[0].chargeRete + '%'
+                }]
             }
           }
         })
