@@ -13,11 +13,12 @@ import 'babel-polyfill'
 import Scrollbar from 'smooth-scrollbar'
 //  公用请求方法
 import publicUtils from 'js/publicUtils'
+import echarts from 'echarts'
 // 设置公用请求端口
 import getwbkUrl from 'js/getwbkUrl'
 import VueLazyload from 'vue-lazyload'
 import InitScroll from 'js/initScroll'
-import config from "../config"
+import config from '../config'
 import './theme/iview/index.less'
 
 axios.defaults.baseURL = process.env.API
@@ -30,6 +31,7 @@ axios.defaults.withCredentials=true
 
 Vue.prototype.axios = axios
 Vue.prototype.Scrollbar = Scrollbar
+Vue.prototype.echarts = echarts
 Vue.config.productionTip = false
 
 Vue.use(iView)

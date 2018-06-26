@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "echarts": "^4.1.0",
     "good-storage": "^1.0.1",
     "html2canvas": "^1.0.0-alpha.12",
     "iview": "^2.14.1",

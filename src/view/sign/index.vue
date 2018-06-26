@@ -36,15 +36,30 @@
     data () {
       return {
         loadImg: '',
-        url: 'https://pmp.coreware.cn/gather/weixin/createwxaqrcode?toUrl=pages/exhibition-details/exhibition-details?id=' + this.$route.query.id
+        data: '',
+        url: ''
       }
     },
     created () {
       setTimeout(() => {
-
+        this.initItem()
       }, 20)
     },
-    methods: {}
+    methods: {
+      /**
+       * 提交表单
+       * @param url
+       * @param obj
+       */
+      initItem () {
+        this.requestAjax('GET', 'activitys', {id: this.id}).then((data) => {
+          if (data.success) {
+            this.data = data.data.rows[0]
+            this.url = 'https://pmp.coreware.cn/gather/files/down?path=' + this.data.signUrl
+          }
+        })
+      }
+    }
   }
 </script>
 

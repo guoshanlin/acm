@@ -24,10 +24,6 @@
             <Button class="fr" type="primary">导出</Button>
           </div>
           <div class="posct wrapper-border m-t10" style="height: 260px;">chart 图表</div>
-          <div class="clear m-t30">
-            <div>访问量趋势图</div>
-            <Button class="fr" type="primary">导出</Button>
-          </div>
           <div class="posct wrapper-border m-t10">
             <i-table border :columns="columns" :data="data"></i-table>
           </div>
@@ -69,7 +65,9 @@
           </div>
           <Row type="flex">
             <i-col :span="12">
-              <div class="posct wrapper-border m-10" style="height: 260px;">chart 图表</div>
+              <div class="posct wrapper-border m-10" style="height: 260px;">
+                 <div id="preMap" style="height: 260px"></div>
+              </div>
             </i-col>
             <i-col :span="12">
               <div class="posct wrapper-border m-10" style="height: 260px;">chart 图表2</div>
@@ -139,6 +137,9 @@
       return {
         statistics: 0,
         orderStatus: '昨天',
+        width: {
+          width01: document.documentElement.clientWidth - 330
+        },
         columns: [
           {title: '页面/场景', width: 100, key: 'company', sortable: false},
           {title: '总浏览量PV', width: 110, key: 'position', sortable: false},
@@ -187,7 +188,7 @@
     },
     created () {
       setTimeout(() => {
-
+        this.initChart()
       }, 20)
     },
     methods: {
@@ -195,6 +196,9 @@
         this.statistics = v
       },
       orderStatusChange () {
+
+      },
+      initChart () {
 
       }
     }
