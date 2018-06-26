@@ -47,7 +47,11 @@ export default {
       // 签到统计
       reportSign: {url: '/activitys/reportSign', pre: preuUrl},
       // 报名统计
-      reportEntered: {url: '/activitys/reportEntered', pre: preuUrl}
+      reportEntered: {url: '/activitys/reportEntered', pre: preuUrl},
+      // 活动报名表
+      reportEnteredDateInfo: {url: '/activitys/reportEnteredDateInfo', pre: preuUrl},
+      // 活动报名订单统计
+      reportOrderInfo: {url: '/activitys/reportOrderInfo', pre: preuUrl}
     }
     /**
      * 获取url

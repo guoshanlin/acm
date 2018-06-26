@@ -9,11 +9,11 @@
       <div class="fbox fz14 m-t10 ct c3 statistics-wrapper">
         <div class="flex">
           <span class="fz20 c2">{{report.number}}</span><br>
-          <span>签到人数</span>
+          <span>报名人数</span>
         </div>
         <div class="flex">
           <span class="fz20 c2">{{report.signNumber}}</span><br>
-          <span>报名人数</span>
+          <span>签到人数</span>
         </div>
         <div class="flex">
           <span class="fz20 c2">{{report.signRete}}%</span><br>

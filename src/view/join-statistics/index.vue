@@ -8,7 +8,7 @@
     <div v-if="statistics == 0">
       <div class="content-wrapper m-t10 wrapper-border m-t20">
         <div class="clear">
-          <span>报名签到统计</span>
+          <span>报名率统计</span>
         </div>
         <div class="fbox fz14 m-t10 ct c3 statistics-wrapper">
           <div class="flex">
@@ -21,7 +21,7 @@
           </div>
           <div class="flex">
             <span class="fz20 c2">{{reportEntered.activity ? reportEntered.activity.numberRete : 0}}%</span><br>
-            <span>报名率</span>
+            <span>报名成功率</span>
           </div>
         </div>
         <div>
@@ -32,7 +32,7 @@
         </div>
         <div class="m-t30">
           <div class="clear">
-            <RadioGroup @on-change="orderStatusChange" v-model="orderStatus" type="button">
+            <RadioGroup  @on-change="rateDateChange" v-model="rate" type="button">
               <Radio label="昨天"></Radio>
               <Radio label="最近7天"></Radio>
               <Radio label="最近30天"></Radio>
@@ -141,7 +141,7 @@
             key: "actual"
           },
           {
-            title: "报名率",
+            title: "报名成功率",
             align: 'center',
             key: "rate"
           }
@@ -245,12 +245,16 @@
             rate: '0%'
           }
         ],
-        orderStatus: "昨天",
+        orderStatus: "",
+        rate: "",
 
         id: this.$route.query.id,
         reportSign: {number: 0,signNumber: 0,signRete: 0},    // 签到统计数据
         reportEntered: {},     // 报名统计数据
-        charts: {}
+        charts: {},
+        chartsOps: {},
+        charts1Parms: {id: this.$route.query.id, bt: '', et: '',day: ''},
+        charts2Parms: {id: this.$route.query.id, bt: '', et: '',day: ''}
       }
     },
     created() {
@@ -259,6 +263,10 @@
         this.requesrReportEntered()
         // 签到统计
         this.requestReportSign()
+        // 查询活动报名报表
+        this.requesrReportEnteredDateInfo()
+        // 活动报名订单统计
+        this.requesrReportOrderInfo()
         this.initChart()
       }, 20)
     },
@@ -272,8 +280,19 @@
           }
         }, 20)
       },
-      orderStatusChange(v){
-        this.$Message.warning(v)
+      rateDateChange(v) {
+        this.rate = v
+        this.charts1Parms.bt = ''
+        this.charts1Parms.et = ''
+        this.charts1Parms.day = this._parseDate(v)
+        this.requesrReportEnteredDateInfo()
+      },
+      orderStatusChange(v) {
+        this.orderStatus = v
+        this.charts2Parms.bt = ''
+        this.charts2Parms.et = ''
+        this.charts2Parms.day = this._parseDate(v)
+        this.requesrReportOrderInfo()
       },
       // 签到统计
       requestReportSign () {
@@ -311,93 +330,127 @@
           }
         })
       },
+      // 查询活动报名报表
+      requesrReportEnteredDateInfo() {
+        this.requestAjax('get', 'reportEnteredDateInfo', this.charts1Parms).then(res => {
+          if (res.success){
+            let rows = res.data.rows,
+                timerArray = [], freeActualArray = [], chargeActualArray = []
+            rows.forEach((v, i) => {
+              timerArray.push(v.cTime)
+              freeActualArray.push(v.freeActualNumber)
+              chargeActualArray.push(v.chargeActualNumber)
+            })
+            this.chartsOps.chart1.series[0].data = freeActualArray
+            this.chartsOps.chart1.series[1].data = chargeActualArray
+            this.chartsOps.chart1.xAxis.data = timerArray
+            this.charts.joinChart1Chart.setOption(this.chartsOps.chart1)
+          }
+        })
+      },
+      // 活动报名订单统计
+      requesrReportOrderInfo() {
+        this.requestAjax('get', 'reportOrderInfo', this.charts2Parms).then(res => {
+          if (res.success){
+            let rows = res.data.rows,
+              timerArray = [], countArray = [], numberArray = []
+            rows.forEach((v, i) => {
+              timerArray.push(v.cTime)
+              countArray.push(v.count)
+              numberArray.push(v.number)
+            })
+            this.chartsOps.chart2.series[0].data = countArray
+            this.chartsOps.chart2.series[1].data = numberArray
+            this.chartsOps.chart2.xAxis.data = timerArray
+            this.charts.joinChart2Chart.setOption(this.chartsOps.chart2)
+          }
+        })
+      },
       exportTableData(name){
         this.$refs["$"+name].exportCsv({filename:name})
       },
       initChart () {
         this.charts.joinChart1Chart = this.echarts.init(document.getElementById('joinChart1'))
         this.charts.joinChart2Chart = this.echarts.init(document.getElementById('joinChart2'))
-        let data = [["2000-06-05", 116], ["2000-06-06", 129], ["2000-06-07", 135], ["2000-06-08", 86],
-          ["2000-06-09", 73], ["2000-06-10", 85], ["2000-06-11", 73], ["2000-06-12", 68], ["2000-06-13", 92],
-          ["2000-06-14", 130], ["2000-06-15", 245], ["2000-06-16", 139], ["2000-06-17", 115], ["2000-06-18", 111],
-          ["2000-06-19", 309], ["2000-06-20", 206], ["2000-06-21", 137], ["2000-06-22", 128], ["2000-06-23", 85],
-          ["2000-06-24", 94], ["2000-06-25", 71], ["2000-06-26", 106], ["2000-06-27", 84], ["2000-06-28", 93], ["2000-06-29", 85],
-          ["2000-06-30", 73], ["2000-07-01", 83], ["2000-07-02", 125], ["2000-07-03", 107], ["2000-07-04", 82], ["2000-07-05", 44],
-          ["2000-07-06", 72], ["2000-07-07", 106], ["2000-07-08", 107], ["2000-07-09", 66], ["2000-07-10", 91], ["2000-07-11", 92],
-          ["2000-07-12", 113], ["2000-07-13", 107], ["2000-07-14", 131], ["2000-07-15", 111], ["2000-07-16", 64],
-          ["2000-07-17", 69], ["2000-07-18", 88], ["2000-07-19", 77], ["2000-07-20", 83], ["2000-07-21", 111],
-          ["2000-07-22", 57], ["2000-07-23", 55], ["2000-07-24", 60]]
-        let option = {
-          color: ["#00ADFF","#5fff21"],
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'cross',
-              label: {
-                backgroundColor: '#283b56'
-              }
-            }
-          },
-          grid: {
-            top: '10%',
-            left: '5%',
-            right: '10%',
-            bottom: '10%',
-            width: '85%',
-            height: '80%',
-            containLabel: true
-          },
-          xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            axisLabel: {
-              color: "#ccc"
-            },
-            data: data.map((item) => {
-              return item[0];
-            })
-          },
-          yAxis: {
-            type: 'value',
-            scale: true,
-            axisLabel: {
-              color: "#ccc"
-            },
-            splitLine: {
-              lineStyle: {
-                type: 'dotted',
-                color: '#515151'
+
+        for(let i = 1; i < 3; i++){
+          let option = {
+            color: ["#00ADFF","#5fff21"],
+            tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                type: 'cross',
+                label: {
+                  backgroundColor: '#283b56'
+                }
               }
             },
-            min:0,
-            boundaryGap: [0.2, 0.2]
-          },
-          series: [
-            {
-              type: 'line',
-              showSymbol: false,
-              name: '免费报名',
-              data: data.map((item) => {
-                return item[1]
-              })
-            }
-          ]
+            grid: {
+              top: '10%',
+              left: '5%',
+              right: '10%',
+              bottom: '10%',
+              width: '85%',
+              height: '80%',
+              containLabel: true
+            },
+            xAxis: {
+              type: 'category',
+              boundaryGap: false,
+              axisLabel: {
+                color: "#ccc"
+              },
+              data: []
+            },
+            yAxis: {
+              type: 'value',
+              scale: true,
+              axisLabel: {
+                color: "#ccc"
+              },
+              splitLine: {
+                lineStyle: {
+                  type: 'dotted',
+                  color: '#515151'
+                }
+              },
+              min:0,
+              boundaryGap: [0.2, 0.2]
+            },
+            series: [
+              {
+                type: 'line',
+                showSymbol: false,
+                name: i == 1 ? '免费数' : "订单数",
+                data: []
+              },
+              {
+                type: 'line',
+                showSymbol: false,
+                name: i == 1 ? '收费数' : "售出票数",
+                data: []
+              }
+            ]
+          }
+          this.chartsOps["chart" + i] = option
         }
-        this.charts.joinChart1Chart.setOption(option)
-        option.series[0].name= '订单数'
-        option.series.push({
-          type: 'line',
-          showSymbol: false,
-          name: '售出票数',
-          data: data.map((item) => {
-            return Math.round(Math.random() * item[1])
-          })
-        })
-        this.charts.joinChart2Chart.setOption(option)
+
+        this.charts.joinChart1Chart.setOption(this.chartsOps.chart1)
+        this.charts.joinChart2Chart.setOption(this.chartsOps.chart2)
       },
       _resize () {
         for (let char in this.charts) {
           this.charts[char].resize()
+        }
+      },
+      _parseDate(v){
+        switch (v) {
+          case "昨天":
+            return 1
+          case "最近7天":
+            return 7
+          case "最近30天":
+            return 30
         }
       }
     }
