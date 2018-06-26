@@ -211,7 +211,7 @@
             this.$Message.success(msg + '成功')
             this.inputForm.modalshow = false
             this.initItem()
-          } else if (!data.message) {
+          } else {
             this.$Message.success(msg + '失败')
           }
           this.inputForm.modalDisabled = false
@@ -229,7 +229,7 @@
         const _params = this.parms
         const _url = 'balance'
         this.requestAjax(_type, _url, _params).then((data) => {
-          if (!data.message) {
+          if (data.success) {
             this.total = !isNaN(+data.data.total) ? +data.data.total : 0
             this.data = data.data.rows
           } else {

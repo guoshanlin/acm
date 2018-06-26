@@ -84,7 +84,7 @@
       },
       loadItem () {
         this.requestAjax('get', 'activitys', this.parms).then((data) => {
-          if (!data.message) {
+          if (data.success) {
             this.total = !isNaN(+data.data.total) ? +data.data.total : 0
             this.data = data.data.rows
           } else {

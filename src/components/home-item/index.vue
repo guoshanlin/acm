@@ -14,7 +14,7 @@
             <div class="home-item-content" @click="routePush('/index/activities',row.id,'home')">
               <div class="index-home">
                 <img width="100%" height="100%" v-lazy="url + row.posterUrl">
-                <span class="tips b1 c">进行中</span>
+                <span class="tips b1 c">{{getActiveStatus(row.status)}}</span>
               </div>
               <div class="info-home flex c2">
                 <h3 class="fz24 td-render" :title="row.name">{{row.name}}</h3>

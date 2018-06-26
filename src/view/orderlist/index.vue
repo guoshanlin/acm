@@ -84,7 +84,8 @@
             title: "订单编号",
             align: 'left',
             width: 180,
-            key: "id"
+            key: "id",
+            render: this.tdRender
           },
           {
             title: "下单时间",
@@ -107,34 +108,40 @@
             title: "姓名",
             align: 'left',
             width: 120,
-            key: "memberNickName"
+            key: "memberNickName",
+            render: this.tdRender
           },
           {
             title: "手机",
             align: 'left',
             width: 140,
-            key: "memberPhone"
+            key: "memberPhone",
+            render: this.tdRender
           },
           {
             title: "数量",
             align: 'left',
-            key: "number"
+            key: "number",
+            render: this.tdRender
           },
           {
             title: "应付",
             align: 'left',
-            key: "priceTotal"
+            key: "priceTotal",
+            render: this.tdRender
           },
           {
             title: "折扣价",
             align: 'left',
-            key: "priceDiscount"
+            key: "priceDiscount",
+            render: this.tdRender
           },
           {
             title: "实际支付",
             align: 'left',
             width: 100,
-            key: "priceActual"
+            key: "priceActual",
+            render: this.tdRender
           }
         ],
         tableData: []

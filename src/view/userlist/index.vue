@@ -129,7 +129,9 @@
             title: '头像昵称',
             width: 200,
             render: (h, params) => {
-              return h('div', [
+              return h('div', { 'class': 'td-render',
+                domProps: {
+                  title: params.row.nickName}}, [
                 h('Avatar', {
                   style: {marginRight: '5px'},
                   props: {
@@ -143,7 +145,8 @@
           {
             title: '名称',
             width: 180,
-            key: "memberName"
+            key: "memberName",
+            render: this.tdRender
           },
           {
             title: '是否会员',
@@ -155,13 +158,15 @@
             title: "参会码",
             align: 'center',
             width: 100,
-            key: "codeNumber"
+            key: "codeNumber",
+            render: this.tdRender
           },
           {
             title: "手机号",
             align: 'center',
             width: 130,
-            key: "memberPhone"
+            key: "memberPhone",
+            render: this.tdRender
           },
           {
             title: "签到状态",
@@ -214,7 +219,7 @@
                     }
                   }
                 }, '删除')
-              ]);
+              ])
             }
           }
         ],

@@ -1,6 +1,6 @@
 <template>
   <div class="swiper">
-    <swiper :options="swiperOption" v-if='rows.length>0'>
+    <swiper :options="swiperOption" v-if='rows.length> 0'>
       <swiper-slide v-for="(item, index) in rows" :key="index"><img width='100%' height='100%' v-lazy="item.url" @click="routePush('/index/activities',item.id,'home')"></swiper-slide>
       <div class="swiper-button-prev" slot="button-prev"></div>
       <div class="swiper-button-next" slot="button-next"></div>
@@ -18,7 +18,7 @@
       return {
         swiperOption: {
           watchSlidesProgress: true,
-          loop: this.rows.length > 1 ? true : false,
+          loop: true,
           loopedSlides: 5,
           speed: 500,
           autoplay: {

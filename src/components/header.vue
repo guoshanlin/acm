@@ -12,7 +12,7 @@
            <div>
              <Row type="flex" justify="center" class="code-row-bg">
                <i-col>
-                 <div class="header-nav" v-if="!showAdmin">
+                 <div class="header-nav c" v-if="!showAdmin">
                   <a @click="routePush('/register')">注册</a>/
                    <a @click="routePush('/login')">登录</a>
                  </div>
@@ -39,7 +39,7 @@
                  </div>
                </i-col>
                <i-col>
-                 <div class="header-nav"><i-button type="primary">搜索</i-button></div>
+                 <div class="header-nav"><i-button type="primary" @click="search">搜索</i-button></div>
                </i-col>
                <i-col>
                  <div class="header-nav"><i-button type="primary" @click="initiatingActivity"><Icon class="fz18" style="vertical-align: sub;" type="ios-paperplane"></Icon> 发起活动</i-button></div>
@@ -133,7 +133,11 @@
         } else {
           this.$Message.error('请先登入')
         }
-     }
+     },
+      search () {
+        console.log('搜索。。。')
+        // this.routePush(this.$route.path, '', '', Object.assign({}, this.$route.query, {searchKey: this.searchKey}))
+      }
     },
     mounted () {
       this.$nextTick(() => {

@@ -65,23 +65,21 @@
       return {
       /*  height: '' + (document.body.offsetHeight - 325),*/
         columns: [
-          {title: '姓名', key: 'name', width: 120, sortable: false},
+          {title: '姓名', key: 'name', width: 120, sortable: false, render: this.tdRender},
        /*   {title: '昵称', key: 'nickName', width: 100, sortable: false},*/
           {title: '性别',
             key: 'sex',
             width: 80,
             sortable: false
           },
-          {title: '手机', width: 120, key: 'phone', sortable: false},
-          {title: '邮箱', key: 'email', sortable: false},
+          {title: '手机', width: 120, key: 'phone', sortable: false, render: this.tdRender},
+          {title: '邮箱', key: 'email', sortable: false, render: this.tdRender},
           {title: '地址',
             key: 'address',
             sortable: false,
-            render: (h, params) => {
-              return this.tdRender(h, params)
-            }},
-          {title: '公司', width: 170, key: 'company', sortable: false},
-          {title: '职位', width: 120, key: 'position', sortable: false},
+            render: this.tdRender},
+          {title: '公司', width: 170, key: 'company', sortable: false, render: this.tdRender},
+          {title: '职位', width: 120, key: 'position', sortable: false, render: this.tdRender},
           {title: '级别',
             key: 'level',
             width: 80,
@@ -178,6 +176,7 @@
             this.loading = '暂无数据'
             this.data = data.data.rows
           } else {
+            this.loading = '暂无数据'
             this.data = []
           }
         })
@@ -422,7 +421,7 @@
             this.$Message.success(this.clickType + '会员成功')
             this.inputForm.modalshow = false
             this.loadTable()
-          } else if (!data.message) {
+          } else {
             this.$Message.success(this.clickType + '会员失败')
           }
           this.inputForm.modalDisabled = false

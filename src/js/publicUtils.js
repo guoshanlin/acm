@@ -1,5 +1,8 @@
+import store from '../store'
+import {setIsLogin,setUserInfo} from './cache'
+
 export default {
-  install(Vue, options) {
+  install (Vue, options) {
     /**
      * 公用请求方法 以params形式提交参数
      * @param type
@@ -29,10 +32,12 @@ export default {
           xhrFields: {
             withCredentials: true
           }
-          //withCredentials:true
         }).then((data) => {
-          resolve(data.data)
+          if (this.isOvertime(data.data)) {
+             resolve(data.data)
+          }
         }).catch((error) => {
+          console.log('error...')
           reject(error)
         })
       })
@@ -51,10 +56,13 @@ export default {
           method: type,
           url: this.getWbkUrl(url, urlId),
           data: data,
-          withCredentials:true
+          withCredentials: true
         }).then((data) => {
-          resolve(data.data)
+          if (this.isOvertime(data.data)) {
+            resolve(data.data)
+          }
         }).catch((error) => {
+          console.log('error...')
           reject(error)
         })
       })
@@ -156,6 +164,26 @@ export default {
       }
     }
     /**
+     * 转义订单状态
+     * @param number
+     * @returns {string}
+     */
+    Vue.prototype.formatterBalancelogStatus = function (number) {
+      //0到账；1待审批；2审批通过；3审批不通过
+      switch ('' + number) {
+        case '0':
+          return '已到账'
+        case '1':
+          return '待审批'
+        case '2':
+          return '待支付'
+        case '3':
+          return '审批未通过'
+        default:
+          return number
+      }
+    }
+    /**
      * 设置定时器
      * @param func
      * @param delay
@@ -176,14 +204,18 @@ export default {
      * 公用页面跳转
      * @param url
      */
-    Vue.prototype.routePush = function (url, id, type) {
-      if (id && type) {
-        this.$router.push({path: url, query: {id: id, type: type}})
-      } else if (id) {
-        this.$router.push({path: url, query: {id: id}})
-      } else {
-        this.$router.push(url)
+    Vue.prototype.routePush = function (url, id, type, obj) {
+      let newParams = {}
+      if (obj) {
+        Object.assign(newParams, obj)
       }
+      if (id) {
+        Object.assign(newParams, {id: id})
+      }
+      if (type) {
+        Object.assign(newParams, {type: type})
+      }
+      this.$router.push({path: url, query: newParams})
     }
     /**
      * 验证非空
@@ -304,6 +336,19 @@ export default {
         return '<='
       } else {
         return '>'
+      }
+    }
+    Vue.prototype.isOvertime = function (data) {
+      if (data.data && data.data.TimeOut) {
+        store.state.isLogin = false
+        setIsLogin(false)
+        store.state.userData = null
+        setUserInfo(null)
+        this.$Message.warning({content: '登录超时, 请重新登录！', duration: 10, closable: true})
+        this.routePush('/login', '', '', {oldPath: this.$route.path})
+        return false
+      } else {
+        return true
       }
     }
   }

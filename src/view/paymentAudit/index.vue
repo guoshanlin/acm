@@ -128,14 +128,14 @@
       submitAjax (row) {
         this.requestAjax('post', 'examination', {id: row.id, status: 0}).then((data) => {
           if (data.success) {
-            this.$Message.success( '确认成功')
+            this.$Message.success('确认成功')
 
             this.initItem()
-          } else if (!data.message) {
-            this.$Message.success( '确认失败')
+          } else {
+            this.$Message.success('确认失败')
           }
         }, (err) => {
-          this.$Message.success( '确认失败')
+          this.$Message.success('确认失败')
 
         })
       },
@@ -147,7 +147,7 @@
         const _params = this.parms
         const _url = 'balance'
         this.requestAjax(_type, _url, _params).then((data) => {
-          if (!data.message) {
+          if (data.success) {
             this.total = !isNaN(+data.data.total) ? +data.data.total : 0
             this.data = data.data.rows
           } else {

@@ -79,16 +79,21 @@
             key: 'passTime',
             sortable: false,
             render: (h, params) => {
-              return h('div', this.formatterObjTime(params.row.passTime))
+              return h('div', this.formatterObjTime(params.row.createTime))
             }},
           {title: '提现金额(元）', key: 'optAmounts', sortable: false},
           {title: '提现手续费(元）', key: 'serviceFee', sortable: false},
-          {title: '提现状态', key: 'position', sortable: false},
+          {title: '提现状态',
+            key: 'status',
+            sortable: false,
+            render: (h, params) => {  //0到账；1待审批；2审批通过；3审批不通过
+              return h('div', this.formatterBalancelogStatus(params.row.status))
+            }},
           {title: '到账时间',
-            key: 'overTime',
+            key: 'passReview',
             sortable: false,
             render: (h, params) => {
-              return h('div', this.formatterObjTime(params.row.createTime))
+              return h('div', this.formatterObjTime(params.row.passReview))
             }}
         ],
         timer: {},
