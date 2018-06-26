@@ -33,6 +33,7 @@ axios.defaults.withCredentials=true
 
 Vue.prototype.axios = axios
 Vue.prototype.Scrollbar = Scrollbar
+Vue.prototype.echarts = echarts
 Vue.config.productionTip = false
 
 Vue.use(iView)
@@ -46,6 +47,16 @@ Vue.use(VueLazyload, {
   error: require('./assets/loading.png'),
   loading:require('./assets/loading.png'),
   attempt: 1
+})
+
+// 加载条
+NProgress.configure({ showSpinner: false })
+router.beforeEach((to, from, next) => {
+  NProgress.start() // start progress bar
+  next()
+})
+router.afterEach(() => {
+  NProgress.done() // finish progress bar
 })
 
 /* eslint-disable no-new */
