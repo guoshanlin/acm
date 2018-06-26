@@ -338,6 +338,11 @@ export default {
         return '>'
       }
     }
+    /**
+     * 登入超时验证
+     * @param data
+     * @returns {boolean}
+     */
     Vue.prototype.isOvertime = function (data) {
       if (data.data && data.data.TimeOut) {
         store.state.isLogin = false
@@ -350,6 +355,25 @@ export default {
       } else {
         return true
       }
+    }
+    /**
+     * 强制保留两位小数
+     * @param x
+     * @returns {*}
+     */
+    Vue.prototype.toDecimal2 = function (x) {
+      if (isNaN(+x)) {return '0.00'}
+      let num = Math.round(x*100)/100
+      let s = num.toString()
+      let rs = s.indexOf('.')
+        if (rs < 0) {
+          rs = s.length
+          s += '.'
+        }
+        while (s.length <= rs + 2) {
+          s += '0'
+        }
+        return s
     }
   }
 }

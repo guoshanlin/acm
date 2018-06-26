@@ -33,10 +33,10 @@
                 </div>
                 <div class="fbox">
                   <div class="flex">
-                    <div>提现金额：{{item.optAmounts}} 元</div>
+                    <div>提现金额：{{toDecimal2(item.optAmounts)}} 元</div>
                   </div>
                   <div class="flex">
-                    <div>账户总金额：{{item.balance}} 元</div>
+                    <div>账户总金额：{{toDecimal2(item.balance)}} 元</div>
                   </div>
                   <div class="flex">
                     <div>耗时：{{formatterObjTime(item.applyBeginTime)}}</div>

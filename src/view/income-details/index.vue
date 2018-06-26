@@ -93,18 +93,28 @@
           {title: '活动名称', key: 'objectName', sortable: false},
           {title: '订单编号', key: 'id', sortable: false},
           // {title: '交易人', key: 'phone', width: 140, sortable: false},
-          {title: '订单金额',
-            key: 'optAmounts',
-            sortable: false},
+          {title: '订单金额(元)',
+            key: 'optAmounts', // toDecimal2
+            sortable: false,
+            render: (h, params) => {
+              return h('div', this.toDecimal2(params.row.optAmounts))
+            }
+          },
           // {title: '入账时间', key: 'company', width: 180, sortable: false},
           // {title: '交易状态', key: 'position', width: 140, sortable: false},
            {title: '票券数', key: 'ticketCount', width: 140, sortable: false},
-           {title: '票券服务费', key: 'ticketServiceFee', width: 140, sortable: false},
-          {title: '入账金额',
+           {title: '票券服务费(元)',
+             key: 'ticketServiceFee',
+             width: 140,
+             sortable: false,
+             render: (h, params) => {
+               return h('div', this.toDecimal2(params.row.ticketServiceFee))
+             }},
+          {title: '入账金额(元)',
             key: 'optAmounts',
             sortable: false,
             render: (h, params) => {
-              return h('div', params.row.optAmounts - params.row.ticketServiceFee)
+              return h('div',this.toDecimal2(params.row.optAmounts - params.row.ticketServiceFee))
             }},
            {title: '入账时间',
             key: 'createTime',

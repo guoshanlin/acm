@@ -26,9 +26,9 @@
       </div>
       <Row class="withdrawal">
         <i-col span="6">
-          <div>未入账：{{row.unrecorded ? row.unrecorded : 0}}元</div>
-          <div>提现中：{{row.withdraw}}元</div>
-          <div>已提现：{{row.withdrawTotal}}元</div>
+          <div>未入账：{{toDecimal2(row.unrecorded)}}元</div>
+          <div>提现中：{{toDecimal2(row.withdraw)}}元</div>
+          <div>已提现：{{toDecimal2(row.withdrawTotal)}}元</div>
         </i-col>
         <i-col span="6">
           <div><a class="c1" @click="routePush('/finance/incomeDetails')">收入明细</a></div>

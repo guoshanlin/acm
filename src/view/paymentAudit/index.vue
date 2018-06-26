@@ -27,7 +27,7 @@
                     <div class="">申请时间：{{formatterObjTime(item.createTime)}}</div>
                   </div>
                   <div class="flex">
-                    <div class="">金额：{{item.optAmounts}} 元</div>
+                    <div class="">金额：{{toDecimal2(item.optAmounts)}} 元</div>
                   </div>
                   <div class="flex">
                     <div class="">状态：{{item.status == 2 ? '待支付': '已支付'}}</div>
