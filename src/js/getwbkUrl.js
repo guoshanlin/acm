@@ -43,7 +43,9 @@ export default {
       // 申请提现
       createWithdrawOrder: {url: 'balanceLog/createWithdrawOrder', pre: preuUrl},
       // 申请提现
-      examination: {url: 'balanceLog/examination', pre: preuUrl}
+      examination: {url: 'balanceLog/examination', pre: preuUrl},
+      // 签到统计
+      reportSign: {url: '/activitys/reportSign', pre: preuUrl},
     }
     /**
      * 获取url

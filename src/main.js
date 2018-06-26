@@ -18,6 +18,8 @@ import getwbkUrl from 'js/getwbkUrl'
 import VueLazyload from 'vue-lazyload'
 import InitScroll from 'js/initScroll'
 import config from "../config"
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 import './theme/iview/index.less'
 
 axios.defaults.baseURL = process.env.API
@@ -43,6 +45,16 @@ Vue.use(VueLazyload, {
   error: require('./assets/loading.png'),
   loading:require('./assets/loading.png'),
   attempt: 1
+})
+
+// 加载条
+NProgress.configure({ showSpinner: false })
+router.beforeEach((to, from, next) => {
+  NProgress.start() // start progress bar
+  next()
+})
+router.afterEach(() => {
+  NProgress.done() // finish progress bar
 })
 
 /* eslint-disable no-new */

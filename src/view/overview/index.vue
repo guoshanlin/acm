@@ -8,15 +8,15 @@
       </div>
       <div class="fbox fz14 m-t10 ct c3 statistics-wrapper">
         <div class="flex">
-          <span class="fz20 c2">{{data.ticket && data.ticket[0].签到人数 != null  ? data.ticket[0].签到人数 : 0 }}</span><br>
+          <span class="fz20 c2">{{report.number}}</span><br>
           <span>签到人数</span>
         </div>
         <div class="flex">
-          <span class="fz20 c2">{{data.ticket && data.ticket[0].报名人数 != null ? data.ticket[0].报名人数 : 0}}</span><br>
+          <span class="fz20 c2">{{report.ordersNumber}}</span><br>
           <span>报名人数</span>
         </div>
         <div class="flex">
-          <span class="fz20 c2">{{data.ticket && data.ticket[0].签到率 != null ? data.ticket[0].签到率 + '%' : "0%"}}</span><br>
+          <span class="fz20 c2">{{report.signNumber}}</span><br>
           <span>签到率</span>
         </div>
       </div>
@@ -28,14 +28,16 @@
       </div>
       <div class="fbox fz14 m-t10 ct c3 statistics-wrapper">
         <div class="flex">
-          <span class="fz20 c2">{{data.orders && data.orders[0].门票订单 != null ? data.orders[0].门票订单 : 0}}</span><br>
+          <span class="fz20 c2">{{report.signRete}}</span><br>
           <span>门票订单</span>
         </div>
         <div class="flex">
-          <span class="fz20 c2">{{data.orders && data.orders[0].售出门票 != null ?  data.orders[0].售出门票 : 0}}</span><br>
+          <span class="fz20 c2">{{report.ticketNumber}}</span><br>
           <span>售出门票</span>
         </div>
         <div class="flex">
+          <span class="fz20 c2">{{report.ticketPriceActual}}</span><br>
+          <span>活动金额</span>
         </div>
       </div>
     </div>
@@ -57,6 +59,14 @@
     data () {
       return {
         data: '',
+        report: {
+          number: 0,
+          ordersNumber: 0,
+          signNumber: 0,
+          signRete: 0,
+          ticketNumber: 1,
+          ticketPriceActual: 0
+        },
         rowId: this.$route.query.id
       }
     },
@@ -67,9 +77,19 @@
     },
     methods: {
       getTicket () {
-        this.requestAjax('get', 'report', {id: this.$route.query.id}).then((data) => {
-          console.log(JSON.stringify(data.data))
-          this.data = data.data
+        this.requestAjax('get', 'report', {id: this.$route.query.id}).then(res => {
+          console.log(JSON.stringify(res.data))
+          if(res.success){
+            let ticket = res.data.ticket[0],
+                orders = res.data.orders[0]
+            for(let k in orders){
+              this.report[k] = orders[k]
+            }
+            for(let k in ticket){
+              this.report[k] = ticket[k]
+            }
+            this.report.ordersNumber = orders.number
+          }
         })
       }
     }
