@@ -40,7 +40,9 @@
             <DatePicker class="m-l5" type="datetimerange" format="yyyy-MM-dd" placeholder="请选择时间段" style="width: 240px"></DatePicker>
             <Button class="fr" type="primary">导出</Button>
           </div>
-          <div class="posct wrapper-border m-t10" style="height: 260px;">chart 图表</div>
+          <div class="posct wrapper-border m-t10">
+             <div id="joinChart1" style="height: 260px; width: 100%"></div>
+          </div>
         </div>
       </div>
       <div class="content-wrapper m-t20 wrapper-border" style="display: none;">
@@ -76,7 +78,9 @@
             <DatePicker class="m-l5" type="datetimerange" format="yyyy-MM-dd" placeholder="请选择时间段" style="width: 240px"></DatePicker>
             <Button class="fr" type="primary">导出</Button>
           </div>
-          <div class="posct wrapper-border m-t10" style="height: 260px;">chart 图表</div>
+          <div class="posct wrapper-border m-t10">
+            <div id="joinChart2" style="height: 260px; width: 100%"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -245,7 +249,8 @@
 
         id: this.$route.query.id,
         reportSign: {number: 0,signNumber: 0,signRete: 0},    // 签到统计数据
-        reportEntered: {}     // 报名统计数据
+        reportEntered: {},     // 报名统计数据
+        charts: {}
       }
     },
     created() {
@@ -254,11 +259,18 @@
         this.requesrReportEntered()
         // 签到统计
         this.requestReportSign()
+        this.initChart()
       }, 20)
     },
     methods: {
       menuSelect(v){
         this.statistics = v
+        setTimeout(() => {
+          this._resize()
+          if (v == 0) {
+            this.initChart()
+          }
+        }, 20)
       },
       orderStatusChange(v){
         this.$Message.warning(v)
@@ -301,6 +313,92 @@
       },
       exportTableData(name){
         this.$refs["$"+name].exportCsv({filename:name})
+      },
+      initChart () {
+        this.charts.joinChart1Chart = this.echarts.init(document.getElementById('joinChart1'))
+        this.charts.joinChart2Chart = this.echarts.init(document.getElementById('joinChart2'))
+        let data = [["2000-06-05", 116], ["2000-06-06", 129], ["2000-06-07", 135], ["2000-06-08", 86],
+          ["2000-06-09", 73], ["2000-06-10", 85], ["2000-06-11", 73], ["2000-06-12", 68], ["2000-06-13", 92],
+          ["2000-06-14", 130], ["2000-06-15", 245], ["2000-06-16", 139], ["2000-06-17", 115], ["2000-06-18", 111],
+          ["2000-06-19", 309], ["2000-06-20", 206], ["2000-06-21", 137], ["2000-06-22", 128], ["2000-06-23", 85],
+          ["2000-06-24", 94], ["2000-06-25", 71], ["2000-06-26", 106], ["2000-06-27", 84], ["2000-06-28", 93], ["2000-06-29", 85],
+          ["2000-06-30", 73], ["2000-07-01", 83], ["2000-07-02", 125], ["2000-07-03", 107], ["2000-07-04", 82], ["2000-07-05", 44],
+          ["2000-07-06", 72], ["2000-07-07", 106], ["2000-07-08", 107], ["2000-07-09", 66], ["2000-07-10", 91], ["2000-07-11", 92],
+          ["2000-07-12", 113], ["2000-07-13", 107], ["2000-07-14", 131], ["2000-07-15", 111], ["2000-07-16", 64],
+          ["2000-07-17", 69], ["2000-07-18", 88], ["2000-07-19", 77], ["2000-07-20", 83], ["2000-07-21", 111],
+          ["2000-07-22", 57], ["2000-07-23", 55], ["2000-07-24", 60]]
+        let option = {
+          color: ["#00ADFF","#5fff21"],
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'cross',
+              label: {
+                backgroundColor: '#283b56'
+              }
+            }
+          },
+          grid: {
+            top: '10%',
+            left: '5%',
+            right: '10%',
+            bottom: '10%',
+            width: '85%',
+            height: '80%',
+            containLabel: true
+          },
+          xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            axisLabel: {
+              color: "#ccc"
+            },
+            data: data.map((item) => {
+              return item[0];
+            })
+          },
+          yAxis: {
+            type: 'value',
+            scale: true,
+            axisLabel: {
+              color: "#ccc"
+            },
+            splitLine: {
+              lineStyle: {
+                type: 'dotted',
+                color: '#515151'
+              }
+            },
+            min:0,
+            boundaryGap: [0.2, 0.2]
+          },
+          series: [
+            {
+              type: 'line',
+              showSymbol: false,
+              name: '免费报名',
+              data: data.map((item) => {
+                return item[1]
+              })
+            }
+          ]
+        }
+        this.charts.joinChart1Chart.setOption(option)
+        option.series[0].name= '订单数'
+        option.series.push({
+          type: 'line',
+          showSymbol: false,
+          name: '售出票数',
+          data: data.map((item) => {
+            return Math.round(Math.random() * item[1])
+          })
+        })
+        this.charts.joinChart2Chart.setOption(option)
+      },
+      _resize () {
+        for (let char in this.charts) {
+          this.charts[char].resize()
+        }
       }
     }
   }

@@ -21,22 +21,62 @@
           <div class="posct wrapper-border m-t10" style="height: 400px;">
              <Row class="full-width">
                 <i-col :span="12">
-                  <div class="t-center">
-                    <i-circle :percent="100" stroke-color="#2db7f5" :size="200" :stroke-width="10">
-                      <span class="demo-Circle-inner fz24 c7">80</span><br>  <br>
-                      <span class="demo-Circle-inner fz16">总浏览量</span>
-                    </i-circle>
-                  </div>
+                    <Row type="flex" justify="center" align="middle" class="">
+                      <i-col>
+                        <div class="m-r15">
+                          <span class="demo-Circle-inner fz24 c7">80</span><br>
+                          <span class="demo-Circle-inner fz16">日最高</span>
+                        </div>
+                      </i-col>
+                      <i-col>
+                        <div>
+                          <div class="t-center m-b15"><span class="demo-Circle-inner fz24 c7">PV:浏览量</span></div>
+                          <i-circle :percent="100" stroke-color="#2db7f5" :size="200" :stroke-width="10">
+                            <span class="demo-Circle-inner fz24 c7">80</span><br>  <br>
+                            <span class="demo-Circle-inner fz16">总浏览量</span>
+                          </i-circle>
+                          <div class="t-center">
+                            <span class="demo-Circle-inner fz24 c7">80</span><br>
+                            <span class="demo-Circle-inner fz16">日平均</span>
+                          </div>
+                        </div>
+                      </i-col>
+                      <i-col>
+                        <div class="m-l15">
+                          <span class="demo-Circle-inner fz24 c7">80</span><br>
+                          <span class="demo-Circle-inner fz16">日最低</span>
+                        </div>
+                      </i-col>
+                    </Row>
                 </i-col>
                  <i-col :span="12">
-                   <div class="t-center">
-                     <i-circle :percent="100" :size="200" stroke-color="#5cb85c" :stroke-width="10">
-                       <span class="demo-Circle-inner fz24 c6">10</span>
-                       <br>
-                       <br>
-                       <span class="demo-Circle-inner fz16">总访客数</span>
-                     </i-circle>
-                   </div>
+                   <Row type="flex" justify="center" align="middle" class="">
+                     <i-col>
+                       <div class="m-r15">
+                         <span class="demo-Circle-inner fz24 c6">80</span><br>
+                         <span class="demo-Circle-inner fz16">日最高</span>
+                       </div>
+                     </i-col>
+                     <i-col>
+                       <div>
+                         <div class="t-center m-b15"><span class="demo-Circle-inner fz24 c6">UV:访客数</span></div>
+                         <i-circle :percent="100" :size="200" stroke-color="#5cb85c" :stroke-width="10">
+                           <span class="demo-Circle-inner fz24 c6">10</span><br><br>
+                           <span class="demo-Circle-inner fz16">总访客数</span>
+                         </i-circle>
+                         <div class="t-center">
+                           <span class="demo-Circle-inner fz24 c6">80</span><br>
+                           <span class="demo-Circle-inner fz16">日平均</span>
+                         </div>
+                       </div>
+                     </i-col>
+                     <i-col>
+                       <div class="m-l15">
+                         <span class="demo-Circle-inner fz24 c6">80</span><br>
+                         <span class="demo-Circle-inner fz16">日最低</span>
+                       </div>
+                     </i-col>
+                   </Row>
                  </i-col>
              </Row>
           </div>
