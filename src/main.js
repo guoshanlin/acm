@@ -14,6 +14,7 @@ import Scrollbar from 'smooth-scrollbar'
 //  公用请求方法
 import publicUtils from 'js/publicUtils'
 import echarts from 'echarts'
+import chinaJson from 'echarts/map/json/china.json';//此处引入中国地图json
 // 设置公用请求端口
 import getwbkUrl from 'js/getwbkUrl'
 import VueLazyload from 'vue-lazyload'
@@ -31,6 +32,7 @@ axios.defaults.withCredentials=true
   // withCredentials: true
 })*/
 
+echarts.registerMap('china', chinaJson);
 Vue.prototype.axios = axios
 Vue.prototype.Scrollbar = Scrollbar
 Vue.prototype.echarts = echarts
