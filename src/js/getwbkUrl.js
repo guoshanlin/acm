@@ -46,6 +46,8 @@ export default {
       examination: {url: 'balanceLog/examination', pre: preuUrl},
       // 签到统计
       reportSign: {url: '/activitys/reportSign', pre: preuUrl},
+      // 报名统计
+      reportEntered: {url: '/activitys/reportEntered', pre: preuUrl}
     }
     /**
      * 获取url
