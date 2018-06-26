@@ -43,7 +43,7 @@
           <div class="posct wrapper-border m-t10" style="height: 260px;">chart 图表</div>
         </div>
       </div>
-      <div class="content-wrapper m-t20 wrapper-border">
+      <div class="content-wrapper m-t20 wrapper-border" style="display: none;">
         <div class="clear">
           <span>报名渠道统计</span>
           <Button class="fr" type="primary">导出</Button>
@@ -88,24 +88,24 @@
         </div>
         <div class="fbox fz14 m-t10 ct c3 statistics-wrapper">
           <div class="flex">
-            <span class="fz20 c2">{{data.ticket && data.ticket[0].报名人数 != null ? data.ticket[0].报名人数 : 0}}</span><br>
+            <span class="fz20 c2">{{reportSign.number}}</span><br>
             <span>报名人数</span>
           </div>
           <div class="flex">
-            <span class="fz20 c2">{{data.ticket && data.ticket[0].签到人数 != null  ? data.ticket[0].签到人数 : 0 }}</span><br>
+            <span class="fz20 c2">{{reportSign.signNumber}}</span><br>
             <span>签到人数</span>
           </div>
           <div class="flex">
-            <span class="fz20 c2">{{data.ticket && data.ticket[0].签到率 != null ? data.ticket[0].签到率 + '%' : "0%"}}</span><br>
+            <span class="fz20 c2">{{reportSign.signRete}}%</span><br>
             <span>签到率</span>
           </div>
         </div>
         <div class="content-wrapper m-t20 wrapper-border">
           <div class="clear">
             <span>签到方式统计</span>
-            <Button class="fr" type="primary">导出</Button>
+            <Button class="fr" type="primary" @click="exportTableData('reportSign')">导出</Button>
           </div>
-          <Table class="m-t10" border ref="$table" :columns="signInCol" :data="signInData"></Table>
+          <Table class="m-t10" border ref="$reportSign" :columns="signInCol" :data="signInData"></Table>
         </div>
       </div>
     </div>
@@ -227,40 +227,32 @@
         ],
         signInData: [
           {
-            name: '位置签到',
-            total: 18,
-            rate: '50%'
+            name: '票券二维码',
+            total: 0,
+            rate: '0%'
           },
           {
-            name: '微信扫码签到',
-            total: 32,
-            rate: '50%'
+            name: '活动二维码',
+            total: 0,
+            rate: '0%'
           },
           {
-            name: '后台标记签到',
-            total: 2,
-            rate: '50%'
-          },
-          {
-            name: 'APP签到',
-            total: 31,
-            rate: '50%'
-          },
-          {
-            name: '人脸识别签到',
-            total: 23,
-            rate: '50%'
+            name: '票券序列号',
+            total: 0,
+            rate: '0%'
           }
         ],
         orderStatus: "昨天",
 
         id: this.$route.query.id,
         data: '',
+        reportSign: {number: 0,signNumber: 0,signRete: 0}
       }
     },
     created() {
       setTimeout(() => {
-        this.requestTicket()
+        // 签到统计
+        this.requestReportSign()
       }, 20)
     },
     methods: {
@@ -270,11 +262,22 @@
       orderStatusChange(v){
         this.$Message.warning(v)
       },
-
-      requestTicket () {
-        this.requestAjax('get', 'report', {id: this.id}).then((data) => {
-          this.data = data.data
+      requestReportSign () {
+        this.requestAjax('get', 'reportSign', {id: this.id}).then(res => {
+          if(res.success){
+            let data = res.data.data[0], reportSign = this.reportSign
+            for(let k in reportSign){
+              this.reportSign[k] = data[k]
+            }
+            for(let i =0, ilen = this.signInData.length; i < ilen; i++){
+              this.signInData[i].total = data["signType" + i]
+              this.signInData[i].rate = data["signTypeRete" + i] + "%"
+            }
+          }
         })
+      },
+      exportTableData(name){
+        this.$refs["$"+name].exportCsv({filename:name})
       }
     }
   }

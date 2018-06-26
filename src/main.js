@@ -19,6 +19,8 @@ import getwbkUrl from 'js/getwbkUrl'
 import VueLazyload from 'vue-lazyload'
 import InitScroll from 'js/initScroll'
 import config from '../config'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 import './theme/iview/index.less'
 
 axios.defaults.baseURL = process.env.API
@@ -31,7 +33,6 @@ axios.defaults.withCredentials=true
 
 Vue.prototype.axios = axios
 Vue.prototype.Scrollbar = Scrollbar
-Vue.prototype.echarts = echarts
 Vue.config.productionTip = false
 
 Vue.use(iView)
