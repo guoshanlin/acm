@@ -90,8 +90,8 @@
           offset: 1
         },
         columns: [
-          {title: '活动名称', key: 'objectName', sortable: false},
-          {title: '订单编号', key: 'id', sortable: false},
+          {title: '活动名称', key: 'objectName', sortable: false, render: this.tdRender},
+          {title: '订单编号', width: 180, key: 'id', sortable: false, render: this.tdRender},
           // {title: '交易人', key: 'phone', width: 140, sortable: false},
           {title: '订单金额(元)',
             key: 'optAmounts', // toDecimal2

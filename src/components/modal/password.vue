@@ -127,7 +127,7 @@
         const _params = {
           id: this.userData.id,
           passWord: this.value.oldPassword,
-          newPassWord: this.value.passWord
+          newPassWord: this.value.password
         }
         this.requestAjax('POST', 'updatePwd', _params).then((data) => {
           if (data.success) {
@@ -140,7 +140,7 @@
               duration: 3
             })
             setTimeout(() => {
-              this.routePush('/index', 'password')
+              this.routePush('/login', '', '', {oldPath: this.$route.path})
             }, 3 * 1000)
           } else {
             this.$Message.error('修改失败')

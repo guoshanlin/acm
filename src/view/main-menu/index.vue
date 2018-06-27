@@ -26,7 +26,7 @@
         <img src="../../assets/logo_core.gif">
       </div>
 
-      <Menu theme="dark" :active-name="activeNenu" width="160px"  class="menu-wrapper" @on-select="changeMenu">
+      <Menu theme="dark" ref="refName" :active-name="activeNenu" width="160px"  class="menu-wrapper" @on-select="changeMenu">
         <template v-for="(item,i) in menuList">
           <MenuItem :name="item.path" :key="i"><Icon :type="item.icon"></Icon>{{item.title}}</MenuItem>
         </template>
@@ -134,6 +134,9 @@
           {icon: 'social-yen', path: '/finance/myAccount', title: '财务'}
         ]
       }
+      this.$nextTick(() => {
+        this.$refs.refName.updateActiveName()
+      })
     }
   }
 </script>

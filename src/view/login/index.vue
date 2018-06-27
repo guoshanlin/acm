@@ -158,7 +158,7 @@
           passwordCheck: '',
           nickName: '',
           checkbox: false,
-          remember: true
+          remember: false
         },
         ruleRegister: {
           phone: [
