@@ -184,6 +184,11 @@ export default new Router({
             path: '/index/learn',
             name: '学习',
             component: (resolve) => require(['../view/learn/index'], resolve)
+          },
+          {
+            path: '/index/map',
+            name: '测试地图',
+            component: (resolve) => require(['../view/map/index'], resolve)
           }
         ]
     }
