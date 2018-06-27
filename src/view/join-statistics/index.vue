@@ -37,7 +37,7 @@
               <Radio label="最近7天"></Radio>
               <Radio label="最近30天"></Radio>
             </RadioGroup>
-            <DatePicker class="m-l5" type="datetimerange" format="yyyy-MM-dd" placeholder="请选择时间段" style="width: 240px"></DatePicker>
+            <DatePicker class="m-l5" type="datetimerange" v-model="rateDate" @on-ok="datePickerEvent(0)" format="yyyy-MM-dd" placeholder="请选择时间段" style="width: 240px"></DatePicker>
             <Button class="fr" type="primary">导出</Button>
           </div>
           <div class="posct wrapper-border m-t10">
@@ -75,7 +75,7 @@
               <Radio label="最近7天"></Radio>
               <Radio label="最近30天"></Radio>
             </RadioGroup>
-            <DatePicker class="m-l5" type="datetimerange" format="yyyy-MM-dd" placeholder="请选择时间段" style="width: 240px"></DatePicker>
+            <DatePicker class="m-l5" type="datetimerange" v-model="orderDate" @on-ok="datePickerEvent(0)" format="yyyy-MM-dd" placeholder="请选择时间段" style="width: 240px"></DatePicker>
             <Button class="fr" type="primary">导出</Button>
           </div>
           <div class="posct wrapper-border m-t10">
@@ -253,6 +253,8 @@
         reportEntered: {},     // 报名统计数据
         charts: {},
         chartsOps: {},
+        rateDate: '',   // 报名统计时间选择器
+        orderDate: '',   // 报名订单统计时间选择器
         charts1Parms: {id: this.$route.query.id, bt: '', et: '',day: ''},
         charts2Parms: {id: this.$route.query.id, bt: '', et: '',day: ''}
       }
@@ -279,6 +281,30 @@
             this.initChart()
           }
         }, 20)
+      },
+      datePickerEvent(v){
+        let bt = '', et = ''
+        if(v == 0){
+          if(this.rateDate[0] && this.rateDate[1] ){
+            bt = new Date(this.rateDate[0]).format("yyyy-MM-dd")
+            et = new Date(this.rateDate[1]).format("yyyy-MM-dd")
+          }
+          this.rate = ''
+          this.charts1Parms.day = ''
+          this.charts1Parms.bt = bt
+          this.charts1Parms.et = et
+          this.requesrReportEnteredDateInfo()
+        }else{
+          if(this.orderDate[0] && this.orderDate[1] ){
+            bt = new Date(this.orderDate[0]).format("yyyy-MM-dd")
+            et = new Date(this.orderDate[1]).format("yyyy-MM-dd")
+          }
+          this.orderStatus = ''
+          this.charts2Parms.day = ''
+          this.charts2Parms.bt = bt
+          this.charts2Parms.et = et
+          this.requesrReportOrderInfo()
+        }
       },
       rateDateChange(v) {
         this.rate = v
