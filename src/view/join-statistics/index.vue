@@ -5,7 +5,7 @@
       <MenuItem name="0">报名统计</MenuItem>
       <MenuItem name="1">签到统计</MenuItem>
     </Menu>
-    <div v-if="statistics == 0">
+    <div v-show="statistics == 0">
       <div class="content-wrapper m-t10 wrapper-border m-t20">
         <div class="clear">
           <span>报名率统计</span>
@@ -85,7 +85,7 @@
       </div>
     </div>
 
-    <div v-else>
+    <div v-show="statistics == 1">
       <div class="content-wrapper wrapper-border m-t20">
         <div class="clear">
           <span>签到率统计</span>
@@ -275,12 +275,14 @@
     methods: {
       menuSelect(v){
         this.statistics = v
-        setTimeout(() => {
+        /*setTimeout(() => {
           this._resize()
           if (v == 0) {
-            this.initChart()
+            //this.initChart()
+          }else{
+
           }
-        }, 20)
+        }, 20)*/
       },
       datePickerEvent(v){
         let bt = '', et = ''
@@ -307,6 +309,7 @@
         }
       },
       rateDateChange(v) {
+        this.rateDate = ''
         this.rate = v
         this.charts1Parms.bt = ''
         this.charts1Parms.et = ''
@@ -314,6 +317,7 @@
         this.requesrReportEnteredDateInfo()
       },
       orderStatusChange(v) {
+        this.orderDate = ''
         this.orderStatus = v
         this.charts2Parms.bt = ''
         this.charts2Parms.et = ''
