@@ -35,6 +35,11 @@
                 <InputNumber style="width: 100%" v-if="rows.type=='InputNumberPercent'" :max="maxIpnut[rows.id]"
                              :min="rows.min" :placeholder="rows.required ? '请输入...(必填）':'请输入...'"
                              v-model="fromVal[rows.id]"></InputNumber>
+                <i-input type="text" v-if="rows.type=='bankCard'"
+                         :placeholder="rows.required ? '请输入...(必填）':'请输入...'"
+                         v-model="fromVal[rows.id]"
+                         :disabled="rows.disabled"
+                         :maxlength="rows.maxLength!=undefined ? rows.maxLength: 50" @on-blur="bankCardChange(rows)"></i-input>
 
                 <i-input type="text" v-if="rows.type=='input'"
                        :placeholder="rows.required ? '请输入...(必填）':'请输入...'"
@@ -121,6 +126,7 @@
 </template>
 <script>
   import utils from 'js/utils'
+  import bankData from 'js/bankData/bankData.json'
 
   export default {
     data () {
@@ -527,6 +533,29 @@
           this.enough = false
         } else {
           this.enough = true
+        }
+      },
+      bankCardChange (rows) {
+        if (this.fromVal[rows.id] == '') return
+        let bankCard = this.fromVal[rows.id]
+        if (rows.valueType === 'bankCheck' && utils.bankCheck(this.fromVal[rows.id])) {
+          let bankBin = 0
+          let isFind = false
+            for (let key = 10; key >= 2; key--) {
+              bankBin = bankCard.substring(0, key)
+              for (let i = 0; i < bankData.length; i++) {
+                if (bankData[i].bin == bankBin) {
+                  isFind = true
+                  this.fromVal[rows.relation] = bankData[i].bankName
+                }
+              }
+              if (isFind) { break }
+            }
+            if (!isFind) {this.fromVal[rows.relation] = '未知' }
+        } else {
+          this.$Message.error('银行卡卡号格式不正确')
+          this.fromVal[rows.id] = ''
+          this.fromVal[rows.relation] = ''
         }
       }
     }

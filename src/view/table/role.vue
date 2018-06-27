@@ -291,6 +291,7 @@
               {title: '角色', value: this.getRole(row.role), show: true, type: ''}
             ],
             [
+
               {title: '开户行', value: row.bank, show: true, type: ''},
               {title: '银行卡号', value: row.bankCard, show: true, type: ''}
             ],
@@ -400,21 +401,33 @@
             ],
             [
               {
-                title: '开户行',
-                id: 'bank',
-                type: 'select',
-                titlespan: 3,
-                colspan: 9,
-                required: false
-              },
-              {
                 title: '银行卡号',
                 id: 'bankCard',
+                type: 'bankCard',
+                titlespan: 3,
+                colspan: 21,
+                required: true,
+                relation: 'bank',
+                valueType: 'bankCheck'
+              }
+            ],
+            [
+              {
+                title: '开户行',
+                id: 'bank',
                 type: 'input',
                 titlespan: 3,
                 colspan: 9,
-                valueType: 'bankCheck',
-                required: false
+                relation: '',
+                required: true
+              },
+              {
+                title: '开户名',
+                id: 'bankUser',
+                type: 'input',
+                titlespan: 3,
+                colspan: 9,
+                required: true
               }
             ],
             [
@@ -529,7 +542,8 @@
           bank: _b ? row.bank : '',
           bankCard: _b ? row.bankCard : '',
           status: _b ? row.status : '',
-          role: _b ? row.role : ''
+          role: _b ? row.role : '',
+          bankUser: _b ? row.bankUser : ''
         }
         if (_b) {
           this.inputForm.value.id = row.id

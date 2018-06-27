@@ -22,7 +22,7 @@
                 <h3 class="fz13">订单号：{{item.id}}&nbsp;&nbsp;</h3>
                 <div class="fbox">
                   <div class="flex">
-                    <div class="">申请人：{{item.name}}</div>
+                    <div class="">申请人：{{item.memberName}}</div>
                   </div>
                   <div class="flex">
                     <div class="">申请时间：{{formatterObjTime(item.createTime)}}</div>

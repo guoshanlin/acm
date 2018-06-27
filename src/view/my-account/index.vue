@@ -140,7 +140,7 @@
             {
               title: '银行卡号',
               id: 'bankCard',
-              type: 'input',
+              type: 'bankCard',
               titlespan: 6,
               colspan: 18,
               required: true,
@@ -151,13 +151,24 @@
               {
                 title: '银行',
                 id: 'bank',
-                type: 'select',
+                type: 'input',
                 disabled: true,
                 titlespan: 6,
                 colspan: 18,
                 relation: '',
                 required: true
               }
+              ],
+              [
+                {
+                  title: '开户名',
+                  id: 'bankUser',
+                  type: 'input',
+                  titlespan: 6,
+                  colspan: 18,
+                  required: true,
+                  disabled: true
+                }
               ]
           ],
           button: [{
@@ -171,7 +182,9 @@
           amounts: 0,
           poundage: 0,
           bank: this.userData.bank,
-          bankCard: this.userData.bankCard
+          bankCard: this.userData.bankCard,
+          memberName: this.userData.name,
+          bankUser: this.userData.bankUser
         }
         // this.$Message.warning('申请提现')
       },
@@ -187,7 +200,7 @@
             [
               {
                 title: '开户名',
-                id: 'name',
+                id: 'bankUser',
                 type: 'input',
                 titlespan: 6,
                 colspan: 18,
@@ -199,10 +212,11 @@
               {
                 title: '卡号',
                 id: 'bankCard',
-                type: 'input',
+                type: 'bankCard',
                 titlespan: 6,
                 colspan: 18,
                 required: true,
+                relation: 'bank',
                 valueType: 'bankCheck'
               }
             ],
@@ -210,7 +224,7 @@
               {
                 title: '银行',
                 id: 'bank',
-                type: 'select',
+                type: 'input',
                 titlespan: 6,
                 colspan: 18,
                 relation: '',
@@ -225,7 +239,7 @@
           }]
         }
         this.inputForm.value = {
-          name: this.userData.name,
+          bankUser: this.userData.bankUser,
           bank: this.userData.bank,
           bankCard: this.userData.bankCard
         }
@@ -275,6 +289,7 @@
               Object.assign(_obj, this.userData)
               _obj.bank = obj.bank
               _obj.bankCard = obj.bankCard
+              _obj.bankUser = obj.bankUser
               this.setUserDate(_obj)
               setUserInfo(_obj)
             }
