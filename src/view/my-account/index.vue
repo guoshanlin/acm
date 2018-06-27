@@ -186,12 +186,13 @@
           opintions: [
             [
               {
-                title: '用户名',
+                title: '开户名',
                 id: 'name',
                 type: 'input',
                 titlespan: 6,
                 colspan: 18,
-                disabled: true
+                required: true
+                // disabled: true
               }
             ],
             [

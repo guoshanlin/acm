@@ -74,7 +74,7 @@
         },
         columns: [
           // {title: '业务流水', key: 'name', width: 180, sortable: false},
-          {title: '订单编号', key: 'id', sortable: false},
+          {title: '订单编号', key: 'id', sortable: false, width: 180, render: this.tdRender},
           {title: '申请时间',
             key: 'passTime',
             sortable: false,
