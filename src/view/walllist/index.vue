@@ -1,6 +1,6 @@
 <template>
   <div class="b wrapper-box">
-    微信墙
+    微信互动
   </div>
 </template>
 

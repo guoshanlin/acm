@@ -60,7 +60,9 @@ export default {
       // 时间统计流量-统计每个url流量
       queryAccessCtByUrlList: {url: 'accessLog/queryAccessCtByUrlList', pre: preuUrl},
       // 按类型统计流量
-      queryAccessCtByType: {url: 'accessLog/queryAccessCtByType', pre: preuUrl}
+      queryAccessCtByType: {url: 'accessLog/queryAccessCtByType', pre: preuUrl},
+      // 查询活动分来
+      activitysConfig: {url: 'activitys/config', pre: preuUrl}
     }
     /**
      * 获取url

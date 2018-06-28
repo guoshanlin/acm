@@ -7,7 +7,7 @@
     </Menu>
 
     <div v-if="statistics == 0">
-      <div class="posct wrapper-border m-t10" style="min-height: 260px;">
+      <div class="wrapper-border m-t10" style="min-height: 260px;">
         <div class="m-t30 full-width">
           <Row type="flex" :gutter=5>
             <!--<列表导栏>-->
@@ -37,7 +37,7 @@
               </Row>
             </i-col>
           </Row>
-          <div class="posct wrapper-border m-t10" style="height: 400px;">
+          <div class="wrapper-border m-t10" style="height: 400px;">
              <Row class="full-width">
                 <i-col :span="12">
                     <Row type="flex" justify="center" align="middle" class="">
@@ -103,7 +103,7 @@
             <div>访问量趋势图</div>
             <Button class="fr" type="primary">导出</Button>
           </div>
-          <div class="posct wrapper-border m-t10" style="height: 260px;">
+          <div class="wrapper-border m-t10" style="height: 260px;">
              <div id="pageView" style="height: 260px; width: 100%"></div>
           </div>
           <div class="wrapper-border m-t10">
@@ -151,7 +151,7 @@
           </div>
           <Row type="flex" align="middle">
             <i-col :span="12">
-              <div class="posct wrapper-border m-t10" style="height: 260px;">
+              <div class="wrapper-border m-t10" style="height: 260px;">
                 <div id="flowed1" style="width: 100%; height: 260px;"></div>
               </div>
             </i-col>
@@ -169,12 +169,12 @@
           </div>
           <Row type="flex">
             <i-col :span="12">
-              <div class="posct wrapper-border m-10" style="height: 400px;">
+              <div class="wrapper-border m-10" style="height: 400px;">
                  <div id="map1" style="width:100%;height: 400px"></div>
               </div>
             </i-col>
             <i-col :span="12">
-              <div class="posct wrapper-border m-10" style="height: 400px;">chart 图表2</div>
+              <div class="wrapper-border m-10" style="height: 400px;">chart 图表2</div>
             </i-col>
           </Row>
             <div class="m-10">
@@ -188,12 +188,12 @@
             </div>
             <Row type="flex">
               <i-col :span="12">
-                <div class="posct wrapper-border m-10" style="height: 400px;">
+                <div class="wrapper-border m-10" style="height: 400px;">
                   <div id="map2" style="width:100%;height: 400px"></div>
                 </div>
               </i-col>
               <i-col :span="12">
-                <div class="posct wrapper-border m-10" style="height:400px;">chart 图表2</div>
+                <div class="wrapper-border m-10" style="height:400px;">chart 图表2</div>
               </i-col>
             </Row>
               <div class="m-10">
@@ -208,7 +208,7 @@
           </div>
           <Row type="flex" align="middle">
             <i-col :span="12">
-              <div class="posct wrapper-border m-t10" style="height: 260px;">
+              <div class="wrapper-border m-t10" style="height: 260px;">
                 <div id="flowed2" style="width: 100%; height: 260px;"></div>
               </div>
             </i-col>
@@ -226,7 +226,7 @@
           </div>
           <Row type="flex" align="middle">
             <i-col :span="12">
-              <div class="posct wrapper-border m-t10" style="height: 260px;">
+              <div class="wrapper-border m-t10" style="height: 260px;">
                 <div id="flowed3" style="width: 100%; height: 260px;"></div>
               </div>
             </i-col>
@@ -361,8 +361,7 @@
       }
     },
     destroyed () {
-      window.onresize = function () {
-      }
+      window.onresize = function () {}
       clearInterval(this.timer)
     },
     created () {

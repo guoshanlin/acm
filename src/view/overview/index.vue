@@ -1,6 +1,6 @@
 <template>
   <div class="b wrapper-box">
-    <h3 class="fz14">我的账户</h3>
+    <h3 class="fz14">活动概况</h3>
     <div class="content-wrapper m-t10 wrapper-border m-t20">
       <div class="clear">
         <span>报名签到统计</span>

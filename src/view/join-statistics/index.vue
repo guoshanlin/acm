@@ -1,6 +1,6 @@
 <template>
   <div class="b wrapper-box">
-    <h3 class="fz14">我的账户</h3>
+    <h3 class="fz14">参会统计</h3>
     <Menu mode="horizontal" active-name="0" @on-select="menuSelect">
       <MenuItem name="0">报名统计</MenuItem>
       <MenuItem name="1">签到统计</MenuItem>
@@ -44,8 +44,7 @@
                 </i-col>
                 <i-col>
                   <div class="m-l5" style="min-width: 350px;">
-                    <i-time ref="timePicker" :ids='timePicker.timeArr' :placeholder="timePicker.placeholderArr"
-                            :span="timePicker.spanArr" :day="timePicker.day" @on-change="timeChange"></i-time>
+                    <i-time ref="timePicker" :ids='timePicker.timeArr' :placeholder="timePicker.placeholderArr" :span="timePicker.spanArr" :day="timePicker.day" @on-change="timeChange"></i-time>
                   </div>
                 </i-col>
               </Row>
@@ -68,7 +67,7 @@
             <!--<DatePicker class="m-l5" type="datetimerange" v-model="rateDate" @on-ok="datePickerEvent(0)" format="yyyy-MM-dd" placeholder="请选择时间段" style="width: 240px"></DatePicker>-->
             <!--<Button class="fr" type="primary">导出</Button>-->
           <!--</div>-->
-          <div class="posct wrapper-border m-t10">
+          <div class="wrapper-border m-t10">
              <div id="joinChart1" style="height: 260px; width: 100%"></div>
           </div>
         </div>
@@ -134,7 +133,7 @@
             <!--<DatePicker class="m-l5" type="datetimerange" v-model="orderDate" @on-ok="datePickerEvent(0)" format="yyyy-MM-dd" placeholder="请选择时间段" style="width: 240px"></DatePicker>-->
             <!--<Button class="fr" type="primary">导出</Button>-->
           <!--</div>-->
-          <div class="posct wrapper-border m-t10">
+          <div class="wrapper-border m-t10">
             <div id="joinChart2" style="height: 260px; width: 100%"></div>
           </div>
         </div>
@@ -415,11 +414,11 @@
           if(res.success){
             let data = res.data.data[0], reportSign = this.reportSign
             for(let k in reportSign){
-              this.reportSign[k] = data[k]
+              this.reportSign[k] = data[k] == null || data[k] == '' ?  '0' : data[k]
             }
             for(let i =0, ilen = this.signInData.length; i < ilen; i++){
-              this.signInData[i].total = data["signType" + i]
-              this.signInData[i].rate = data["signTypeRete" + i] + "%"
+              this.signInData[i].total = data["signType" + i] == null ? '0' : data["signType" + i]
+              this.signInData[i].rate = data["signTypeRete" + i] == null ? '0%' : data['signTypeRete' + i] + '%'
             }
           }
         })
@@ -432,13 +431,13 @@
             if(this.reportEntered.orderInfo){
               this.registerRateData = [{
                 name: '免费报名',
-                total: this.reportEntered.orderInfo[0].freeNumber,
-                actual: this.reportEntered.orderInfo[0].freeActualNumber,
+                total: this.reportEntered.orderInfo[0].freeNumber == null ?  '0': this.reportEntered.orderInfo[0].freeNumber,
+                actual: this.reportEntered.orderInfo[0].freeActualNumber == null ?  '0': this.reportEntered.orderInfo[0].freeActualNumber,
                 rate: this.reportEntered.orderInfo[0].freeRete + '%'
               }, {
                   name: '付费报名',
-                  total: this.reportEntered.orderInfo[0].chargeActualNumber,
-                  actual: this.reportEntered.orderInfo[0].chargeNumber,
+                  total: this.reportEntered.orderInfo[0].chargeActualNumber == null ?  '0': this.reportEntered.orderInfo[0].chargeActualNumber,
+                  actual: this.reportEntered.orderInfo[0].chargeNumber == null ?  '0': this.reportEntered.orderInfo[0].chargeNumber,
                   rate: this.reportEntered.orderInfo[0].chargeRete + '%'
                 }]
             }

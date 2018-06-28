@@ -35,18 +35,23 @@
              <div class="float-r form-fill">
                <div>
                  <Row>
-                   <i-col span="5">
-                     <Select v-model="fromVal.address.province"   @on-change="cityChange" placeholder="请选择省" filterable>
+                   <i-col span="4">
+                     <Select v-model="fromVal.address.province"   @on-change="provinceChange" placeholder="请选择省" filterable>
                         <Option v-for="item in select.province" :value="item.value" :key="item.value">{{ item.label }}</Option>
                      </Select>
                    </i-col>
-                   <i-col span="5">
-                     <Select v-model="fromVal.address.city" placeholder="请选择市区" :filterable="false">
+                   <i-col span="4">
+                     <Select v-model="fromVal.address.city" placeholder="请选择市、县" :filterable="false"  @on-change="cityChange">
                        <Option v-for="item in select.city" :value="item.value" :key="item.value">{{ item.label }}</Option>
                      </Select>
                    </i-col>
-                   <i-col span="14">
-                     <i-input type="text" placeholder="请输入详细地址" v-model="fromVal.address.area"></i-input>
+                   <i-col span="4">
+                     <Select v-model="fromVal.address.area" placeholder="请选择县、区" :filterable="false">
+                       <Option v-for="item in select.area" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                     </Select>
+                   </i-col>
+                   <i-col span="12">
+                     <i-input type="text" placeholder="请输入详细地址" v-model="fromVal.address.address"></i-input>
                    </i-col>
                  </Row>
                </div>
@@ -59,7 +64,7 @@
              </div>
              <div class="float-r form-fill">
                <div class="t-left">
-                 timePicker
+                 <i-time ref="timePicker" :ids='timePicker.timeArr' :placeholder="timePicker.placeholderArr" :span="timePicker.spanArr" @on-change="timeChange"></i-time>
                 </div>
              </div>
              <div class="clearFix"></div>
@@ -240,23 +245,24 @@
     data () {
       const province = []
       let cityObj = {}
+      let areaObj = {}
       for (let code in locationData) {
         let item = locationData[code]
         province.push(Object.assign({}, {label: item.name, value: item.name}))
         let cityList = item.cities
-         cityObj[item.name] = []
-          if (Object.keys(cityList).length === 1) {
+              cityObj[item.name] = []
               for (let key in cityList) {
+                // console.log(cityList[key])
+                cityObj[item.name].push(Object.assign({}, {label: cityList[key].name, value: cityList[key].name}))
+                areaObj[cityList[key].name] = []
                 for (let _key in cityList[key].districts) {
-                  cityObj[item.name].push(Object.assign({}, {label: cityList[key].districts[_key], value: cityList[key].districts[_key]}))
+                  // console.log(cityList[key].districts[_key])
+                   areaObj[cityList[key].name].push(Object.assign({}, {label: cityList[key].districts[_key], value: cityList[key].districts[_key]}))
                 }
               }
-          } else {
-            for (let key in cityList) {
-              cityObj[item.name].push(Object.assign({}, {label: cityList[key].name, value: cityList[key].name}))
-            }
-          }
       }
+      console.log(cityObj)
+      console.log(areaObj)
       return {
     //    imgHtml: '<div style="height:300px; line-height: 300px" class="c3">图片格式为1080 * 640px，大小不超过2M</div>',
         imgHtml: '<div style="height:300px; line-height: 300px" class="c3">大小不超过4M</div>',
@@ -266,7 +272,8 @@
           address: {
             province: '广东省',
             city: '深圳市',
-            area: ''
+            area: '南山区',
+            address: ''
           },
           posterUrl: '',
           number: 0,
@@ -286,6 +293,7 @@
         select: {
           province: province,
           city: cityObj['广东省'],
+          area: areaObj['深圳市'],
           tag: [
             {value: '移动互联网', label: '移动互联网'},
             {value: '创新', label: '创新'},
@@ -352,6 +360,7 @@
           ]
         },
         city: cityObj,
+        areaObj: areaObj,
         radio: {
           industry: ['不限', 'IT互联网', '金融', '制造业', '医疗卫生', '文娱', '服务业', '教育', '交通运输', '地产', '能源', '农林渔牧', '其他'],
            classify: [
@@ -381,7 +390,10 @@
           beginTime: {msg: '请选择活动开始时间', required: true},
           endTime: {msg: '请选择活动结束时间', required: true},
           remark: {msg: '活动摘要不能为空', required: true},
-          agenda: {msg: '活动议程不能为空', required: true}
+          agenda: {msg: '活动议程不能为空', required: true},
+          city1: {msg: '请选择省市', required: true},
+          city2: {msg: '请选择城区', required: true},
+          city3: {msg: '请选择县区', required: true}
        },
         disabled: false,
         timePicker: {
@@ -407,6 +419,11 @@
       iSpecies,
       iTime
     },
+    created () {
+      setTimeout(() => {
+        this.activitysConfig()
+      }, 20)
+    },
     methods: {
       getVal (val) {
         this.fromVal.detailedContent = val
@@ -415,9 +432,15 @@
         console.log('保存设置表单内容')
         this.registrationForm = false
       },
-      cityChange (val) {
+      provinceChange (val) {
         this.fromVal.address.city = ''
+        this.fromVal.address.area = ''
         this.select.city = this.city[val]
+        this.select.area = []
+      },
+      cityChange (val) {
+        this.fromVal.address.area = ''
+        this.select.area = this.areaObj[val]
       },
       tagChange (val) {
         if (val.length >= 5) {
@@ -438,7 +461,10 @@
           isNeedPay: ticket[0].type == 'free' ? 0 : 1, // 是否付费【1付费，0免费】
           mbPrice: ticket[0].type == 'free' ? '' : ticket[0].vPrice, // 会员价格
           nonMBPrice: ticket[0].type == 'free' ? '' : ticket[0].price, // 非会员价格
-          address: this.fromVal.address.province + this.fromVal.address.city + this.fromVal.address.area, // 地址
+          city1: this.fromVal.address.province, // 地址
+          city2: this.fromVal.address.city, // 地址
+          city3: this.fromVal.address.area, // 地址
+          address: this.fromVal.address.address, // 地址
           posterUrl: this.fromVal.posterUrl, // 海报url
           applyBeginTime: this.$refs.timeApply.getValue().applyBeginTime, // 活动开始时间
           applyEndTime: this.$refs.timeApply.getValue().applyEndTime, // 活动开始时间
@@ -541,7 +567,42 @@
            }
          break
        }
-     }
+     },
+      /**
+       * 查询活动分类
+       */
+      activitysConfig () {
+        this.requestAjax('get', 'activitysConfig', {}).then((data) => {
+         // {title: '行业', radio: ['IT互联网', '创业', '科技', '金融','游戏','文娱','电商','教育','营销','设计','地产','医疗','服务业']},
+          this.radio.classify = []
+          if (data.success) {
+            for (let key in data.data) {
+              let _obj = {title: this.formatTitle(key), radio: []}
+              let item = data.data[key]
+                for (let i in item) {
+                  _obj.radio.push(item[i])
+                }
+              this.radio.classify.push(_obj)
+            }
+          }
+        }, () => {
+
+        })
+      },
+      formatTitle (key) {
+        switch (key + '') {
+          case 'activity':
+            return '活动'
+          case 'communities':
+            return '社区'
+          case 'featured':
+            return '精选'
+          case 'learn':
+            return '学习'
+          default:
+            return key
+        }
+      }
     }
   }
 
