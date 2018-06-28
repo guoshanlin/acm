@@ -14,9 +14,6 @@
             </ul>
             <ul class="menu c3" v-if="showAdmin">
               <li class="menu-item menu-item-welcome">您好，欢迎访问本站！</li>
-              <li class="menu-item menu-item-login">
-                <a class="user-login" href="javascript:void(0)" @click="routePush('/meeting')">主办方中心</a>
-              </li>
               <li class="menu-item menu-item-reg">
                 <a href="javascript:void(0)" @click="passModalShow = true">修改密码</a>
               </li>
@@ -31,6 +28,7 @@
               <li class="menu-item"><a href="javascript:void(0)">地图</a></li>
               <li class="menu-item"><a href="javascript:void(0)">标签</a></li>
               <li class="menu-item"><a href="javascript:void(0)">链接</a></li>
+              <li v-if="showAdmin" class="menu-item"><a href="javascript:void(0)" @click="routePush('/meeting')">主办方中心</a></li>
               <li v-if="showAdmin" class="menu-item"><a href="javascript:void(0)" class="c1" @click="routePush('/initiatingActivity')"><Icon class="fz15" type="paper-airplane"></Icon> 发布活动</a></li>
             </ul>
           </div>
