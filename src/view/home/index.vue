@@ -304,7 +304,7 @@
     padding: 2px 8px;
   }
   .title-tag ul li a:hover{
-    color: #FF1111;
+    color: #e1244e;
   }
 
   .title-tag .home_button {
