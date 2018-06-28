@@ -303,7 +303,7 @@
           totalCity: 0,
 
           columnsTer: [
-            {title: '终端系统', key: 'name', sortable: false},
+            {title: '终端系统', key: 'name', sortable: false, render: this.tdRender},
             {title: '访客数', key: 'value', sortable: false},
             {
               title: '占比',
@@ -318,7 +318,7 @@
           totalTer: 0,
 
           columnsTerTop: [
-            {title: '终端机型', key: 'name', sortable: false},
+            {title: '终端机型', key: 'name', sortable: false, render: this.tdRender},
             {title: '访客数', key: 'value', sortable: false},
             {
               title: '占比',
@@ -398,7 +398,7 @@
 
       },
       initChart () {
-        this.charts.pageViewChart = this.echarts.init(document.getElementById('pageView'))
+        this.charts.pageViewChart = this.echarts.init(document.getElementById('pageView'), 'shine')
         let data = this.pageViewData
         let option = {
           color: ["#00ADFF"],
@@ -460,9 +460,17 @@
             {
               type: 'line',
              // showSymbol: false,
-              name: '浏览量',
+              name: 'PV浏览量',
               data: data.map((item) => {
                 return item.ct
+              })
+            },
+            {
+              type: 'line',
+              // showSymbol: false,
+              name: 'UV浏览量',
+              data: data.map((item) => {
+                return item.dtCt
               })
             }
           ]
@@ -470,9 +478,9 @@
         this.charts.pageViewChart.setOption(option)
       },
       initChart1 () {
-        this.charts.flowed1Chart = this.echarts.init(document.getElementById('flowed1'))
-        this.charts.flowed2Chart = this.echarts.init(document.getElementById('flowed2'))
-        this.charts.flowed3Chart = this.echarts.init(document.getElementById('flowed3'))
+        this.charts.flowed1Chart = this.echarts.init(document.getElementById('flowed1'), 'shine')
+        this.charts.flowed2Chart = this.echarts.init(document.getElementById('flowed2'), 'shine')
+        this.charts.flowed3Chart = this.echarts.init(document.getElementById('flowed3'), 'shine')
 
         let option = {
           // title: {
@@ -487,17 +495,21 @@
           legend: {
             type: 'scroll',
             orient: 'vertical',
-            x: 'left',
+            x: 'right',
             top: '55',
             data: this.table.data.map((item) => {
               return item.name
             })
+          },
+          grid: {
+            left: 'left'
           },
           series: [
             {
               name: '访问来源',
               type: 'pie',
               radius: ['50%', '70%'],
+              center: ['30%', '50%'],
               avoidLabelOverlap: false,
               labelLine: {
                 normal: {
@@ -510,7 +522,8 @@
                   show: true,
                   position: 'inner',
                   color: '#000',
-                  formatter: '{b} : {c} ({d}%)'
+              //    formatter: '{b} : {c} ({d}%)'
+                  formatter: '{d}%'
                 }
               }
             }
@@ -528,8 +541,8 @@
         option.series[0].data = this.table.dataTerTop
         this.charts.flowed3Chart.setOption(option)
         return
-        this.charts.map1Chart = this.echarts.init(document.getElementById('map1'))
-        this.charts.map2Chart = this.echarts.init(document.getElementById('map2'))
+        this.charts.map1Chart = this.echarts.init(document.getElementById('map1'), 'shine')
+        this.charts.map2Chart = this.echarts.init(document.getElementById('map2'), 'shine')
         let optionMap = {
           // title: {
           //   text: '省份分布 TOP10',
@@ -586,16 +599,16 @@
       },
       timeChange () {
         let _time = this.$refs.timePicker.getValue()
-        this.params.bTime = _time.bTime
-        this.params.eTime = _time.eTime
+        this.params.bTime = _time.bTime + ' 00:00:00'
+        this.params.eTime = _time.eTime + ' 23:59:59'
         this.queryAccessCt()
         this.queryAccessCtByMinList()
         this.queryAccessCtByUrlList()
       },
       timeChangeTwo () {
         let _time = this.$refs.timePickerTwo.getValue()
-        this.paramsTwo.bTime = _time.bTime
-        this.paramsTwo.eTime = _time.eTime
+        this.paramsTwo.bTime = _time.bTime + ' 00:00:00'
+        this.paramsTwo.eTime = _time.eTime + ' 23:59:59'
         this.queryAccessCtByType()
       },
       queryAccessCt () {
@@ -636,8 +649,6 @@
       },
       queryAccessCtByType () {
         this.requestAjax('get', 'queryAccessCtByType', this.paramsTwo).then((data) => {
-          console.log(data)
-          // this.data = []
           if (data.success) {
             let _arr = this.paramsTwo.ctKey.split(',')  // visitor_sex,visitor_client_sys,visitor_client_model
             let _obj = {visitor_sex: ['data', 'total'], visitor_client_sys: ['dataTer', 'totalTer'], visitor_client_model: ['dataTerTop', 'totalTop']}

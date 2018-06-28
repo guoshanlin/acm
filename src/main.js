@@ -23,6 +23,7 @@ import config from '../config'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import './theme/iview/index.less'
+import  'echarts/theme/shine.js'  // vintage dark macarons infographic shine roma
 
 axios.defaults.baseURL = process.env.API
 axios.defaults.withCredentials=true

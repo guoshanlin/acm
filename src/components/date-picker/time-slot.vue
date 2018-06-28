@@ -51,9 +51,9 @@
         let _this = this
         WdatePicker({
           el: '' + bId,
-          dateFmt: 'yyyy-MM-dd HH:mm:ss',
+          dateFmt: 'yyyy-MM-dd',
           autoPickDate: false,
-          maxDate: '#F{$dp.$D(' + endID + ")||'%y-%M-%d %H:%m:%s'}",
+          maxDate: '#F{$dp.$D(' + endID + ")||'%y-%M-{%d-1}'}",
           onpicking: function (dp) {
             _this.value[bId] = dp.cal.getNewDateStr()
           },
@@ -66,10 +66,10 @@
         let _this = this
         WdatePicker({
           el: '' + endID,
-          dateFmt: 'yyyy-MM-dd HH:mm:ss',
+          dateFmt: 'yyyy-MM-dd',
           autoPickDate: false,
           minDate: '#F{$dp.$D(\'' + bId + '\')}',
-          maxDate: '%y-%M-%d %H:%m:%s',
+          maxDate: '%y-%M-{%d-1}',
           onpicking: function (dp) {
             _this.value[endID] = dp.cal.getNewDateStr()
           },
@@ -96,8 +96,8 @@
          document.getElementById('' + id).value = ''
       },
       setValue () {
-        this.value[this.ids[1]] = new Date().format('yyyy-MM-dd hh:mm:ss')
-        this.value[this.ids[0]] = new Date().addTimes(this.day + 'd').format('yyyy-MM-dd hh:mm:ss')
+        this.value[this.ids[1]] = new Date().addTimes('-1d').format('yyyy-MM-dd')
+        this.value[this.ids[0]] = new Date().addTimes(this.day + 'd').format('yyyy-MM-dd')
         document.getElementById('' + this.ids[0]).value = this.value[this.ids[0]]
         document.getElementById('' + this.ids[1]).value = this.value[this.ids[1]]
         this.$emit('on-change')

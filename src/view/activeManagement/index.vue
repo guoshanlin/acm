@@ -13,9 +13,9 @@
   import asideMenu from 'components/aside-menu'
     export default {
         name: 'index',
-      components: {
-         asideMenu
-      }
+        components: {
+           asideMenu
+        }
     }
 </script>
 

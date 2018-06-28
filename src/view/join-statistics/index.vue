@@ -31,15 +31,43 @@
           <Table border ref="$orderInfo" :columns="registerRateCol" :data="registerRateData"></Table>
         </div>
         <div class="m-t30">
-          <div class="clear">
-            <RadioGroup  @on-change="rateDateChange" v-model="rate" type="button">
-              <Radio label="昨天"></Radio>
-              <Radio label="最近7天"></Radio>
-              <Radio label="最近30天"></Radio>
-            </RadioGroup>
-            <DatePicker class="m-l5" type="datetimerange" v-model="rateDate" @on-ok="datePickerEvent(0)" format="yyyy-MM-dd" placeholder="请选择时间段" style="width: 240px"></DatePicker>
-            <Button class="fr" type="primary">导出</Button>
-          </div>
+          <Row type="flex" :gutter=5>
+            <!--<列表导栏>-->
+            <i-col span="16">
+              <Row type="flex" justify="start">
+                <i-col>
+                  <RadioGroup @on-change="orderStatusChange" v-model="timePicker.day" type="button">
+                    <Radio label="-1">昨天</Radio>
+                    <Radio label="-7">最近7天</Radio>
+                    <Radio label="-30">最近30天</Radio>
+                  </RadioGroup>
+                </i-col>
+                <i-col>
+                  <div class="m-l5" style="min-width: 350px;">
+                    <i-time ref="timePicker" :ids='timePicker.timeArr' :placeholder="timePicker.placeholderArr"
+                            :span="timePicker.spanArr" :day="timePicker.day" @on-change="timeChange"></i-time>
+                  </div>
+                </i-col>
+              </Row>
+
+            </i-col>
+            <i-col span="8">
+              <Row type="flex" justify="end">
+                <i-col>
+                  <Button type="primary">导出</Button>
+                </i-col>
+              </Row>
+            </i-col>
+          </Row>
+          <!--<div class="clear">-->
+            <!--<RadioGroup  @on-change="rateDateChange" v-model="rate" type="button">-->
+              <!--<Radio label="昨天"></Radio>-->
+              <!--<Radio label="最近7天"></Radio>-->
+              <!--<Radio label="最近30天"></Radio>-->
+            <!--</RadioGroup>-->
+            <!--<DatePicker class="m-l5" type="datetimerange" v-model="rateDate" @on-ok="datePickerEvent(0)" format="yyyy-MM-dd" placeholder="请选择时间段" style="width: 240px"></DatePicker>-->
+            <!--<Button class="fr" type="primary">导出</Button>-->
+          <!--</div>-->
           <div class="posct wrapper-border m-t10">
              <div id="joinChart1" style="height: 260px; width: 100%"></div>
           </div>
@@ -69,15 +97,43 @@
           </div>
         </div>
         <div class="m-t30">
-          <div class="clear">
-            <RadioGroup @on-change="orderStatusChange" v-model="orderStatus" type="button">
-              <Radio label="昨天"></Radio>
-              <Radio label="最近7天"></Radio>
-              <Radio label="最近30天"></Radio>
-            </RadioGroup>
-            <DatePicker class="m-l5" type="datetimerange" v-model="orderDate" @on-ok="datePickerEvent(0)" format="yyyy-MM-dd" placeholder="请选择时间段" style="width: 240px"></DatePicker>
-            <Button class="fr" type="primary">导出</Button>
-          </div>
+          <Row type="flex" :gutter=5>
+            <!--<列表导栏>-->
+            <i-col span="16">
+              <Row type="flex" justify="start">
+                <i-col>
+                  <RadioGroup @on-change="orderStatusChange" v-model="timePickerTwo.day" type="button">
+                    <Radio label="-1">昨天</Radio>
+                    <Radio label="-7">最近7天</Radio>
+                    <Radio label="-30">最近30天</Radio>
+                  </RadioGroup>
+                </i-col>
+                <i-col>
+                  <div class="m-l5" style="min-width: 350px;">
+                    <i-time ref="timePickerTwo" :ids='timePickerTwo.timeArr' :placeholder="timePickerTwo.placeholderArr"
+                            :span="timePickerTwo.spanArr" :day="timePickerTwo.day" @on-change="timeChangeTwo"></i-time>
+                  </div>
+                </i-col>
+              </Row>
+
+            </i-col>
+            <i-col span="8">
+              <Row type="flex" justify="end">
+                <i-col>
+                  <!--<Button type="primary">导出</Button>-->
+                </i-col>
+              </Row>
+            </i-col>
+          </Row>
+          <!--<div class="clear">-->
+            <!--<RadioGroup @on-change="orderStatusChange" v-model="orderStatus" type="button">-->
+              <!--<Radio label="昨天"></Radio>-->
+              <!--<Radio label="最近7天"></Radio>-->
+              <!--<Radio label="最近30天"></Radio>-->
+            <!--</RadioGroup>-->
+            <!--<DatePicker class="m-l5" type="datetimerange" v-model="orderDate" @on-ok="datePickerEvent(0)" format="yyyy-MM-dd" placeholder="请选择时间段" style="width: 240px"></DatePicker>-->
+            <!--<Button class="fr" type="primary">导出</Button>-->
+          <!--</div>-->
           <div class="posct wrapper-border m-t10">
             <div id="joinChart2" style="height: 260px; width: 100%"></div>
           </div>
@@ -117,7 +173,7 @@
 </template>
 
 <script>
-
+  import iTime from 'components/date-picker/time-slot.vue'
   export default {
     name: "index",
     data() {
@@ -255,21 +311,49 @@
         chartsOps: {},
         rateDate: '',   // 报名统计时间选择器
         orderDate: '',   // 报名订单统计时间选择器
-        charts1Parms: {id: this.$route.query.id, bt: '', et: '',day: ''},
-        charts2Parms: {id: this.$route.query.id, bt: '', et: '',day: ''}
+        charts1Parms: {id: this.$route.query.id, bt: '', et: ''},
+        charts2Parms: {id: this.$route.query.id, bt: '', et: ''},
+        timePicker: {
+          timeArr: ['bTime', 'eTime'],
+          placeholderArr: ['开始时间', '结束时间'],
+          spanArr: [12, 12],
+          day: '-1'
+        },
+        timePickerTwo: {
+          timeArr: ['bT', 'eT'],
+          placeholderArr: ['开始时间', '结束时间'],
+          spanArr: [12, 12],
+          day: '-1'
+        },
+        timer: {}
       }
     },
-    created() {
+    components: {
+      iTime
+    },
+    destroyed () {
+      window.onresize = function () {
+      }
+      clearInterval(this.timer)
+    },
+    created () {
       setTimeout(() => {
         // 报名统计
         this.requesrReportEntered()
         // 签到统计
         this.requestReportSign()
         // 查询活动报名报表
-        this.requesrReportEnteredDateInfo()
-        // 活动报名订单统计
-        this.requesrReportOrderInfo()
+        // this.requesrReportEnteredDateInfo()
+        // // 活动报名订单统计
+        // this.requesrReportOrderInfo()
         this.initChart()
+        clearInterval(this.timer)
+        this.timer = setInterval(() => {
+          this.requestReportSign()
+          this.requesrReportEnteredDateInfo()
+          this.requesrReportEntered()
+          this.requesrReportOrderInfo()
+        }, 60 * 1000)
       }, 20)
     },
     methods: {
@@ -309,14 +393,15 @@
         }
       },
       rateDateChange(v) {
-        this.rateDate = ''
-        this.rate = v
+        // this.rateDate = ''
+        // this.rate = v
         this.charts1Parms.bt = ''
         this.charts1Parms.et = ''
         this.charts1Parms.day = this._parseDate(v)
         this.requesrReportEnteredDateInfo()
       },
       orderStatusChange(v) {
+        return
         this.orderDate = ''
         this.orderStatus = v
         this.charts2Parms.bt = ''
@@ -340,7 +425,7 @@
         })
       },
       // 报名统计
-      requesrReportEntered(){
+      requesrReportEntered () {
         this.requestAjax('get', 'reportEntered', {id: this.id}).then(res => {
           if(res.success){
             this.reportEntered = res.data
@@ -400,8 +485,8 @@
         this.$refs["$"+name].exportCsv({filename:name})
       },
       initChart () {
-        this.charts.joinChart1Chart = this.echarts.init(document.getElementById('joinChart1'))
-        this.charts.joinChart2Chart = this.echarts.init(document.getElementById('joinChart2'))
+        this.charts.joinChart1Chart = this.echarts.init(document.getElementById('joinChart1'), 'shine')
+        this.charts.joinChart2Chart = this.echarts.init(document.getElementById('joinChart2'), 'shine')
 
         for(let i = 1; i < 3; i++){
           let option = {
@@ -450,7 +535,7 @@
             series: [
               {
                 type: 'line',
-                showSymbol: false,
+                // showSymbol: false,
                 name: i == 1 ? '免费数' : "订单数",
                 data: []
               },
@@ -482,6 +567,18 @@
           case "最近30天":
             return 30
         }
+      },
+      timeChange () {
+        let _time = this.$refs.timePicker.getValue()
+        this.charts1Parms.bt = _time.bTime
+        this.charts1Parms.et = _time.eTime
+        this.requesrReportEnteredDateInfo()
+      },
+      timeChangeTwo () {
+        let _time = this.$refs.timePickerTwo.getValue()
+        this.charts2Parms.bt = _time.bT
+        this.charts2Parms.et = _time.eT
+        this.requesrReportOrderInfo()
       }
     }
   }
