@@ -9,22 +9,41 @@
     <div v-if="statistics == 0">
       <div class="posct wrapper-border m-t10" style="min-height: 260px;">
         <div class="m-t30 full-width">
-          <div class="clear">
-            <RadioGroup @on-change="orderStatusChange" v-model="orderStatus" type="button">
-              <Radio label="昨天"></Radio>
-              <Radio label="最近7天"></Radio>
-              <Radio label="最近30天"></Radio>
-            </RadioGroup>
-            <DatePicker class="m-l5" type="datetimerange" format="yyyy-MM-dd" placeholder="请选择时间段" style="width: 240px"></DatePicker>
-            <Button class="fr" type="primary">导出</Button>
-          </div>
+          <Row type="flex" :gutter=5>
+            <!--<列表导栏>-->
+            <i-col span="16">
+              <Row type="flex" justify="start">
+                <i-col>
+                  <RadioGroup @on-change="orderStatusChange" v-model="timePicker.day" type="button">
+                    <Radio label="-1">昨天</Radio>
+                    <Radio label="-7">最近7天</Radio>
+                    <Radio label="-30">最近30天</Radio>
+                  </RadioGroup>
+                </i-col>
+                <i-col>
+                  <div class="m-l5" style="min-width: 350px;">
+                    <i-time ref="timePicker" :ids='timePicker.timeArr' :placeholder="timePicker.placeholderArr"
+                            :span="timePicker.spanArr" :day="timePicker.day" @on-change="timeChange"></i-time>
+                  </div>
+                </i-col>
+              </Row>
+
+            </i-col>
+            <i-col span="8">
+              <Row type="flex" justify="end">
+                <i-col>
+                  <Button type="primary">导出</Button>
+                </i-col>
+              </Row>
+            </i-col>
+          </Row>
           <div class="posct wrapper-border m-t10" style="height: 400px;">
              <Row class="full-width">
                 <i-col :span="12">
                     <Row type="flex" justify="center" align="middle" class="">
                       <i-col>
                         <div class="m-r15">
-                          <span class="demo-Circle-inner fz24 c7">80</span><br>
+                          <span class="demo-Circle-inner fz24 c7">{{dataRl.ctRl.maxCt}}</span><br>
                           <span class="demo-Circle-inner fz16">日最高</span>
                         </div>
                       </i-col>
@@ -32,18 +51,18 @@
                         <div>
                           <div class="t-center m-b15"><span class="demo-Circle-inner fz24 c7">PV:浏览量</span></div>
                           <i-circle :percent="100" stroke-color="#2db7f5" :size="200" :stroke-width="10">
-                            <span class="demo-Circle-inner fz24 c7">80</span><br>  <br>
+                            <span class="demo-Circle-inner fz24 c7">{{dataRl.ctRl.totalCt}}</span><br>  <br>
                             <span class="demo-Circle-inner fz16">总浏览量</span>
                           </i-circle>
                           <div class="t-center">
-                            <span class="demo-Circle-inner fz24 c7">80</span><br>
+                            <span class="demo-Circle-inner fz24 c7">{{dataRl.ctRl.avgCt}}</span><br>
                             <span class="demo-Circle-inner fz16">日平均</span>
                           </div>
                         </div>
                       </i-col>
                       <i-col>
                         <div class="m-l15">
-                          <span class="demo-Circle-inner fz24 c7">80</span><br>
+                          <span class="demo-Circle-inner fz24 c7">{{dataRl.ctRl.minCt}}</span><br>
                           <span class="demo-Circle-inner fz16">日最低</span>
                         </div>
                       </i-col>
@@ -53,7 +72,7 @@
                    <Row type="flex" justify="center" align="middle" class="">
                      <i-col>
                        <div class="m-r15">
-                         <span class="demo-Circle-inner fz24 c6">80</span><br>
+                         <span class="demo-Circle-inner fz24 c6">{{dataRl.distinctCtRl.maxCt}}</span><br>
                          <span class="demo-Circle-inner fz16">日最高</span>
                        </div>
                      </i-col>
@@ -61,18 +80,18 @@
                        <div>
                          <div class="t-center m-b15"><span class="demo-Circle-inner fz24 c6">UV:访客数</span></div>
                          <i-circle :percent="100" :size="200" stroke-color="#5cb85c" :stroke-width="10">
-                           <span class="demo-Circle-inner fz24 c6">10</span><br><br>
+                           <span class="demo-Circle-inner fz24 c6">{{dataRl.distinctCtRl.totalCt}}</span><br><br>
                            <span class="demo-Circle-inner fz16">总访客数</span>
                          </i-circle>
                          <div class="t-center">
-                           <span class="demo-Circle-inner fz24 c6">80</span><br>
+                           <span class="demo-Circle-inner fz24 c6">{{dataRl.distinctCtRl.avgCt}}</span><br>
                            <span class="demo-Circle-inner fz16">日平均</span>
                          </div>
                        </div>
                      </i-col>
                      <i-col>
                        <div class="m-l15">
-                         <span class="demo-Circle-inner fz24 c6">80</span><br>
+                         <span class="demo-Circle-inner fz24 c6">{{dataRl.distinctCtRl.minCt}}</span><br>
                          <span class="demo-Circle-inner fz16">日最低</span>
                        </div>
                      </i-col>
@@ -95,16 +114,34 @@
     </div>
 
     <div v-else>
-        <div class="content-wrapper m-t10 wrapper-border m-t20">
-            <div class="clear">
-              <RadioGroup @on-change="orderStatusChange" v-model="orderStatus" type="button">
-                <Radio label="昨天"></Radio>
-                <Radio label="最近7天"></Radio>
-                <Radio label="最近30天"></Radio>
+      <Row type="flex" :gutter=5>
+        <!--<列表导栏>-->
+        <i-col span="16">
+          <Row type="flex" justify="start">
+            <i-col>
+              <RadioGroup @on-change="orderStatusChange" v-model="timePickerTwo.day" type="button">
+                <Radio label="-1">昨天</Radio>
+                <Radio label="-7">最近7天</Radio>
+                <Radio label="-30">最近30天</Radio>
               </RadioGroup>
-              <DatePicker class="m-l5" type="datetimerange" format="yyyy-MM-dd" placeholder="请选择时间段" style="width: 240px"></DatePicker>
-            </div>
-        </div>
+            </i-col>
+            <i-col>
+              <div class="m-l5" style="min-width: 350px;">
+                <i-time ref="timePickerTwo" :ids='timePickerTwo.timeArr' :placeholder="timePickerTwo.placeholderArr"
+                        :span="timePickerTwo.spanArr" :day="timePickerTwo.day" @on-change="timeChangeTwo"></i-time>
+              </div>
+            </i-col>
+          </Row>
+
+        </i-col>
+        <i-col span="8">
+          <Row type="flex" justify="end">
+            <i-col>
+              <Button type="primary">导出</Button>
+            </i-col>
+          </Row>
+        </i-col>
+      </Row>
         <div class="content-wrapper m-t20 wrapper-border">
           <div class="clear">
             <span>访客性别分布</span>
@@ -123,7 +160,7 @@
             </i-col>
           </Row>
         </div>
-        <div class="content-wrapper m-t20 wrapper-border">
+        <div v-if="show" class="content-wrapper m-t20 wrapper-border">
           <div class="clear">
             <span>省份分布 TOP10</span>
             <Button class="fr" type="primary">导出</Button>
@@ -142,7 +179,7 @@
               <i-table border :columns="table.columnsPro" :data="table.dataPro"></i-table>
             </div>
        </div>
-        <div class="content-wrapper m-t20 wrapper-border">
+        <div v-if="show" class="content-wrapper m-t20 wrapper-border">
             <div class="clear">
               <span>城市分布 TOP10</span>
               <Button class="fr" type="primary">导出</Button>
@@ -161,6 +198,7 @@
                 <i-table border :columns="table.columnsCity" :data="table.dataCity"></i-table>
               </div>
         </div>
+
         <div class="content-wrapper m-t20 wrapper-border">
           <div class="clear">
             <span>终端系统分布</span>
@@ -202,25 +240,33 @@
 </template>
 
 <script>
+  import iTime from 'components/date-picker/time-slot.vue'
   export default {
     name: 'index',
     data () {
       return {
+        show: false,
         statistics: 0,
-        orderStatus: '昨天',
+        orderStatus: '-1',
         width: {
           width01: document.documentElement.clientWidth - 330
         },
+        dataRl: {
+          'ctRl': {'minCt': 0, 'totalCt': 0, 'maxCt': 0, 'avgCt': 0},
+          'distinctCtRl': {'minCt': 0, 'totalCt': 0, 'maxCt': 0, 'avgCt': 0}
+        },
+        pageViewData: {},
         columns: [
-          {title: '页面/场景', width: 100, key: 'company', sortable: false},
-          {title: '总浏览量PV', width: 110, key: 'position', sortable: false},
-          {title: '日最高PV', key: 'position', sortable: false},
-          {title: '日最低PV', key: 'position', sortable: false},
-          {title: '日平均PV', key: 'position', sortable: false},
-          {title: '总访客数UV', width: 110, key: 'position', sortable: false},
-          {title: '日最高UV', key: 'position', sortable: false},
-          {title: '日最低UV', key: 'position', sortable: false},
-          {title: '日平均UV', key: 'position', sortable: false}
+
+          {title: '页面/场景', width: 100, key: 'key', sortable: false},
+          {title: '总浏览量PV', width: 110, key: 'totalCt', sortable: false},
+          {title: '日最高PV', key: 'maxCt', sortable: false},
+          {title: '日最低PV', key: 'minCt', sortable: false},
+          {title: '日平均PV', key: 'avgCt', sortable: false},
+          {title: '总访客数UV', width: 110, key: 'dtTotalCt', sortable: false},
+          {title: '日最高UV', key: 'dtMaxCt', sortable: false},
+          {title: '日最低UV', key: 'dtAvgCt', sortable: false},
+          {title: '日平均UV', key: 'dtMinCt', sortable: false}
         ],
         data: [{company: '订单详情页', position: 1}, {company: '提交订单页', position: 1}],
         table: {
@@ -267,13 +313,38 @@
             {value: 234, name: '未知'}
             ]
         },
-        charts: {}
+        charts: {},
+        timePicker: {
+          timeArr: ['bTime', 'eTime'],
+          placeholderArr: ['开始时间', '结束时间'],
+          spanArr: [12, 12],
+          day: '-1'
+        },
+        timePickerTwo: {
+          timeArr: ['bTime', 'eTime'],
+          placeholderArr: ['开始时间', '结束时间'],
+          spanArr: [12, 12],
+          day: '-1'
+        },
+        params: {
+          // activityId: this.$route.query.id,
+          bTime: '',
+          eTime: ''
+        },
+        paramsTwo: {
+          activityId: this.$route.query.id,
+          bTime: '',
+          eTime: ''
+        }
       }
     },
     created () {
       setTimeout(() => {
-        this.initChart()
+        // this.initChart()
       }, 20)
+    },
+    components: {
+      iTime
     },
     methods: {
       menuSelect (v) {
@@ -292,16 +363,7 @@
       },
       initChart () {
         this.charts.pageViewChart = this.echarts.init(document.getElementById('pageView'))
-        let data = [["2000-06-05", 116], ["2000-06-06", 129], ["2000-06-07", 135], ["2000-06-08", 86],
-          ["2000-06-09", 73], ["2000-06-10", 85], ["2000-06-11", 73], ["2000-06-12", 68], ["2000-06-13", 92],
-          ["2000-06-14", 130], ["2000-06-15", 245], ["2000-06-16", 139], ["2000-06-17", 115], ["2000-06-18", 111],
-          ["2000-06-19", 309], ["2000-06-20", 206], ["2000-06-21", 137], ["2000-06-22", 128], ["2000-06-23", 85],
-          ["2000-06-24", 94], ["2000-06-25", 71], ["2000-06-26", 106], ["2000-06-27", 84], ["2000-06-28", 93], ["2000-06-29", 85],
-          ["2000-06-30", 73], ["2000-07-01", 83], ["2000-07-02", 125], ["2000-07-03", 107], ["2000-07-04", 82], ["2000-07-05", 44],
-          ["2000-07-06", 72], ["2000-07-07", 106], ["2000-07-08", 107], ["2000-07-09", 66], ["2000-07-10", 91], ["2000-07-11", 92],
-          ["2000-07-12", 113], ["2000-07-13", 107], ["2000-07-14", 131], ["2000-07-15", 111], ["2000-07-16", 64],
-          ["2000-07-17", 69], ["2000-07-18", 88], ["2000-07-19", 77], ["2000-07-20", 83], ["2000-07-21", 111],
-          ["2000-07-22", 57], ["2000-07-23", 55], ["2000-07-24", 60]]
+        let data = this.pageViewData
         let option = {
           color: ["#00ADFF"],
           tooltip: {
@@ -329,7 +391,7 @@
               color: "#ccc"
             },
             data: data.map((item) => {
-              return item[0];
+              return item.time
             })
           },
           yAxis: {
@@ -364,7 +426,7 @@
               showSymbol: false,
               name: '浏览量',
               data: data.map((item) => {
-                return item[1]
+                return item.ct
               })
             }
           ]
@@ -375,8 +437,6 @@
         this.charts.flowed1Chart = this.echarts.init(document.getElementById('flowed1'))
         this.charts.flowed2Chart = this.echarts.init(document.getElementById('flowed2'))
         this.charts.flowed3Chart = this.echarts.init(document.getElementById('flowed3'))
-        this.charts.map1Chart = this.echarts.init(document.getElementById('map1'))
-        this.charts.map2Chart = this.echarts.init(document.getElementById('map2'))
 
         let option = {
           // title: {
@@ -431,7 +491,9 @@
         })
         option.series[0].data = this.table.dataTerTop
         this.charts.flowed3Chart.setOption(option)
-
+        return
+        this.charts.map1Chart = this.echarts.init(document.getElementById('map1'))
+        this.charts.map2Chart = this.echarts.init(document.getElementById('map2'))
         let optionMap = {
           // title: {
           //   text: '省份分布 TOP10',
@@ -443,8 +505,7 @@
           },
           legend: {
             orient: 'vertical',
-            left: 'left',
-            data:['iphone3','iphone4','iphone5']
+            left: 'left'
           },
           grid: {
 
@@ -459,7 +520,6 @@
           },
           series: [
             {
-              name: 'iphone3',
               type: 'map',
               mapType: 'china',
               roam: false,
@@ -474,94 +534,7 @@
               data:[
                 {name: '北京',value: Math.round(Math.random()*1000) },
                 {name: '天津',value: Math.round(Math.random()*1000) },
-                {name: '上海',value: Math.round(Math.random()*1000) },
-                {name: '重庆',value: Math.round(Math.random()*1000) },
-                {name: '河北',value: Math.round(Math.random()*1000) },
-                {name: '河南',value: Math.round(Math.random()*1000) },
-                {name: '云南',value: Math.round(Math.random()*1000) },
-                {name: '辽宁',value: Math.round(Math.random()*1000) },
-                {name: '黑龙江',value: Math.round(Math.random()*1000) },
-                {name: '湖南',value: Math.round(Math.random()*1000) },
-                {name: '安徽',value: Math.round(Math.random()*1000) },
-                {name: '山东',value: Math.round(Math.random()*1000) },
-                {name: '新疆',value: Math.round(Math.random()*1000) },
-                {name: '江苏',value: Math.round(Math.random()*1000) },
-                {name: '浙江',value: Math.round(Math.random()*1000) },
-                {name: '江西',value: Math.round(Math.random()*1000) },
-                {name: '湖北',value: Math.round(Math.random()*1000) },
-                {name: '广西',value: Math.round(Math.random()*1000) },
-                {name: '甘肃',value: Math.round(Math.random()*1000) },
-                {name: '山西',value: Math.round(Math.random()*1000) },
-                {name: '内蒙古',value: Math.round(Math.random()*1000) },
-                {name: '陕西',value: Math.round(Math.random()*1000) },
-                {name: '吉林',value: Math.round(Math.random()*1000) },
-                {name: '福建',value: Math.round(Math.random()*1000) },
-                {name: '贵州',value: Math.round(Math.random()*1000) },
-                {name: '广东',value: Math.round(Math.random()*1000) },
-                {name: '青海',value: Math.round(Math.random()*1000) },
-                {name: '西藏',value: Math.round(Math.random()*1000) },
-                {name: '四川',value: Math.round(Math.random()*1000) },
-                {name: '宁夏',value: Math.round(Math.random()*1000) },
-                {name: '海南',value: Math.round(Math.random()*1000) },
-                {name: '台湾',value: Math.round(Math.random()*1000) },
-                {name: '香港',value: Math.round(Math.random()*1000) },
-                {name: '澳门',value: Math.round(Math.random()*1000) }
-              ]
-            },
-            {
-              name: 'iphone4',
-              type: 'map',
-              mapType: 'china',
-              label: {
-                normal: {
-                  show: true
-                },
-                emphasis: {
-                  show: true
-                }
-              },
-              data:[
-                {name: '北京',value: Math.round(Math.random()*1000) },
-                {name: '天津',value: Math.round(Math.random()*1000) },
-                {name: '上海',value: Math.round(Math.random()*1000) },
-                {name: '重庆',value: Math.round(Math.random()*1000) },
-                {name: '河北',value: Math.round(Math.random()*1000) },
-                {name: '安徽',value: Math.round(Math.random()*1000) },
-                {name: '新疆',value: Math.round(Math.random()*1000) },
-                {name: '浙江',value: Math.round(Math.random()*1000) },
-                {name: '江西',value: Math.round(Math.random()*1000) },
-                {name: '山西',value: Math.round(Math.random()*1000) },
-                {name: '内蒙古',value: Math.round(Math.random()*1000) },
-                {name: '吉林',value: Math.round(Math.random()*1000) },
-                {name: '福建',value: Math.round(Math.random()*1000) },
-                {name: '广东',value: Math.round(Math.random()*1000) },
-                {name: '西藏',value: Math.round(Math.random()*1000) },
-                {name: '四川',value: Math.round(Math.random()*1000) },
-                {name: '宁夏',value: Math.round(Math.random()*1000) },
-                {name: '香港',value: Math.round(Math.random()*1000) },
-                {name: '澳门',value: Math.round(Math.random()*1000) }
-              ]
-            },
-            {
-              name: 'iphone5',
-              type: 'map',
-              mapType: 'china',
-              label: {
-                normal: {
-                  show: true
-                },
-                emphasis: {
-                  show: true
-                }
-              },
-              data:[
-                {name: '北京',value: Math.round(Math.random()*1000) },
-                {name: '天津',value: Math.round(Math.random()*1000) },
-                {name: '上海',value: Math.round(Math.random()*1000) },
-                {name: '广东',value: Math.round(Math.random()*1000) },
-                {name: '台湾',value: Math.round(Math.random()*1000) },
-                {name: '香港',value: Math.round(Math.random()*1000) },
-                {name: '澳门',value: Math.round(Math.random()*1000) }
+                {name: '上海',value: Math.round(Math.random()*1000) }
               ]
             }
           ]
@@ -574,6 +547,58 @@
         for (let char in this.charts) {
           this.charts[char].resize()
         }
+      },
+      timeChange () {
+        let _time = this.$refs.timePicker.getValue()
+        this.params.bTime = _time.bTime
+        this.params.eTime = _time.eTime
+        this.queryAccessCt()
+        this.queryAccessCtByMinList()
+        this.queryAccessCtByUrlList()
+      },
+      timeChangeTwo () {
+        let _time = this.$refs.timePickerTwo.getValue()
+        this.paramsTwo.bTime = _time.bTime
+        this.paramsTwo.eTime = _time.eTime
+        this.queryAccessCt()
+        this.queryAccessCtByMinList()
+        this.queryAccessCtByUrlList()
+      },
+      queryAccessCt () {
+        this.dataRl = {
+          'ctRl': {'minCt': 0, 'totalCt': 0, 'maxCt': 0, 'avgCt': 0},
+          'distinctCtRl': {'minCt': 0, 'totalCt': 0, 'maxCt': 0, 'avgCt': 0}
+        }
+        this.requestAjax('get', 'queryAccessCt', this.params).then((data) => {
+          if (data.success) {
+            this.dataRl = data.data
+          }
+        }, () => {
+
+        })
+        },
+      queryAccessCtByMinList () {
+        this.requestAjax('get', 'ctByFormat', this.params).then((data) => {
+          if (data.success) {
+            this.pageViewData = data.data
+            setTimeout(() => {
+              this._resize()
+              this.initChart()
+            }, 20)
+          }
+        }, () => {
+
+        })
+      },
+      queryAccessCtByUrlList () {
+        this.requestAjax('get', 'queryAccessCtByUrlList', this.params).then((data) => {
+          this.data = []
+          if (data.success) {
+            this.data = data.data
+          }
+        }, () => {
+
+        })
       }
     }
   }

@@ -59,7 +59,7 @@
              </div>
              <div class="float-r form-fill">
                <div class="t-left">
-                  <i-time ref="timePicker" :ids='timePicker.timeArr' :placeholder="timePicker.placeholderArr" :span="timePicker.spanArr" @on-change="timeChange"></i-time>
+                 timePicker
                 </div>
              </div>
              <div class="clearFix"></div>
