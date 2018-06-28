@@ -108,7 +108,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .life{ padding: 20px;}
   .life .wrapper-box{background-color:#ffffff}
   .life-title{padding:0 20px; line-height: 34px;}

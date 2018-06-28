@@ -109,7 +109,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .industry{ padding: 20px;}
   .industry .wrapper-box{background-color:#ffffff}
   .industry-title{padding:0 20px; line-height: 34px;}

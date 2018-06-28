@@ -88,7 +88,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .manage-btn {
     position: absolute;
     top: 23px;

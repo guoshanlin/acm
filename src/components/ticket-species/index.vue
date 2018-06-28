@@ -338,7 +338,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .ivu-form-item {margin-bottom: inherit}
   .ticket{margin: 20px 0; position: relative}
   .ticket-button{padding: 5px;}

@@ -51,7 +51,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .rig-list-wrapper {
     padding: 10px 0
   }

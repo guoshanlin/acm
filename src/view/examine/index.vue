@@ -249,7 +249,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .wrapper {
     margin: 10px
   }

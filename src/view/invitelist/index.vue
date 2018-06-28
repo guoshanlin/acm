@@ -47,7 +47,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .invitelist-item{
     width: 100%;
   }

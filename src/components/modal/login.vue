@@ -1,4 +1,4 @@
-<style>
+<style scoped>
   #login-div .lc-block:not(.lcb-alt) {padding: 0px 35px;}
   #login-div .ivu-form-item {display: block;width: 100%;margin-bottom: 24px!important;}
   #login-div  .ivu-form-item:last-child,#login-div .ivu-form-item:nth-last-child(2) {margin-bottom:0px!important;}

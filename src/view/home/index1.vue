@@ -90,6 +90,6 @@
   }
 </script>
 
-<style>
+<style scoped>
   .home-page{background-color: #ffffff}
 </style>

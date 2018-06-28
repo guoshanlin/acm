@@ -19,7 +19,7 @@
     }
 </script>
 
-<style>
+<style scoped>
   .layout-content-menu{ width: 140px}
   .layout-content-main{width: calc(100% - 140px); padding: 10px;}
 </style>

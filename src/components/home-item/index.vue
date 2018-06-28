@@ -68,7 +68,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .home-item{position: relative; border: 1px solid #e3e2e5; padding: 10px; border-radius: 5px; margin: 10px;}
 
   .index-home {height: 300px;position: relative;border-radius: 4px;overflow: hidden;}

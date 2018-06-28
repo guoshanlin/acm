@@ -8,6 +8,6 @@
     }
 </script>
 
-<style>
+<style scoped>
    .footer{background-color: #712e2e;padding: 10px 0; color: #fff}
 </style>

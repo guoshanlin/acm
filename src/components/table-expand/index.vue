@@ -92,8 +92,7 @@
       }
     }
 </script>
-
-<style>
+<style scoped>
   .table-title{width:150px; }
   .table-fill{width: calc(100% - 150px);}
 </style>

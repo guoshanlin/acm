@@ -547,7 +547,7 @@
 
 </script>
 
-<style>
+<style scoped>
   .initiating .initiating-form-item{line-height: 30px; margin-bottom: 20px}
   .initiating .initiating-form-item>div{ border: 1px solid #e3e2e5; padding: 10px; border-radius: 5px}
   .initiating div{line-height: 30px}

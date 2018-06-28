@@ -152,7 +152,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .meeting-menu {height: 130px !important;background: #712e2e!important;}
   /*.ivu-menu.ivu-menu-horizontal .ivu-row-flex{height:130px;}*/
   .headPrimary {min-width: 992px;background: #712e2e}

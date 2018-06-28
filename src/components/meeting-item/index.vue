@@ -101,7 +101,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .meeting-item{
     width: 100%;
   }

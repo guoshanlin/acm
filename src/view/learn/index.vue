@@ -108,7 +108,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .learn{ padding: 20px;}
   .learn .wrapper-box{background-color:#ffffff}
   .learn-title{padding:0 20px; line-height: 34px;}

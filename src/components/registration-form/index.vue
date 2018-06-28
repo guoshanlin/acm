@@ -209,7 +209,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .ivu-form-item {margin-bottom: inherit}
   .form-div{margin: 20px 0; position: relative}
   .form-div-button{padding-bottom: 2px}

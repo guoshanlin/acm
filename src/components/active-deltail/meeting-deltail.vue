@@ -141,7 +141,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .wrapper{margin: 10px}
   .datails-flex-item { display: inline-block; width: 100px; margin-right: 10px}
   .span-title{ font-weight: bold}

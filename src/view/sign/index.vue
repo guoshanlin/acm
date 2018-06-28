@@ -63,7 +63,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .sign-item{
       width: 100%;
     }

@@ -108,7 +108,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .parenting{ padding: 20px;}
   .parenting .wrapper-box{background-color:#ffffff}
   .parenting-title{padding:0 20px; line-height: 34px;}
