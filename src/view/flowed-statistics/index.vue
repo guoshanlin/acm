@@ -266,8 +266,8 @@
           {title: '日平均PV', key: 'avgCt', sortable: false},
           {title: '总访客数UV', width: 110, key: 'dtTotalCt', sortable: false},
           {title: '日最高UV', key: 'dtMaxCt', sortable: false},
-          {title: '日最低UV', key: 'dtAvgCt', sortable: false},
-          {title: '日平均UV', key: 'dtMinCt', sortable: false}
+          {title: '日最低UV', key: 'dtMinCt', sortable: false},
+          {title: '日平均UV', key: 'dtAvgCt', sortable: false}
         ],
         data: [{company: '订单详情页', position: 1}, {company: '提交订单页', position: 1}],
         table: {
@@ -459,7 +459,7 @@
           series: [
             {
               type: 'line',
-              showSymbol: false,
+             // showSymbol: false,
               name: '浏览量',
               data: data.map((item) => {
                 return item.ct

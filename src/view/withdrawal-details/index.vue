@@ -100,10 +100,10 @@
               return h('div', this.formatterBalancelogStatus(params.row.status))
             }},
           {title: '到账时间',
-            key: 'passReview',
+            key: 'overTime',
             sortable: false,
             render: (h, params) => {
-              return h('div', this.formatterObjTime(params.row.passReview))
+              return h('div', this.formatterObjTime(params.row.overTime))
             }}
         ],
         timer: {},
@@ -141,6 +141,8 @@
         })
       },
       searchDriver () {
+        this.formData.limit = 20
+        this.formData.offset = 1
         this.loadItem()
       },
       /**

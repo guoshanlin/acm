@@ -164,6 +164,8 @@
       },
       searchDriver() {
         this.parms.keyWord = this.keyWord
+        this.parms.limit = 20
+        this.parms.offset = 1
         this.initItem()
       },
       formatterStatus (val) {
