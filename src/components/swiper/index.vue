@@ -1,7 +1,7 @@
 <template>
   <div class="swiper">
     <swiper :options="swiperOption" v-if='rows.length> 0'>
-      <swiper-slide v-for="(item, index) in rows" :key="index"><img width='100%' height='100%' v-lazy="item.url" @click="routePush('/index/activities',item.id,'home')"></swiper-slide>
+      <swiper-slide v-for="(item, index) in rows" :key="index1"><img width='100%' height='100%' v-lazy="item.url" @click="routePush('/index/activities',item.id,'home')"></swiper-slide>
       <div class="swiper-button-prev" slot="button-prev"></div>
       <div class="swiper-button-next" slot="button-next"></div>
       <div class="swiper-pagination" slot="pagination"></div>
@@ -61,8 +61,8 @@
   }
   .swiper {
     position: relative;
-    width: 100%;
-    margin: 10px 0 auto
+  width: 100%;
+  margin: 10px 0 auto
   }
   .swiper .swiper-slide {
     width: 1080px;

@@ -1,5 +1,10 @@
 <template>
-  <div class="layout">
+  <div class="layout" style="background-color: #f8f8f8;
+    background-repeat: repeat;
+    background-size: inherit;
+    background-attachment: fixed;
+    background-position: center center;
+    background-image: url(https://yfdxs.com/wp-content/themes/lensnews/images/body.png);">
     <!--顶部栏-->
     <top-header></top-header>
     <div class="index-tab">
