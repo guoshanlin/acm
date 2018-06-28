@@ -1,10 +1,5 @@
 <template>
-  <div class="layout" style="background-color: #f8f8f8;
-    background-repeat: repeat;
-    background-size: inherit;
-    background-attachment: fixed;
-    background-position: center center;
-    background-image: url(https://yfdxs.com/wp-content/themes/lensnews/images/body.png);">
+  <div class="layout">
     <!--顶部栏-->
     <top-header></top-header>
     <!--<div class="index-tab">-->
@@ -101,7 +96,14 @@
 </script>
 
 <style>
-  .layout {background-size:cover;background-position:50% 50%;background-repeat: no-repeat;height: 100%; overflow-y: auto}
+  .layout {background-color: #f8f8f8;
+    background-repeat: repeat;
+    background-size: inherit;
+    background-attachment: fixed;
+    background-position: center center;
+    background-image: url(../assets/body.png);
+    height: 100%;
+    overflow-y: auto}
   .layout-copy {text-align: center; color: #9ea7b4;}
   .index-tab{height: 50px;line-height: 50px;background-color: #712e2e}
   .index-tab h3{height: 50px;}

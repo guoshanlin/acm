@@ -1,7 +1,6 @@
 <template>
   <div class="footer">
-    <section class="slogan m-t20 c"
-             style="background-image: url(https://yfdxs.com/wp-content/themes/lensnews/images/slogan_bg.jpg">
+    <section class="slogan m-t20 c">
       <div style="position:relative; z-index: 2">
         <h3 class="fz32">聚热会</h3>
         <p class="fz15">做最有营养的活动</p>
@@ -28,6 +27,7 @@
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+    background-image: url(../assets/slogan_bg.jpg);
     color: #eee;
     text-align: center;
     padding: 100px 20px;
