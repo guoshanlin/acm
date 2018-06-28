@@ -45,13 +45,22 @@ export default {
       // 申请提现
       examination: {url: 'balanceLog/examination', pre: preuUrl},
       // 签到统计
-      reportSign: {url: '/activitys/reportSign', pre: preuUrl},
+      reportSign: {url: 'activitys/reportSign', pre: preuUrl},
       // 报名统计
-      reportEntered: {url: '/activitys/reportEntered', pre: preuUrl},
+      reportEntered: {url: 'activitys/reportEntered', pre: preuUrl},
       // 活动报名表
-      reportEnteredDateInfo: {url: '/activitys/reportEnteredDateInfo', pre: preuUrl},
+      reportEnteredDateInfo: {url: 'activitys/reportEnteredDateInfo', pre: preuUrl},
       // 活动报名订单统计
-      reportOrderInfo: {url: '/activitys/reportOrderInfo', pre: preuUrl}
+      reportOrderInfo: {url: 'activitys/reportOrderInfo', pre: preuUrl},
+      // 按时间统计流量
+      queryAccessCt: {url: 'accessLog/queryAccessCt', pre: preuUrl},
+      // 时间统计流量-统计每分钟流量
+      queryAccessCtByMinList: {url: 'accessLog/queryAccessCtByMinList', pre: preuUrl},
+      ctByFormat: {url: 'accessLog/ctByFormat', pre: preuUrl},
+      // 时间统计流量-统计每个url流量
+      queryAccessCtByUrlList: {url: 'accessLog/queryAccessCtByUrlList', pre: preuUrl},
+      // 按类型统计流量
+      queryAccessCtByType: {url: 'accessLog/queryAccessCtByType', pre: preuUrl}
     }
     /**
      * 获取url

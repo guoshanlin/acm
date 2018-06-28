@@ -14,6 +14,7 @@
         <i-col><h3 :class="active.life" @click="tabSwitch('/index/life','life')"><a>生活</a></h3></i-col>
         <i-col><h3 :class="active.parenting" @click="tabSwitch('/index/parenting','parenting')"><a>亲子</a></h3></i-col>
         <i-col><h3 :class="active.learn" @click="tabSwitch('/index/learn','learn')"><a>学习</a></h3></i-col>
+        <i-col><h3 :class="active.map" @click="tabSwitch('/index/map','map')"><a>地图测试</a></h3></i-col>
 <!--        <i-col><h3 @click="routePush('/index')"><a>展会</a></h3></i-col>-->
       </Row>
     </div>
@@ -39,7 +40,8 @@
           industry: '',
           life: '',
           parenting: '',
-          learn: ''
+          learn: '',
+          map: ''
         }
       }
     },
