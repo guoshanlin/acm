@@ -31,7 +31,7 @@
                 </div>
                 <div class="flex">
                   <Icon type="ios-location"></Icon>
-                  {{row.address}}
+                  {{row.city1 + row.city2 + row.city3 +row.address}}
                 </div>
               </div>
           </div>

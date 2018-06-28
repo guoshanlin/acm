@@ -50,7 +50,7 @@
                         return
                       }
                       const file = damo.childNodes[0].files[0]
-                      if (file.size > 2000 * 1024) {
+                      if (file.size > 4000 * 1024) {
                         _this.$Message.error('文件超出大小限制')
                         return
                       }

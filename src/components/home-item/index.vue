@@ -31,7 +31,7 @@
                 </div>
                 <div class="fbox">
                   <div class="flex">
-                    <Icon type="ios-location"></Icon> {{row.address}}
+                    <Icon type="ios-location"></Icon> {{row.city1 + row.city2 + row.city3 +row.address}}
                   </div>
                   <div class="t-right">
                     <Icon type="eye"></Icon>浏览数：{{row.count}}

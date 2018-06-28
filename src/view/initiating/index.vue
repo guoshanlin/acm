@@ -99,7 +99,7 @@
                <div class="t-center">
                    <Row type="flex" class="code-row-bg">
                      <i-col :span="16">
-                        <div class="container-img" v-html="imgHtml"></div>
+                        <div class="container-img posct" v-html="imgHtml"></div>
                      </i-col>
                      <i-col :span="8">
                         <div class="upload">
@@ -608,26 +608,26 @@
 
 </script>
 
-<style scoped>
+<style>
   .initiating .initiating-form-item{line-height: 30px; margin-bottom: 20px}
   .initiating .initiating-form-item>div{ border: 1px solid #e3e2e5; padding: 10px; border-radius: 5px}
   .initiating div{line-height: 30px}
-  .form-title{ width:100px !important; }
-  .form-fill{ width: calc(100% - 100px) !important;}
-  .form-sub{margin: 10px;}
-  .form-sub button{ margin: 0 10px;}
-  .form-group{margin: 5px 0px;}
-  .upload{ height: 300px;padding: 0 10px}
-  .ivu-radio-wrapper{margin: 5px!important;}
-  .ivu-radio-group-button .ivu-radio-wrapper:last-child,.ivu-radio-group-button.ivu-radio-group-small .ivu-radio-wrapper:first-child{border-radius:0;}
-  .registration-tip{cursor: pointer;}
-  .registration-tip:hover{background-color: #f5f6f7;}
-  .save-button{padding: 5px 0;}
+  .initiating .form-title{ width:100px !important; }
+  .initiating .form-fill{ width: calc(100% - 100px) !important;}
+  .initiating .form-sub{margin: 10px;}
+  .initiating .form-sub button{ margin: 0 10px;}
+  .initiating .form-group{margin: 5px 0px;}
+  .initiating .upload{ height: 300px;padding: 0 10px}
+  .initiating .ivu-radio-wrapper{margin: 5px!important;}
+  .initiating .ivu-radio-group-button .ivu-radio-wrapper:last-child,.ivu-radio-group-button.ivu-radio-group-small .ivu-radio-wrapper:first-child{border-radius:0;}
+  .initiating .registration-tip{cursor: pointer;}
+  .initiating .registration-tip:hover{background-color: #f5f6f7;}
+  .initiating .save-button{padding: 5px 0;}
   .initiating .ivu-select-dropdown{ z-index: 10000}
   .initiating .ivu-select-multiple .ivu-select-item{display: inline-block; margin: 2px}
   .initiating .ivu-select-multiple .ivu-select-item-selected{background-color: rgba(153, 199, 238, 0.36)}
   .initiating .ivu-select-multiple .ivu-select-item-selected:after{display: none;}
-  .red{color: #FF0000}
-  .container-img { border: 1px solid #e3e2e5; background-color: #eeeeee; width: 100%;padding: 10px;}
+  .initiating .red{color: #FF0000}
+  .initiating .container-img { border: 1px solid #e3e2e5; background-color: #eeeeee; width: 100%;padding: 10px;}
   .initiating img{width:100% !important;}
 </style>
