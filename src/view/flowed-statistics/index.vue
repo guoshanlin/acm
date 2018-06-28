@@ -106,7 +106,7 @@
           <div class="posct wrapper-border m-t10" style="height: 260px;">
              <div id="pageView" style="height: 260px; width: 100%"></div>
           </div>
-          <div class="posct wrapper-border m-t10">
+          <div class="wrapper-border m-t10">
             <i-table border :columns="columns" :data="data"></i-table>
           </div>
         </div>
@@ -114,34 +114,36 @@
     </div>
 
     <div v-else>
-      <Row type="flex" :gutter=5>
-        <!--<列表导栏>-->
-        <i-col span="16">
-          <Row type="flex" justify="start">
-            <i-col>
-              <RadioGroup @on-change="orderStatusChange" v-model="timePickerTwo.day" type="button">
-                <Radio label="-1">昨天</Radio>
-                <Radio label="-7">最近7天</Radio>
-                <Radio label="-30">最近30天</Radio>
-              </RadioGroup>
-            </i-col>
-            <i-col>
-              <div class="m-l5" style="min-width: 350px;">
-                <i-time ref="timePickerTwo" :ids='timePickerTwo.timeArr' :placeholder="timePickerTwo.placeholderArr"
-                        :span="timePickerTwo.spanArr" :day="timePickerTwo.day" @on-change="timeChangeTwo"></i-time>
-              </div>
-            </i-col>
-          </Row>
+        <div class="m-t20">
+          <Row type="flex" :gutter=5>
+            <!--<列表导栏>-->
+            <i-col span="16">
+              <Row type="flex" justify="start">
+                <i-col>
+                  <RadioGroup @on-change="orderStatusChange" v-model="timePickerTwo.day" type="button">
+                    <Radio label="-1">昨天</Radio>
+                    <Radio label="-7">最近7天</Radio>
+                    <Radio label="-30">最近30天</Radio>
+                  </RadioGroup>
+                </i-col>
+                <i-col>
+                  <div class="m-l5" style="min-width: 350px;">
+                    <i-time ref="timePickerTwo" :ids='timePickerTwo.timeArr' :placeholder="timePickerTwo.placeholderArr"
+                            :span="timePickerTwo.spanArr" :day="timePickerTwo.day" @on-change="timeChangeTwo"></i-time>
+                  </div>
+                </i-col>
+              </Row>
 
-        </i-col>
-        <i-col span="8">
-          <Row type="flex" justify="end">
-            <i-col>
-              <Button type="primary">导出</Button>
+            </i-col>
+            <i-col span="8">
+              <Row type="flex" justify="end">
+                <i-col>
+                  <!--<Button type="primary">导出</Button>-->
+                </i-col>
+              </Row>
             </i-col>
           </Row>
-        </i-col>
-      </Row>
+        </div>
         <div class="content-wrapper m-t20 wrapper-border">
           <div class="clear">
             <span>访客性别分布</span>
@@ -212,7 +214,7 @@
             </i-col>
             <i-col :span="12">
               <div style="padding: 20px;">
-                <i-table border :columns="table.columnsTer" :data="table.dataTer"></i-table>
+                <i-table border :columns="table.columnsTer" :data="table.dataTer" :height="260"></i-table>
               </div>
             </i-col>
           </Row>
@@ -230,7 +232,7 @@
             </i-col>
             <i-col :span="12">
               <div style="padding: 20px;">
-                <i-table border :columns="table.columnsTerTop" :data="table.dataTerTop"></i-table>
+                <i-table border :columns="table.columnsTerTop" :data="table.dataTerTop" :height="260"></i-table>
               </div>
             </i-col>
           </Row>
@@ -257,7 +259,6 @@
         },
         pageViewData: {},
         columns: [
-
           {title: '页面/场景', width: 100, key: 'key', sortable: false},
           {title: '总浏览量PV', width: 110, key: 'totalCt', sortable: false},
           {title: '日最高PV', key: 'maxCt', sortable: false},
@@ -273,45 +274,63 @@
           columns: [
             {title: '性别', key: 'name', sortable: false},
             {title: '访客数', key: 'value', sortable: false},
-            {title: '占比', key: 'position', sortable: false}
+            {
+              title: '占比',
+              sortable: false,
+              render: (h, params) => {
+                return h('div', [
+                  h('span', this.proportion(params.row.value, this.table.total) + '%')
+                ])
+              }}
             ],
-          data: [
-            {value: 335, name: '男'},
-            {value: 310, name: '女'},
-            {value: 234, name: '未知'}
-            ],
+          data: [],
+          total: 0,
+
           columnsPro: [
             {title: '省份', key: 'company', sortable: false},
             {title: '访客数', key: 'position', sortable: false},
             {title: '占比', key: 'position', sortable: false}
             ],
           dataPro: [],
+          totalPro: 0,
+
           columnsCity: [
             {title: '城市', key: 'company', sortable: false},
             {title: '访客数', key: 'position', sortable: false},
             {title: '占比', key: 'position', sortable: false}
           ],
           dataCity: [],
+          totalCity: 0,
+
           columnsTer: [
             {title: '终端系统', key: 'name', sortable: false},
             {title: '访客数', key: 'value', sortable: false},
-            {title: '占比', key: 'position', sortable: false}
+            {
+              title: '占比',
+              sortable: false,
+              render: (h, params) => {
+                return h('div', [
+                  h('span', this.proportion(params.row.value, this.table.totalTer) + '%')
+                ])
+              }}
           ],
-          dataTer: [
-            {value: 335, name: 'android'},
-            {value: 310, name: 'ios'},
-            {value: 234, name: '未知'}
-          ],
+          dataTer: [],
+          totalTer: 0,
+
           columnsTerTop: [
             {title: '终端机型', key: 'name', sortable: false},
             {title: '访客数', key: 'value', sortable: false},
-            {title: '占比', key: 'position', sortable: false}
+            {
+              title: '占比',
+              sortable: false,
+              render: (h, params) => {
+                return h('div', [
+                  h('span', this.proportion(params.row.value, this.table.totalTop) + '%')
+                ])
+              }}
           ],
-          dataTerTop: [
-            {value: 335, name: 'pra-al00x'},
-            {value: 310, name: '终端机型2'},
-            {value: 234, name: '未知'}
-            ]
+          dataTerTop: [],
+          totalTop: 0
         },
         charts: {},
         timePicker: {
@@ -327,20 +346,37 @@
           day: '-1'
         },
         params: {
-          // activityId: this.$route.query.id,
+          activityId: this.$route.query.id,
           bTime: '',
           eTime: ''
         },
         paramsTwo: {
           activityId: this.$route.query.id,
+          ctKey: 'visitor_sex,visitor_client_sys,visitor_client_model',
+          topN: 10,
           bTime: '',
           eTime: ''
-        }
+        },
+        timer: {}
       }
+    },
+    destroyed () {
+      window.onresize = function () {
+      }
+      clearInterval(this.timer)
     },
     created () {
       setTimeout(() => {
-        // this.initChart()
+        clearInterval(this.timer)
+          this.timer = setInterval(() => {
+            if (this.statistics == 0) {
+              this.queryAccessCt()
+              this.queryAccessCtByMinList()
+              this.queryAccessCtByUrlList()
+            } else {
+              this.queryAccessCtByType()
+            }
+          }, 60 * 1000)
       }, 20)
     },
     components: {
@@ -417,7 +453,7 @@
                 color: '#515151'
               }
             },
-            min:0,
+            min: 0,
             boundaryGap: [0.2, 0.2]
           },
           series: [
@@ -560,9 +596,7 @@
         let _time = this.$refs.timePickerTwo.getValue()
         this.paramsTwo.bTime = _time.bTime
         this.paramsTwo.eTime = _time.eTime
-        this.queryAccessCt()
-        this.queryAccessCtByMinList()
-        this.queryAccessCtByUrlList()
+        this.queryAccessCtByType()
       },
       queryAccessCt () {
         this.dataRl = {
@@ -599,6 +633,50 @@
         }, () => {
 
         })
+      },
+      queryAccessCtByType () {
+        this.requestAjax('get', 'queryAccessCtByType', this.paramsTwo).then((data) => {
+          console.log(data)
+          // this.data = []
+          if (data.success) {
+            let _arr = this.paramsTwo.ctKey.split(',')  // visitor_sex,visitor_client_sys,visitor_client_model
+            let _obj = {visitor_sex: ['data', 'total'], visitor_client_sys: ['dataTer', 'totalTer'], visitor_client_model: ['dataTerTop', 'totalTop']}
+            for (let i in _arr) {
+              console.log(i, _obj[_arr[i]])
+               let item = data.data[_arr[i]]
+               let _newArr = []
+               let _total = 0
+               for (let key in item) {
+                if (_arr[i] == 'visitor_sex') {
+                  if (key == 0) {
+                    _newArr.push({value: item[key], name: '未知'})
+                  } else {
+                    _newArr.push({value: item[key], name: key == 1 ? '男' : '女'})
+                  }
+                } else {
+                  _newArr.push({value: item[key], name: key })
+                }
+                 _total += item[key]
+               }
+              this.table[_obj[_arr[i]][0]] = _newArr
+              this.table[_obj[_arr[i]][1]] = _total
+            }
+            setTimeout(() => {
+              this._resize()
+              this.initChart1()
+            }, 20)
+            // this.data = data.data
+          }
+        }, () => {
+
+        })
+      },
+      proportion (val, total) {
+        if (isNaN(+val) || isNaN(+total) || +total == 0) {
+          return '0.00'
+        } else {
+          return this.toDecimal2(((+val) / (+total)) * 100)
+        }
       }
     }
   }
