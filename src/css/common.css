@@ -7,6 +7,8 @@ html, body ,div, span ,p ,h1, h2 ,h3 ,h4 ,h5 ,h6 ,li, a, input, option,table , t
   font-family:"微软雅黑"!important;
 }
 ul,li{list-style:none;}
+a,figure img{-webkit-transition: ease-in-out .3s;
+  transition: ease-in-out .3s;}
 table {border-collapse: collapse;border-spacing: 0;}
 #app{font-size:12px;font-family:"微软雅黑"!important;color:#000;height: 100%;}
 table {border-collapse: collapse;border-spacing: 0;}
@@ -57,10 +59,10 @@ table {border-collapse: collapse;border-spacing: 0;}
 .ct{text-align: center;}
 
 .b{background: #fff!important;}
-.b1{background: #FF1111!important;}
+.b1{background: #e1244e!important;}
 .b2{background: #eeefee}
 .c{color: #fff!important;}
-.c1{color: #FF1111!important;}
+.c1{color: #e1244e!important;}
 .c2{color: #333!important;}
 .c3{color: #757993!important;}
 .c4{color: #ff5050!important;}
@@ -74,6 +76,7 @@ table {border-collapse: collapse;border-spacing: 0;}
 .fz18{font-size:18px!important;}
 .fz20{font-size:20px!important;}
 .fz24{font-size:24px!important;}
+.fz32{font-size:32px!important;}
 .fz36{font-size:36px!important;}
 .fz48{font-size:48px!important;}
 .fz64{font-size:64px!important;}
@@ -194,8 +197,8 @@ span.ivu-date-picker-cells-cell {
 
 .login-wrapper .ivu-input-group-prepend{
   padding: 4px 12px;
-  background-color: #FF1111;
-  border: 1px solid #FF1111;
+  background-color: #e1244e;
+  border: 1px solid #e1244e;
   color: #fff;
   font-size: 18px;
 }

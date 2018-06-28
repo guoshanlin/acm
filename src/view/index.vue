@@ -7,17 +7,17 @@
     background-image: url(https://yfdxs.com/wp-content/themes/lensnews/images/body.png);">
     <!--顶部栏-->
     <top-header></top-header>
-    <div class="index-tab">
-      <Row type="flex" justify="center">
-        <i-col><h3 :class="active.home" @click="tabSwitch('/index','home')"><a>首页</a></h3></i-col>
-        <i-col><h3 :class="active.industry" @click="tabSwitch('/index/industry','industry')"><a>行业</a></h3></i-col>
-        <i-col><h3 :class="active.life" @click="tabSwitch('/index/life','life')"><a>生活</a></h3></i-col>
-        <i-col><h3 :class="active.parenting" @click="tabSwitch('/index/parenting','parenting')"><a>亲子</a></h3></i-col>
-        <i-col><h3 :class="active.learn" @click="tabSwitch('/index/learn','learn')"><a>学习</a></h3></i-col>
-        <i-col><h3 :class="active.map" @click="tabSwitch('/index/map','map')"><a>地图测试</a></h3></i-col>
-<!--        <i-col><h3 @click="routePush('/index')"><a>展会</a></h3></i-col>-->
-      </Row>
-    </div>
+    <!--<div class="index-tab">-->
+      <!--<Row type="flex" justify="center">-->
+        <!--<i-col><h3 :class="active.home" @click="tabSwitch('/index','home')"><a>首页</a></h3></i-col>-->
+        <!--<i-col><h3 :class="active.industry" @click="tabSwitch('/index/industry','industry')"><a>行业</a></h3></i-col>-->
+        <!--<i-col><h3 :class="active.life" @click="tabSwitch('/index/life','life')"><a>生活</a></h3></i-col>-->
+        <!--<i-col><h3 :class="active.parenting" @click="tabSwitch('/index/parenting','parenting')"><a>亲子</a></h3></i-col>-->
+        <!--<i-col><h3 :class="active.learn" @click="tabSwitch('/index/learn','learn')"><a>学习</a></h3></i-col>-->
+        <!--<i-col><h3 :class="active.map" @click="tabSwitch('/index/map','map')"><a>地图测试</a></h3></i-col>-->
+<!--&lt;!&ndash;        <i-col><h3 @click="routePush('/index')"><a>展会</a></h3></i-col>&ndash;&gt;-->
+      <!--</Row>-->
+    <!--</div>-->
     <div class="layout-content min-height clearFix m-0">
        <router-view></router-view>
     </div>
