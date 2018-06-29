@@ -19,101 +19,106 @@
       <div v-for="(row ,index) in options.opintions" :key="index">
         <Row :gutter=5>
            <div  v-for="rows in row" :key="rows.title">
-              <i-col :span="rows.titlespan">
-                <p class="width-right m-l10"><span class="red_tip">{{rows.required ? '*' : ''}}</span>{{rows.title}}</p>
-              </i-col>
-              <i-col :span="rows.colspan">
+             <div v-if="rows.theme" class="m-t10 m-b10">
+                 <h3 class="c2" style="font-weight: bold">{{rows.title}}</h3>
+             </div>
+              <div v-else>
+                <i-col :span="rows.titlespan">
+                  <p class="width-right m-l10"><span class="red_tip">{{rows.required ? '*' : ''}}</span>{{rows.title}}</p>
+                </i-col>
+                <i-col :span="rows.colspan">
 
-                <InputNumber style="width: 100%" v-if="rows.type=='InputNumber'" :max="rows.max" :min="rows.min"
-                             :placeholder="rows.required ? '请输入...(必填）':'请输入...'"
-                             v-model="fromVal[rows.id]"></InputNumber>
-                <InputNumber style="width: 100%" v-if="rows.type=='InputNumberMoney'" :max="rows.max" :min="rows.min"
-                             :placeholder="rows.required ? '请输入...(必填）':'请输入...'"
-                             :formatter="value => `${value}`.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')"
-                             v-model="fromVal[rows.id]" @on-change="moneyChange(arguments[0],rows)"></InputNumber>
+                  <InputNumber style="width: 100%" v-if="rows.type=='InputNumber'" :max="rows.max" :min="rows.min"
+                               :placeholder="rows.required ? '请输入...(必填）':'请输入...'"
+                               v-model="fromVal[rows.id]"></InputNumber>
+                  <InputNumber style="width: 100%" v-if="rows.type=='InputNumberMoney'" :max="rows.max" :min="rows.min"
+                               :placeholder="rows.required ? '请输入...(必填）':'请输入...'"
+                               :formatter="value => `${value}`.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')"
+                               v-model="fromVal[rows.id]" @on-change="moneyChange(arguments[0],rows)"></InputNumber>
 
-                <InputNumber style="width: 100%" v-if="rows.type=='InputNumberPercent'" :max="maxIpnut[rows.id]"
-                             :min="rows.min" :placeholder="rows.required ? '请输入...(必填）':'请输入...'"
-                             v-model="fromVal[rows.id]"></InputNumber>
-                <i-input type="text" v-if="rows.type=='bankCard'"
-                         :placeholder="rows.required ? '请输入...(必填）':'请输入...'"
-                         v-model="fromVal[rows.id]"
-                         :disabled="rows.disabled"
-                         :maxlength="rows.maxLength!=undefined ? rows.maxLength: 50" @on-blur="bankCardChange(rows)"></i-input>
+                  <InputNumber style="width: 100%" v-if="rows.type=='InputNumberPercent'" :max="maxIpnut[rows.id]"
+                               :min="rows.min" :placeholder="rows.required ? '请输入...(必填）':'请输入...'"
+                               v-model="fromVal[rows.id]"></InputNumber>
+                  <i-input type="text" v-if="rows.type=='bankCard'"
+                           :placeholder="rows.required ? '请输入...(必填）':'请输入...'"
+                           v-model="fromVal[rows.id]"
+                           :disabled="rows.disabled"
+                           :maxlength="rows.maxLength!=undefined ? rows.maxLength: 50" @on-blur="bankCardChange(rows)"></i-input>
 
-                <i-input type="text" v-if="rows.type=='input'"
-                       :placeholder="rows.required ? '请输入...(必填）':'请输入...'"
-                       v-model="fromVal[rows.id]"
-                       :disabled="rows.disabled"
-                       :maxlength="rows.maxLength!=undefined ? rows.maxLength: 50"></i-input>
-                <i-input type="text" v-if="rows.type=='passWord'"
-                       :placeholder="rows.required ? '请输入...(必填）':'请输入...'"
-                        v-model="fromVal[rows.id]"
-                       :disabled="rows.disabled"
-                       :maxlength="rows.maxLength!=undefined ? rows.maxLength: 50"></i-input>
+                  <i-input type="text" v-if="rows.type=='input'"
+                           :placeholder="rows.required ? '请输入...(必填）':'请输入...'"
+                           v-model="fromVal[rows.id]"
+                           :disabled="rows.disabled"
+                           :maxlength="rows.maxLength!=undefined ? rows.maxLength: 50"></i-input>
+                  <i-input type="text" v-if="rows.type=='passWord'"
+                           :placeholder="rows.required ? '请输入...(必填）':'请输入...'"
+                           v-model="fromVal[rows.id]"
+                           :disabled="rows.disabled"
+                           :maxlength="rows.maxLength!=undefined ? rows.maxLength: 50"></i-input>
 
-                <i-input v-if="rows.type=='textarea'"
-                       v-model="fromVal[rows.id]"
-                       type="textarea"
-                       :rows="rows.rowsNub"
-                       :placeholder="rows.required ? '请输入...(必填）':'请输入...'"></i-input>
+                  <i-input v-if="rows.type=='textarea'"
+                           v-model="fromVal[rows.id]"
+                           type="textarea"
+                           :rows="rows.rowsNub"
+                           :placeholder="rows.required ? '请输入...(必填）':'请输入...'"></i-input>
 
-                <Dropdown v-if="rows.type=='dropDown'" trigger="click" style="width: 100%"
-                          @on-click="clickDropDown(arguments[0], rows.id)">
-                  <i-input type="text" placeholder="请输入或选择类型..." v-model="fromVal[rows.id]" :maxlength="10"></i-input>
-                  <DropdownMenu slot="list">
-                    <DropdownItem v-for="item in select[rows.id]" :name="item.value" :key="item.value">{{item.label }}&nbsp;({{item.value}})
-                    </DropdownItem>
-                  </DropdownMenu>
-                </Dropdown>
+                  <Dropdown v-if="rows.type=='dropDown'" trigger="click" style="width: 100%"
+                            @on-click="clickDropDown(arguments[0], rows.id)">
+                    <i-input type="text" placeholder="请输入或选择类型..." v-model="fromVal[rows.id]" :maxlength="10"></i-input>
+                    <DropdownMenu slot="list">
+                      <DropdownItem v-for="item in select[rows.id]" :name="item.value" :key="item.value">{{item.label }}&nbsp;({{item.value}})
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </Dropdown>
 
-                <Select v-if="rows.type=='select'&& rows.relation!=''"
-                        v-model="fromVal[rows.id]"
-                        :placeholder="rows.required ? '请选择(必选）':'请选择'"
-                        :disabled="rows.disabled"
-                        @on-change="selectChange(arguments[0], rows.relation)"
-                        :filterable="rows.filterable"
-                        :placement="placement">
-                  <Option v-for="item in select[rows.id]" :value="item.value" :key="item.value">{{ item.label }}
-                  </Option>
-                </Select>
+                  <Select v-if="rows.type=='select'&& rows.relation!=''"
+                          v-model="fromVal[rows.id]"
+                          :placeholder="rows.required ? '请选择(必选）':'请选择'"
+                          :disabled="rows.disabled"
+                          @on-change="selectChange(arguments[0], rows.relation)"
+                          :filterable="rows.filterable"
+                          :placement="placement">
+                    <Option v-for="item in select[rows.id]" :value="item.value" :key="item.value">{{ item.label }}
+                    </Option>
+                  </Select>
 
-                <Select v-if="rows.type=='select'&& rows.relation==''"
-                        v-model="fromVal[rows.id]"
-                        :placeholder="rows.required ? '请选择(必选）':'请选择'"
-                        :disabled="rows.disabled"
-                        :id="rows.id"
-                        :filterable="rows.filterable"
-                        :placement="placement">
-                  <Option v-for="item in select[rows.id]" :value="item.value" :key="item.value">{{ item.label }}
-                  </Option>
-                </Select>
+                  <Select v-if="rows.type=='select'&& rows.relation==''"
+                          v-model="fromVal[rows.id]"
+                          :placeholder="rows.required ? '请选择(必选）':'请选择'"
+                          :disabled="rows.disabled"
+                          :id="rows.id"
+                          :filterable="rows.filterable"
+                          :placement="placement">
+                    <Option v-for="item in select[rows.id]" :value="item.value" :key="item.value">{{ item.label }}
+                    </Option>
+                  </Select>
 
-                <div v-if="rows.type=='radio'" style="height: 32px;padding: 5px">
-                  <RadioGroup v-model="fromVal[rows.id]" size="large">
-                    <Radio v-for="item in radios[rows.id]" :label="item.value" :key="item.value">{{item.name}}</Radio>
-                  </RadioGroup>
-                </div>
-                <div v-if="rows.type=='checkbox'" style="height: 32px;padding: 5px">
-                  <CheckboxGroup v-model="fromVal[rows.id]">
-                    <Checkbox v-for="item in checkboxes[rows.id]" :label="item.value" :key="item.value"></Checkbox>
-                  </CheckboxGroup>
-                </div>
-                <Select v-if="rows.type=='selectMultiple'"
-                        multiple
-                        v-model="fromVal[rows.id]"
-                        :placeholder="rows.required ? '请选择(可多选,必选)':'请选择(可多选)'"
-                        :filterable="rows.filterable"
-                        @on-change="selectChange(arguments[0], rows.relation)"
-                        :placement="placement">
-                  <Option v-for="item in select[rows.id]" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                </Select>
-                <div v-if="rows.type=='time'" class="ivu-input-wrapper ivu-input-type">
-                  <i class="ivu-icon ivu-icon-ios-calendar-outline ivu-input-icon ivu-input-icon-normal"></i>
-                  <input :id="rows.id" :value="fromVal[rows.id]" autocomplete="off" spellcheck="false" type="text" :placeholder="rows.required ? '请选择日期和时间(必选）':'请选择日期和时间'" class="ivu-input" @click='initTime(rows.id, rows.format)'>
-                </div>
-                <div v-if="rows.type=='tip'" class="l-h30">{{rows.name}}{{fromVal[rows.id]}} 元  <span class="c3">(按照提现金额收取15%的手续费)</span> <span v-if="enough" class="c1">余额不足</span></div>
-              </i-col>
+                  <div v-if="rows.type=='radio'" style="height: 32px;padding: 5px">
+                    <RadioGroup v-model="fromVal[rows.id]" size="large">
+                      <Radio v-for="item in radios[rows.id]" :label="item.value" :key="item.value">{{item.name}}</Radio>
+                    </RadioGroup>
+                  </div>
+                  <div v-if="rows.type=='checkbox'" style="height: 32px;padding: 5px">
+                    <CheckboxGroup v-model="fromVal[rows.id]">
+                      <Checkbox v-for="item in checkboxes[rows.id]" :label="item.value" :key="item.value"></Checkbox>
+                    </CheckboxGroup>
+                  </div>
+                  <Select v-if="rows.type=='selectMultiple'"
+                          multiple
+                          v-model="fromVal[rows.id]"
+                          :placeholder="rows.required ? '请选择(可多选,必选)':'请选择(可多选)'"
+                          :filterable="rows.filterable"
+                          @on-change="selectChange(arguments[0], rows.relation)"
+                          :placement="placement">
+                    <Option v-for="item in select[rows.id]" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                  </Select>
+                  <div v-if="rows.type=='time'" class="ivu-input-wrapper ivu-input-type">
+                    <i class="ivu-icon ivu-icon-ios-calendar-outline ivu-input-icon ivu-input-icon-normal"></i>
+                    <input :id="rows.id" :value="fromVal[rows.id]" autocomplete="off" spellcheck="false" type="text" :placeholder="rows.required ? '请选择日期和时间(必选）':'请选择日期和时间'" class="ivu-input" @click='initTime(rows.id, rows.format)'>
+                  </div>
+                  <div v-if="rows.type=='tip'" class="l-h30">{{rows.name}}{{fromVal[rows.id]}} 元  <span class="c3">(按照提现金额收取15%的手续费)</span> <span v-if="enough" class="c1">余额不足</span></div>
+                </i-col>
+              </div>
             </div>
         </Row>
       </div>

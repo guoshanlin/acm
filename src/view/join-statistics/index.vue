@@ -183,17 +183,17 @@
 
         registerRateCol: [
           {
-            title: "报名名称",
+            title: "票券类型",
             align: 'center',
             key: "name"
           },
           {
-            title: "总人数",
+            title: "报名总人数",
             align: 'center',
             key: "total"
           },
           {
-            title: "实际报名",
+            title: "报名成功人数",
             align: 'center',
             key: "actual"
           },
@@ -205,13 +205,13 @@
         ],
         registerRateData: [
           {
-            name: '免费报名',
+            name: '免费',
             total: 0,
             actual: '0',
             rate: '0%'
           },
           {
-            name: '付费报名',
+            name: '付费',
             total: 0,
             actual: '0',
             rate: '0%'

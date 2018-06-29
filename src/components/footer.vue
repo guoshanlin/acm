@@ -9,7 +9,7 @@
       <div class="bg"></div>
     </section>
     <div class="c3 copyright">
-      @2007-2016 Coreware Software, Inc. | All Rights Reserved. 广州科微软件有限公司
+      @2018- Coreware Software, Inc. | All Rights Reserved. 广州科微软件有限公司
     </div>
   </div>
 </template>

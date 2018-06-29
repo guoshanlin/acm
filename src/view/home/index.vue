@@ -7,11 +7,12 @@
           <Icon type="android-notifications" style="vertical-align: middle"></Icon>
           <span class="fz14 c">公告</span>
         </section>
-        <swiper class="notice flex" :options="noticeOption" v-if='rowSwiper.length> 0'>
-          <swiper-slide  v-for="item in rowSwiper" :key="item.id">
+        <swiper class="notice flex" :options="noticeOption" v-if='option[1].rows.length> 0'>
+          <swiper-slide  v-for="item in option[1].rows" :key="item.id">
             <div class="hzline1"><a class="c2" href="javascript:void(0)">最新发布活动：{{item.name}} </a></div></swiper-slide>
           <!--<swiper-slide>-->
-          <!--<div class="hzline1"><a class="c2" href="javascript:void(0)">MNews 主题更新至1.1： 站内信，打赏，百度推送，阿里云视频点播和优酷视频，认阿里云视频点播和优酷视频阿里云视频点播和优酷视频证作者加认阿里云视频点播和优酷视频阿里云视频点播和优酷视频证作者加 V，前台编辑文章等自媒体实用的功能，增加了视频自</a></div></swiper-slide>-->
+          <!--<div class="hzline1"><a class="c2" href="javascript:void(0)">MNews 主题更新至1.1： 站内信，打赏，百度推送，阿里云视频点播和优酷视频，认阿里云视频点播和优酷视频阿里
+          云视频点播和优酷视频证作者加认阿里云视频点播和优酷视频阿里云视频点播和优酷视频证作者加 V，前台编辑文章等自媒体实用的功能，增加了视频自</a></div></swiper-slide>-->
         </swiper>
         <div class="fz20 notice-btn-wrapper">
           <a class="notice-prev" href="javascript:void(0)"><Icon type="android-arrow-dropleft-circle"></Icon></a>
@@ -186,7 +187,7 @@
       loadActivity () {
         let arr = ['1' ,'2', '']
         for (let i = 0; i < 3; i++) {
-          this.requestAjax('get', 'activitys', {importance: arr[i], status: '1,2'}).then((data) => {
+          this.requestAjax('get', 'activitys', {importance: arr[i], status: '1,2',limit: 8}).then((data) => {
             if (data.success) {
               if (i == 0) {
                 this.row = []

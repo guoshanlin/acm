@@ -295,57 +295,64 @@
           title: _b ? '修改会员' : '新增会员',
           width: '1040',
           opintions: [
+            [{title: '基本信息', theme: true}],
             [
               {title: '姓名',id: 'name',type: 'input',titlespan: 2,colspan: 6,required: true },
-              {title: '手机',id: 'phone',type: 'input',titlespan: 2,colspan: 6,required: true,valueType: 'mobilePhone'},
-              {title: '邮箱',id: 'email',type: 'input',titlespan: 2,colspan: 6,required: true,valueType: 'email'},
-            ],
-            [
               { title: '性别',id: 'sex',type: 'select',titlespan: 2,colspan: 6,required: false,relation: ''},
-              {title: '身份证号',id: 'cardNumber',type: 'input',titlespan: 2,colspan: 6,required: false,valueType: 'idCard'},
-              {title: '类型',id: 'type',type: 'select',titlespan: 2,colspan: 6,relation: '',required: false}
+              {title: '出生日期',id: 'birth',type: 'time',format: 'yyyy-MM-dd',titlespan: 2,colspan: 6,required: false}
             ],
             [
-              {title: '爱好',id: 'hobby',type: 'input',titlespan: 2,colspan: 6,required: false},
+              {title: '手机',id: 'phone',type: 'input',titlespan: 2,colspan: 6,required: true,valueType: 'mobilePhone'},
+              {title: '微信号',id: 'wechat',type: 'input',titlespan: 2,colspan: 6, relation: '',required: false},
+              {title: '邮箱',id: 'email',type: 'input',titlespan: 2,colspan: 6,required: true,valueType: 'email'}
+            ],
+            [
+              {title: '级别',id: 'level',type: 'select',titlespan: 2,colspan: 6, relation: '',required: false},
+              {title: '会员卡号',id: 'vipNo',type: 'input',titlespan: 2,colspan: 6, relation: '',required: false},
+              {title: '会员期限',id: 'validTime',type: 'time',titlespan: 2,colspan: 6,required: false}
+            ],
+            [
               {title: '公司',id: 'company',type: 'input',titlespan: 2,colspan: 6,required: false},
               {title: '职位',id: 'position',type: 'input',titlespan: 2,colspan: 6,required: false},
+              {title: '地址',id: 'address',type: 'input',titlespan: 2,colspan: 6,required: false}
+            ],
+            [{title: '扩展信息', theme: true}],
+            [
+              {title: '身份证号',id: 'cardNumber',type: 'input',titlespan: 2,colspan: 6,required: false,valueType: 'idCard'},
+              {title: '籍贯',id: 'hometown',type: 'input',titlespan: 2,colspan: 6,required: false},
+              {title: '爱好',id: 'hobby',type: 'input',titlespan: 2,colspan: 6,required: false}
             ],
             [
-              {title: '渠道',id: 'channel',type: 'select',titlespan: 2,colspan: 6,relation: '',required: false},
-              {title: '级别',id: 'level',type: 'select',titlespan: 2,colspan: 6, relation: '',required: false},
-              {title: '会员期限',id: 'validTime',type: 'time',titlespan: 2,colspan: 6,required: false}
+              {title: '毕业院校',id: 'institutions',type: 'input',titlespan: 2,colspan: 6,required: false},
+              {title: '学历',id: 'education',type: 'input',titlespan: 2,colspan: 6, relation: '',required: false},
+              {title: '所属行业',id: 'profession',type: 'input',titlespan: 2,colspan: 6, relation: '',required: false}
             ],
 
             [
-              {title: '微信号',id: 'wechat',type: 'input',titlespan: 2,colspan: 6, relation: '',required: false},
-              {title: '出生日期',id: 'birth',type: 'time',format: 'yyyy-MM-dd',titlespan: 2,colspan: 6,required: false},
-              {title: '所属行业',id: 'profession',type: 'input',titlespan: 2,colspan: 6, relation: '',required: false},
+              {title: '类型',id: 'type',type: 'select',titlespan: 2,colspan: 6,relation: '',required: false},
+              {title: '渠道',id: 'channel',type: 'select',titlespan: 2,colspan: 6,relation: '',required: false},
+              {title: '工作年限',id: 'experienceYears',type: 'input',titlespan: 2,colspan: 6,required: false}
             ],
             [
-              {title: '工作年限',id: 'experienceYears',type: 'input',titlespan: 2,colspan: 6,required: false},
-              {title: '拥有资源',id: 'resources',type: 'input',titlespan: 2,colspan: 6, relation: '',required: false},
-              {title: '籍贯',id: 'hometown',type: 'input',titlespan: 2,colspan: 6,required: false}
+              {title: '拥有资源',id: 'resources',type: 'input',titlespan: 2,colspan: 22, relation: '',required: false},
             ],
             [
-              {title: '学历',id: 'education',type: 'input',titlespan: 2,colspan: 6, relation: '',required: false},
-              {title: '毕业院校',id: 'institutions',type: 'input',titlespan: 2,colspan: 6,required: false},
-              {title: '想学技能',id: 'wannaSkills',type: 'input',titlespan: 2,colspan: 6, relation: '',required: false},
+              {title: '拥有技能',id: 'skills',type: 'input',titlespan: 2,colspan: 22,required: false}
             ],
             [
-              {title: '擅长技能',id: 'goodSkills',type: 'input',titlespan: 2,colspan: 6,required: false},
+              {title: '擅长技能',id: 'goodSkills',type: 'input',titlespan: 2,colspan: 22,required: false}
+            ],
+            [
+              {title: '想学技能',id: 'wannaSkills',type: 'input',titlespan: 2,colspan: 22, relation: '',required: false}
+            ],
+            [
+              {title: '想收获',id: 'gains',type: 'input',titlespan: 2,colspan: 22,required: false}
+            ],
+            [
+              {title: '分享知识',id: 'shareInfo',type: 'input',titlespan: 2,colspan: 22,required: false},
               {title: '分享日期',id: 'shareDate',type: 'time',format: 'yyyy-MM-dd',titlespan: 2,colspan: 6, relation: '',required: false},
-              {title: '会员卡号',id: 'vipNo',type: 'input',titlespan: 2,colspan: 6, relation: '',required: false},
-            ],
-            [
-              {title: '拥有技能',id: 'skills',type: 'input',titlespan: 2,colspan: 6,required: false},
-              {title: '想收获内容',id: 'gains',type: 'input',titlespan: 3,colspan: 6,required: false},
-            ],
-            [
-              {title: '地址',id: 'address',type: 'input',titlespan: 2,colspan: 22,required: false}
-            ],
-            [
-              {title: '分享知识',id: 'shareInfo',type: 'input',titlespan: 2,colspan: 22,required: false}
             ]
+
           ],
           button: [{type: 'primary',title: _b ? '修改' : '提交',click: 'handle'}]
 
