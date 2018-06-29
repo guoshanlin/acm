@@ -136,7 +136,6 @@
 
   .header {
     height: 108px;
-    margin-bottom: 24px;
     border-bottom: 1px #f2f2f2 solid;
     height: 108px;
     padding: 4px 20px 0;

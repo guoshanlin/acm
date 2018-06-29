@@ -151,6 +151,11 @@ export default new Router({
       ]
     },
     {
+      path: '/category',
+      name: 'category',
+      component: (resolve) => require(['../view/category'], resolve)
+    },
+    {
       path: '/index',
       name: 'index',
       component: (resolve) => require(['../view/index'], resolve),
