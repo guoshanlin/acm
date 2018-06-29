@@ -168,39 +168,11 @@
                 valueType: 'mobilePhone'
               },
               {
-                title: '微信openId',
-                id: 'wechat',
-                type: 'input',
-                titlespan: 3,
-                colspan: 9,
-                required: false
-              }
-            ],
-            [
-              {
-                title: '状态',
-                id: 'status',
-                type: 'select',
-                titlespan: 3,
-                colspan: 9,
-                required: false
-              },
-              {
-                title: '角色',
-                id: 'role',
-                type: 'select',
-                titlespan: 3,
-                colspan: 9,
-                required: false
-              }
-            ],
-            [
-              {
                 title: '银行卡号',
                 id: 'bankCard',
                 type: 'bankCard',
                 titlespan: 3,
-                colspan: 21,
+                colspan: 9,
                 required: true,
                 relation: 'bank',
                 valueType: 'bankCheck'
@@ -208,20 +180,20 @@
             ],
             [
               {
+                title: '开户名',
+                id: 'bankUser',
+                type: 'input',
+                titlespan: 3,
+                colspan: 9,
+                required: true
+              },
+              {
                 title: '开户行',
                 id: 'bank',
                 type: 'input',
                 titlespan: 3,
                 colspan: 9,
                 relation: '',
-                required: true
-              },
-              {
-                title: '开户名',
-                id: 'bankUser',
-                type: 'input',
-                titlespan: 3,
-                colspan: 9,
                 required: true
               }
             ],
@@ -293,22 +265,11 @@
                 required: false
               },
               {
-                title: '渠道',
-                id: 'channel',
-                type: 'select',
-                titlespan: 3,
-                colspan: 9,
-                relation: '',
-                required: false
-              }
-            ],
-            [
-              {
                 title: '地址',
                 id: 'address',
                 type: 'input',
                 titlespan: 3,
-                colspan: 21,
+                colspan: 9,
                 required: false
               }
             ]
@@ -331,12 +292,9 @@
           hobby: row.hobby,
           company: row.company,
           position: row.position,
-          channel: row.channel,
           address: row.address,
           bank: row.bank,
           bankCard: row.bankCard,
-          status: row.status,
-          role: row.role,
           bankUser: row.bankUser,
           id: row.id
         }

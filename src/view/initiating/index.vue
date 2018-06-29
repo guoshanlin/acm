@@ -145,7 +145,7 @@
                    </i-col>
                    <i-col span="22">
                      <RadioGroup v-model="fromVal.classify" type="button" size="small">
-                       <Radio v-for="value in item.radio" :label="value" :key="value" :value="value"></Radio>
+                       <Radio v-for="value in item.children" :label="value.title" :key="value.title" :value="value.title"></Radio>
                      </RadioGroup>
                    </i-col>
                  </Row>
@@ -261,8 +261,6 @@
                 }
               }
       }
-      console.log(cityObj)
-      console.log(areaObj)
       return {
     //    imgHtml: '<div style="height:300px; line-height: 300px" class="c3">图片格式为1080 * 640px，大小不超过2M</div>',
         imgHtml: '<div style="height:300px; line-height: 300px" class="c3">大小不超过4M</div>',
@@ -572,18 +570,20 @@
        * 查询活动分类
        */
       activitysConfig () {
-        this.requestAjax('get', 'activitysConfig', {}).then((data) => {
+        this.requestAjax('get', 'findTree', {}).then((data) => {
          // {title: '行业', radio: ['IT互联网', '创业', '科技', '金融','游戏','文娱','电商','教育','营销','设计','地产','医疗','服务业']},
           this.radio.classify = []
           if (data.success) {
-            for (let key in data.data) {
-              let _obj = {title: this.formatTitle(key), radio: []}
-              let item = data.data[key]
-                for (let i in item) {
-                  _obj.radio.push(item[i])
-                }
-              this.radio.classify.push(_obj)
-            }
+            this.radio.classify = JSON.parse(data.data.rows).children
+            // console.log(JSON.parse(data.data.rows).children)
+            // for (let key in data.data) {
+            //   let _obj = {title: this.formatTitle(key), radio: []}
+            //   let item = data.data[key]
+            //     for (let i in item) {
+            //       _obj.radio.push(item[i])
+            //     }
+            //   this.radio.classify.push(_obj)
+            // }
           }
         }, () => {
 

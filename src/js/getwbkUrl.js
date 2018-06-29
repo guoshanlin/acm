@@ -63,6 +63,8 @@ export default {
       queryAccessCtByType: {url: 'accessLog/queryAccessCtByType', pre: preuUrl},
       // 查询活动分来
       activitysConfig: {url: 'activitys/config', pre: preuUrl},
+      // 查询活动分来
+      findTree: {url: 'configs/findTree', pre: preuUrl},
       // 查询最热活动
       activityTopN: {url: 'accessLog/activityTopN', pre: preuUrl}
     }

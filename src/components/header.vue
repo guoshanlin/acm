@@ -56,19 +56,10 @@
           <div class="header-menu fr fz14">
             <ul class="menu">
               <li class="menu-item">
-                <a class="c1" href="javascript:void(0)">首页</a>
+                <a href="javascript:void(0)" @click="routePush('/index')">首页</a>
               </li>
-              <li class="menu-item">
-                <a href="javascript:void(0)">行业</a>
-              </li>
-              <li class="menu-item">
-                <a href="javascript:void(0)">生活</a>
-              </li>
-              <li class="menu-item">
-                <a href="javascript:void(0)">亲子</a>
-              </li>
-              <li class="menu-item">
-                <a href="javascript:void(0)">学习</a>
+              <li class="menu-item" v-for="(item, index) in findTree" :key="index">
+                <a href="javascript:void(0)" @click="routePush('/category','','',{type:item.title})">{{item.title}}</a>
               </li>
             </ul>
           </div>
@@ -99,12 +90,13 @@
           modalshow: false,
           option: {},
           value: {}
-        } // 表单参数
+        }, // 表单参数
+        findTree: {}
       }
     },
-    created() {
+    created () {
       setTimeout(() => {
-
+        this.activitysConfig()
       }, 20)
     },
     computed: {
@@ -124,7 +116,7 @@
         setUserDate: 'SET_USERDATA',
         setIsLogin: 'SET_ISLOGIN'
       }),
-      searchEvent(){
+      searchEvent () {
         this.$Message.info('搜索：' + this.searchValue)
       },
       handleSubmit (name) {
@@ -203,39 +195,11 @@
                 valueType: 'mobilePhone'
               },
               {
-                title: '微信openId',
-                id: 'wechat',
-                type: 'input',
-                titlespan: 3,
-                colspan: 9,
-                required: false
-              }
-            ],
-            [
-              {
-                title: '状态',
-                id: 'status',
-                type: 'select',
-                titlespan: 3,
-                colspan: 9,
-                required: false
-              },
-              {
-                title: '角色',
-                id: 'role',
-                type: 'select',
-                titlespan: 3,
-                colspan: 9,
-                required: false
-              }
-            ],
-            [
-              {
                 title: '银行卡号',
                 id: 'bankCard',
                 type: 'bankCard',
                 titlespan: 3,
-                colspan: 21,
+                colspan: 9,
                 required: true,
                 relation: 'bank',
                 valueType: 'bankCheck'
@@ -243,20 +207,20 @@
             ],
             [
               {
+                title: '开户名',
+                id: 'bankUser',
+                type: 'input',
+                titlespan: 3,
+                colspan: 9,
+                required: true
+              },
+              {
                 title: '开户行',
                 id: 'bank',
                 type: 'input',
                 titlespan: 3,
                 colspan: 9,
                 relation: '',
-                required: true
-              },
-              {
-                title: '开户名',
-                id: 'bankUser',
-                type: 'input',
-                titlespan: 3,
-                colspan: 9,
                 required: true
               }
             ],
@@ -328,22 +292,11 @@
                 required: false
               },
               {
-                title: '渠道',
-                id: 'channel',
-                type: 'select',
-                titlespan: 3,
-                colspan: 9,
-                relation: '',
-                required: false
-              }
-            ],
-            [
-              {
                 title: '地址',
                 id: 'address',
                 type: 'input',
                 titlespan: 3,
-                colspan: 21,
+                colspan: 9,
                 required: false
               }
             ]
@@ -366,12 +319,9 @@
           hobby: row.hobby,
           company: row.company,
           position: row.position,
-          channel: row.channel,
           address: row.address,
           bank: row.bank,
           bankCard: row.bankCard,
-          status: row.status,
-          role: row.role,
           bankUser: row.bankUser,
           id: row.id
         }
@@ -406,7 +356,18 @@
           this.$Message.success('修改信息失败')
           this.inputForm.modalDisabled = false
         })
-      }
+      },
+      activitysConfig () {
+        this.requestAjax('get', 'findTree', {}).then((data) => {
+          // {title: '行业', radio: ['IT互联网', '创业', '科技', '金融','游戏','文娱','电商','教育','营销','设计','地产','医疗','服务业']},
+          this.findTree = []
+          if (data.success) {
+            this.findTree = JSON.parse(data.data.rows).children
+          }
+        }, () => {
+
+        })
+      },
     },
     components: {
       iPassword,

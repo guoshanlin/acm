@@ -51,7 +51,7 @@
               </article>
             </li>
           </ul>
-          <a class="more c3" href="javascript:void(0)" title="查看更多置顶推荐的文章"><span>更多热度榜活动</span>
+          <a class="more c3" href="javascript:void(0)" title="查看更多置顶推荐的活动" @click="routePush('/category')"><span>更多热度榜活动</span>
             <Icon class="fr" type="chevron-right"></Icon>
           </a>
         </div>
@@ -78,7 +78,7 @@
                 <!--<a  href="javascript:void(0)">原创</a>-->
               <!--</li>-->
             <!--</ul>-->
-            <a href="javascript:void(0)" class="home_button c3" title="查看更多">
+            <a href="javascript:void(0)" class="home_button c3" title="查看更多" @click="routePush('/category')">
               <Icon type="ios-more"></Icon>
             </a>
           </section>
