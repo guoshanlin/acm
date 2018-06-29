@@ -168,13 +168,24 @@
           }
         ],
         rowSwiper: [],
-        dataTop: []
+        dataTop: [],
+        timer: {}
       }
     },
-    created() {
+    destroyed () {
+      window.onresize = function () {
+      }
+      clearInterval(this.timer)
+    },
+    created () {
       setTimeout(() => {
         this.loadActivity()
         this.loadActivityTop()
+        clearInterval(this.timer)
+        this.timer = setInterval(() => {
+          this.loadActivity()
+          this.loadActivityTop()
+        }, 60 * 1000)
       }, 20)
     },
     methods: {
@@ -185,7 +196,7 @@
         })
       },
       loadActivity () {
-        let arr = ['1' ,'2', '']
+        let arr = ['1', '2', '']
         for (let i = 0; i < 3; i++) {
           this.requestAjax('get', 'activitys', {importance: arr[i], status: '1,2',limit: 8}).then((data) => {
             if (data.success) {

@@ -55,7 +55,7 @@
                             <span class="demo-Circle-inner fz16">总浏览量</span>
                           </i-circle>
                           <div class="t-center">
-                            <span class="demo-Circle-inner fz24 c7">{{dataRl.ctRl.avgCt}}</span><br>
+                            <span class="demo-Circle-inner fz24 c7">{{toDecimal2(dataRl.ctRl.avgCt)}}</span><br>
                             <span class="demo-Circle-inner fz16">日平均</span>
                           </div>
                         </div>
@@ -84,7 +84,7 @@
                            <span class="demo-Circle-inner fz16">总访客数</span>
                          </i-circle>
                          <div class="t-center">
-                           <span class="demo-Circle-inner fz24 c6">{{dataRl.distinctCtRl.avgCt}}</span><br>
+                           <span class="demo-Circle-inner fz24 c6">{{toDecimal2(dataRl.distinctCtRl.avgCt)}}</span><br>
                            <span class="demo-Circle-inner fz16">日平均</span>
                          </div>
                        </div>
@@ -263,11 +263,21 @@
           {title: '总浏览量PV', width: 110, key: 'totalCt', sortable: false},
           {title: '日最高PV', key: 'maxCt', sortable: false},
           {title: '日最低PV', key: 'minCt', sortable: false},
-          {title: '日平均PV', key: 'avgCt', sortable: false},
+          {title: '日平均PV',
+            key: 'avgCt',
+            sortable: false,
+            render: (h, params) => {
+            return h('div', this.toDecimal2(params.row.avgCt))
+            }},
           {title: '总访客数UV', width: 110, key: 'dtTotalCt', sortable: false},
           {title: '日最高UV', key: 'dtMaxCt', sortable: false},
           {title: '日最低UV', key: 'dtMinCt', sortable: false},
-          {title: '日平均UV', key: 'dtAvgCt', sortable: false}
+          {title: '日平均UV',
+            key: 'dtAvgCt',
+            sortable: false,
+            render: (h, params) => {
+              return h('div', this.toDecimal2(params.row.avgCt))
+            }}
         ],
         data: [{company: '订单详情页', position: 1}, {company: '提交订单页', position: 1}],
         table: {
