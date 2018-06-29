@@ -20,7 +20,7 @@
     </div>
     <div class="content-wrapper m-t20">
       <div class="clear m-t10 m-b10 ">
-        <div class="fl">可提现余额&nbsp;&nbsp;&nbsp;&nbsp;<span class="fz24 c1">{{row.balance}}元</span></div>
+        <div class="fl">可提现余额&nbsp;&nbsp;&nbsp;&nbsp;<span class="fz24 c1">{{toDecimal2(row.balance)}}元</span></div>
         <Button v-if="row.balance > 0" class="fr" type="primary" @click="applyWithdrawal">申请提现</Button>
         <!--<Button class="fr" type="primary" @click="applyWithdrawal">申请提现</Button>-->
       </div>

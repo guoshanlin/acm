@@ -52,7 +52,7 @@
        * @param obj
        */
       initItem () {
-        this.requestAjax('GET', 'activitys', {id: this.id}).then((data) => {
+        this.requestAjax('GET', 'activitys', {id: this.$route.query.id}).then((data) => {
           if (data.success) {
             this.data = data.data.rows[0]
             this.url = 'https://pmp.coreware.cn/gather/files/down?path=' + this.data.signUrl

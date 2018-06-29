@@ -62,7 +62,9 @@ export default {
       // 按类型统计流量
       queryAccessCtByType: {url: 'accessLog/queryAccessCtByType', pre: preuUrl},
       // 查询活动分来
-      activitysConfig: {url: 'activitys/config', pre: preuUrl}
+      activitysConfig: {url: 'activitys/config', pre: preuUrl},
+      // 查询最热活动
+      activityTopN: {url: 'accessLog/activityTopN', pre: preuUrl}
     }
     /**
      * 获取url

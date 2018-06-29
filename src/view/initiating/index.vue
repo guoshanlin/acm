@@ -392,8 +392,8 @@
           remark: {msg: '活动摘要不能为空', required: true},
           agenda: {msg: '活动议程不能为空', required: true},
           city1: {msg: '请选择省市', required: true},
-          city2: {msg: '请选择城区', required: true},
-          city3: {msg: '请选择县区', required: true}
+          city2: {msg: '请选择城区', required: true}
+          // city3: {msg: '请选择县区', required: true}
        },
         disabled: false,
         timePicker: {
