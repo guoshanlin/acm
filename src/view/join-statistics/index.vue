@@ -13,11 +13,11 @@
         <div class="fbox fz14 m-t10 ct c3 statistics-wrapper">
           <div class="flex">
             <span class="fz20 c2">{{reportEntered.activity ? reportEntered.activity.number : 0}}</span><br>
-            <span>总人数</span>
+            <span>报名总人数</span>
           </div>
           <div class="flex">
             <span class="fz20 c2">{{reportEntered.activity ? reportEntered.activity.numberActual : 0}}</span><br>
-            <span>实际报名</span>
+            <span>报名成功人数</span>
           </div>
           <div class="flex">
             <span class="fz20 c2">{{reportEntered.activity ? reportEntered.activity.numberRete : 0}}%</span><br>
@@ -86,13 +86,15 @@
         <div class="fbox fz14 m-t10 ct c3 statistics-wrapper">
           <div class="flex">
             <span class="fz20 c2">{{reportEntered.orders ? reportEntered.orders[0].number : 0}}</span><br>
-            <span>订单数</span>
+            <span>订单总数</span>
+          </div>
+          <div class="flex">
+            <span class="fz20 c2">{{reportEntered.orders ? reportEntered.orders[0].validNumber : 0}}</span><br>
+            <span>有效订单</span>
           </div>
           <div class="flex">
             <span class="fz20 c2">{{reportEntered.orders ? reportEntered.orders[0].ticketNumber : 0}}</span><br>
             <span>售出票数</span>
-          </div>
-          <div class="flex">
           </div>
         </div>
         <div class="m-t30">
@@ -431,13 +433,13 @@
             if(this.reportEntered.orderInfo){
               this.registerRateData = [{
                 name: '免费报名',
-                total: this.reportEntered.orderInfo[0].freeNumber == null ?  '0': this.reportEntered.orderInfo[0].freeNumber,
-                actual: this.reportEntered.orderInfo[0].freeActualNumber == null ?  '0': this.reportEntered.orderInfo[0].freeActualNumber,
+                actual: this.reportEntered.orderInfo[0].freeNumber == null ?  '0': this.reportEntered.orderInfo[0].freeNumber,
+                total: this.reportEntered.orderInfo[0].freeActualNumber == null ?  '0': this.reportEntered.orderInfo[0].freeActualNumber,
                 rate: this.reportEntered.orderInfo[0].freeRete + '%'
               }, {
                   name: '付费报名',
-                  total: this.reportEntered.orderInfo[0].chargeActualNumber == null ?  '0': this.reportEntered.orderInfo[0].chargeActualNumber,
-                  actual: this.reportEntered.orderInfo[0].chargeNumber == null ?  '0': this.reportEntered.orderInfo[0].chargeNumber,
+                actual: this.reportEntered.orderInfo[0].chargeActualNumber == null ?  '0': this.reportEntered.orderInfo[0].chargeActualNumber,
+                total: this.reportEntered.orderInfo[0].chargeNumber == null ?  '0': this.reportEntered.orderInfo[0].chargeNumber,
                   rate: this.reportEntered.orderInfo[0].chargeRete + '%'
                 }]
             }
@@ -540,7 +542,7 @@
               },
               {
                 type: 'line',
-                showSymbol: false,
+                // showSymbol: false,
                 name: i == 1 ? '收费数' : "售出票数",
                 data: []
               }

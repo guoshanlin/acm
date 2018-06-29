@@ -15,11 +15,20 @@
             <ul class="menu c3" v-if="showAdmin">
               <li class="menu-item menu-item-welcome">您好，欢迎访问本站！</li>
               <li class="menu-item menu-item-reg">
-                <a href="javascript:void(0)" @click="passModalShow = true">修改密码</a>
+                <Dropdown  v-if="showAdmin"  class="drop-index-header" @on-click="handleSubmit">
+                  <a href="javascript:void(0)" class="c3">{{userData.nickName}}/{{userData.phone}}<Icon type="arrow-down-b"></Icon></a>
+                  <DropdownMenu slot="list">
+                    <DropdownItem name="activity">我的活动</DropdownItem>
+                    <DropdownItem name="my" divided>个人信息</DropdownItem>
+                    <DropdownItem name="password" divided>修改密码</DropdownItem>
+                    <DropdownItem  name="logout" divided>退出</DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
+                <!--<a href="javascript:void(0)" @click="passModalShow = true">修改密码</a>-->
               </li>
-              <li class="menu-item menu-item-reg">
-                <a href="javascript:void(0)" @click="logout">退出</a>
-              </li>
+              <!--<li class="menu-item menu-item-reg">-->
+                <!--<a href="javascript:void(0)" @click="logout">退出</a>-->
+              <!--</li>-->
             </ul>
           </div>
           <div class="top-menu fr">
@@ -66,6 +75,8 @@
         </nav>
       </section>
       <i-password :show="passModalShow" @cancel="passModalShow = false"></i-password>
+      <input-from v-if="inputForm.show" @changeOptions="getInputVal" :options="inputForm.option" :value="inputForm.value" :modalDisabled="inputForm.modalDisabled"
+                  :modalshow="inputForm.modalshow"/>
     </div>
 </template>
 
@@ -73,6 +84,7 @@
   import {setIsLogin, setUserInfo} from 'js/cache'
   import {mapMutations, mapGetters} from 'vuex'
   import iPassword from 'components/modal/password'
+  import inputFrom from 'components/modal/inputFrom.vue'
 
   export default {
     data() {
@@ -80,7 +92,14 @@
         searchValue: '',
         showAdmin: false,
         passModalShow: false,
-        loginShow: this.$route.query.id == 'password' ? true : false
+        loginShow: this.$route.query.id == 'password' ? true : false,
+        inputForm: {
+          show: false,
+          modalDisabled: false,
+          modalshow: false,
+          option: {},
+          value: {}
+        } // 表单参数
       }
     },
     created() {
@@ -108,6 +127,25 @@
       searchEvent(){
         this.$Message.info('搜索：' + this.searchValue)
       },
+      handleSubmit (name) {
+        console.log(name)
+        switch ('' + name) {
+          case 'activity': // 我的活动/展会
+            this.routePush('/meeting')
+            break
+          case 'my': // 个人信息
+            this.addOrModify(this.userData)
+            // this.routePush('/meeting')
+            break
+          case 'logout': // 退出登录
+            this.logout()
+            break
+          case 'password': // 修改密码
+            this.passModalShow = true
+            break
+          default:
+        }
+      },
       logout () {
         this.requestAjax('POST', 'logout', {}).then((res) => {
           this.showAdmin = false
@@ -124,10 +162,255 @@
           setUserInfo(null)
           this.routePush('/index')
         })
+      },
+      /**
+       *新增或修改用户
+       */
+      addOrModify (row) {
+        this.inputForm.modalshow = true
+        this.inputForm.show = true
+        this.inputForm.modalDisabled = false
+        this.inputForm.option = {
+          title: '个人信息',
+          width: '768',
+          opintions: [
+            [
+              {
+                title: '姓名',
+                id: 'name',
+                type: 'input',
+                titlespan: 3,
+                colspan: 9,
+                required: true
+              },
+              {
+                title: '昵称',
+                id: 'nickName',
+                type: 'input',
+                titlespan: 3,
+                colspan: 9,
+                required: true
+              }
+            ],
+            [
+              {
+                title: '手机',
+                id: 'phone',
+                type: 'input',
+                titlespan: 3,
+                colspan: 9,
+                required: true,
+                valueType: 'mobilePhone'
+              },
+              {
+                title: '微信openId',
+                id: 'wechat',
+                type: 'input',
+                titlespan: 3,
+                colspan: 9,
+                required: false
+              }
+            ],
+            [
+              {
+                title: '状态',
+                id: 'status',
+                type: 'select',
+                titlespan: 3,
+                colspan: 9,
+                required: false
+              },
+              {
+                title: '角色',
+                id: 'role',
+                type: 'select',
+                titlespan: 3,
+                colspan: 9,
+                required: false
+              }
+            ],
+            [
+              {
+                title: '银行卡号',
+                id: 'bankCard',
+                type: 'bankCard',
+                titlespan: 3,
+                colspan: 21,
+                required: true,
+                relation: 'bank',
+                valueType: 'bankCheck'
+              }
+            ],
+            [
+              {
+                title: '开户行',
+                id: 'bank',
+                type: 'input',
+                titlespan: 3,
+                colspan: 9,
+                relation: '',
+                required: true
+              },
+              {
+                title: '开户名',
+                id: 'bankUser',
+                type: 'input',
+                titlespan: 3,
+                colspan: 9,
+                required: true
+              }
+            ],
+            [
+              {
+                title: '邮箱',
+                id: 'email',
+                type: 'input',
+                titlespan: 3,
+                colspan: 9,
+                required: true,
+                valueType: 'email'
+              },
+              {
+                title: '性别',
+                id: 'sex',
+                type: 'select',
+                titlespan: 3,
+                colspan: 9,
+                required: false,
+                relation: ''
+              }
+            ],
+            [
+              {
+                title: '身份证号',
+                id: 'cardNumber',
+                type: 'input',
+                titlespan: 3,
+                colspan: 9,
+                required: false,
+                valueType: 'idCard'
+              },
+              {
+                title: '类型',
+                id: 'type',
+                type: 'select',
+                titlespan: 3,
+                colspan: 9,
+                relation: '',
+                required: false
+              }
+            ],
+            [
+              {
+                title: '爱好',
+                id: 'hobby',
+                type: 'input',
+                titlespan: 3,
+                colspan: 9,
+                required: false
+              },
+              {
+                title: '公司',
+                id: 'company',
+                type: 'input',
+                titlespan: 3,
+                colspan: 9,
+                required: false
+              }
+            ],
+            [
+              {
+                title: '职位',
+                id: 'position',
+                type: 'input',
+                titlespan: 3,
+                colspan: 9,
+                required: false
+              },
+              {
+                title: '渠道',
+                id: 'channel',
+                type: 'select',
+                titlespan: 3,
+                colspan: 9,
+                relation: '',
+                required: false
+              }
+            ],
+            [
+              {
+                title: '地址',
+                id: 'address',
+                type: 'input',
+                titlespan: 3,
+                colspan: 21,
+                required: false
+              }
+            ]
+          ],
+          button: [{
+            type: 'primary',
+            title: '修改',
+            click: 'handle'
+          }]
+        }
+        this.inputForm.value = {
+          name: row.name,
+          nickName: row.nickName,
+          email: row.email,
+          phone: row.phone,
+          wechat: row.wechat,
+          sex: row.sex,
+          type: row.type,
+          cardNumber: row.cardNumber,
+          hobby: row.hobby,
+          company: row.company,
+          position: row.position,
+          channel: row.channel,
+          address: row.address,
+          bank: row.bank,
+          bankCard: row.bankCard,
+          status: row.status,
+          role: row.role,
+          bankUser: row.bankUser,
+          id: row.id
+        }
+      },
+      /**
+       *提交返回处理方法
+       * @param val
+       * @param type
+       */
+      getInputVal (val, type) {
+        this.inputForm.value = val // 表单填写的内容;
+        if (type === 'cancel') { // 按钮操作
+          this.inputForm.modalshow = false // 隐藏modal
+          return
+        }
+        let newVal = {}
+        Object.assign(newVal, val)
+        this.inputForm.modalDisabled = true
+        this.requestAjax('post', 'members', newVal).then((data) => {
+          if (data.success) {
+            this.$Message.success('修改信息成功')
+            let _obj = {}
+            Object.assign(_obj, this.userData,newVal )
+            this.setUserDate(_obj)
+            setUserInfo(_obj)
+            this.inputForm.modalshow = false
+          } else {
+            this.$Message.success('修改信息失败')
+          }
+          this.inputForm.modalDisabled = false
+        }, () => {
+          this.$Message.success('修改信息失败')
+          this.inputForm.modalDisabled = false
+        })
       }
     },
     components: {
-      iPassword
+      iPassword,
+      inputFrom
     }
   }
 </script>

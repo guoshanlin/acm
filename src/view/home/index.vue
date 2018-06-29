@@ -22,7 +22,7 @@
         <div class="slider b">
           <!-- swiper -->
           <swiper :options="swiperOption" v-if='rowSwiper.length> 0'>
-            <swiper-slide v-for="(item, index) in rowSwiper" :key="index"><img width='100%' height='100%' v-lazy="item.url"></swiper-slide>
+            <swiper-slide v-for="(item, index) in rowSwiper" :key="index"><img width='100%' height='100%' :src="item.url"></swiper-slide>
             <!--<swiper-slide v-for="(item, index) in row" :key="index" :style ="{backgroundImage: 'url(' + item.url + ')'}"></swiper-slide>-->
             <!--<swiper-slide-->
               <!--style="background-image:url('https://surmon-china.github.io/vue-awesome-swiper/static/images/surmon-6.jpg')"></swiper-slide>-->
@@ -40,10 +40,12 @@
                   <img class="thumb" :src="url + item.posterUrl"/>
                 </figure>
                 <h3 class="c2">{{item.name}}</h3>
-                <div class="info c3">
-                  <span class="category">{{item.memberName}}</span>
-                  <span class="date"><Icon type="clock"></Icon>{{formatterObjTime(item.beginTime,'yyyy-MM-dd')}}</span>
-                  <span class="like fr"><Icon class="fz20" style="vertical-align: sub;margin-right: 3px" type="ios-eye"></Icon>{{item.ct}}</span>
+                <div class="info c3 m-t5">
+                  <span class="category"> <Icon type="person"></Icon> {{item.memberName}}</span>
+                  <span class="like fr"><Icon class="fz20" style="vertical-align: sub;margin-right: 3px" type="ios-eye"></Icon> {{item.ct}}</span>
+                </div>
+                <div class="info c3 m-t10">
+                  <span class="date"><Icon type="clock"></Icon> {{formatterObjTime(item.beginTime,'yyyy-MM-dd')}}</span>
                 </div>
               </article>
             </li>
@@ -58,25 +60,25 @@
         <section class="home_title clear">
           <h3 class="fl">{{item.title}}</h3>
           <section class="title-tag fr">
-            <ul>
-              <li>
-                <a href="javascript:void(0)">简约</a>
-              </li>
-              <li>
-                <a href="javascript:void(0)">电影</a>
-              </li>
-              <li>
-                <a href="javascript:void(0)">生活</a>
-              </li>
-              <li>
-                <a href="javascript:void(0)">旅行摄影</a>
-              </li>
-              <li>
-                <a  href="javascript:void(0)">原创</a>
-              </li>
-            </ul>
+            <!--<ul>-->
+              <!--<li>-->
+                <!--<a href="javascript:void(0)">简约</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="javascript:void(0)">电影</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="javascript:void(0)">生活</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="javascript:void(0)">旅行摄影</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a  href="javascript:void(0)">原创</a>-->
+              <!--</li>-->
+            <!--</ul>-->
             <a href="javascript:void(0)" class="home_button c3" title="查看更多">
-              <Icon class="fz20" type="android-add-circle"></Icon>
+              <Icon type="ios-more"></Icon>
             </a>
           </section>
         </section>
@@ -88,13 +90,20 @@
                   <a href="javascript:void(0)">
                   <img class="thumb" :src="url + row.posterUrl"></a>
                 </figure>
-                <h2 class="fz16 c2 hzline1">{{row.name}}</h2>
-                <div class="homeinfo c3">
-                  <span class="category">{{row.memberNickName}}&nbsp;&nbsp;</span>
-                  <span class="date"><Icon type="clock"></Icon>{{formatterObjTime(row.beginTime,'yyyy-MM-dd')}}</span>
-                  <span class="like fr"><Icon class="fz20" style="vertical-align: sub;margin-right: 3px" type="ios-eye"></Icon>85</span>
+                <div class="home-content">
+                  <h2 class="fz16 c2 hzline1">{{row.name}}</h2>
+                  <div class="homeinfo c3">
+                    <span class="category">  <Icon type="person"></Icon> {{row.memberNickName}}</span>
+                  </div>
+                  <div class="homeinfo c3 m-t10">
+                    <span class="date"><Icon type="clock"></Icon> {{formatterObjTime(row.beginTime,'yyyy-MM-dd')}}</span>
+                    <!--<span class="like fr"><Icon class="fz20" style="vertical-align: sub;margin-right: 3px" type="ios-eye"></Icon>85</span>-->
+                  </div>
+                  <div class="homeinfo c3 m-t10 category td-render" :title="row.city1 + row.city2 + row.city3 +row.address">
+                    <Icon type="ios-location"></Icon> {{row.city1 + row.city2 + row.city3 +row.address}}
+                  </div>
+                  <!--<div class="excerpt hzline2 c3 m-t5">{{row.remark}}</div>-->
                 </div>
-                <div class="excerpt hzline2 c3 m-t5">{{row.remark}}</div>
               </article>
             </li>
           </ul>
@@ -149,15 +158,11 @@
         url: process.env.NODE_ENV === 'production' ? '' : process.env.API,
         option: [
           {
-            title: '最新活动',
-            rows: []
-          },
-          {
-            title: '精选活动',
-            rows: []
-          },
-          {
             title: '推荐活动',
+            rows: []
+          },
+          {
+            title: '最新活动',
             rows: []
           }
         ],
@@ -179,10 +184,11 @@
         })
       },
       loadActivity () {
+        let arr = ['1' ,'2', '']
         for (let i = 0; i < 3; i++) {
-          this.requestAjax('get', 'activitys', {importance: i, status: '1,2'}).then((data) => {
+          this.requestAjax('get', 'activitys', {importance: arr[i], status: '1,2'}).then((data) => {
             if (data.success) {
-              if (i == 1) {
+              if (i == 0) {
                 this.row = []
                 for (let n = 0; n < data.data.rows.length; n++) {
                   if (n < 5) {
@@ -190,7 +196,9 @@
                   }
                 }
               }
-              this.option[i].rows = data.data.rows
+              if (i> 0) {
+                this.option[i-1].rows = data.data.rows
+              }
             }
           })
         }
@@ -399,5 +407,11 @@
     overflow: hidden;
     display: block;
   }
-
+.home-content {
+  border: 1px solid #eeeeee;
+  border-top:  0px;
+  width: 100%;
+  height: 125px;
+  padding: 5px;
+}
 </style>
