@@ -596,28 +596,35 @@
           this.charts[char].resize()
         }
       },
-      timeChange () {
+      timeChange (id) {
         let _time = this.$refs.timePicker.getValue()
+        if (id) {
+          this.timePicker.day = this.getTimeDay(_time, this.timePicker.timeArr)
+        }
         this.params.bTime = _time.bTime + ' 00:00:00'
         this.params.eTime = _time.eTime + ' 23:59:59'
         this.queryAccessCt()
         this.queryAccessCtByMinList()
         this.queryAccessCtByUrlList()
       },
-      timeChangeTwo () {
+      timeChangeTwo (id) {
         let _time = this.$refs.timePickerTwo.getValue()
+        if (id) {
+          this.timePickerTwo.day = this.getTimeDay(_time, this.timePickerTwo.timeArr)
+        }
         this.paramsTwo.bTime = _time.bTime + ' 00:00:00'
         this.paramsTwo.eTime = _time.eTime + ' 23:59:59'
         this.queryAccessCtByType()
       },
       queryAccessCt () {
-        this.dataRl = {
-          'ctRl': {'minCt': 0, 'totalCt': 0, 'maxCt': 0, 'avgCt': 0},
-          'distinctCtRl': {'minCt': 0, 'totalCt': 0, 'maxCt': 0, 'avgCt': 0}
-        }
         this.requestAjax('get', 'queryAccessCt', this.params).then((data) => {
           if (data.success) {
             this.dataRl = data.data
+          } else {
+            this.dataRl = {
+              'ctRl': {'minCt': 0, 'totalCt': 0, 'maxCt': 0, 'avgCt': 0},
+              'distinctCtRl': {'minCt': 0, 'totalCt': 0, 'maxCt': 0, 'avgCt': 0}
+            }
           }
         }, () => {
 
@@ -686,6 +693,17 @@
           return '0.00'
         } else {
           return this.toDecimal2(((+val) / (+total)) * 100)
+        }
+      },
+      getTimeDay (timeObj, arr) {
+        if (timeObj[arr[0]] == new Date().addTimes('-1d').format('yyyy-MM-dd') && timeObj[arr[1]] == new Date().addTimes('-1d').format('yyyy-MM-dd')) {
+          return '-1'
+        } else if (timeObj[arr[0]] == new Date().addTimes('-1d').format('yyyy-MM-dd') && timeObj[arr[1]] == new Date().addTimes('-7d').format('yyyy-MM-dd')) {
+          return '-7'
+         } else if (timeObj[arr[0]] == new Date().addTimes('-1d').format('yyyy-MM-dd') && timeObj[arr[1]] == new Date().addTimes('-30d').format('yyyy-MM-dd')) {
+          return '-30'
+        } else {
+          return ''
         }
       }
     }

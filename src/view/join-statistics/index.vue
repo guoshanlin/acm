@@ -567,17 +567,34 @@
             return 30
         }
       },
-      timeChange () {
+      timeChange (id) {
         let _time = this.$refs.timePicker.getValue()
+        if (id) {
+          this.timePicker.day = this.getTimeDay(_time, this.timePicker.timeArr)
+        }
         this.charts1Parms.bt = _time.bTime
         this.charts1Parms.et = _time.eTime
         this.requesrReportEnteredDateInfo()
       },
-      timeChangeTwo () {
+      timeChangeTwo (id) {
         let _time = this.$refs.timePickerTwo.getValue()
+        if (id) {
+          this.timePickerTwo.day = this.getTimeDay(_time, this.timePickerTwo.timeArr)
+        }
         this.charts2Parms.bt = _time.bT
         this.charts2Parms.et = _time.eT
         this.requesrReportOrderInfo()
+      },
+      getTimeDay (timeObj, arr) {
+        if (timeObj[arr[0]] == new Date().addTimes('-1d').format('yyyy-MM-dd') && timeObj[arr[1]] == new Date().addTimes('-1d').format('yyyy-MM-dd')) {
+          return '-1'
+        } else if (timeObj[arr[0]] == new Date().addTimes('-1d').format('yyyy-MM-dd') && timeObj[arr[1]] == new Date().addTimes('-7d').format('yyyy-MM-dd')) {
+          return '-7'
+        } else if (timeObj[arr[0]] == new Date().addTimes('-1d').format('yyyy-MM-dd') && timeObj[arr[1]] == new Date().addTimes('-30d').format('yyyy-MM-dd')) {
+          return '-30'
+        } else {
+          return ''
+        }
       }
     }
   }

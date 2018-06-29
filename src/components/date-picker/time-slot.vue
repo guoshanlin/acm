@@ -37,7 +37,9 @@
         this.initValue()
       },
       day (val) {
-        this.setValue()
+        if (val && val != '') {
+          this.setValue()
+        }
       }
     },
     methods: {
@@ -53,7 +55,8 @@
           el: '' + bId,
           dateFmt: 'yyyy-MM-dd',
           autoPickDate: false,
-          maxDate: '#F{$dp.$D(' + endID + ")||'%y-%M-{%d-1}'}",
+         // maxDate: '#F{$dp.$D(' + endID + ")||'%y-%M-{%d-1}'}",
+          maxDate: '#F{$dp.$D(' + endID + ")||'%y-%M-%d'}",
           onpicking: function (dp) {
             _this.value[bId] = dp.cal.getNewDateStr()
           },
@@ -69,7 +72,8 @@
           dateFmt: 'yyyy-MM-dd',
           autoPickDate: false,
           minDate: '#F{$dp.$D(\'' + bId + '\')}',
-          maxDate: '%y-%M-{%d-1}',
+        //  maxDate: '%y-%M-{%d-1}',
+          maxDate: '%y-%M-%d',
           onpicking: function (dp) {
             _this.value[endID] = dp.cal.getNewDateStr()
           },
@@ -96,8 +100,23 @@
          document.getElementById('' + id).value = ''
       },
       setValue () {
-        this.value[this.ids[1]] = new Date().addTimes('-1d').format('yyyy-MM-dd')
-        this.value[this.ids[0]] = new Date().addTimes(this.day + 'd').format('yyyy-MM-dd')
+        switch (this.day + '') {
+          case '-1':
+            this.value[this.ids[1]] = new Date().addTimes('-1d').format('yyyy-MM-dd')
+            this.value[this.ids[0]] = new Date().addTimes('-1d').format('yyyy-MM-dd')
+                break
+          case '-7':
+            this.value[this.ids[1]] = new Date().addTimes('-1d').format('yyyy-MM-dd')
+            this.value[this.ids[0]] = new Date().addTimes('-7d').format('yyyy-MM-dd')
+            break
+          case '-30':
+            this.value[this.ids[1]] = new Date().addTimes('-1d').format('yyyy-MM-dd')
+            this.value[this.ids[0]] = new Date().addTimes('-30d').format('yyyy-MM-dd')
+            break
+          default:
+            this.value[this.ids[1]] = new Date().format('yyyy-MM-dd')
+            this.value[this.ids[0]] = new Date().format('yyyy-MM-dd')
+        }
         document.getElementById('' + this.ids[0]).value = this.value[this.ids[0]]
         document.getElementById('' + this.ids[1]).value = this.value[this.ids[1]]
         this.$emit('on-change')

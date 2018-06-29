@@ -7,15 +7,11 @@
           <Icon type="android-notifications" style="vertical-align: middle"></Icon>
           <span class="fz14 c">公告</span>
         </section>
-        <swiper class="notice flex" :options="noticeOption">
-          <swiper-slide>
-            <div class="hzline1"><a class="c2" href="javascript:void(0)">MNews 主题更新至1.1： 站内信，打赏，百度推送，阿里云视频点播和优酷视频，认阿里云视频点播和优酷视频阿里云视频点播和优酷视频证作者加认阿里云视频点播和优酷视频阿里云视频点播和优酷视频证作者加 V，前台编辑文章等自媒体实用的功能，增加了视频自</a></div></swiper-slide>
-          <swiper-slide>
-          <div class="hzline1"><a class="c2" href="javascript:void(0)">MNews 主题更新至1.1： 站内信，打赏，百度推送，阿里云视频点播和优酷视频，认阿里云视频点播和优酷视频阿里云视频点播和优酷视频证作者加认阿里云视频点播和优酷视频阿里云视频点播和优酷视频证作者加 V，前台编辑文章等自媒体实用的功能，增加了视频自</a></div></swiper-slide>
-          <swiper-slide>
-          <div class="hzline1"><a class="c2" href="javascript:void(0)">MNews 主题更新至1.1： 站内信，打赏，百度推送，阿里云视频点播和优酷视频，认阿里云视频点播和优酷视频阿里云视频点播和优酷视频证作者加认阿里云视频点播和优酷视频阿里云视频点播和优酷视频证作者加 V，前台编辑文章等自媒体实用的功能，增加了视频自</a></div></swiper-slide>
-          <swiper-slide>
-          <div class="hzline1"><a class="c2" href="javascript:void(0)">MNews 主题更新至1.1： 站内信，打赏，百度推送，阿里云视频点播和优酷视频，认阿里云视频点播和优酷视频阿里云视频点播和优酷视频证作者加认阿里云视频点播和优酷视频阿里云视频点播和优酷视频证作者加 V，前台编辑文章等自媒体实用的功能，增加了视频自</a></div></swiper-slide>
+        <swiper class="notice flex" :options="noticeOption" v-if='rowSwiper.length> 0'>
+          <swiper-slide  v-for="item in rowSwiper" :key="item.id">
+            <div class="hzline1"><a class="c2" href="javascript:void(0)">最新发布活动：{{item.name}} </a></div></swiper-slide>
+          <!--<swiper-slide>-->
+          <!--<div class="hzline1"><a class="c2" href="javascript:void(0)">MNews 主题更新至1.1： 站内信，打赏，百度推送，阿里云视频点播和优酷视频，认阿里云视频点播和优酷视频阿里云视频点播和优酷视频证作者加认阿里云视频点播和优酷视频阿里云视频点播和优酷视频证作者加 V，前台编辑文章等自媒体实用的功能，增加了视频自</a></div></swiper-slide>-->
         </swiper>
         <div class="fz20 notice-btn-wrapper">
           <a class="notice-prev" href="javascript:void(0)"><Icon type="android-arrow-dropleft-circle"></Icon></a>
@@ -25,17 +21,11 @@
       <div class="slides-sticky m-t10  clear">
         <div class="slider b">
           <!-- swiper -->
-          <swiper :options="swiperOption">
-            <swiper-slide
-              style="background-image:url('https://surmon-china.github.io/vue-awesome-swiper/static/images/surmon-1.jpg')"></swiper-slide>
-            <swiper-slide
-              style="background-image:url('https://surmon-china.github.io/vue-awesome-swiper/static/images/surmon-6.jpg')"></swiper-slide>
-            <swiper-slide
-              style="background-image:url('https://surmon-china.github.io/vue-awesome-swiper/static/images/surmon-8.jpg')"></swiper-slide>
-            <swiper-slide
-              style="background-image:url('https://surmon-china.github.io/vue-awesome-swiper/static/images/surmon-9.jpg')"></swiper-slide>
-            <swiper-slide
-              style="background-image:url('https://surmon-china.github.io/vue-awesome-swiper/static/images/surmon-10.jpg')"></swiper-slide>
+          <swiper :options="swiperOption" v-if='rowSwiper.length> 0'>
+            <swiper-slide v-for="(item, index) in rowSwiper" :key="index"><img width='100%' height='100%' v-lazy="item.url"></swiper-slide>
+            <!--<swiper-slide v-for="(item, index) in row" :key="index" :style ="{backgroundImage: 'url(' + item.url + ')'}"></swiper-slide>-->
+            <!--<swiper-slide-->
+              <!--style="background-image:url('https://surmon-china.github.io/vue-awesome-swiper/static/images/surmon-6.jpg')"></swiper-slide>-->
             <div class="swiper-pagination swiper-pagination-white" slot="pagination"></div>
             <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
             <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
@@ -44,16 +34,16 @@
 
         <div class="sticky box triangle b">
           <ul>
-            <li v-for="item in [1,2,3,4]">
-              <article class="postlist">
+            <li v-for="item in dataTop" :key="item.id">
+              <article class="postlist cursor-p">
                 <figure>
-                  <img class="thumb" src="https://surmon-china.github.io/vue-awesome-swiper/static/images/surmon-1.jpg"/>
+                  <img class="thumb" :src="url + item.posterUrl"/>
                 </figure>
-                <h3 class="c2">雪后登大理苍山十九峰之兰峰黑龙潭双龙潭黄龙潭三阳峰</h3>
+                <h3 class="c2">{{item.name}}</h3>
                 <div class="info c3">
-                  <span class="category">徒步登山</span>
-                  <span class="date">2018-01-09</span>
-                  <span class="like fr">21</span>
+                  <span class="category">{{item.memberName}}</span>
+                  <span class="date"><Icon type="clock"></Icon>{{formatterObjTime(item.beginTime,'yyyy-MM-dd')}}</span>
+                  <span class="like fr"><Icon class="fz20" style="vertical-align: sub;margin-right: 3px" type="ios-eye"></Icon>{{item.ct}}</span>
                 </div>
               </article>
             </li>
@@ -64,9 +54,9 @@
         </div>
       </div>
 
-      <div class="category-wrapper box m-t10 triangle b" v-for="i in [1,2,3,4]">
+      <div class="category-wrapper box m-t10 triangle b" v-for="item in option" v-if="item.rows.length > 0" :key="item.title">
         <section class="home_title clear">
-          <h3 class="fl">推荐活动</h3>
+          <h3 class="fl">{{item.title}}</h3>
           <section class="title-tag fr">
             <ul>
               <li>
@@ -92,19 +82,19 @@
         </section>
         <section class="post_list post_bottom">
           <ul class="layout_ul">
-            <li class="layout_li" v-for="item in [1,2,3,4,5,6,7,8]">
+            <li class="layout_li" v-for="row in item.rows">
               <article class="postgrid">
-                <figure>
+                <figure class="t-center">
                   <a href="javascript:void(0)">
-                  <img class="thumb" src="https://yfdxs.com/wp-content/themes/lensnews/includes/timthumb.php?src=https://pic.salongweb.com/sites/2/2014/10/qixingdali_122.jpg&amp;h=338&amp;w=600"></a>
+                  <img class="thumb" :src="url + row.posterUrl"></a>
                 </figure>
-                <h2 class="fz16 c2 hzline1">骑行去大理生活</h2>
+                <h2 class="fz16 c2 hzline1">{{row.name}}</h2>
                 <div class="homeinfo c3">
-                  <span class="category">珍藏记忆</span>
-                  <span class="date"><Icon type="clock"></Icon> 2014-10-25</span>
+                  <span class="category">{{row.memberNickName}}&nbsp;&nbsp;</span>
+                  <span class="date"><Icon type="clock"></Icon>{{formatterObjTime(row.beginTime,'yyyy-MM-dd')}}</span>
                   <span class="like fr"><Icon class="fz20" style="vertical-align: sub;margin-right: 3px" type="ios-eye"></Icon>85</span>
                 </div>
-                <div class="excerpt hzline2 c3 m-t5">网上已经有很多介绍 WordPress 多语言的插件了，比如 Polylang 和 WPML 等强大的多语言插件等强大的多语言插件等强大的多语言插件</div>
+                <div class="excerpt hzline2 c3 m-t5">{{row.remark}}</div>
               </article>
             </li>
           </ul>
@@ -155,15 +145,65 @@
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev'
           }
-        }
+        },
+        url: process.env.NODE_ENV === 'production' ? '' : process.env.API,
+        option: [
+          {
+            title: '最新活动',
+            rows: []
+          },
+          {
+            title: '精选活动',
+            rows: []
+          },
+          {
+            title: '推荐活动',
+            rows: []
+          }
+        ],
+        rowSwiper: [],
+        dataTop: []
       }
     },
     created() {
       setTimeout(() => {
-
+        this.loadActivity()
+        this.loadActivityTop()
       }, 20)
     },
-    methods: {},
+    methods: {
+      loadImportance () {
+        this.requestAjax('get', 'activitys', {importance:1}).then((data) => {
+          this.option[0].rows = data.data.rows
+          this.option[1].rows = data.data.rows
+        })
+      },
+      loadActivity () {
+        for (let i = 0; i < 3; i++) {
+          this.requestAjax('get', 'activitys', {importance: i, status: '1,2'}).then((data) => {
+            if (data.success) {
+              if (i == 1) {
+                this.row = []
+                for (let n = 0; n < data.data.rows.length; n++) {
+                  if (n < 5) {
+                    this.rowSwiper.push({id: data.data.rows[n].id, url: this.url + data.data.rows[n].posterUrl, name: data.data.rows[n].name})
+                  }
+                }
+              }
+              this.option[i].rows = data.data.rows
+            }
+          })
+        }
+      },
+      loadActivityTop () {
+      //  activityTopN
+        this.requestAjax('get', 'activityTopN', {topN: 4}).then((data) => {
+          if (data.success) {
+            this.dataTop = data.data
+          }
+        })
+      }
+    },
     components: {
       swiper,
       swiperSlide
@@ -262,6 +302,7 @@
 
   .postlist figure img.thumb {
     width: 128px;
+    height: 75px;
   }
 
   .postlist h3 {
@@ -339,8 +380,10 @@
   }
 
   figure a img{
-    max-width: 100%;
-    height: auto;
+    /*max-width: 100%;*/
+    width: 100%;
+    /*height: auto;*/
+    height: 160px;
     display: block;
     opacity: 1!important;
   }
@@ -356,6 +399,5 @@
     overflow: hidden;
     display: block;
   }
-
 
 </style>
