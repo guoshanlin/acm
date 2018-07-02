@@ -425,7 +425,7 @@
       }, 20)
     },
     methods: {
-      getVal (val) {
+      getVal (val, content) {
         this.fromVal.detailedContent = val
       },
       saveFrom (val) {

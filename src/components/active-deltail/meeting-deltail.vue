@@ -4,72 +4,74 @@
       <i-button @click="copy" type="primary">生成活动图片</i-button>
     </div>
     <div id="deltail">
-      <div class="wrapper b wrapper-box">
-        <div class="datails-item">
-          <datails-item :row='data' :button="buttonName"></datails-item>
-        </div>
-        <div class="datails-item m-t10">
-          <div class="fbox">
-            <div class="datails-flex-item t-right"><h3>活动分类:</h3></div>
-            <div class="flex t-left">
-              <div>{{data.style}}</div>
-            </div>
-          </div>
-        </div>
-        <div class="datails-item m-t10">
-          <div class="fbox">
-            <div class="datails-flex-item t-right"><h3>票种:</h3></div>
-            <div class="flex t-left">
-              <div v-if="data.isNeedPay == 0">免费</div>
-              <div v-if="data.isNeedPay == 1">&nbsp;<span class="span-title">非会员价:</span>&nbsp;{{data.nonMBPrice}}元&nbsp;&nbsp;&nbsp;<span class="span-title">会员价:</span>&nbsp;{{data.mbPrice}}元</div>
-            </div>
-          </div>
-        </div>
-        <div class="datails-item m-t10">
-          <div class="fbox">
-            <div class="datails-flex-item t-right"><h3>活动标签:</h3></div>
-            <div class="flex t-left">
-              <Tag v-if="data.label != ''" color="blue" v-for="item in label" :key="item">{{item}}</Tag>
-            </div>
-          </div>
-        </div>
-        <div class="datails-item m-t10">
-          <div class="fbox">
-            <div class="datails-flex-item t-right"><h3>活动摘要:</h3></div>
-            <div class="flex t-left">
-              <div>
-                <pre v-html = 'data.remark'></pre>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="datails-item m-t10">
-          <div class="fbox">
-            <div class="datails-flex-item t-right"><h3>活动议程:</h3></div>
-            <div class="flex t-left">
-              <div>
-                <pre v-html = 'data.agenda'></pre>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="datails-item m-t10">
-          <div class="fbox">
-            <div class="datails-flex-item t-right"><h3>详细内容:</h3></div>
-            <div class="flex t-left">
-              <div id="content">
-                <pre v-html = 'data.content'></pre>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <datails-item :row='data'></datails-item>
+      <!--<div class="wrapper b wrapper-box">-->
+        <!--<div class="datails-item">-->
+          <!--<datails-item :row='data' :button="buttonName"></datails-item>-->
+        <!--</div>-->
+        <!--<div class="datails-item m-t10">-->
+          <!--<div class="fbox">-->
+            <!--<div class="datails-flex-item t-right"><h3>活动分类:</h3></div>-->
+            <!--<div class="flex t-left">-->
+              <!--<div>{{data.style}}</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="datails-item m-t10">-->
+          <!--<div class="fbox">-->
+            <!--<div class="datails-flex-item t-right"><h3>票种:</h3></div>-->
+            <!--<div class="flex t-left">-->
+              <!--<div v-if="data.isNeedPay == 0">免费</div>-->
+              <!--<div v-if="data.isNeedPay == 1">&nbsp;<span class="span-title">非会员价:</span>&nbsp;{{data.nonMBPrice}}元&nbsp;&nbsp;&nbsp;<span class="span-title">会员价:</span>&nbsp;{{data.mbPrice}}元</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="datails-item m-t10">-->
+          <!--<div class="fbox">-->
+            <!--<div class="datails-flex-item t-right"><h3>活动标签:</h3></div>-->
+            <!--<div class="flex t-left">-->
+              <!--<Tag v-if="data.label != ''" color="blue" v-for="item in label" :key="item">{{item}}</Tag>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="datails-item m-t10">-->
+          <!--<div class="fbox">-->
+            <!--<div class="datails-flex-item t-right"><h3>活动摘要:</h3></div>-->
+            <!--<div class="flex t-left">-->
+              <!--<div>-->
+                <!--<pre v-html = 'data.remark'></pre>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="datails-item m-t10">-->
+          <!--<div class="fbox">-->
+            <!--<div class="datails-flex-item t-right"><h3>活动议程:</h3></div>-->
+            <!--<div class="flex t-left">-->
+              <!--<div>-->
+                <!--<pre v-html = 'data.agenda'></pre>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="datails-item m-t10">-->
+          <!--<div class="fbox">-->
+            <!--<div class="datails-flex-item t-right"><h3>详细内容:</h3></div>-->
+            <!--<div class="flex t-left">-->
+              <!--<div id="content">-->
+                <!--<pre v-html = 'data.content'></pre>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
     </div>
   </div>
 </template>
 
 <script>
-  import datailsItem from 'components/datails-item/index'
+  // import datailsItem from 'components/datails-item/index'
+  import datailsItem from 'components/active-deltail/active-deltail'
   import html2canvas from 'html2canvas'
 
   export default {

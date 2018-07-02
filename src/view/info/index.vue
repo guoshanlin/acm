@@ -2,7 +2,7 @@
   <div class="b wrapper-box">
     <Menu mode="horizontal" :active-name="activeName" @on-select="menuSelect">
       <MenuItem name="1">基本信息</MenuItem>
-      <MenuItem name="2">活动议程</MenuItem>
+      <!--<MenuItem name="2">活动议程</MenuItem>-->
       <MenuItem name="3">周边信息</MenuItem>
     </Menu>
     <div class="content-wrapper">

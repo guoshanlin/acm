@@ -4,7 +4,7 @@
     <top-header></top-header>
 
     <div class="w1200">
-      <section class="box triangle crumbs_wrap b m-t10 m-b10 ct c2" v-if="title != ''">
+      <section class="box triangle crumbs_wrap b m-t10 ct c2" v-if="title && title != ''">
         <h3>{{title}}</h3>
         <div class="t-left">
           <RadioGroup type="button" size="small">
@@ -17,14 +17,14 @@
         <!--<p class="c3">绘画，最享受的一件事情，那种忘我的境地是其他任何事都无法比拟！</p>-->
       </section>
 
-      <div class="content clear">
+      <div class="content clear m-t10">
         <div class="content-wrap fl">
           <!--<article class="box triangle b m-b10">-->
             <!--<a title="LensNews" href="javascript:void(0)"><img src="https://yfdxs.com/wp-content/themes/lensnews/images/ad.jpg" alt="LensNews"></a>-->
           <!--</article>-->
 
           <article class="box triangle b m-b10" v-for="item in dataOptions.rows" :key="item.id">
-            <article class="post_main">
+            <article class="post_main" @click="routePush('/deltail',item.id,'category')">
               <figure>
                 <!--<a href="https://yfdxs.com/country-painting-art.html" title="乡间绘画艺术" target="_blank">-->
                 <a href="javascript:void(0)"><img class="thumb" :src="url + item.posterUrl"> </a>
@@ -63,7 +63,7 @@
           <div class="sticky box triangle b m-b10">
             <div class="sidebar_title"><h3>热门活动</h3></div>
             <ul class="hot-wrapper">
-              <li v-for="item in dataTop" :key="item.id">
+              <li v-for="item in dataTop" :key="item.id" @click="routePush('/deltail',item.id,'category')">
                 <article class="postlist">
                   <!--<figure>-->
                     <!--&lt;!&ndash;<img class="thumb" src="https://surmon-china.github.io/vue-awesome-swiper/static/images/surmon-1.jpg"/>&ndash;&gt;-->
@@ -129,7 +129,7 @@
           keyWord: '',
           configId: ''
         },
-        title: this.$route.query.type,
+        title: this.$route.query.category,
         configPid: '',
         dataTop: {},
         findTree: '',
@@ -140,7 +140,7 @@
     created () {
       setTimeout(() => {
         if (this.$route.query.keyWord) {
-          this.routePush('/category', '', '', Object.assign({}, this.$route.query, {keyWord: ''}))
+          this.params.keyWord = this.$route.query.keyWord
         }
         this.configPid = this.$route.query.pid
         this.activitysConfig()
@@ -149,13 +149,13 @@
     },
     watch: {
       $route (to, from) {
-        this.$nextTick(() => {
-          this.configPid = this.$route.query.pid
-          this.title = this.$route.query.type
-          this.params.limit = 5
-          this.params.keyWord = to.query.keyWord
-          this.activitysConfig()
-        })
+          this.$nextTick(() => {
+            this.configPid = this.$route.query.pid
+            this.title = this.$route.query.category
+            this.params.limit = 5
+            this.params.keyWord = to.query.keyWord
+            this.activitysConfig()
+          })
       }
     },
     methods: {
@@ -196,7 +196,6 @@
               this.childrenTree = this.findTree[i].children
             }
           }
-          console.log(this.childrenTree)
           this.$nextTick(() => {
             this.loadActivitys()
           })

@@ -87,7 +87,7 @@
                         // 得到编辑器的纯文本内容
                         const plainTxt = this.editor.getPlainTxt()
                         // $emit触发当前实例上的事件。附加参数都会传给监听器回调
-                        this.$emit('getValue', plainTxt, 'ueditor', this.name) // 内容改变时传值父组件
+                        this.$emit('getValue', content, 'ueditor', this.name) // 内容改变时传值父组件
                         this.$emit('input', {wordCount: wordCount, content: content, plainTxt: plainTxt})
                     })
                     this.$emit('ready', this.editor)

@@ -1,69 +1,78 @@
 <template>
     <div class="header b">
       <section class="wrapper">
-        <nav class="top-nav clear">
-          <div class="top-menu fl">
-            <ul class="menu c3" v-if="!showAdmin">
-              <li class="menu-item menu-item-welcome">您好，欢迎访问本站！</li>
-              <li class="menu-item menu-item-login">
-                <a class="user-login" href="javascript:void(0)" @click="routePush('/login')">登录</a>
-              </li>
-              <!--<li class="menu-item menu-item-reg">-->
-                <!--<a href="javascript:void(0)" @click="routePush('/register')">注册</a>-->
-              <!--</li>-->
-            </ul>
-            <ul class="menu c3" v-if="showAdmin">
-              <li class="menu-item menu-item-welcome">您好，欢迎访问本站！</li>
-              <li class="menu-item menu-item-reg">
-                <Dropdown  v-if="showAdmin"  class="drop-index-header" @on-click="handleSubmit">
-                  <a href="javascript:void(0)" class="c3">{{userData.nickName}}/{{userData.phone}}<Icon type="arrow-down-b"></Icon></a>
-                  <DropdownMenu slot="list">
-                    <DropdownItem name="activity">我的活动</DropdownItem>
-                    <DropdownItem name="my" divided>个人信息</DropdownItem>
-                    <DropdownItem name="password" divided>修改密码</DropdownItem>
-                    <DropdownItem  name="logout" divided>退出</DropdownItem>
-                  </DropdownMenu>
-                </Dropdown>
-                <!--<a href="javascript:void(0)" @click="passModalShow = true">修改密码</a>-->
-              </li>
-              <!--<li class="menu-item menu-item-reg">-->
-                <!--<a href="javascript:void(0)" @click="logout">退出</a>-->
-              <!--</li>-->
-            </ul>
+        <div class="fbox">
+          <div class="logo_core_img">
+            <a href="javascript:void(0)" class="logo" title="知识E站">
+              <img src="../assets/logo_core.gif" alt="知识E站">
+            </a>
           </div>
-          <div class="top-menu fr">
-            <ul class="menu">
-              <li class="menu-item"><a href="javascript:void(0)">公告</a></li>
-              <li class="menu-item"><a href="javascript:void(0)">地图</a></li>
-              <li class="menu-item"><a href="javascript:void(0)">标签</a></li>
-              <li class="menu-item"><a href="javascript:void(0)">链接</a></li>
-              <li v-if="showAdmin" class="menu-item"><a href="javascript:void(0)" @click="routePush('/meeting')">主办方中心</a></li>
-              <li v-if="showAdmin" class="menu-item"><a href="javascript:void(0)" class="c1" @click="routePush('/initiatingActivity')"><Icon class="fz15" type="paper-airplane"></Icon> 发布活动</a></li>
-            </ul>
-          </div>
-        </nav>
+          <div class="flex">
+            <nav class="top-nav clear">
+              <div class="top-menu fl">
+                <ul class="menu c3" v-if="!showAdmin">
+                  <li class="menu-item menu-item-welcome">您好，欢迎访问本站！</li>
+                  <li class="menu-item menu-item-login">
+                    <a class="user-login" href="javascript:void(0)" @click="routePush('/login')">登录</a>
+                  </li>
+                  <!--<li class="menu-item menu-item-reg">-->
+                  <!--<a href="javascript:void(0)" @click="routePush('/register')">注册</a>-->
+                  <!--</li>-->
+                </ul>
+                <ul class="menu c3" v-if="showAdmin">
+                  <li class="menu-item menu-item-welcome">您好，欢迎访问本站！</li>
+                  <li class="menu-item menu-item-reg">
+                    <Dropdown  v-if="showAdmin"  class="drop-index-header" @on-click="handleSubmit">
+                      <a href="javascript:void(0)" class="c3">{{userData.nickName}}/{{userData.phone}}<Icon type="arrow-down-b"></Icon></a>
+                      <DropdownMenu slot="list">
+                        <DropdownItem name="activity">我的活动</DropdownItem>
+                        <DropdownItem name="my" divided>个人信息</DropdownItem>
+                        <DropdownItem name="password" divided>修改密码</DropdownItem>
+                        <DropdownItem  name="logout" divided>退出</DropdownItem>
+                      </DropdownMenu>
+                    </Dropdown>
+                    <!--<a href="javascript:void(0)" @click="passModalShow = true">修改密码</a>-->
+                  </li>
+                  <!--<li class="menu-item menu-item-reg">-->
+                  <!--<a href="javascript:void(0)" @click="logout">退出</a>-->
+                  <!--</li>-->
+                </ul>
+              </div>
+              <div class="top-menu fr">
+                <ul class="menu">
+                  <li class="menu-item"><a href="javascript:void(0)">公告</a></li>
+                  <li class="menu-item"><a href="javascript:void(0)">地图</a></li>
+                  <li class="menu-item"><a href="javascript:void(0)">标签</a></li>
+                  <li class="menu-item"><a href="javascript:void(0)">链接</a></li>
+                  <li v-if="showAdmin" class="menu-item"><a href="javascript:void(0)" @click="routePush('/meeting')">主办方中心</a></li>
+                  <li v-if="showAdmin" class="menu-item"><a href="javascript:void(0)" class="c1" @click="routePush('/initiatingActivity')"><Icon class="fz15" type="paper-airplane"></Icon> 发布活动</a></li>
+                </ul>
+              </div>
+            </nav>
 
-        <nav class="header-nav clear fbox">
-          <a href="javascript:void(0)" class="logo fl" title="聚热会">
-            <img src="../assets/logo_core.gif" alt="聚热会">
-          </a>
-          <div class="flex posct">
-            <div class="search-wrapper fbox">
-              <input v-model="searchValue" class="search"/>
-              <a class="search-btn" href="javascript:void(0)" @click="searchEvent">搜索</a>
-            </div>
+            <nav class="header-nav clear fbox">
+              <a href="javascript:void(0)" class="logo fl" title="聚热会">
+                <!--<img src="../assets/logo_core.gif" alt="聚热会">-->
+              </a>
+              <div class="flex posct">
+                <div class="search-wrapper fbox">
+                  <input v-model="searchValue" class="search"/>
+                  <a class="search-btn" href="javascript:void(0)" @click="searchEvent">搜索</a>
+                </div>
+              </div>
+              <div class="header-menu fr fz14">
+                <ul class="menu">
+                  <li class="menu-item">
+                    <a href="javascript:void(0)" @click="routePush('/index')">首页</a>
+                  </li>
+                  <li class="menu-item" v-for="(item, index) in findTree" :key="index">
+                    <a href="javascript:void(0)" @click="routePush('/category','','',{category:item.title,pid:item.id})">{{item.title}}</a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
           </div>
-          <div class="header-menu fr fz14">
-            <ul class="menu">
-              <li class="menu-item">
-                <a href="javascript:void(0)" @click="routePush('/index')">首页</a>
-              </li>
-              <li class="menu-item" v-for="(item, index) in findTree" :key="index">
-                <a href="javascript:void(0)" @click="routePush('/category','','',{type:item.title,pid:item.id})">{{item.title}}</a>
-              </li>
-            </ul>
-          </div>
-        </nav>
+        </div>
       </section>
       <i-password :show="passModalShow" @cancel="passModalShow = false"></i-password>
       <input-from v-if="inputForm.show" @changeOptions="getInputVal" :options="inputForm.option" :value="inputForm.value" :modalDisabled="inputForm.modalDisabled"
@@ -96,6 +105,9 @@
     },
     created () {
       setTimeout(() => {
+        if (this.$route.query.keyWord) {
+          this.searchValue = this.$route.query.keyWord
+        }
         this.activitysConfig()
       }, 20)
     },
@@ -107,7 +119,6 @@
     },
     mounted () {
       this.$nextTick(() => {
-        console.log(this.isLogin)
         this.showAdmin = this.isLogin
       })
     },
@@ -412,9 +423,9 @@
     margin-top: 12px;
     height: 56px;
   }
-  .logo img {
-    max-height: 36px;
-  }
+  /*.logo img {*/
+    /*max-height: 36px;*/
+  /*}*/
   .header-menu>ul>li>a {
     padding: 12px 16px 20px;
     display: block;
@@ -444,6 +455,13 @@
     line-height: 36px;
     text-align: center;
     float: right;
+  }
+  .logo_core_img {
+     width: 120px;
+     height: 100px;
+  }
+  .logo_core_img  img{
+    height: 100%;
   }
 
 </style>
