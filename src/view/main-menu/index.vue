@@ -219,13 +219,12 @@
             ],
             [
               {
-                title: '身份证号',
-                id: 'cardNumber',
+                title: '微信号',
+                id: 'wechatNumber',
                 type: 'input',
                 titlespan: 3,
                 colspan: 9,
-                required: false,
-                valueType: 'idCard'
+                required: false
               },
               {
                 title: '类型',
@@ -285,16 +284,15 @@
           nickName: row.nickName,
           email: row.email,
           phone: row.phone,
-          wechat: row.wechat,
           sex: row.sex,
           type: row.type,
-          cardNumber: row.cardNumber,
           hobby: row.hobby,
           company: row.company,
           position: row.position,
           address: row.address,
           bank: row.bank,
           bankCard: row.bankCard,
+          wechatNumber: row.wechatNumber,
           bankUser: row.bankUser,
           id: row.id
         }

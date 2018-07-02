@@ -289,7 +289,7 @@
             ],
             [
               {title: '手机', value: row.phone, show: true, type: ''},
-              {title: '微信', value: row.wechat, show: true, type: ''}
+              {title: '微信号', value: row.wechatNumber, show: true, type: ''}
             ],
             [
               {title: '状态', value: row.status == 0 ? "禁用": "启用", show: true, type: ''},
@@ -378,8 +378,8 @@
                 valueType: 'mobilePhone'
               },
               {
-                title: '微信openId',
-                id: 'wechat',
+                title: '微信号',
+                id: 'wechatNumber',
                 type: 'input',
                 titlespan: 3,
                 colspan: 9,
@@ -535,7 +535,7 @@
           nickName: _b ? row.nickName : '',
           email: _b ? row.email : '',
           phone: _b ? row.phone : '',
-          wechat: _b ? row.wechat : '',
+          wechatNumber: _b ? row.wechatNumber : '',
           sex: _b ? '' + row.sex : '男',
           type: _b ? '' + row.type : '0',
           cardNumber: _b ? row.cardNumber : '',
@@ -589,7 +589,11 @@
             this.inputForm.modalshow = false
             this.loadTable()
           } else {
-            this.$Message.success(this.clickType + '用户失败')
+            if (this.clickType == '新增') {
+              this.$Message.success(data.desc)
+            } else {
+              this.$Message.success(this.clickType + '用户失败')
+            }
           }
           this.inputForm.modalDisabled = false
         }, (err) => {

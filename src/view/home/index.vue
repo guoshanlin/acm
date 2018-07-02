@@ -198,18 +198,19 @@
       loadActivity () {
         let arr = ['1', '2', '']
         for (let i = 0; i < 3; i++) {
-          this.requestAjax('get', 'activitys', {importance: arr[i], status: '1,2',limit: 8}).then((data) => {
+        //  this.requestAjax('get', 'activitys', {importance: arr[i], status: '1,2',limit: 8}).then((data) => {
+          this.requestAjax('get', 'activitys', {importance: arr[i], status: '>0',limit: 8}).then((data) => {
             if (data.success) {
               if (i == 0) {
-                this.row = []
+                this.rowSwiper = []
                 for (let n = 0; n < data.data.rows.length; n++) {
                   if (n < 5) {
                     this.rowSwiper.push({id: data.data.rows[n].id, url: this.url + data.data.rows[n].posterUrl, name: data.data.rows[n].name})
                   }
                 }
               }
-              if (i> 0) {
-                this.option[i-1].rows = data.data.rows
+              if (i > 0) {
+                this.option[i - 1].rows = data.data.rows
               }
             }
           })

@@ -156,6 +156,11 @@ export default new Router({
       component: (resolve) => require(['../view/category'], resolve)
     },
     {
+      path: '/deltail',
+      name: 'deltail',
+      component: (resolve) => require(['../view/deltail'], resolve)
+    },
+    {
       path: '/index',
       name: 'index',
       component: (resolve) => require(['../view/index'], resolve),

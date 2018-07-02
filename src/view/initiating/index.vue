@@ -145,7 +145,9 @@
                    </i-col>
                    <i-col span="22">
                      <RadioGroup v-model="fromVal.classify" type="button" size="small">
-                       <Radio v-for="value in item.children" :label="value.title" :key="value.title" :value="value.title"></Radio>
+                       <Radio v-for="value in item.children" :label="value.title + ',' + value.id" :key="value.title" :value="value.title + ',' + value.id">
+                         {{value.title}}
+                       </Radio>
                      </RadioGroup>
                    </i-col>
                  </Row>
@@ -473,7 +475,8 @@
           beginTime: this.formatterTime(this.fromVal.beginTime), // 活动开始时间
           endTime: this.formatterTime(this.fromVal.endTime), // 活动结束时间*/
           status: 0, // 审核状态
-          style: this.fromVal.classify,
+          style: this.fromVal.classify.split(',')[0],
+          configId: this.fromVal.classify.split(',')[1],
           label: this.fromVal.tag.length > 0 ? this.fromVal.tag.join(',') : '',
           principal: '',
           remark: this.fromVal.abstract,

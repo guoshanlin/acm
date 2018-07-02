@@ -11,68 +11,87 @@
 
       <div class="content clear">
         <div class="content-wrap fl">
-          <article class="box triangle b m-b10">
-            <a title="LensNews" href="javascript:void(0)"><img src="https://yfdxs.com/wp-content/themes/lensnews/images/ad.jpg" alt="LensNews"></a>
-          </article>
+          <!--<article class="box triangle b m-b10">-->
+            <!--<a title="LensNews" href="javascript:void(0)"><img src="https://yfdxs.com/wp-content/themes/lensnews/images/ad.jpg" alt="LensNews"></a>-->
+          <!--</article>-->
 
-          <article class="box triangle b m-b10" v-for="item in [1,2,3,4]">
+          <article class="box triangle b m-b10" v-for="item in dataOptions.rows" :key="item.id">
             <article class="post_main">
               <figure>
-                <a href="https://yfdxs.com/country-painting-art.html" title="乡间绘画艺术" target="_blank">
-                  <img class="thumb" src="https://yfdxs.com/wp-content/themes/lensnews/includes/timthumb.php?src=https://pic.salongweb.com/sites/2/gallery/yuanshengtai/yuanshengtai_001.JPG&amp;h=338&amp;w=600" alt="乡间绘画艺术"> </a>
+                <!--<a href="https://yfdxs.com/country-painting-art.html" title="乡间绘画艺术" target="_blank">-->
+                <a href="javascript:void(0)"><img class="thumb" :src="url + item.posterUrl"> </a>
               </figure>
-              <h2><a href="javascript:void(0)" title="乡间绘画艺术">[￥998]WordPress 简约新闻自媒体主题  MNews(用户中心、用户关注、商城、付费阅读、点赞收藏、评论评分、站内信、打赏、视频点播)</a></h2>
+              <h2><a href="javascript:void(0)" :title="item.name">{{item.name}}</a></h2>
               <div class="postinfo clear">
                 <div class="fl">
                   <span class="author">
                     <a href="javascript:void(0)" class="c3">
-                      <img class="avatar" src="https://secure.gravatar.com/avatar/c9bd07d563393c25e5f8812b47e6e640?s=120">发布人
+                      <!--<img class="avatar" src="https://secure.gravatar.com/avatar/c9bd07d563393c25e5f8812b47e6e640?s=120">{{item.memberName}}-->
+                      <Icon type="person"></Icon>&nbsp;{{item.memberNickName}}
                     </a>
                   </span>
-                  <span class="category">标签 标签</span>
-                  <span class="date">2013-02-18</span>
+                  <span class="category">{{item.label.replace(/,/g, ' ')}}</span>
+                  <span class="date">{{formatterObjTime(item.beginTime,'yyyy-MM-dd')}}</span>
                 </div>
                 <div class="fr">
                   <span class="view"><Icon class="fz20" style="vertical-align: sub;" type="ios-eye"></Icon> 6.71K</span>
-                  <span class="like"><Icon type="android-favorite"></Icon> 99</span>
+                  <!--<span class="like"><Icon type="android-favorite"></Icon> 99</span>-->
                 </div>
               </div>
-              <div class="excerpt hzline3 c2">
-                艺术缘于生活，却高于生活。对于刘乐平老师的绘画作品，充分体现了这句话的含义。认识刘老师是在高三时，经他侄子的介绍，在他身边学习绘画，初见他的作品就被深深的吸引，都是生活中的一些</div>
+              <div class="excerpt hzline3 c2">{{item.remark}}
+                <br><span class="c4">摘要假内容：2017年04月24日三人一同从崇圣寺三塔徒步登上苍山之巅——大理电视塔，
+                  从春天走到了冬天，从花暖看到雪冷，一天之内体验了爱我们没人多变与神奇。
+                  此次是萨龙龙第二次徒步登上苍山之巅，相比第一次少了些艰苦，多了些冷酷。早晨起床时天气特</span> </div>
             </article>
           </article>
 
-          <div class="ias-noneleft b m-b10">已经加载到天涯海角了！</div>
-          <div class="ias-noneleft b m-b10 cursor-p">点击加载更多</div>
+          <div class="ias-noneleft b m-b10" v-if="loading">内容加载中,请耐心等待...</div>
+          <div class="ias-noneleft b m-b10" v-if="!loading && params.limit == dataOptions.total">已经加载到天涯海角了！</div>
+          <div class="ias-noneleft b m-b10" v-if="!loading && dataOptions.rows && dataOptions.rows.length == 0 && params.keyWord != ''">没有搜索结果</div>
+          <div class="ias-noneleft b m-b10" v-if="!loading && dataOptions.rows && dataOptions.rows.length == 0 && params.keyWord == ''">暂时没有相关活动 <a @click="routePush('/initiatingActivity')">去发布</a></div>
+          <div class="ias-noneleft b m-b10 cursor-p"  v-if="!loading && params.limit < dataOptions.total" @click="loadMore">点击加载更多</div>
         </div>
         <div class="sidebar fr">
           <div class="sticky box triangle b m-b10">
             <div class="sidebar_title"><h3>热门活动</h3></div>
             <ul class="hot-wrapper">
-              <li v-for="item in [1,2,3,4]">
+              <li v-for="item in dataTop" :key="item.id">
                 <article class="postlist">
+                  <!--<figure>-->
+                    <!--&lt;!&ndash;<img class="thumb" src="https://surmon-china.github.io/vue-awesome-swiper/static/images/surmon-1.jpg"/>&ndash;&gt;-->
+
+                    <!--<img class="thumb" :src="url + item.posterUrl" />-->
+                  <!--</figure>-->
+                  <!--<h3 class="c2">{{item.name}}</h3>-->
+                  <!--<div class="info c3">-->
+                    <!--<span class="category"><Icon type="person"></Icon>&nbsp;{{item.memberName}}</span>-->
+                    <!--<span class="date"><Icon type="clock"></Icon> {{formatterObjTime(item.beginTime,'yyyy-MM-dd')}}</span>-->
+                    <!--<span class="like fr"><Icon class="fz20" style="vertical-align: sub;margin-right: 3px" type="ios-eye"></Icon>&nbsp;{{item.ct}}</span>-->
+                  <!--</div>-->
                   <figure>
-                    <img class="thumb" src="https://surmon-china.github.io/vue-awesome-swiper/static/images/surmon-1.jpg"/>
+                    <img class="thumb" :src="url + item.posterUrl"/>
                   </figure>
-                  <h3 class="c2">雪后登大理苍山十九峰之兰峰黑龙潭双龙潭黄龙潭三阳峰</h3>
-                  <div class="info c3">
-                    <span class="category">徒步登山</span>
-                    <span class="date">2018-01-09</span>
-                    <span class="like fr">21</span>
+                  <h3 class="c2">{{item.name}}</h3>
+                  <div class="info c3 m-t5">
+                    <span class="category"> <Icon type="person"></Icon> {{item.memberName}}</span>
+                    <span class="like fr"><Icon class="fz20" style="vertical-align: sub;margin-right: 3px" type="ios-eye"></Icon> {{item.ct}}</span>
+                  </div>
+                  <div class="info c3 m-t10">
+                    <span class="date"><Icon type="clock"></Icon> {{formatterObjTime(item.beginTime,'yyyy-MM-dd')}}</span>
                   </div>
                 </article>
               </li>
             </ul>
           </div>
 
-          <div class="sticky box triangle b m-b10">
-            <div class="sidebar_title"><h3>分类目录</h3></div>
-            <ul>
-              <li class="cat-item" v-for="item in [1,2,3,4,1,2,3,4,1,2,3,4]">
-                <Icon type="ios-arrow-right"></Icon> <a href="javascript: void(0)">分类</a><span>(22)</span>
-              </li>
-            </ul>
-          </div>
+          <!--<div class="sticky box triangle b m-b10">-->
+            <!--<div class="sidebar_title"><h3>分类目录</h3></div>-->
+            <!--<ul>-->
+              <!--<li class="cat-item" v-for="item in [1,2,3,4,1,2,3,4,1,2,3,4]">-->
+                <!--<Icon type="ios-arrow-right"></Icon> <a href="javascript: void(0)">分类</a><span>(22)</span>-->
+              <!--</li>-->
+            <!--</ul>-->
+          <!--</div>-->
         </div>
       </div>
 
@@ -92,21 +111,74 @@
   import iFooter from 'components/footer'
 
   export default {
-    data() {
-      return {}
+    data () {
+      return {
+        url: process.env.NODE_ENV === 'production' ? '' : process.env.API,
+        dataOptions: {},
+        params: {
+          status: '>0',
+          limit: 5,
+          keyWord: '',
+          type: ''
+        },
+        dataTop: {},
+        loading: true
+      }
     },
-    created() {
+    created () {
       setTimeout(() => {
-
+        if (this.$route.query.type) {
+          this.params.type = this.$route.query.type
+        }
+        if (this.$route.query.keyWord) {
+          this.routePush('/category', '', '', Object.assign({}, this.$route.query, {keyWord: ''}))
+        }
+        this.loadActivitys()
+        this.loadActivityTop()
       }, 20)
     },
+    watch: {
+      $route (to, from) {
+        console.log(to)
+        this.$nextTick(() => {
+          this.params.limit = 5
+          this.params.keyWord = to.query.keyWord
+          this.loadActivitys()
+        })
+      }
+    },
     methods: {
-
+      loadActivitys () {
+        this.loading = true
+        this.requestAjax('get', 'activitys', this.params).then((data) => {
+          if (data.success) {
+            this.dataOptions = data.data
+            console.log(this.dataOptions)
+          }
+          this.loading = false
+        })
+      },
+      loadActivityTop () {
+        //  activityTopN
+        this.requestAjax('get', 'activityTopN', {topN: 4}).then((data) => {
+          if (data.success) {
+            this.dataTop = data.data
+          }
+        })
+      },
+      loadMore () {
+        if (this.params.limit == this.dataOptions.total) return
+        this.params.limit = this.params.limit + 5
+        if (this.params.limit > this.dataOptions.total) {
+          this.params.limit = this.dataOptions.total
+        }
+        this.loadActivitys()
+      }
     },
     components: {
       topHeader,
       iFooter
-    },
+    }
   }
 </script>
 
@@ -136,7 +208,6 @@
     width: 390px;
   }
 
-
   .post_main {
     padding-left: 262px;
     overflow: hidden;
@@ -157,6 +228,7 @@
   }
   .post_main img.thumb {
     width: 250px;
+    height: 140px;
     overflow: hidden;
   }
   .post_main h2 {
@@ -214,7 +286,6 @@
     border: 1px #f4f4f4 solid;
   }
 
-
   .sticky {
     float: right;
     width: 390px;
@@ -233,6 +304,7 @@
   }
   .postlist figure img.thumb {
     width: 128px;
+    height: 75px;
   }
   .postlist h3 {
     font-weight: 500;
@@ -263,5 +335,13 @@
     color: #333;
   }
 
+  .demo-spin-icon-load{
+    animation: ani-demo-spin 1s linear infinite;
+  }
+  @keyframes ani-demo-spin {
+    from { transform: rotate(0deg);}
+    50%  { transform: rotate(180deg);}
+    to   { transform: rotate(360deg);}
+  }
 
 </style>

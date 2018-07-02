@@ -276,7 +276,7 @@
             key: 'dtAvgCt',
             sortable: false,
             render: (h, params) => {
-              return h('div', this.toDecimal2(params.row.avgCt))
+              return h('div', this.toDecimal2(params.row.dtAvgCt))
             }}
         ],
         data: [{company: '订单详情页', position: 1}, {company: '提交订单页', position: 1}],
