@@ -357,6 +357,10 @@
 </script>
 
 <style scoped>
+  .wrapper-content{
+    min-width: 1060px;
+  }
+
   .app-header{
     width: 100%;
     height: 50px;
