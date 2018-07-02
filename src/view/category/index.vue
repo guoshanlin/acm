@@ -24,7 +24,7 @@
           <!--</article>-->
 
           <article class="box triangle b m-b10" v-for="item in dataOptions.rows" :key="item.id">
-            <article class="post_main" @click="routePush('/deltail',item.id,'category')">
+            <article class="post_main" @click="routePush('/activities',item.id,'category')">
               <figure>
                 <!--<a href="https://yfdxs.com/country-painting-art.html" title="乡间绘画艺术" target="_blank">-->
                 <a href="javascript:void(0)"><img class="thumb" :src="url + item.posterUrl"> </a>
@@ -63,7 +63,7 @@
           <div class="sticky box triangle b m-b10">
             <div class="sidebar_title"><h3>热门活动</h3></div>
             <ul class="hot-wrapper">
-              <li v-for="item in dataTop" :key="item.id" @click="routePush('/deltail',item.id,'category')">
+              <li v-for="item in dataTop" :key="item.id" @click="routePush('/activities',item.id,'category')">
                 <article class="postlist">
                   <!--<figure>-->
                     <!--&lt;!&ndash;<img class="thumb" src="https://surmon-china.github.io/vue-awesome-swiper/static/images/surmon-1.jpg"/>&ndash;&gt;-->

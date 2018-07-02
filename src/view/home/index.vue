@@ -9,7 +9,7 @@
         </section>
         <swiper class="notice flex" :options="noticeOption" v-if='option[1].rows.length> 0'>
           <swiper-slide  v-for="item in option[1].rows" :key="item.id">
-            <div class="hzline1"><a class="c2" href="javascript:void(0)" @click="routePush('/deltail',item.id,'home')">最新发布活动：{{item.name}} </a></div></swiper-slide>
+            <div class="hzline1"><a class="c2" href="javascript:void(0)" @click="routePush('/activities',item.id,'home')">最新发布活动：{{item.name}} </a></div></swiper-slide>
           <!--<swiper-slide>-->
           <!--<div class="hzline1"><a class="c2" href="javascript:void(0)">MNews 主题更新至1.1： 站内信，打赏，百度推送，阿里云视频点播和优酷视频，认阿里云视频点播和优酷视频阿里
           云视频点播和优酷视频证作者加认阿里云视频点播和优酷视频阿里云视频点播和优酷视频证作者加 V，前台编辑文章等自媒体实用的功能，增加了视频自</a></div></swiper-slide>-->
@@ -23,7 +23,7 @@
         <div class="slider b">
           <!-- swiper -->
           <swiper :options="swiperOption" v-if='rowSwiper.length> 0'>
-            <swiper-slide v-for="(item, index) in rowSwiper" :key="index"><img width='100%' height='100%' :src="item.url" @click="routePush('/deltail',item.id,'home')"></swiper-slide>
+            <swiper-slide v-for="(item, index) in rowSwiper" :key="index"><img width='100%' height='100%' :src="item.url" @click="routePush('/activities',item.id,'home')"></swiper-slide>
             <!--<swiper-slide v-for="(item, index) in row" :key="index" :style ="{backgroundImage: 'url(' + item.url + ')'}"></swiper-slide>-->
             <!--<swiper-slide-->
               <!--style="background-image:url('https://surmon-china.github.io/vue-awesome-swiper/static/images/surmon-6.jpg')"></swiper-slide>-->
@@ -38,7 +38,7 @@
             <li v-for="item in dataTop" :key="item.id">
               <article class="postlist cursor-p">
                 <figure>
-                  <img class="thumb" :src="url + item.posterUrl" @click="routePush('/deltail',item.id,'home')" />
+                  <img class="thumb" :src="url + item.posterUrl" @click="routePush('/activities',item.id,'home')" />
                 </figure>
                 <h3 class="c2">{{item.name}}</h3>
                 <div class="info c3 m-t5">
@@ -88,7 +88,7 @@
             <li class="layout_li" v-for="row in item.rows" :key="row.id">
               <article class="postgrid">
                 <figure class="t-center">
-                  <a href="javascript:void(0)" @click="routePush('/deltail',row.id,'home')">
+                  <a href="javascript:void(0)" @click="routePush('/activities',row.id,'home')">
                   <img class="thumb" :src="url + row.posterUrl"></a>
                 </figure>
                 <div class="home-content">

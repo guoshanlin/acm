@@ -459,9 +459,11 @@
   .logo_core_img {
      width: 120px;
      height: 100px;
+    text-align: center;
   }
   .logo_core_img  img{
-    height: 100%;
+    height: 80%;
+    margin-top: 10%;
   }
 
 </style>
