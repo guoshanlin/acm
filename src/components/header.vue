@@ -8,9 +8,9 @@
               <li class="menu-item menu-item-login">
                 <a class="user-login" href="javascript:void(0)" @click="routePush('/login')">登录</a>
               </li>
-              <li class="menu-item menu-item-reg">
-                <a href="javascript:void(0)" @click="routePush('/register')">注册</a>
-              </li>
+              <!--<li class="menu-item menu-item-reg">-->
+                <!--<a href="javascript:void(0)" @click="routePush('/register')">注册</a>-->
+              <!--</li>-->
             </ul>
             <ul class="menu c3" v-if="showAdmin">
               <li class="menu-item menu-item-welcome">您好，欢迎访问本站！</li>
@@ -59,7 +59,7 @@
                 <a href="javascript:void(0)" @click="routePush('/index')">首页</a>
               </li>
               <li class="menu-item" v-for="(item, index) in findTree" :key="index">
-                <a href="javascript:void(0)" @click="routePush('/category','','',{type:item.title})">{{item.title}}</a>
+                <a href="javascript:void(0)" @click="routePush('/category','','',{type:item.title,pid:item.id})">{{item.title}}</a>
               </li>
             </ul>
           </div>
@@ -366,7 +366,7 @@
         }, () => {
 
         })
-      },
+      }
     },
     components: {
       iPassword,

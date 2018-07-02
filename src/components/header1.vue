@@ -137,6 +137,7 @@
      },
       search () {
         console.log('搜索。。。')
+
         // this.routePush(this.$route.path, '', '', Object.assign({}, this.$route.query, {searchKey: this.searchKey}))
       }
     },

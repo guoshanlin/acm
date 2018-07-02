@@ -117,6 +117,8 @@ export default {
       switch ('' + role) {
         case '0':
           return '普通用户'
+        case '1':
+          return '活动管理员'
         case '98':
           return '运营管理员'
         case '99':

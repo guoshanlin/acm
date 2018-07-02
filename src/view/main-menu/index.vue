@@ -33,7 +33,6 @@
         </template>
       </Menu>
 
-<!--      <div class="c3 posct" style="position:absolute;width: 100%;height:40px;bottom:0;"><img width="60" src="../../assets/logo_core.png" ></div>-->
     </div>
     <div class="app-content">
       <router-view></router-view>
@@ -315,7 +314,7 @@
           if (data.success) {
             this.$Message.success('修改信息成功')
             let _obj = {}
-            Object.assign(_obj, this.userData,newVal )
+            Object.assign(_obj, this.userData, newVal)
             this.setUserDate(_obj)
             setUserInfo(_obj)
             this.inputForm.modalshow = false
@@ -346,7 +345,8 @@
         this.menuList = [
           {icon: 'android-walk', path: '/meeting', title: '活动'},
           {icon: 'ios-person-outline', path: '/member', title: '会员'},
-          {icon: 'social-yen', path: '/finance/myAccount', title: '财务'}
+          {icon: 'social-yen', path: '/finance/myAccount', title: '财务'},
+          {icon: 'ios-compose', path: '/examine', title: '活动审核'}
         ]
       }
       this.$nextTick(() => {

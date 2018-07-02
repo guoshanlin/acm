@@ -6,7 +6,7 @@
         <i-col span="12">
           <Row type="flex" justify="start">
             <i-col>
-          <!--    <Button type="primary" @click="addOrModify">新增</Button>-->
+              <Button type="primary" @click="addOrModify">新增</Button>
 <!--              <Button type="warning" " @click="deleteAll">删除</Button>-->
             </i-col>
           </Row>
@@ -411,7 +411,7 @@
                 type: 'bankCard',
                 titlespan: 3,
                 colspan: 21,
-                required: true,
+                required: false,
                 relation: 'bank',
                 valueType: 'bankCheck'
               }
@@ -424,7 +424,7 @@
                 titlespan: 3,
                 colspan: 9,
                 relation: '',
-                required: true
+                required: false
               },
               {
                 title: '开户名',
@@ -432,7 +432,7 @@
                 type: 'input',
                 titlespan: 3,
                 colspan: 9,
-                required: true
+                required: false
               }
             ],
             [
@@ -442,7 +442,7 @@
                 type: 'input',
                 titlespan: 3,
                 colspan: 9,
-                required: true,
+                required: false,
                 valueType: 'email'
               },
               {

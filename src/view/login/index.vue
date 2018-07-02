@@ -8,11 +8,11 @@
             回到首页</a>
           <span v-if="switchFlag" class="fz16">登录聚热会</span>
           <span v-else class="fz16">注册聚热会帐号</span>
-          <a class="fr c1" @click="switchEvent">
-            <span v-if="switchFlag">注册新账号</span>
-            <span v-else>已有账号登录</span>
-            <Icon type="ios-arrow-right" class="fz16" style="vertical-align: middle;margin-top: -3px;"></Icon>
-          </a>
+          <!--<a class="fr c1" @click="switchEvent">-->
+            <!--<span v-if="switchFlag">注册新账号</span>-->
+            <!--<span v-else>已有账号登录</span>-->
+            <!--<Icon type="ios-arrow-right" class="fz16" style="vertical-align: middle;margin-top: -3px;"></Icon>-->
+          <!--</a>-->
         </div>
 
         <div class="content-box">
@@ -145,7 +145,8 @@
       }
 
       return {
-        switchFlag: this.$route.path == "/login",
+        switchFlag: true,
+        //switchFlag: this.$route.path == "/login",
         formLogin: {
           username: '',
           password: '',
@@ -200,6 +201,7 @@
         setIsLogin: 'SET_ISLOGIN'
       }),
       switchEvent () {
+        return
         this.routePush( this.switchFlag ? '/register' : '/login')
       },
       loginEvent() {

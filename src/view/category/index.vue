@@ -4,9 +4,17 @@
     <top-header></top-header>
 
     <div class="w1200">
-      <section class="box triangle crumbs_wrap b m-t10 m-b10 ct c2">
-        <h3>绘画</h3>
-        <p class="c3">绘画，最享受的一件事情，那种忘我的境地是其他任何事都无法比拟！</p>
+      <section class="box triangle crumbs_wrap b m-t10 m-b10 ct c2" v-if="title != ''">
+        <h3>{{title}}</h3>
+        <div class="t-left">
+          <RadioGroup type="button" size="small">
+            <Radio label="" value="">不限</Radio>
+            <Radio v-for="value in childrenTree" :label="value.title + ',' + value.id" :key="value.title" :value="value.title + ',' + value.id">
+              {{value.title}}
+            </Radio>
+          </RadioGroup>
+        </div>
+        <!--<p class="c3">绘画，最享受的一件事情，那种忘我的境地是其他任何事都无法比拟！</p>-->
       </section>
 
       <div class="content clear">
@@ -39,7 +47,7 @@
                 </div>
               </div>
               <div class="excerpt hzline3 c2">{{item.remark}}
-                <br><span class="c4">摘要假内容：2017年04月24日三人一同从崇圣寺三塔徒步登上苍山之巅——大理电视塔，
+                <br><span class="c3">摘要假内容：2017年04月24日三人一同从崇圣寺三塔徒步登上苍山之巅——大理电视塔，
                   从春天走到了冬天，从花暖看到雪冷，一天之内体验了爱我们没人多变与神奇。
                   此次是萨龙龙第二次徒步登上苍山之巅，相比第一次少了些艰苦，多了些冷酷。早晨起床时天气特</span> </div>
             </article>
@@ -119,31 +127,34 @@
           status: '>0',
           limit: 5,
           keyWord: '',
-          type: ''
+          configId: ''
         },
+        title: this.$route.query.type,
+        configPid: '',
         dataTop: {},
+        findTree: '',
+        childrenTree: '',
         loading: true
       }
     },
     created () {
       setTimeout(() => {
-        if (this.$route.query.type) {
-          this.params.type = this.$route.query.type
-        }
         if (this.$route.query.keyWord) {
           this.routePush('/category', '', '', Object.assign({}, this.$route.query, {keyWord: ''}))
         }
-        this.loadActivitys()
+        this.configPid = this.$route.query.pid
+        this.activitysConfig()
         this.loadActivityTop()
       }, 20)
     },
     watch: {
       $route (to, from) {
-        console.log(to)
         this.$nextTick(() => {
+          this.configPid = this.$route.query.pid
+          this.title = this.$route.query.type
           this.params.limit = 5
           this.params.keyWord = to.query.keyWord
-          this.loadActivitys()
+          this.activitysConfig()
         })
       }
     },
@@ -153,7 +164,6 @@
         this.requestAjax('get', 'activitys', this.params).then((data) => {
           if (data.success) {
             this.dataOptions = data.data
-            console.log(this.dataOptions)
           }
           this.loading = false
         })
@@ -173,6 +183,26 @@
           this.params.limit = this.dataOptions.total
         }
         this.loadActivitys()
+      },
+      activitysConfig () {
+        this.requestAjax('get', 'findTree', {}).then((data) => {
+          // {title: '行业', radio: ['IT互联网', '创业', '科技', '金融','游戏','文娱','电商','教育','营销','设计','地产','医疗','服务业']},
+          this.findTree = []
+          if (data.success) {
+            this.findTree = JSON.parse(data.data.rows).children
+          }
+          for (let i = 0; i < this.findTree.length; i++) {
+            if (this.findTree[i].id == this.$route.query.pid) {
+              this.childrenTree = this.findTree[i].children
+            }
+          }
+          console.log(this.childrenTree)
+          this.$nextTick(() => {
+            this.loadActivitys()
+          })
+        }, () => {
+
+        })
       }
     },
     components: {
@@ -335,13 +365,7 @@
     color: #333;
   }
 
-  .demo-spin-icon-load{
-    animation: ani-demo-spin 1s linear infinite;
-  }
-  @keyframes ani-demo-spin {
-    from { transform: rotate(0deg);}
-    50%  { transform: rotate(180deg);}
-    to   { transform: rotate(360deg);}
-  }
+  .ivu-radio-wrapper{margin: 5px!important;}
+  .ivu-radio-group-button .ivu-radio-wrapper:last-child,.ivu-radio-group-button.ivu-radio-group-small .ivu-radio-wrapper:first-child{border-radius:0;}
 
 </style>
