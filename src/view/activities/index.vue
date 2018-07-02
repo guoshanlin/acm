@@ -17,7 +17,7 @@
           <div class="sticky box triangle b m-b10">
             <div class="sidebar_title"><h3>热门活动</h3></div>
             <ul class="hot-wrapper">
-              <li v-for="item in dataTop" :key="item.id">
+              <li v-for="item in dataTop" :key="item.id" @click="routePush('/activities',item.id,'activities')">
                 <article class="postlist">
                   <figure>
                     <img class="thumb" :src="url + item.posterUrl"/>
