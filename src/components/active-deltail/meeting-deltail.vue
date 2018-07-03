@@ -1,8 +1,8 @@
 <template>
   <div class="meeting-deltail">
-    <div class="copy">
-      <i-button @click="copy" type="primary">生成活动图片</i-button>
-    </div>
+    <!--<div class="copy">-->
+      <!--<i-button @click="copy" type="primary">生成活动图片</i-button>-->
+    <!--</div>-->
     <div id="deltail">
       <datails-item :row='data'></datails-item>
       <!--<div class="wrapper b wrapper-box">-->
@@ -105,14 +105,14 @@
           if (data.success) {
             this.data = data.data.rows[0]
             this.label = this.data.label.split(',')
-            this.$nextTick(() => {
-              this.bindAClick(document.querySelectorAll('#content img'))
-            })
+            // this.$nextTick(() => {
+            //   this.bindAClick(document.querySelectorAll('#content img'))
+            // })
           }
         })
       },
       copy () {
-        html2canvas(document.getElementById('deltail'),{useCORS: true}).then((canvas) => {
+        html2canvas(document.getElementById('deltail'), {useCORS: true, scale: 0.8}).then((canvas) => {
           // document.getElementById('img').appendChild(canvas)
           let imgUri = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream')
           let _save = document.createElementNS('http://www.w3.org/1999/xhtml', 'a')
@@ -122,7 +122,7 @@
           event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
           _save.dispatchEvent(event)
         })
-      },
+       },
       bindAClick (damo) {
         if (damo != null && damo.length !== 0) {
           for (let i = 0; i < damo.length; i++) {
@@ -158,4 +158,7 @@
     word-wrap: break-word; /*InternetExplorer5.5+*/
   }
   pre img{max-width: 80%;}
+  #deltail {
+    padding: 5px;
+  }
 </style>

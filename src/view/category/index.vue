@@ -1,7 +1,7 @@
 <template>
 
   <div class="cBg">
-    <top-header></top-header>
+    <top-header @search="search"></top-header>
 
     <div class="w1200">
       <section class="box triangle crumbs_wrap b m-t10 ct c2" v-if="title && title != ''">
@@ -199,9 +199,12 @@
           this.$nextTick(() => {
             this.loadActivitys()
           })
-        }, () => {
-
-        })
+        }, () => {})
+      },
+      search (val) {
+        this.params.limit = 5
+        this.params.keyWord = val
+        this.loadActivitys()
       }
     },
     components: {

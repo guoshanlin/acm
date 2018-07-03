@@ -128,7 +128,12 @@
         setIsLogin: 'SET_ISLOGIN'
       }),
       searchEvent () {
-        this.routePush('/category', '', '', Object.assign({}, this.$route.query, {keyWord: this.searchValue}))
+        if (this.$route.path != '/category') {
+          this.routePush('/category', '', '', Object.assign({}, this.$route.query, {keyWord: this.searchValue}))
+        } else {
+          this.$emit('search', this.searchValue)
+        }
+        // this.routePush('/category', '', '', Object.assign({}, this.$route.query, {keyWord: this.searchValue}))
         // this.$Message.info('搜索：' + this.searchValue)
       },
       handleSubmit (name) {
