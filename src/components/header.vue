@@ -3,8 +3,8 @@
       <section class="wrapper">
         <div class="fbox">
           <div class="logo_core_img">
-            <a href="javascript:void(0)" class="logo" title="知识E站">
-              <img src="../assets/logo_core.gif" alt="知识E站">
+            <a href="javascript:void(0)" class="logo" title="知识e站">
+              <img src="../assets/logo_core.gif" alt="知识e站">
             </a>
           </div>
           <div class="flex">
@@ -51,7 +51,7 @@
             </nav>
 
             <nav class="header-nav clear fbox">
-              <a href="javascript:void(0)" class="logo fl" title="知识E站">
+              <a href="javascript:void(0)" class="logo fl" title="知识e站">
                 <!--<img src="../assets/logo_core.gif" alt="聚热会">-->
               </a>
               <div class="flex posct">

@@ -2,7 +2,7 @@
   <div class="footer">
     <section v-if="showSlogan" class="slogan m-t20 c">
       <div style="position:relative; z-index: 2">
-        <h3 class="fz32">知识E站</h3>
+        <h3 class="fz32">知识e站</h3>
         <p class="fz15">做最有营养的活动</p>
         <a href="javascript:void(0)">联系我们</a>
       </div>
