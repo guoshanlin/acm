@@ -51,7 +51,7 @@
             </nav>
 
             <nav class="header-nav clear fbox">
-              <a href="javascript:void(0)" class="logo fl" title="聚热会">
+              <a href="javascript:void(0)" class="logo fl" title="知识E站">
                 <!--<img src="../assets/logo_core.gif" alt="聚热会">-->
               </a>
               <div class="flex posct">

@@ -25,7 +25,7 @@
 
   export default {
     name: 'index',
-    data() {
+    data () {
       return {
         rowId: this.$route.query.id,
         row: '',

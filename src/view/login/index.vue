@@ -6,8 +6,8 @@
           <a class="fl c1" @click="routePush('/index')">
             <Icon type="ios-home" class="fz14"></Icon>
             回到首页</a>
-          <span v-if="switchFlag" class="fz16">登录聚热会</span>
-          <span v-else class="fz16">注册聚热会帐号</span>
+          <span v-if="switchFlag" class="fz16">登录知识E站</span>
+          <span v-else class="fz16">注册知识E站帐号</span>
           <!--<a class="fr c1" @click="switchEvent">-->
             <!--<span v-if="switchFlag">注册新账号</span>-->
             <!--<span v-else>已有账号登录</span>-->
@@ -17,9 +17,9 @@
 
         <div class="content-box">
           <div v-if="switchFlag">
-            <h3 class="c3">聚热会帐号登录</h3>
+            <h3 class="c3">知识E站帐号登录</h3>
             <div class="ipu-wrapper">
-              <i-input type="text" v-model="formLogin.username" placeholder="聚展会帐号 邮箱/手机">
+              <i-input type="text" v-model="formLogin.username" placeholder="知识E站帐号 邮箱/手机">
                 <Icon type="ios-person-outline" slot="prepend"></Icon>
               </i-input>
             </div>

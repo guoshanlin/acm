@@ -1,12 +1,11 @@
 <template>
   <div>
-    <div>
       <article class="box triangle b m-b10">
         <article class="post_main">
           <div class="fbox">
             <div style="padding-right:10px;">
-              <!--<a href="javascript:void(0)"><img class="thumb" :src="url + row.posterUrl 'https://pmp.coreware.cn/gather/files' + row.posterUrl.split('files')[1]"> </a>-->
-              <a href="javascript:void(0)"><img class="thumb" :src="'https://pmp.coreware.cn/gather/files' + row.posterUrl.split('files')[1]"> </a>
+              <a href="javascript:void(0)"><img class="thumb" :src="url + row.posterUrl"> </a>
+              <!--<a href="javascript:void(0)"><img class="thumb" :src="'https://pmp.coreware.cn/gather/files' + row.posterUrl.split('files')[1]"> </a>-->
             </div>
             <div class="flex">
               <h2 class="m-t20 m-b10"><a href="javascript:void(0)" :title="row.name">{{row.name}}</a></h2>
@@ -70,8 +69,6 @@
           </div>
         </article>
       </article>
-    </div>
-    <div>
       <article class="box triangle b m-b10">
         <article class="post_main">
           <div class="m-t10 excerpt content-deltail" id="content-deltail">
@@ -80,7 +77,6 @@
           </div>
         </article>
       </article>
-    </div>
   </div>
 </template>
 
