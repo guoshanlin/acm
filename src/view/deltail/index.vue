@@ -1,6 +1,6 @@
 <template>
   <div class="wechat" id="wechat">
-    <pre v-html="content"></pre>
+    <div v-html="content"></div>
   </div>
 </template>
 
@@ -53,7 +53,8 @@
   .wechat {
     max-width: 650px;
     margin: 0 auto;
-    padding: 0 10px;
+    padding: 10px;
+    background: #fff;
   }
 
   .wechat img {
