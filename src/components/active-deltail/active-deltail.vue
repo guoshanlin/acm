@@ -44,7 +44,7 @@
             <!--</div>-->
         </article>
       </article>
-      <article class="box triangle b m-b10"  v-if="modalShow.poster">
+      <article class="box triangle b m-b10" id="poster" v-if="modalShow.poster">
       <article class="post_main">
       <figure>
           <!--<a href="javascript:void(0)"><img class="thumb" :src="url + row.posterUrl"> </a>-->
@@ -52,7 +52,7 @@
       </figure>
       </article>
       </article>
-      <article class="box triangle b m-b10"  v-if="modalShow.abstract">
+      <article class="box triangle b m-b10" id="abstract" v-if="modalShow.abstract">
         <article class="post_main">
           <div class="m-t10 excerpt">
             <h4>活动摘要:</h4>
@@ -60,7 +60,7 @@
           </div>
         </article>
       </article>
-      <article class="box triangle b m-b10"  v-if="modalShow.agenda">
+      <article class="box triangle b m-b10" id="agenda" v-if="modalShow.agenda">
         <article class="post_main">
           <div class="m-t10 excerpt">
             <h4>活动议程:</h4>
@@ -68,7 +68,7 @@
           </div>
         </article>
       </article>
-      <article class="box triangle b m-b10"  v-if="modalShow.deltail">
+      <article class="box triangle b m-b10" id="deltails" v-if="modalShow.deltails">
         <article class="post_main">
           <div class="m-t10 excerpt content-deltail" id="content-deltail">
             <h4>详细内容:</h4>
@@ -76,12 +76,12 @@
           </div>
         </article>
       </article>
-      <article class="box triangle b m-b10" v-if="modalShow.promoCode">
+      <article class="box triangle b m-b10" id="promoCode" v-if="modalShow.promoCode">
         <article class="post_main">
           <div class="m-t10 excerpt">
             <h4>活动推广码:</h4>
             <div class="posct">
-              <img :src="imgSrc">
+              <img v-if="imgSrc!=''" :src="imgSrc" style="width: 200px;">
               <!--<img style="width: 200px;" src="../../assets/jrh.jpg">-->
             </div>
           </div>
@@ -96,12 +96,12 @@
     data () {
       return {
         url: process.env.NODE_ENV === 'production' ? '' : process.env.API,
-        imgSrc: 'https://pmp.coreware.cn/gather/' + this.row.appUrlImg,
+        imgSrc: '',
         modalShow: {
           poster: true,
           abstract: true,
           agenda: true,
-          deltail: true,
+          deltails: true,
           promoCode: false
         }
       }
@@ -114,11 +114,11 @@
       row () {
         this.$nextTick(() => {
           this.bindAClick(document.querySelectorAll('#content-deltail img'))
-          this.imgSrc = 'https://pmp.coreware.cn/gather/' + this.row.appUrlImg
+          this.imgSrc = this.row.appUrlImg && this.row.appUrlImg != '' ? 'https://pmp.coreware.cn/gather' + this.row.appUrlImg : ''
         })
       },
       showObj (val) {
-        if (!this.modalShow.deltail && val.deltail) {
+        if (!this.modalShow.deltails && val.deltails) {
           this.modalShow = val
           this.$nextTick(() => {
             this.bindAClick(document.querySelectorAll('#content-deltail img'))
@@ -147,6 +147,14 @@
         this.$nextTick(() => {
           this.bindAClick(document.querySelectorAll('#content-deltail img'))
         })
+      },
+      getDamoHeight () {
+        let _arr = ['poster', 'abstract', 'agenda', 'deltails', 'promoCode']
+        let _obj = {}
+        for (let i = 0; i < _arr.length; i++) {
+          _obj[_arr[i]] = Math.round((document.getElementById(_arr[i]).clientWidth + 10) * 0.8) + ' x ' + Math.round(document.getElementById(_arr[i]).clientHeight * 0.8)
+        }
+        return _obj
       }
     },
     beforeCreate () {
@@ -154,6 +162,7 @@
         if (this.showObj && this.showObj != '') {
           this.modalShow = this.showObj
         }
+        this.imgSrc = this.row.appUrlImg && this.row.appUrlImg != '' ? 'https://pmp.coreware.cn/gather' + this.row.appUrlImg : ''
         this.bindAClick(document.querySelectorAll('#content-deltail img'))
       })
     }

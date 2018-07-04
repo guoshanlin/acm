@@ -71,11 +71,16 @@
       title="设置生成图片模块"
       :mask-closable="false"
       @on-ok="ok"
-      @on-cancel="cancel">
+      @on-cancel="cancel" :width="400">
       <div class="t-center">
-        <Checkbox v-for="(item, index) in checkboxArr" v-model="showModal[item.id]" :key="index" @on-change="checkedChange" :disabled="item.disabled">{{item.name}}</Checkbox>
-        <div v-if="msg!=''" class="m-t15">
-          <Icon type="android-notifications c4"></Icon> <span class="c4">{{msg}}</span>
+        <div class="t-left in-line">
+          <div  v-for="(item, index) in checkboxArr" :key="index">
+            <Checkbox v-model="showModal[item.id]" @on-change="checkedChange" :disabled="item.disabled"><span class="in-line" style="width: 70px;">{{item.name}}</span>&nbsp;&nbsp; 宽x高:({{modalSpec[item.id]}})</Checkbox>
+          </div>
+        </div>
+        <div class="m-t15 t-left p-10">
+           备注：宽高都缩小了0.8,当按钮为禁用状态时，说明生成图片大小超限制，无法生成图片，建议移除宽高较大模块。
+          <!--<Icon type="android-notifications c4"></Icon> <span class="c4">{{msg}}</span>-->
         </div>
       </div>
       <div slot="footer">
@@ -103,19 +108,20 @@
           poster: true,
           abstract: true,
           agenda: true,
-          deltail: true,
+          deltails: true,
           promoCode: true
         },
         checkboxArr: [
           {id: 'poster', name: '海报'},
           {id: 'abstract', name: '活动摘要', disabled: true},
           {id: 'agenda', name: '活动议程', disabled: true},
-          {id: 'deltail', name: '活动详情'},
+          {id: 'deltails', name: '活动详情'},
           {id: 'promoCode', name: '活动二维码', disabled: true}
         ],
         disabled: true,
         setImg: false,
         msg: '',
+        modalSpec: '',
         timer: {}
       }
     },
@@ -148,13 +154,14 @@
       },
       setImgMadal () {
         this.setImg = true
-        this.getcCanvas(true)
+         this.modalSpec = this.$refs.datails.getDamoHeight()
+         this.getcCanvas(true)
       },
       copy () {
         let _this = this
         html2canvas(document.getElementById('deltail'), {useCORS: true, scale: 0.8}).then((canvas) => {
           console.log(canvas)
-          _this.showModal = {poster: true, abstract: true, agenda: true, deltail: true, promoCode: true}
+          _this.showModal = {poster: true, abstract: true, agenda: true, deltails: true, promoCode: true}
           let imgUri = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream')
             let _save = document.createElementNS('http://www.w3.org/1999/xhtml', 'a')
             _save.href = imgUri
@@ -195,12 +202,12 @@
         this.copy()
       },
       cancel () {
-        this.showModal = {poster: true, abstract: true, agenda: true, deltail: true, promoCode: true}
+        this.showModal = {poster: true, abstract: true, agenda: true, deltails: true, promoCode: true}
         this.setImg = false
         this.$Message.info('点击了取消')
       },
       checkedChange () {
-        if (this.showModal.deltail) {
+        if (this.showModal.deltails) {
           this.$refs.datails.initImg()
         }
         clearTimeout(this.timer)

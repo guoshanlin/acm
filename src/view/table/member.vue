@@ -406,7 +406,6 @@
         }
         let newVal = {}
         Object.assign(newVal, val)
-        console.log("newVal----------------"+JSON.stringify(newVal))
         this.inputForm.modalDisabled = true
         switch (this.clickType) {
           case '新增':
@@ -429,7 +428,11 @@
             this.inputForm.modalshow = false
             this.loadTable()
           } else {
-            this.$Message.success(this.clickType + '会员失败')
+            if (this.clickType == '新增') {
+              this.$Message.success(data.desc)
+            } else {
+              this.$Message.success(this.clickType + '会员失败')
+            }
           }
           this.inputForm.modalDisabled = false
         }, (err) => {

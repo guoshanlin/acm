@@ -197,7 +197,7 @@
              <div class="float-r form-fill">
                <div class="t-left">
                    <div id="main">
-                     <mavon-editor @change="mavonChange" placeholder="编辑详情..."/>
+                     <mavon-editor ref="mavon" @change="mavonChange"  @imgAdd="$imgAdd" placeholder="编辑详情..."/>
                    </div>
                </div>
              </div>
@@ -603,6 +603,16 @@
       },
       mavonChange (v, r) {
         this.mavonValue = r
+      },
+      $imgAdd (pos, $file) {
+        // 第一步.将图片上传到服务器.
+        let formdata = new FormData()
+        formdata.append('file', $file)
+        this.requestFile('POST', 'upload', formdata).then((data) => {
+          if (data.err == '') {
+            this.$refs.mavon.$img2Url(pos, data.msg)
+          }
+        })
       }
     }
   }
