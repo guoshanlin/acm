@@ -199,7 +199,6 @@
                    <div id="main">
                      <mavon-editor @change="mavonChange" placeholder="编辑详情..."/>
                    </div>
-                    <!--<i-ueditor :value=uEditorOptions.defaultMsg :config=uEditorOptions.config @getValue="getVal"></i-ueditor>-->
                </div>
              </div>
              <div class="clearFix"></div>
@@ -238,7 +237,6 @@
 </template>
 
 <script>
-  // import iUeditor from 'components/modal/ueditor.vue'
   import iTime from 'components/date-picker/index.vue'
   import iForm from 'components/registration-form/index.vue'
   import iSpecies from 'components/ticket-species/index.vue'
@@ -375,13 +373,6 @@
               {title: '学习', radio: ['课程', '读书', '职场','社团','讲座']}
             ]
         },
-        uEditorOptions: {
-          defaultMsg: '',
-          config: {
-            initialFrameWidth: null,
-            initialFrameHeight: 300
-          }
-        },
         registrationForm: false,
         dataFile: '',
         msgTip: {
@@ -420,7 +411,6 @@
       ])
     },
     components: {
-      // iUeditor,
       iForm,
       iSpecies,
       iTime,
@@ -432,9 +422,6 @@
       }, 20)
     },
     methods: {
-      getVal (val, content) {
-        this.fromVal.detailedContent = val
-      },
       saveFrom (val) {
         console.log('保存设置表单内容')
         this.registrationForm = false
