@@ -137,6 +137,8 @@
               item.src = process.env.NODE_ENV === 'production' ? process.env.API + 'files' + item.src.split('files')[1] : 'https://pmp.coreware.cn/gather/files' + item.src.split('files')[1]
               item.style = 'width: 100%;'
               // item.width = '300'
+            } else {
+              item.style = 'width: 100%;'
             }
           }
         }
@@ -237,4 +239,5 @@
     word-wrap: break-word; /*InternetExplorer5.5+*/
   }
   pre img{max-width: 80%;}
+  /*pre img{width: 100%!important;}*/
 </style>
