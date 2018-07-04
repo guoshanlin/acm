@@ -79,7 +79,7 @@
       <article class="box triangle b m-b10" id="promoCode" v-if="modalShow.promoCode">
         <article class="post_main">
           <div class="m-t10 excerpt">
-            <h4>活动推广码:</h4>
+            <h2>扫码查看详情&报名:</h2>
             <div class="posct">
               <img v-if="imgSrc!=''" :src="imgSrc" style="width: 200px;">
               <!--<img style="width: 200px;" src="../../assets/jrh.jpg">-->

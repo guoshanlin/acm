@@ -35,15 +35,28 @@
     data () {
       return {
         loadImg: '../../assets/spread.jpg',
-        url: 'https://pmp.coreware.cn/gather/weixin/createwxaqrcode?toUrl=pages/exhibition-details/exhibition-details?id=' + this.$route.query.id
+        row: '',
+        url: ''
       }
     },
     created () {
       setTimeout(() => {
-
+        this.initItem()
       }, 20)
     },
-    methods: {}
+    methods: {
+      initItem () {
+        const _type = 'GET'
+        const _params = {id: this.$route.query.id}
+        const _url = 'activitys'
+        this.requestAjax(_type, _url, _params).then((data) => {
+          if (data.success) {
+            this.row = data.data.rows[0]
+            this.url = 'https://pmp.coreware.cn/gather' + data.data.rows[0].appUrlImg
+          }
+        })
+      }
+    }
   }
 </script>
 

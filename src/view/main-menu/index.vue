@@ -339,7 +339,8 @@
           {icon: 'ios-world-outline', path: '/promotion', title: '推广'},
           {icon: 'ios-compose', path: '/examine', title: '活动审核'},
           {icon: 'android-checkmark-circle', path: '/payment', title: '提现审批'},
-          {icon: 'social-yen-outline', path: '/paymentAudit', title: '提现支付'}
+          {icon: 'social-yen-outline', path: '/paymentAudit', title: '提现支付'},
+          {icon: 'social-yen', path: '/allFinance/allAccount', title: '财务管理'}
         ]
       } else {
         this.menuList = [

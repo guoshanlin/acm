@@ -79,7 +79,7 @@
           </div>
         </div>
         <div class="m-t15 t-left p-10">
-           备注：宽高都缩小了0.8,当按钮为禁用状态时，说明生成图片大小超限制，无法生成图片，建议移除宽高较大模块。
+           备注：宽高都缩小了80%,当按钮为禁用状态时，说明生成图片大小超限制，无法生成图片，建议移除宽高较大模块。
           <!--<Icon type="android-notifications c4"></Icon> <span class="c4">{{msg}}</span>-->
         </div>
       </div>

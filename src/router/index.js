@@ -69,6 +69,24 @@ export default new Router({
           ]
         },
         {
+          path: '/allFinance',
+          component: (resolve) => require(['../view/all-finance'], resolve),
+          children: [
+            {
+              path: 'allAccount',
+              component: (resolve) => require(['../view/all-account'], resolve)
+            },
+            {
+              path: 'allIncome',
+              component: (resolve) => require(['../view/all-income'], resolve)
+            },
+            {
+              path: 'allDetails',
+              component: (resolve) => require(['../view/all-details'], resolve)
+            }
+          ]
+        },
+        {
           path: '/role',
           name: '用户管理',
           component: (resolve) => require(['../view/table/role'], resolve)
