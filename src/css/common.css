@@ -68,10 +68,10 @@ table {border-collapse: collapse;border-spacing: 0;}
   min-height: 100%;}
 
 .b{background: #fff!important;}
-.b1{background: #e1244e!important;}
+.b1{background: #F29900!important;}
 .b2{background: #eeefee}
 .c{color: #fff!important;}
-.c1{color: #e1244e!important;}
+.c1{color: #F29900!important;}
 .c2{color: #333!important;}
 .c3{color: #757993!important;}
 .c4{color: #ff5050!important;}
@@ -208,8 +208,8 @@ span.ivu-date-picker-cells-cell {
 
 .login-wrapper .ivu-input-group-prepend{
   padding: 4px 12px;
-  background-color: #e1244e;
-  border: 1px solid #e1244e;
+  background-color: #F29900;
+  border: 1px solid #F29900;
   color: #fff;
   font-size: 18px;
 }
@@ -244,6 +244,6 @@ span.ivu-date-picker-cells-cell {
   border: 8px transparent solid;
   border-bottom-width: 0;
   border-left-width: 0;
-  border-top-color: #e1244e;
+  border-top-color: #F29900;
   z-index: 10;
 }

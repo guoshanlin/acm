@@ -239,47 +239,6 @@
         // if (selection.rangeCount > 0) selection.removeAllRanges()
         // selection.addRange(range)
         // document.execCommand('copy')
-        // alert('复制成功！')
-
-        html2canvas(document.getElementById('deltail')).then((canvas) => {
-          // document.getElementById('img').appendChild(canvas)
-          let imgUri = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream')
-          let save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a')
-          save_link.href = imgUri
-          save_link.download = this.id + '.png'
-          let event = document.createEvent('MouseEvents')
-          event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
-          save_link.dispatchEvent(event)
-          // window.location.href = imgUri
-          // let range = document.createRange()
-          // range.selectNode(document.getElementById('img'))
-          // let selection = window.getSelection()
-          // if (selection.rangeCount > 0) selection.removeAllRanges()
-          // selection.addRange(range)
-          // document.execCommand('copy')
-          // alert('复制成功！')
-        })
-        // let divContent = document.getElementById('deltail').innerHTML
-        // let data = 'data:image/svg+xml,' +
-        //   "<svg xmlns='http://www.w3.org/2000/svg'>" +
-        //   "<foreignObject width='100%' height='100%'>" +
-        //   "<div xmlns='http://www.w3.org/1999/xhtml' style='font-size:16px;font-family:Helvetica'>" +
-        //   divContent +
-        //   '</div>' +
-        //   '</foreignObject>' +
-        //   '</svg>'
-        // let img = new Image()
-        // img.src = data
-        // let canvas = document.createElement('canvas')
-        // let ctx = canvas.getContext('2d')
-        // img.crossOrigin = 'anonymous'
-        // img.src = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'></svg>"
-        // ctx.drawImage(img, 0, 0)
-        // let canvasbase = canvas.toDataURL()
-        // document.getElementById('img').appendChild(img)
-        // console.log(img)
-        // console.log(canvasbase)
-        // this.src = canvasbase
       },
       bindAClick (damo) {
         if (damo != null && damo.length !== 0) {

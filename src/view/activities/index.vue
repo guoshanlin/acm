@@ -79,6 +79,15 @@
         this.loadActivityTop()
       }, 20)
     },
+    watch: {
+      $route (to, from) {
+        this.$nextTick(() => {
+          this.params.id = this.$route.query.id
+          this.loadActivitys()
+          this.loadActivityTop()
+        })
+      }
+    },
     methods: {
       loadActivitys () {
         this.requestAjax('get', 'activitys', this.params).then((data) => {

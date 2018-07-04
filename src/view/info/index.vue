@@ -15,12 +15,15 @@
               <div class="fbox">
                 <div class="flex"><h3 class="fz14 l-h30">基本信息</h3></div>
                 <div class="t-left">
-                  <i-button @click="copy" type="primary">生成活动图片</i-button>
+                  <!--<i-button @click="copy" type="primary">复制活动链接</i-button>-->
+                  <i-button @click="html2canvas" type="primary">生成活动图片</i-button>
                 </div>
               </div>
             </div>
             <active-deltail :id="rowId" type="info" ref="activeItem"></active-deltail>
           </div>
+
+          <!--<div id="link" style="opacity:0;">https://pmp.coreware.cn/gather/deltail?id={{rowId}}</div>-->
         </div>
         <div class="sidebar">
             <div class="sticky box triangle b m-b10">
@@ -67,7 +70,8 @@
        activeName: 1,
         rowId: this.$route.query.id,
         dataTop: '',
-        url: process.env.NODE_ENV === 'production' ? '' : process.env.API
+        url: process.env.NODE_ENV === 'production' ? '' : process.env.API,
+        isCopy: false
       }
     },
     created () {
@@ -92,7 +96,15 @@
         })
       },
       copy () {
-        this.$refs.activeItem.copy()
+          let range = document.createRange()
+          range.selectNode(document.getElementById('link'))
+          let selection = window.getSelection()
+          if (selection.rangeCount > 0) selection.removeAllRanges()
+          selection.addRange(range)
+          document.execCommand('copy')
+      },
+      html2canvas () {
+        this.$refs.activeItem.setImgMadal()
       }
     }
   }

@@ -299,7 +299,7 @@
             [
               {title: '姓名',id: 'name',type: 'input',titlespan: 2,colspan: 6,required: true },
               { title: '性别',id: 'sex',type: 'select',titlespan: 2,colspan: 6,required: false,relation: ''},
-              {title: '出生日期',id: 'birth',type: 'time',format: 'yyyy-MM-dd',titlespan: 2,colspan: 6,required: false}
+              {title: '出生日期',id: 'birth',type: 'time',format: 'yyyy-MM-dd',titlespan: 2,colspan: 6,required: true}
             ],
             [
               {title: '手机',id: 'phone',type: 'input',titlespan: 2,colspan: 6,required: true,valueType: 'mobilePhone'},
@@ -350,7 +350,7 @@
             ],
             [
               {title: '分享知识',id: 'shareInfo',type: 'input',titlespan: 2,colspan: 22,required: false},
-              {title: '分享日期',id: 'shareDate',type: 'time',format: 'yyyy-MM-dd',titlespan: 2,colspan: 6, relation: '',required: false},
+              {title: '分享日期',id: 'shareDate',type: 'time',format: 'yyyy-MM-dd',titlespan: 2,colspan: 6, relation: '',required: true}
             ]
 
           ],

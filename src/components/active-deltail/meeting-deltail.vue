@@ -4,7 +4,7 @@
       <!--<i-button @click="copy" type="primary">生成活动图片</i-button>-->
     <!--</div>-->
     <div id="deltail">
-      <datails-item :row='data'></datails-item>
+      <datails-item :row='data' :showObj='showModal' ref="datails"></datails-item>
       <!--<div class="wrapper b wrapper-box">-->
         <!--<div class="datails-item">-->
           <!--<datails-item :row='data' :button="buttonName"></datails-item>-->
@@ -66,6 +66,23 @@
         <!--</div>-->
       <!--</div>-->
     </div>
+    <Modal
+      v-model="setImg"
+      title="设置生成图片模块"
+      :mask-closable="false"
+      @on-ok="ok"
+      @on-cancel="cancel">
+      <div class="t-center">
+        <Checkbox v-for="(item, index) in checkboxArr" v-model="showModal[item.id]" :key="index" @on-change="checkedChange" :disabled="item.disabled">{{item.name}}</Checkbox>
+        <div v-if="msg!=''" class="m-t15">
+          <Icon type="android-notifications c4"></Icon> <span class="c4">{{msg}}</span>
+        </div>
+      </div>
+      <div slot="footer">
+        <Button type="ghost" @click="cancel">取消</Button>
+        <Button type="primary" @click="ok" :disabled="disabled">确定</Button>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -81,7 +98,25 @@
         data: {},
         label: [],
         buttonName: '',
-        buttonType: ''
+        buttonType: '',
+        showModal: {
+          poster: true,
+          abstract: true,
+          agenda: true,
+          deltail: true,
+          promoCode: true
+        },
+        checkboxArr: [
+          {id: 'poster', name: '海报'},
+          {id: 'abstract', name: '活动摘要', disabled: true},
+          {id: 'agenda', name: '活动议程', disabled: true},
+          {id: 'deltail', name: '活动详情'},
+          {id: 'promoCode', name: '活动二维码', disabled: true}
+        ],
+        disabled: true,
+        setImg: false,
+        msg: '',
+        timer: {}
       }
     },
     components: {
@@ -111,18 +146,39 @@
           }
         })
       },
+      setImgMadal () {
+        this.setImg = true
+        this.getcCanvas(true)
+      },
       copy () {
+        let _this = this
         html2canvas(document.getElementById('deltail'), {useCORS: true, scale: 0.8}).then((canvas) => {
-          // document.getElementById('img').appendChild(canvas)
+          console.log(canvas)
+          _this.showModal = {poster: true, abstract: true, agenda: true, deltail: true, promoCode: true}
           let imgUri = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream')
-          let _save = document.createElementNS('http://www.w3.org/1999/xhtml', 'a')
-          _save.href = imgUri
-          _save.download = this.id + '.png'
-          let event = document.createEvent('MouseEvents')
-          event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
-          _save.dispatchEvent(event)
+            let _save = document.createElementNS('http://www.w3.org/1999/xhtml', 'a')
+            _save.href = imgUri
+            _save.download = this.id + '.png'
+            let event = document.createEvent('MouseEvents')
+            event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
+            _save.dispatchEvent(event)
         })
        },
+      getcCanvas (val) {
+        let damo = document.getElementById('deltail')
+        if ((damo.clientWidth * damo.clientHeight * 0.8 * 0.8) < (656 * 3000)) {
+          this.msg = ''
+          this.disabled = false
+        } else {
+          if (val) {
+            this.msg = '所有模块生成图片大小超限制，无法生成图片，建议移除较长的详细内容模块'
+            // this.$Message.error('所有模块生成图片大小超限制，建议移除较长的详细内容模块')
+          } else {
+            this.msg = '选择的模块使生成总图片大小超限制，无法生成图片，请重新选择'
+            // this.$Message.error('选择的模块使生成总图片大小超限制，无法生成图片，请重新选择')
+          }
+        }
+      },
       bindAClick (damo) {
         if (damo != null && damo.length !== 0) {
           for (let i = 0; i < damo.length; i++) {
@@ -133,6 +189,24 @@
             }
           }
         }
+      },
+      ok () {
+        this.setImg = false
+        this.copy()
+      },
+      cancel () {
+        this.showModal = {poster: true, abstract: true, agenda: true, deltail: true, promoCode: true}
+        this.setImg = false
+        this.$Message.info('点击了取消')
+      },
+      checkedChange () {
+        if (this.showModal.deltail) {
+          this.$refs.datails.initImg()
+        }
+        clearTimeout(this.timer)
+        this.timer = setTimeout(() => {
+          this.getcCanvas()
+        }, 0.7 * 1000)
       }
     },
     beforeCreate () {
