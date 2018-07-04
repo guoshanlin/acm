@@ -6,7 +6,7 @@ import router from './router'
 import store from 'store'
 
 import iView from 'iview'
-/*import 'iview/dist/styles/iview.css' // 使用 CSS*/
+// import 'iview/dist/styles/iview.css' // 使用 CSS
 import 'js/common'
 import axios from 'axios'
 import 'babel-polyfill'
@@ -14,7 +14,7 @@ import Scrollbar from 'smooth-scrollbar'
 //  公用请求方法
 import publicUtils from 'js/publicUtils'
 import echarts from 'echarts'
-import chinaJson from 'echarts/map/json/china.json';//此处引入中国地图json
+import chinaJson from 'echarts/map/json/china.json' // 此处引入中国地图json
 // 设置公用请求端口
 import getwbkUrl from 'js/getwbkUrl'
 import VueLazyload from 'vue-lazyload'
@@ -23,17 +23,17 @@ import config from '../config'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import './theme/iview/index.less'
-import  'echarts/theme/shine.js'  // vintage dark macarons infographic shine roma
+import 'echarts/theme/shine.js' // vintage dark macarons infographic shine roma
 
 axios.defaults.baseURL = process.env.API
-axios.defaults.withCredentials=true
-/*axios.create({
-  baseURL: process.env.API,
-  timeout: 5000,
-  // withCredentials: true
-})*/
+axios.defaults.withCredentials = true
+// axios.create({
+//   baseURL: process.env.API,
+//   timeout: 5000,
+//   // withCredentials: true
+// })
 
-echarts.registerMap('china', chinaJson);
+echarts.registerMap('china', chinaJson)
 Vue.prototype.axios = axios
 Vue.prototype.Scrollbar = Scrollbar
 Vue.prototype.echarts = echarts
@@ -48,7 +48,7 @@ Vue.use(InitScroll)
 Vue.use(VueLazyload, {
   preLoad: 1.3,
   error: require('./assets/loading.png'),
-  loading:require('./assets/loading.png'),
+  loading: require('./assets/loading.png'),
   attempt: 1
 })
 

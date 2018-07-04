@@ -196,7 +196,10 @@
              </div>
              <div class="float-r form-fill">
                <div class="t-left">
-                    <i-ueditor :value=uEditorOptions.defaultMsg :config=uEditorOptions.config @getValue="getVal"></i-ueditor>
+                   <div id="main">
+                     <mavon-editor @change="mavonChange" placeholder="编辑详情..."/>
+                   </div>
+                    <!--<i-ueditor :value=uEditorOptions.defaultMsg :config=uEditorOptions.config @getValue="getVal"></i-ueditor>-->
                </div>
              </div>
              <div class="clearFix"></div>
@@ -235,11 +238,13 @@
 </template>
 
 <script>
-  import iUeditor from 'components/modal/ueditor.vue'
+  // import iUeditor from 'components/modal/ueditor.vue'
   import iTime from 'components/date-picker/index.vue'
   import iForm from 'components/registration-form/index.vue'
   import iSpecies from 'components/ticket-species/index.vue'
   import {mapGetters} from 'vuex'
+  import {mavonEditor} from 'mavon-editor'
+  import 'mavon-editor/dist/css/index.css'
 
   import locationData from 'js/address/location'
   export default {
@@ -405,7 +410,8 @@
           timeArr: ['applyBeginTime', 'applyEndTime'],
           placeholderArr: ['报名开始时间', '报名结束时间'],
           spanArr: [12, 12]
-        }
+        },
+        mavonValue: ''
       }
     },
     computed: {
@@ -414,10 +420,11 @@
       ])
     },
     components: {
-      iUeditor,
+      // iUeditor,
       iForm,
       iSpecies,
-      iTime
+      iTime,
+      mavonEditor
     },
     created () {
       setTimeout(() => {
@@ -456,7 +463,8 @@
           type: '活动',
           name: this.fromVal.title, // 活动名称
           demand: '', // 活动要求
-          content: this.fromVal.detailedContent, // 活动内容
+          // content: this.fromVal.detailedContent, // 活动内容
+          content: this.mavonValue, // 活动内容
           number: this.fromVal.number, // 人数
           isNeedPay: ticket[0].type == 'free' ? 0 : 1, // 是否付费【1付费，0免费】
           mbPrice: ticket[0].type == 'free' ? '' : ticket[0].vPrice, // 会员价格
@@ -605,6 +613,9 @@
           default:
             return key
         }
+      },
+      mavonChange (v, r) {
+        this.mavonValue = r
       }
     }
   }
@@ -633,4 +644,9 @@
   .initiating .red{color: #FF0000}
   .initiating .container-img { border: 1px solid #e3e2e5; background-color: #eeeeee; width: 100%;padding: 10px;}
   .initiating img{width:100% !important;}
+  /*编辑器样式*/
+  #main .v-note-wrapper{ max-height: 500px; position: inherit;}
+  #main .v-note-wrapper .v-note-op .v-left-item .op-icon,#main .v-note-wrapper .v-note-op .v-right-item .op-icon {height: 20px;width: 20px;font-size: 12px;color: #757575;border-radius: 5px;margin: 0;padding: 0;}
+  #main .fa-mavon-question-circle{ padding:0!important; }
+  #main .v-note-wrapper .v-note-op,#main .v-note-wrapper .v-note-op .v-left-item,#main .v-note-wrapper .v-note-op .v-right-item{min-height: 30px;}
 </style>

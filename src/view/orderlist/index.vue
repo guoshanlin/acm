@@ -13,7 +13,7 @@
                     <RadioGroup @on-change="orderStatusChange" v-model="formData.status" type="button">
                       <Radio label="">全部</Radio>
                       <Radio label="0">待支付</Radio>
-                      <Radio label="1">已支付</Radio>
+                      <Radio label="1,3">已支付</Radio>
                       <Radio label="2">已取消</Radio>
                     </RadioGroup>
                   </i-col>
